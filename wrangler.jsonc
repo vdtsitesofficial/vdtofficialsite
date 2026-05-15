@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "vdttest",
+  "name": "vdtsites",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -16,13 +16,13 @@
       "id": "c3690d7ca5fe41fdad5a6a7daec42775"
     }
   ],
-  // One Worker, multiple custom domains. Cloudflare creates the DNS
-  // automatically on deploy for each zone on this account. The site is
-  // served identically on every hostname below. workers.dev stays live
-  // as a backup.
+  // Custom domains. Cloudflare creates the DNS automatically on deploy.
+  // vdtsites.com is the canonical site; www redirects/serves alongside it.
+  // vdtsites.ca is intentionally NOT here - it 301-redirects to vdtsites.com
+  // via a Cloudflare Redirect Rule, so it must not be a Worker route.
+  // workers.dev stays live as a backup URL.
   "workers_dev": true,
   "routes": [
-    { "pattern": "vdtsites.ca", "custom_domain": true },
     { "pattern": "vdtsites.com", "custom_domain": true },
     { "pattern": "www.vdtsites.com", "custom_domain": true }
   ],
