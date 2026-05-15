@@ -26,27 +26,26 @@
     { "pattern": "vdtsites.com", "custom_domain": true },
     { "pattern": "www.vdtsites.com", "custom_domain": true }
   ],
-  // Cloudflare Workers Email Routing send_email binding. The destination
-  // address MUST be a verified destination in Email Routing for this
-  // Cloudflare account (Email > Email Routing > Destination Addresses).
+  // Cloudflare Workers Email Routing send_email binding. With no
+  // destination_address set, the Worker may send to ANY address that is a
+  // verified destination in Email Routing for this account (Email > Email
+  // Routing > Destination Addresses). This powers both the contact-form
+  // notification and the /admin sign-in PIN.
   //
-  // Uncomment + set the destination once the personal inbox is verified,
-  // then redeploy. Until then the API route returns 502 in prod, which is
-  // the right signal (rather than silently swallowing submissions).
-  //
-  // "send_email": [
-  //   {
-  //     "name": "SEND_EMAIL",
-  //     "destination_address": "your-verified-inbox@example.com"
-  //   }
-  // ],
+  // Each admin email in ADMIN_EMAILS below MUST be verified as a
+  // destination address, or its PIN email will not deliver.
+  "send_email": [{ "name": "SEND_EMAIL" }],
   "vars": {
     // FROM address. Must live on a domain (or subdomain) that has Email
     // Routing enabled in this Cloudflare account. Since nothing else uses
     // vdtsites.ca mail, we point the FROM at the apex directly.
     "CONTACT_FROM_EMAIL": "VDT Test <noreply@vdtsites.ca>",
     // Displayed to the user as the contact destination; actual delivery
-    // happens via SEND_EMAIL.destination_address above.
-    "CONTACT_TO_EMAIL": "info@vdtsites.ca"
+    // happens via the SEND_EMAIL binding above.
+    "CONTACT_TO_EMAIL": "info@vdtsites.ca",
+    // Allowlist of admin emails that may sign in to /admin. Comma-separated.
+    // Replace with the real admin addresses (both must be verified Email
+    // Routing destinations so their sign-in PIN can be delivered).
+    "ADMIN_EMAILS": "admin@vdtsites.ca"
   }
 }

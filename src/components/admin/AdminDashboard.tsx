@@ -26,6 +26,11 @@ export default function AdminDashboard({
   const [messages, setMessages] = useState(initialMessages);
   const [busyId, setBusyId] = useState<string | null>(null);
 
+  async function signOut() {
+    await fetch("/api/admin/logout", { method: "POST" }).catch(() => {});
+    window.location.href = "/admin/login";
+  }
+
   async function remove(id: string) {
     if (!confirm("Delete this message? This cannot be undone.")) return;
     setBusyId(id);
@@ -64,6 +69,13 @@ export default function AdminDashboard({
           <a href="/" className="hover:text-white transition-colors">
             View site →
           </a>
+          <button
+            type="button"
+            onClick={signOut}
+            className="hover:text-white transition-colors"
+          >
+            Sign out
+          </button>
         </div>
       </header>
 
