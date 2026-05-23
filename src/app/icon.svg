@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <style>
+    .mark { stroke: #1a1a1a; }
+    @media (prefers-color-scheme: dark) {
+      .mark { stroke: #f3ede1; }
+    }
+  </style>
+  <g class="mark" stroke-linejoin="round" stroke-linecap="round">
+    <polygon points="8,16 92,16 50,92" stroke-width="9"/>
+    <polygon points="24,30 76,30 50,76" stroke-width="5" opacity="0.55"/>
+    <path d="M50 20 L50 74" stroke-width="5" opacity="0.65"/>
+  </g>
+</svg>
