@@ -57,22 +57,35 @@ export default function SiteNav({
       }
     >
       <div className="grid grid-cols-3 items-center px-6 sm:px-10 py-5">
-        {/* Left — brand */}
+        {/* Left — brand. Inline SVG VDT mark uses currentColor so the
+            outline picks up the nav's text colour automatically (white
+            on the dark overlay, near-black on the solid blog nav). */}
         <div className="flex justify-start">
           <Link
             href="/"
             className="flex items-center gap-2.5 text-[11px] tracking-[0.32em] uppercase"
             style={{ color: ink }}
+            aria-label="VDT Sites — home"
           >
-            <span
-              className="inline-block size-5 rounded-full relative"
-              style={{ border: `1px solid ${muted}` }}
+            <svg
+              viewBox="0 0 100 100"
+              width="26"
+              height="26"
+              fill="none"
+              stroke="currentColor"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              aria-hidden
+              className="shrink-0"
             >
-              <span
-                className="absolute inset-1 rounded-full"
-                style={{ border: `1px solid ${muted}` }}
+              <polygon points="8,18 92,18 50,90" strokeWidth="3.6" />
+              <polygon
+                points="22,30 78,30 50,76"
+                strokeWidth="2.1"
+                opacity="0.55"
               />
-            </span>
+              <path d="M50 18 L50 76" strokeWidth="2.1" opacity="0.65" />
+            </svg>
             VDT Sites
           </Link>
         </div>
