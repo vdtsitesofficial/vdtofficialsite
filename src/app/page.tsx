@@ -1,6 +1,7 @@
 import AboutSection from "@/components/AboutSection";
 import ContactForm from "@/components/ContactForm";
 import CtaSection from "@/components/CtaSection";
+import FluidFooterMark from "@/components/FluidFooterMark";
 import Footer from "@/components/Footer";
 import HeroCarousel from "@/components/HeroCarousel";
 import PreviewBanner from "@/components/PreviewBanner";
@@ -68,6 +69,12 @@ export default function Home() {
             <ContactForm />
           </div>
         </section>
+
+        {/* Apechain-style cursor-reactive fluid wordmark. Real Navier-
+            Stokes solver + particle text. Sits between the contact
+            form and the link/copyright footer. Saved component pattern
+            in the vault → Shared/Fluid Footer Wordmark.md. */}
+        <FluidFooterMark word="VDTSITES" />
 
         <Footer />
       </main>
