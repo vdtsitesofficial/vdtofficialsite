@@ -168,6 +168,17 @@
   width: 100%;
 }
 
+/* Mobile (≤720px): skip the GPU-heavy Navier-Stokes fluid sim
+   entirely — most phones never see the cursor-driven effect, the
+   canvas burns battery, and a static wordmark reads cleaner. JS
+   side: page.tsx's LAB_MODULES gates initFluidFooter on
+   window.innerWidth > 720 so the sim doesn't even spin up. */
+@media (max-width: 720px) {
+  .vdt-fl__canvas { display: none !important; }
+  .vdt-fl__fallback { display: flex !important; }
+  .vdt-fl__fallback-text { font-size: clamp(56px, 19vw, 140px); }
+}
+
 /* The source design had a navy band with a cream gradient fade so the
    wordmark blended into the cream bg below. This port is cream-on-cream,
    so the fade just ghosts the bottom of the letters — disabled. */

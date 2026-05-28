@@ -46,10 +46,14 @@ const LAB_MODULES = `
     initVdtPortfolio({ root: el, enableKeyboard: true, enableDrag: true });
   });
 
+  // Skip the GPU-heavy Navier-Stokes wordmark sim on phones — the
+  // cursor-driven effect never gets used on touch devices, the canvas
+  // burns battery, and the @media (max-width: 720px) rule in
+  // footer.css promotes the static fallback wordmark in its place.
   const flBand     = document.querySelector('[data-vdt-fl-band]');
   const flCanvas   = document.querySelector('[data-vdt-fl-canvas]');
   const flFallback = document.querySelector('[data-vdt-fl-fallback]');
-  if (flBand && flCanvas) {
+  if (flBand && flCanvas && window.innerWidth > 720) {
     initFluidFooter({ wrap: flBand, canvas: flCanvas, fallback: flFallback, word: 'VDTSITES' });
   }
 
