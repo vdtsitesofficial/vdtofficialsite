@@ -389,15 +389,6 @@ body { overflow-x: hidden; }
   .zh-brand span { font-size: 12px; letter-spacing: 0.04em; }
   .zh-nav { gap: 12px; }
   .zh-nav a { font-size: 11px; letter-spacing: 0.04em; }
-
-  /* "BUILT FOR YOU" — the previous clamp(52px, 19vw, 340px) rendered
-     at 19vw=74px on a 390px viewport, which is ~445px wide and
-     overflows both edges of the screen (white-space: nowrap). Drop
-     the rate to 13vw at this breakpoint: 390 × 0.13 = 50.7px, giving
-     a ~305px-wide phrase that fits with ~40px margin per side. */
-  .hero-text {
-    font-size: clamp(36px, 13vw, 90px);
-  }
 }
 @media (max-width: 380px) {
   .zh-brand span { display: none; }
