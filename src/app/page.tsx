@@ -225,7 +225,21 @@ export default function Home() {
       {/* Section 1: ZOOM HERO */}
       <section className="zoom-hero">
         <div className="zoom-stage">
-          <img className="bg-image" src="/lab/assets/background.png" alt="" />
+          {/* Background plate. Browser picks the right asset by media query;
+              the fallback <img.bg-image> stays in the DOM either way so
+              main.js's document.querySelector('.bg-image') keeps working
+              (it sets transform/objectPosition/opacity each frame). */}
+          <picture>
+            <source
+              media="(max-width: 720px)"
+              srcSet="/lab/assets/background-mobile.png"
+            />
+            <img
+              className="bg-image"
+              src="/lab/assets/background.png"
+              alt=""
+            />
+          </picture>
           <h1 className="hero-text">BUILT&nbsp;FOR&nbsp;YOU</h1>
 
           <div className="laptop-wrap">
