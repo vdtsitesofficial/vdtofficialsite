@@ -1,0 +1,292 @@
+/* ============================================================
+ * VDT Portfolio Carousel — drop-in stylesheet.
+ *
+ * All rules scoped under `.vdt-portfolio` so they can't collide with
+ * the host page's existing CSS. Animations prefixed `vdt-portfolio-*`.
+ * Custom properties live on the root so they can be overridden per
+ * instance.
+ *
+ * Required host fonts (load in <head> of the host page):
+ *   <link rel="preconnect" href="https://fonts.googleapis.com">
+ *   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=JetBrains+Mono:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ * ============================================================ */
+
+.vdt-portfolio {
+  --vdt-pf-bg:           #f4efe6;
+  --vdt-pf-bg-2:         #ece5d6;
+  --vdt-pf-ink:          #0d0d0d;
+  --vdt-pf-muted:        #6b6660;
+  --vdt-pf-line:         rgba(13, 13, 13, 0.12);
+  --vdt-pf-red:          #dc2626;
+  --vdt-pf-red-bright:   #ef4444;
+  --vdt-pf-gold:         #c8a96a;
+  --vdt-pf-ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --vdt-pf-t-slide:      900ms;
+
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 0.8rem;
+  padding: 3.2rem 1.2rem 1.6rem;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  color: var(--vdt-pf-ink);
+}
+
+/* ── Intro ── */
+.vdt-portfolio__intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem 0 0;
+}
+.vdt-portfolio__eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--vdt-pf-muted);
+  margin-bottom: .9rem;
+}
+.vdt-portfolio__title {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.76rem, 4.4vw, 2.88rem);
+  letter-spacing: -.025em;
+  line-height: 1;
+}
+.vdt-portfolio__title em {
+  font-style: normal;
+  -webkit-text-stroke: 1.5px var(--vdt-pf-ink);
+  color: transparent;
+}
+.vdt-portfolio__lede {
+  margin-top: .9rem;
+  color: var(--vdt-pf-muted);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+/* ── 3D stage ── */
+.vdt-portfolio__stage {
+  position: relative;
+  width: 100%;
+  /* 20% smaller than the package default so the whole section
+     (intro + cards + controls + meta) fits in one viewport. */
+  height: clamp(304px, 45vh, 496px);
+  perspective: 2200px;
+  perspective-origin: 50% 50%;
+  margin-top: 1.2rem;
+}
+.vdt-portfolio__carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+.vdt-portfolio__reflection {
+  position: absolute;
+  bottom: -10%;
+  left: 10%;
+  right: 10%;
+  height: 16%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(13, 13, 13, 0.18) 0%, transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Card ── */
+.vdt-portfolio__card {
+  position: absolute;
+  top: 50%; left: 50%;
+  /* 20% narrower than the package default. Side cards still peek
+     in via the LAYOUT.prevTx / farTx values in portfolio.js. */
+  width: clamp(304px, 46vw, 704px);
+  aspect-ratio: 16 / 10;
+  --tx: 0;
+  --rot: 0deg;
+  --tz: 0;
+  --scale: 1;
+  --opacity: 1;
+  --hover-rise: 0px;
+  --hover-scale: 1;
+  transform: translate(-50%, calc(-50% + var(--hover-rise)))
+             translateX(var(--tx))
+             translateZ(var(--tz))
+             rotateY(var(--rot))
+             scale(calc(var(--scale) * var(--hover-scale)));
+  opacity: var(--opacity);
+  transition:
+    transform var(--vdt-pf-t-slide) var(--vdt-pf-ease-out),
+    opacity   var(--vdt-pf-t-slide) var(--vdt-pf-ease-out),
+    filter    var(--vdt-pf-t-slide) var(--vdt-pf-ease-out);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  filter: brightness(.85) saturate(.9);
+  z-index: 1;
+}
+.vdt-portfolio__card.is-current  { filter: brightness(1)   saturate(1);   z-index: 30; }
+.vdt-portfolio__card.is-prev,
+.vdt-portfolio__card.is-next     { filter: brightness(.78) saturate(.85); z-index: 20; }
+.vdt-portfolio__card.is-far      { filter: brightness(.6)  saturate(.6);  z-index: 10; }
+.vdt-portfolio__card.is-hidden   { opacity: 0; pointer-events: none; z-index: 0; }
+
+/* Lift centered card on hover — clean rise, no tilt */
+.vdt-portfolio__card.is-current { transition: transform 350ms var(--vdt-pf-ease-out), opacity var(--vdt-pf-t-slide) var(--vdt-pf-ease-out), filter var(--vdt-pf-t-slide) var(--vdt-pf-ease-out); }
+.vdt-portfolio__card.is-current:hover {
+  --hover-rise: -14px;
+  --hover-scale: 1.015;
+}
+.vdt-portfolio__card.is-current:hover .vdt-portfolio__card-frame {
+  box-shadow:
+    0 50px 90px -20px rgba(0, 0, 0, 0.55),
+    0 18px 32px -10px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.vdt-portfolio__card-frame {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  padding: 14px;
+  box-shadow:
+    0 35px 80px -20px rgba(0, 0, 0, .55),
+    0 12px 24px -10px rgba(0, 0, 0, .35),
+    inset 0 1px 0 rgba(255, 255, 255, .06);
+  display: grid;
+  grid-template-rows: 18px 1fr;
+  gap: 6px;
+  transition: box-shadow 350ms var(--vdt-pf-ease-out);
+}
+.vdt-portfolio__card-bezel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vdt-portfolio__card-cam {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.vdt-portfolio__card-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #111;
+}
+.vdt-portfolio__card-shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  background: #1a1a1a;
+  display: block;
+  animation: vdt-portfolio-shot-fade 600ms var(--vdt-pf-ease-out) both;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+@keyframes vdt-portfolio-shot-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Controls ── */
+.vdt-portfolio__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+  position: relative;
+  z-index: 50;
+}
+.vdt-portfolio__nav-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1.5px solid var(--vdt-pf-ink);
+  background: transparent;
+  color: var(--vdt-pf-ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, color .2s, transform .15s;
+  opacity: .85;
+  padding: 0;
+}
+.vdt-portfolio__nav-btn:hover { background: var(--vdt-pf-ink); color: var(--vdt-pf-bg); opacity: 1; transform: translateY(-2px); }
+.vdt-portfolio__nav-btn:active { transform: translateY(0); }
+
+.vdt-portfolio__counter {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: .04em;
+  min-width: 84px;
+  justify-content: center;
+  color: var(--vdt-pf-muted);
+}
+.vdt-portfolio__counter-current {
+  color: var(--vdt-pf-red);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.25rem;
+  transition: opacity .25s;
+}
+.vdt-portfolio__counter-sep { opacity: .4; }
+.vdt-portfolio__counter-total { font-variant-numeric: tabular-nums; }
+
+/* ── Meta ── */
+.vdt-portfolio__meta {
+  text-align: center;
+  padding: 1.2rem 0 0.8rem;
+  position: relative;
+}
+.vdt-portfolio__meta-tags {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--vdt-pf-muted);
+  margin-bottom: .35rem;
+  transition: opacity .3s;
+}
+.vdt-portfolio__meta-name {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  letter-spacing: -.02em;
+  margin-bottom: .55rem;
+  transition: opacity .3s;
+}
+.vdt-portfolio__meta-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .68rem;
+  color: var(--vdt-pf-muted);
+  opacity: .7;
+  font-style: italic;
+}
+.vdt-portfolio__meta-hint svg { color: var(--vdt-pf-red); }
+.vdt-portfolio__meta.is-changing .vdt-portfolio__meta-tags,
+.vdt-portfolio__meta.is-changing .vdt-portfolio__meta-name { opacity: 0; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .vdt-portfolio { padding: 3rem 1rem 1.5rem; }
+  .vdt-portfolio__stage { height: clamp(320px, 50vh, 480px); }
+  .vdt-portfolio__nav-btn { width: 48px; height: 48px; }
+}

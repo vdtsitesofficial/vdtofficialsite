@@ -1,0 +1,326 @@
+/* =========================================================
+ * VDT Contact Card — drop-in scoped stylesheet
+ *
+ * Lifted from C:/Websites/VDT/vdtsites-card/style.css, with every
+ * selector scoped under `.vdt-contact-card` so generic class names
+ * (.card, .name, .info, .item, .icon, .field…) can't collide with
+ * laptop-zoom-v2's existing CSS.
+ * ========================================================= */
+
+.vdt-contact-card {
+  /* Brand cream tones — matching the portfolio section above so the
+     visual flow continues uninterrupted. Previously cool near-white
+     (#fafafa); now the same warm cream gradient + red/gold radial
+     glows used in portfolio.css. */
+  --cc-bg:           #f4efe6;
+  --cc-bg-2:         #ece5d6;
+  --cc-card-bg:      rgba(255, 255, 255, 0.75);
+  --cc-text:         #0d0d0d;
+  --cc-muted:        rgba(13, 13, 13, 0.60);
+  --cc-ink-line:     rgba(13, 13, 13, 0.12);
+  --cc-red:          #dc2626;
+  --cc-red-hot:      #ef4444;
+  --cc-gold:         #c8a96a;
+  --cc-accent-gradient: linear-gradient(135deg, #ef4444, #dc2626);
+
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  /* Flat cream — exact same value as `.real-landing` (var(--canvas) =
+     #f4efe6) so the contact section sits seamlessly under the
+     portfolio with no visible color seam. Red blush stays ONLY on
+     the cards themselves (.cc-color-splash). */
+  background: var(--cc-bg);
+  color: var(--cc-text);
+  padding: 96px 32px;
+  font-family: "Inter", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* ─── two-card row ─── */
+.vdt-contact-card .cards-row {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  /* 1fr 1fr gives each card half the row, side-by-side, scaling
+     with the container instead of being pinned at 440px. */
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  gap: 40px;
+  width: 100%;
+  /* Cap at a sensible reading width so the cards don't stretch wider
+     than feels right on a ultra-wide monitor. Drop or raise this to
+     let them go wider/narrower. */
+  max-width: 1320px;
+}
+
+/* On narrow screens, stack vertically. */
+@media (max-width: 880px) {
+  .vdt-contact-card .cards-row { grid-template-columns: 1fr; }
+}
+
+/* Ambient red bloom — removed per user request. The cards still
+   carry their own per-corner red blush via .cc-color-splash, but
+   nothing tints the background of the section itself. */
+.vdt-contact-card .cc-bg { display: none; }
+
+/* ─── card ─── */
+.vdt-contact-card .cc-card {
+  position: relative;
+  /* width drops out — the parent grid now sizes each card to a column.
+     Padding scales a bit with width so a wider card breathes more. */
+  width: 100%;
+  padding: 56px clamp(42px, 5%, 72px);
+  background: var(--cc-card-bg);
+  border-radius: 20px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.08),
+    0 6px 20px  rgba(0, 0, 0, 0.04),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+/* film grain — multiply so it reads on a light surface */
+.vdt-contact-card .cc-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* ─── name ─── */
+.vdt-contact-card .cc-name {
+  font-family: "Syne", "Inter", sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -1.5px;
+  margin-top: 8px;
+}
+.vdt-contact-card .cc-name span {
+  display: block;
+  background: linear-gradient(120deg, #161616 0%, #4a4a4a 50%, #161616 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.vdt-contact-card .cc-name span:last-child {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background: none;
+  -webkit-text-stroke: 1.5px rgba(22, 22, 22, 0.90);
+  position: relative;
+}
+
+/* form-card variant: "Contact Us" sits on ONE line */
+.vdt-contact-card .cc-card.cc-form-card .cc-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.18em;
+  flex-wrap: nowrap;
+}
+.vdt-contact-card .cc-card.cc-form-card .cc-name span {
+  display: inline-block;
+}
+
+/* ─── role ─── */
+.vdt-contact-card .cc-role {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--cc-muted);
+}
+
+/* ─── divider ─── */
+.vdt-contact-card .cc-divider {
+  margin: 32px 0 28px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.45), transparent);
+  opacity: 0.30;
+}
+
+/* ─── info ─── */
+.vdt-contact-card .cc-info {
+  display: grid;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+.vdt-contact-card .cc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--cc-muted);
+  cursor: default;
+}
+.vdt-contact-card .cc-icon {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: url(#cc-accent-gradient);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
+}
+.vdt-contact-card .cc-item span {
+  position: relative;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.vdt-contact-card .cc-item span::before {
+  content: "—";
+  position: absolute;
+  left: -20px;
+  opacity: 0;
+  background: var(--cc-accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: opacity 0.3s ease;
+}
+.vdt-contact-card .cc-item:hover .cc-icon { opacity: 0; }
+.vdt-contact-card .cc-item:hover span::before { opacity: 1; }
+.vdt-contact-card .cc-item:hover span { color: var(--cc-red); }
+
+/* ─── watermark ─── */
+.vdt-contact-card .cc-watermark {
+  position: absolute;
+  bottom: -34px;
+  right: -16px;
+  font-family: "Syne", "Inter", sans-serif;
+  font-size: 130px;
+  font-weight: 800;
+  letter-spacing: -6px;
+  color: rgba(0, 0, 0, 0.055);
+  transform: rotate(-8deg);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.vdt-contact-card .cc-watermark--sites {
+  font-size: 96px;
+  letter-spacing: -4px;
+  bottom: -22px;
+  right: -10px;
+}
+
+/* =============================================================
+   FORM CARD (left)
+   ============================================================= */
+.vdt-contact-card .cc-form {
+  display: grid;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
+}
+.vdt-contact-card .cc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vdt-contact-card .cc-field label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cc-muted);
+  transition: color 0.25s ease;
+}
+.vdt-contact-card .cc-field input,
+.vdt-contact-card .cc-field textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  color: var(--cc-text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  padding: 6px 0 8px;
+  outline: none;
+  resize: none;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+.vdt-contact-card .cc-field textarea {
+  min-height: 64px;
+  line-height: 1.5;
+}
+.vdt-contact-card .cc-field input::placeholder,
+.vdt-contact-card .cc-field textarea::placeholder {
+  color: rgba(0, 0, 0, 0.30);
+}
+.vdt-contact-card .cc-field input:focus,
+.vdt-contact-card .cc-field textarea:focus {
+  border-bottom-color: var(--cc-red);
+}
+.vdt-contact-card .cc-field:focus-within label { color: var(--cc-red); }
+
+/* honeypot */
+.vdt-contact-card .cc-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* ─── send button ─── */
+.vdt-contact-card .cc-send-btn {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--cc-accent-gradient);
+  color: #fff;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px -8px rgba(220, 38, 38, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.vdt-contact-card .cc-send-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 18px 40px -8px rgba(220, 38, 38, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+.vdt-contact-card .cc-send-btn:active:not(:disabled) { transform: translateY(0); }
+.vdt-contact-card .cc-send-btn:disabled { cursor: default; opacity: 0.85; }
+.vdt-contact-card .cc-send-arrow { transition: transform 0.3s ease; }
+.vdt-contact-card .cc-send-btn:hover .cc-send-arrow { transform: translateX(3px); }
+.vdt-contact-card .cc-send-btn.cc-sent {
+  background: rgba(220, 38, 38, 0.10);
+  color: var(--cc-red);
+  box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.40);
+}
+.vdt-contact-card .cc-send-btn.cc-sent .cc-send-arrow { display: none; }
+
+/* Per-card red splash — removed per user request. Markup stays in
+   place so it's easy to bring back: just unset display:none. */
+.vdt-contact-card .cc-color-splash { display: none; }

@@ -1,0 +1,204 @@
+/* =========================================================
+   VDT Fluid Footer — vanilla CSS port
+
+   Translates the Tailwind/utility classes used in the original
+   Next.js page (`Fluid Footer Wordmark.source.tsx`) to plain CSS,
+   scoped under `.vdt-fl-*` so it can't collide with the host
+   page's existing styles.
+
+   Background is intentionally dark navy (#050B1F) — sharp
+   contrast against the laptop-zoom-v2 cream theme. The fluid
+   particles render as white on dark; inverting them to dark on
+   cream would change the apechain look the source was ported
+   from. The dark footer reads as a clean "footer-mode" break.
+   ========================================================= */
+
+.vdt-fl {
+  --vdt-fl-bg:    #f4efe6;     /* cream — matches the rest of the page */
+  --vdt-fl-ink:   #161616;     /* near-black for type */
+  --vdt-fl-red:   #dc2626;     /* brand accent (the wordmark colour) */
+  --vdt-fl-rule:  rgba(22, 22, 22, 0.12);
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--vdt-fl-bg);
+  color: var(--vdt-fl-ink);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* thin hairline divider at the top of the footer */
+.vdt-fl::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--vdt-fl-rule) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* upper row — brand blurb on the left, link list on the right */
+.vdt-fl__top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem 2rem 1rem;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 720px) {
+  .vdt-fl__top {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2.25rem 3rem 1rem;
+    gap: 0;
+  }
+}
+
+.vdt-fl__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 20rem;
+}
+
+.vdt-fl__brand-name {
+  font-weight: 600;
+  opacity: 1;
+}
+
+.vdt-fl__brand-blurb {
+  opacity: 0.65;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.55;
+  font-size: 12px;
+}
+
+.vdt-fl__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vdt-fl__nav a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.vdt-fl__nav a:hover { opacity: 1; color: var(--vdt-fl-red); }
+
+/* the fluid wordmark band — sized to the wordmark's natural aspect
+   so the text fills the band horizontally AND vertically with
+   almost no empty cream around it. "VDTSITES" in Anton at 95% of
+   its height measures ~3.2× as wide as it is tall, so an
+   aspect-ratio of ~16/5 is the sweet spot where the text-fit
+   logic (95% height, shrink if width-bound) leaves minimal
+   uncovered cream above the wordmark.
+
+   The band's WIDTH stays at 100% — the wordmark is still as wide
+   as the footer — just the HEIGHT comes down so the awkward
+   empty cream gap between the top row and the wordmark closes. */
+.vdt-fl__band {
+  position: relative;
+  width: 100%;
+  /* Aspect tuned to the visible glyph metrics, not the em-box:
+     Anton "VDTSITES" measures ~3.2× wider than its em-height, and at this
+     width it's width-bound (the text-fit logic in footer.js caps fontPx at
+     ~width*0.96/3.2 = width*0.30). Anton's cap-height is ~0.72 of fontPx,
+     so visible cap-height ≈ 0.162 * width when width-bound (margin 0.72 in
+     footer.js for ~14% horizontal gutter per side, Anton word-ratio ~3.2,
+     cap-height ratio ~0.72). Baseline drawn at 0.93 * canvas_height for ~7%
+     bottom breathing room. Bumped each aspect ~10% taller than the
+     "minimum-fit" geometry (~16/3.05 desktop) so the wordmark has visible
+     breathing room above the caps instead of pressing against the band top. */
+  aspect-ratio: 16 / 3.9;
+}
+@media (min-width: 720px)  { .vdt-fl__band { aspect-ratio: 16 / 3.5; } }
+@media (min-width: 1024px) { .vdt-fl__band { aspect-ratio: 16 / 3.35; } }
+
+.vdt-fl__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none; /* swipe-on-wordmark won't scroll the page */
+  /* Horizontal & vertical clearance for the wordmark is handled entirely
+     inside the text canvas (margin + fontPx multiplier + baseline in
+     footer.js → makeTextCanvas). CSS canvas inset was attempted earlier
+     but the resize logic in footer.js forces canvas.style.width to match
+     wrap.clientWidth, which overrides any percentage width from CSS — so
+     the only reliable knobs are the in-canvas ones. */
+}
+
+/* reduced-motion / no-WebGL2 fallback — static Anton wordmark */
+.vdt-fl__fallback {
+  position: absolute;
+  inset: 0;
+  display: none;             /* hidden by default; JS reveals if needed */
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  color: var(--vdt-fl-ink);
+}
+.vdt-fl__fallback-text {
+  font-family: "Anton", "Hanken Grotesk", sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-size: clamp(64px, 22vw, 360px);
+  text-align: center;
+  width: 100%;
+}
+
+/* The source design had a navy band with a cream gradient fade so the
+   wordmark blended into the cream bg below. This port is cream-on-cream,
+   so the fade just ghosts the bottom of the letters — disabled. */
+.vdt-fl__band-fade { display: none; }
+
+/* bottom row — copyright + VDT credit (the "Site by VDTSITES.COM"
+   standing pattern). Both small, low-contrast, uppercase. */
+.vdt-fl__bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 2rem 1.5rem;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+@media (min-width: 720px) {
+  .vdt-fl__bottom {
+    flex-direction: row;
+    padding: 0 3rem 1.5rem;
+  }
+}
+
+.vdt-fl__credit {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.vdt-fl__credit:hover { color: var(--vdt-fl-red); }

@@ -1,0 +1,699 @@
+/* =========================================================
+   laptop-zoom v2 — 2D image-layer hero
+   - Real background photo + transparent laptop PNG, layered
+   - "BUILT FOR YOU" headline behind the laptop
+   - Sticky stage, scroll-driven scale/translate
+   - HTML overlay tracks the laptop screen area and grows to
+     fill the viewport at the end
+   - Drop-in replacement for the procedural Three.js v1
+   ========================================================= */
+
+:root {
+  /* JS drives the laptop's position, size, and scale directly
+     each frame — see the constants block in main.js
+     (LAPTOP_WIDTH_FRAC, LAPTOP_ANCHOR_Y_FRAC, SCREEN_FRAC_*).
+     Keeping geometry math out of CSS avoids the calc/percent
+     resolution traps that caused the overlay to drift off the
+     screen in the previous version.                          */
+
+  /* ── design tokens ── */
+  --ink:        #1a1a1a;
+  /* Matches the cream of the dropped-in VDT hero (--vdt-hero-canvas-bg
+     in hero.css). Keeping the two creams identical means the strip
+     of .screen-overlay visible above the hero (when homeY > 0) blends
+     into the hero's own bg — no visible seam between the two layers. */
+  --canvas:     #f4efe6;
+  --canvas-2:   #d9d2c4;
+  --accent:     #b85a3e;
+  --muted:      #6f6a60;
+  --rule:       rgba(26,26,26,0.10);
+
+  --ease:       cubic-bezier(0.22, 0.61, 0.36, 1);
+  --font-display: 'Syne', 'Inter', sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-serif:   'Cormorant Garamond', serif;
+  --font-poster:  'Anton', 'Impact', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+body { overflow-x: hidden; }
+
+/* ============================================================
+   ZOOM HERO
+   ============================================================ */
+
+.zoom-hero {
+  position: relative;
+  /* Was 220vh — that gave 120vh of scroll runway, of which 22%
+     (≈26vh) was dead slack after the zoom locked at progress=0.78.
+     Dropping to 175vh cuts the runway to 75vh and the post-lock
+     slack to ~17vh — about one wheel-tick of pause before the
+     page transitions into the portfolio below. */
+  height: 175vh;
+}
+
+.zoom-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  /* 3D viewing context — lets the cream overlay use rotateX/Y to
+     match the laptop screen's photographed perspective. The
+     overlay's actual rotation values come from the Tilt sliders. */
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+}
+
+/* ── back layer: room photo ── */
+.bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  z-index: 1;
+  will-change: transform;
+  transform-origin: 50% 63%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── headline text behind the laptop ──
+   Position + transform are written by JS each frame (so the text
+   can drift outward from the laptop anchor during the zoom). The
+   declarations below are only the static styling.              */
+.hero-text {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  font-family: var(--font-poster);
+  font-weight: 400;                /* Anton has only one weight */
+  /* Bumped up from clamp(72,13vw,220) so "BUILT FOR YOU" reads
+     bigger and spans more of the viewport horizontally.
+     (No CSS transform here — main.js writes transform every frame
+     for the zoom translate/scale; styling that property statically
+     would be clobbered. To stretch the letters horizontally beyond
+     this, edit main.js's transform string to add scaleX().) */
+  font-size: clamp(96px, 19vw, 340px);
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  text-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.35),
+    0 1px 0   rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+  text-align: center;
+  pointer-events: none;
+  will-change: opacity, transform;
+  user-select: none;
+}
+
+/* ── laptop layer ──
+   Hidden — the Main hero background image already has a laptop
+   baked into the scene, so we use that one and position the cream
+   screen overlay over its screen area. The wrap still exists in
+   the DOM (and JS still computes its geometry) because the screen
+   rectangle's position on the viewport is derived from the laptop
+   wrap's would-be position. Hiding rather than removing keeps the
+   geometry math intact.                                          */
+.laptop-wrap {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform, left, top;
+  /* Was previously display:none with the comment "avoids a one-frame
+     flash of unstyled wrap" — but no JS actually flips it back, so
+     the laptop never rendered. Setting display:block. The JS still
+     waits for the laptop image's load event before kicking off the
+     tick loop, so the wrap's initial transform is set before paint
+     and there's no visible flash. */
+  display: block;
+}
+
+.laptop-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Realistic shadow cast to the RIGHT and slightly below —
+     implies a key light coming from the LEFT (the big windows
+     on the left side of the room photo, mountains/lake outside).
+     drop-shadow follows the alpha mask, so the silhouette stays
+     correct around the keyboard cutouts and screen frame.
+     Two layers: tight contact shadow + softer ambient.        */
+  filter:
+    drop-shadow( 14px  10px 16px rgba(0, 0, 0, 0.55))
+    drop-shadow( 32px  22px 50px rgba(0, 0, 0, 0.32));
+}
+
+/* ── HTML overlay (destination content) ── */
+.screen-overlay {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: 320px;
+  height: 200px;
+  overflow: hidden;
+  background: var(--canvas);
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  will-change: transform, width, height;
+}
+
+.screen-inner {
+  width: 100vw;
+  height: 100vh;
+  transform-origin: top left;
+  transform: scale(var(--scale, 0.2));
+  background: var(--canvas);
+}
+
+/* ── screen glare ──
+   Layered gradients that sell the cream overlay as a real glossy
+   laptop screen rather than a flat screenshot pasted on top:
+     • a diagonal light streak across the upper-left (typical glass
+       reflection from the room's lighting)
+     • a soft top-edge highlight (ceiling/sky bouncing onto the
+       glass)
+     • a faint vignette darkening at the lower corners (depth)
+   The whole layer fades to 0 as the overlay reaches viewport so
+   the destination page reads as a clean website at the end.
+*/
+.screen-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    /* diagonal light streak — primary glare */
+    linear-gradient(
+      108deg,
+      transparent 24%,
+      rgba(255, 255, 255, 0.22) 40%,
+      rgba(255, 255, 255, 0.07) 52%,
+      transparent 68%
+    ),
+    /* top-edge highlight — soft reflection of ambient ceiling light */
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.04) 18%,
+      transparent 35%
+    ),
+    /* bottom-corner vignette — gives the screen physical depth */
+    radial-gradient(
+      ellipse 90% 60% at 50% 110%,
+      rgba(0, 0, 0, 0.18),
+      transparent 65%
+    );
+  mix-blend-mode: screen;
+  will-change: opacity;
+}
+
+/* ── end-of-zoom mask ── */
+.zoom-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 50%, var(--canvas) 100%);
+}
+
+/* ── scroll cue ── */
+.scroll-cue {
+  position: absolute;
+  z-index: 6;
+  bottom: 28px;
+  /* Horizontal centring via inset:0 + margin:auto instead of
+     left:50% + translateX(-50%). Avoids landing the element on a
+     half-pixel X boundary (which forced anti-aliased rendering on
+     the text during the bob animation and showed up as blur on
+     every frame). The bob keyframes below now animate ONLY
+     translateY, which always lands on integer pixels — text
+     stays crisp through the whole loop. */
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  /* Default: photo background behind it → white text with a dark
+     halo so it stays legible if it lands on a bright patch. */
+  color: rgba(255, 255, 255, 0.95);
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 6px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(0, 0, 0, 0.25);
+  animation: bob 2.4s ease-in-out infinite;
+  pointer-events: none;
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+/* Once the destination chrome has faded in (main.js toggles
+   .is-visible on #site-chrome at chromeAmt > 0.5), the cream
+   overlay has filled the viewport — the photo backdrop is gone
+   and white text would vanish into the cream. Swap to dark text
+   with a soft white halo so the cue stays legible on the main
+   hero. #site-chrome and .zoom-hero are direct DOM siblings so
+   the general-sibling selector reaches the scroll-cue cleanly. */
+.site-chrome.is-visible ~ .zoom-hero .scroll-cue {
+  color: rgba(13, 13, 13, 0.85);
+  text-shadow:
+    0 0 6px rgba(255, 255, 255, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.25);
+}
+@keyframes bob {
+  /* Pure translateY — horizontal centring is handled by margin
+     auto on .scroll-cue, so we don't need the translateX(-50%)
+     that used to live in here. Pure-Y transform keeps the text
+     rendered at integer pixel positions throughout the loop. */
+  0%, 100% { transform: translateY(0);   opacity: 0.85; }
+  50%      { transform: translateY(4px); opacity: 0.55; }
+}
+
+/* ============================================================
+   TRANSPARENT PRE-ZOOM HEADER
+   Sits on top of the room photo while the user is at progress=0.
+   Fades out as the camera dollies in; the fixed site chrome
+   below fades in afterwards as the cream overlay reaches full
+   viewport size.
+   ============================================================ */
+
+.zoom-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 56px;
+  pointer-events: none;          /* re-enabled per-link below */
+  will-change: opacity;
+}
+
+.zoom-header.is-gone { display: none; }
+
+.zh-brand {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.40);
+}
+
+.zh-mark {
+  /* 22px → 34px so the brand prism reads as a proper mark next
+     to the "VDT SITES" wordmark rather than a small bullet. */
+  width: 34px;
+  height: 34px;
+  /* Brand red — matches the destination chrome mark and the
+     CTA / hero accents elsewhere on the site. Drop-shadow stays
+     so the red still has a soft lift against the photo. */
+  color: #dc2626;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.30));
+}
+
+.zh-brand span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  font-size: 13px;
+}
+
+.zh-nav {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.zh-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  position: relative;
+  transition: opacity 0.2s var(--ease);
+  opacity: 0.92;
+}
+.zh-nav a:hover { opacity: 1; }
+
+.zh-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease);
+  opacity: 0.7;
+}
+.zh-nav a:hover::after { transform: scaleX(1); }
+
+@media (max-width: 720px) {
+  .zoom-header { padding: 18px 22px; }
+  .zh-nav { gap: 18px; }
+  .zh-nav a { font-size: 12px; }
+}
+
+/* ============================================================
+   FIXED SITE CHROME
+   ============================================================ */
+
+.site-chrome {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 56px;
+  background: var(--canvas);
+  border-bottom: 1px solid transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: border-color 0.3s var(--ease);
+}
+.site-chrome.is-stuck    { border-bottom-color: var(--rule); }
+.site-chrome.is-visible  { pointer-events: auto; }
+
+.dest-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+/* Brand red, matching the zoom-header mark. var(--accent) was a
+   warmer terra-cotta and made the two headers look like different
+   marks during the chrome cross-fade. Size bumped 22px → 34px to
+   match the zoom-header mark — same prism, same scale, so the
+   chrome cross-fade doesn't visibly shift the mark size. */
+.dest-mark { width: 34px; height: 34px; color: #dc2626; }
+.dest-brand span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+
+.dest-nav { display: flex; align-items: center; gap: 32px; }
+.dest-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.78;
+  transition: opacity 0.2s var(--ease);
+}
+.dest-nav a:hover { opacity: 1; }
+.dest-cta {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--canvas) !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+/* ============================================================
+   DESTINATION PLACEHOLDER (used inside the overlay AND in the
+   real-landing section below — identical so the handoff seam is
+   invisible)
+   ============================================================ */
+
+.dest-placeholder,
+.real-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 9vw;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.real-inner {
+  position: relative;
+  inset: auto;
+  /* Match the stage's .screen-inner height (100vh). Same hero height
+     on both sides means content centres are at the same offset within
+     the hero box — required for the slide-up seam to be invisible. */
+  height: 100vh;
+  padding-top: 0;
+}
+
+.dest-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 22px;
+}
+
+.dest-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(48px, 7.5vw, 108px);
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  margin-bottom: 28px;
+  max-width: 14ch;
+}
+.dest-h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.dest-lede {
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--muted);
+  max-width: 48ch;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   REAL LANDING SECTION
+   ============================================================ */
+
+.real-landing {
+  position: relative;
+  background: var(--canvas);
+  /* Match the stage hero's homeY offset (40px). With the same vertical
+     offset on both heroes, stage's hero BOTTOM aligns with real-landing's
+     hero TOP at the seam — no 56px gap, no visible doubling during the
+     post-zoom slide-up. */
+  padding-top: 40px;
+}
+
+/* ============================================================
+   LIVE TUNING PANEL (dev-only)
+   ============================================================ */
+
+.cp {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  width: 290px;
+  background: rgba(18, 18, 18, 0.92);
+  color: #f5f5f5;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  user-select: none;
+  max-height: calc(100vh - 32px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.cp-title {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.cp-x {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #f5f5f5;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cp-x:hover { background: rgba(255,255,255,0.15); }
+
+.cp-body {
+  padding: 12px 14px 14px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+.cp.is-collapsed .cp-body { display: none; }
+
+.cp-sec {
+  margin-bottom: 14px;
+}
+.cp-sec:last-child { margin-bottom: 0; }
+
+.cp-sec h3 {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.55;
+  margin-bottom: 8px;
+}
+
+.cp-row {
+  display: grid;
+  grid-template-columns: 70px 1fr 56px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.cp-row label {
+  color: #c8c8c8;
+  font-size: 11px;
+}
+
+.cp-row input[type="range"] {
+  width: 100%;
+  accent-color: #ef4444;
+  cursor: pointer;
+  background: transparent;
+}
+
+.cp-v {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  color: #ff7b6b;
+  text-align: right;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 2px 4px;
+  width: 56px;
+  outline: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  cursor: text;
+}
+/* hide native spinner — we drive the value via the slider/keyboard */
+.cp-v::-webkit-outer-spin-button,
+.cp-v::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.cp-v:focus {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+}
+.cp-v:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cp-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.cp-btn {
+  flex: 1;
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ffb8b8;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: inherit;
+}
+.cp-btn:hover { background: rgba(239,68,68,0.32); color: #fff; }
+
+.cp-out {
+  margin-top: 10px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 6px;
+  padding: 10px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 10px;
+  line-height: 1.55;
+  color: #d8d8d8;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 160px;
+  overflow: auto;
+}
+
+/* ============================================================
+   small screens
+   ============================================================ */
+
+@media (max-width: 720px) {
+  .site-chrome { padding: 18px 22px; }
+  .dest-nav { gap: 14px; }
+  .dest-nav a:not(.dest-cta) { display: none; }
+  .dest-placeholder, .real-inner { padding: 0 6vw; }
+}

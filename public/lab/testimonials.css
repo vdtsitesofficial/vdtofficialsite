@@ -1,0 +1,344 @@
+/* ============================================================
+ * VDT Testimonials Marquee — drop-in stylesheet
+ *
+ * All rules scoped under `.vdt-testimonials` so they can't collide
+ * with the host page. Animations prefixed `vdt-testimonials-*`.
+ * Custom properties live on the root so they're overridable per
+ * instance.
+ *
+ * Required host fonts:
+ *   <link rel="preconnect" href="https://fonts.googleapis.com">
+ *   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ * ============================================================ */
+
+.vdt-testimonials {
+  --vdt-ts-bg:           #f4efe6;
+  --vdt-ts-ink:          #0d0d0d;
+  --vdt-ts-ink-2:        #2a2724;
+  --vdt-ts-muted:        #6b6660;
+  --vdt-ts-line:         rgba(13, 13, 13, 0.10);
+  --vdt-ts-red:          #dc2626;
+  --vdt-ts-red-bright:   #ef4444;
+  --vdt-ts-gold:         #f5b800;
+  --vdt-ts-card-bg:      #ffffff;
+  --vdt-ts-duration:     38s;
+  --vdt-ts-gap:          1rem;
+  --vdt-ts-section-fade: 120px; /* depth of the section-level top/bottom fades */
+
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+  padding: 5rem 1.5rem 4rem;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  color: var(--vdt-ts-ink);
+  background: var(--vdt-ts-bg);
+}
+
+/* Section-level top/bottom fades — soft cream-to-transparent overlays
+   sitting at the section's outer edges. Smooth the visual hand-off into
+   whatever section is immediately above (portfolio) or below (contact
+   card). Since the neighbouring sections are also cream, the effect is
+   "marquee cards dissolve at the section boundary" rather than a hard
+   rectangular cutoff. */
+.vdt-testimonials::before,
+.vdt-testimonials::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--vdt-ts-section-fade);
+  pointer-events: none;
+  z-index: 10;
+}
+.vdt-testimonials::before {
+  top: 0;
+  background: linear-gradient(180deg, var(--vdt-ts-bg) 0%, transparent 100%);
+}
+.vdt-testimonials::after {
+  bottom: 0;
+  background: linear-gradient(0deg, var(--vdt-ts-bg) 0%, transparent 100%);
+}
+
+/* ── Intro ── */
+.vdt-testimonials__intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1rem 0 0;
+}
+.vdt-testimonials__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--vdt-ts-muted);
+  margin-bottom: 1rem;
+  padding: .45rem .85rem;
+  border: 1px solid var(--vdt-ts-line);
+  border-radius: 999px;
+  background: var(--vdt-ts-card-bg);
+}
+.vdt-testimonials__google-g { flex-shrink: 0; }
+.vdt-testimonials__title {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  letter-spacing: -.025em;
+  line-height: 1;
+}
+.vdt-testimonials__title em {
+  font-style: normal;
+  -webkit-text-stroke: 1.5px var(--vdt-ts-ink);
+  color: transparent;
+}
+.vdt-testimonials__lede {
+  margin-top: 1rem;
+  color: var(--vdt-ts-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* ── 3D marquee stage ── */
+.vdt-testimonials__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(440px, 60vh, 680px);
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border-radius: 16px;
+}
+.vdt-testimonials__perspective {
+  position: absolute;
+  inset: 0;
+  /* Was 300px — very aggressive foreshortening that combined with
+     translateZ(-100px) made the visible grid look ~75% of its actual
+     size, leaving big cream margins on the sides. 600px gives the
+     same tilt feel with gentler depth scaling so the wider 6-column
+     grid actually fills the viewport. */
+  perspective: 600px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vdt-testimonials__rotor {
+  /* translateZ pulled in from -100 → -30 so we keep a hint of depth
+     without shrinking the grid. translateX bumped left to keep the
+     visual centroid roughly centered now that the grid is wider. */
+  transform:
+    translateX(-160px)
+    translateY(0)
+    translateZ(-30px)
+    rotateX(20deg)
+    rotateY(-10deg)
+    rotateZ(20deg);
+  transform-style: preserve-3d;
+}
+.vdt-testimonials__columns {
+  display: flex;
+  flex-direction: row;
+  gap: var(--vdt-ts-gap);
+}
+.vdt-testimonials__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vdt-ts-gap);
+  overflow: visible;
+  /* 280px → 320px so each card has more horizontal room for the
+     quote text (was wrapping after only 4-5 words per line), and
+     6 columns × 320px + 5 × gap ≈ 2000px total grid width — wider
+     than most desktop viewports, so the 3D rotation lands a card
+     full-bleed against each side instead of leaving cream gaps. */
+  width: 320px;
+  flex-shrink: 0;
+}
+.vdt-testimonials__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vdt-ts-gap);
+  flex-shrink: 0;
+  animation: vdt-testimonials-up var(--vdt-ts-duration) linear infinite;
+  will-change: transform;
+}
+.vdt-testimonials__column[data-direction="down"] .vdt-testimonials__block {
+  animation-direction: reverse;
+}
+.vdt-testimonials__column:hover .vdt-testimonials__block {
+  animation-play-state: paused;
+}
+@keyframes vdt-testimonials-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-100% - var(--vdt-ts-gap))); }
+}
+
+/* ── Testimonial card ── */
+.vdt-testimonials__card {
+  background: var(--vdt-ts-card-bg);
+  border: 1px solid var(--vdt-ts-line);
+  border-radius: 14px;
+  padding: 1.1rem 1.15rem;
+  box-shadow:
+    0 4px 14px -6px rgba(13, 13, 13, .08),
+    0 1px 0 rgba(255, 255, 255, .6) inset;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  flex-shrink: 0;
+}
+.vdt-testimonials__card-head {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+.vdt-testimonials__card-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--vdt-ts-red) 0%, var(--vdt-ts-red-bright) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 900;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.vdt-testimonials__card-avatar--photo { background: var(--vdt-ts-line); }
+.vdt-testimonials__card-avatar--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vdt-testimonials__card-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.vdt-testimonials__card-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: .85rem;
+  color: var(--vdt-ts-ink);
+  letter-spacing: -.005em;
+  line-height: 1.1;
+}
+.vdt-testimonials__card-meta {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .55rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--vdt-ts-muted);
+}
+.vdt-testimonials__card-stars {
+  color: var(--vdt-ts-gold);
+  letter-spacing: .05em;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.vdt-testimonials__card-quote {
+  font-family: "Inter", sans-serif;
+  font-size: .82rem;
+  line-height: 1.55;
+  color: var(--vdt-ts-ink-2);
+}
+.vdt-testimonials__card-source {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .55rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--vdt-ts-muted);
+  padding-top: .25rem;
+  border-top: 1px solid var(--vdt-ts-line);
+}
+.vdt-testimonials__card-source-g {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+
+/* ── Edge fades ── */
+.vdt-testimonials__fade {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+.vdt-testimonials__fade--top    { top: 0; left: 0; right: 0; height: 22%; background: linear-gradient(180deg, var(--vdt-ts-bg) 0%, transparent 100%); }
+.vdt-testimonials__fade--bottom { bottom: 0; left: 0; right: 0; height: 22%; background: linear-gradient(0deg, var(--vdt-ts-bg) 0%, transparent 100%); }
+.vdt-testimonials__fade--left   { top: 0; bottom: 0; left: 0; width: 14%; background: linear-gradient(90deg, var(--vdt-ts-bg) 0%, transparent 100%); }
+.vdt-testimonials__fade--right  { top: 0; bottom: 0; right: 0; width: 14%; background: linear-gradient(270deg, var(--vdt-ts-bg) 0%, transparent 100%); }
+
+/* ── CTA below ── */
+.vdt-testimonials__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.vdt-testimonials__cta-text {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--vdt-ts-muted);
+}
+.vdt-testimonials__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--vdt-ts-bg);
+  text-decoration: none;
+  background: var(--vdt-ts-ink);
+  border: 1.5px solid var(--vdt-ts-ink);
+  padding: .8rem 1.4rem;
+  border-radius: 999px;
+  transition: background .2s, color .2s, transform .15s;
+}
+.vdt-testimonials__cta-btn:hover {
+  background: var(--vdt-ts-red);
+  border-color: var(--vdt-ts-red);
+  transform: translateY(-2px);
+}
+.vdt-testimonials__cta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vdt-ts-red-bright);
+}
+.vdt-testimonials__cta-btn:hover .vdt-testimonials__cta-dot { background: #fff; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .vdt-testimonials { padding: 3rem 1rem 1.5rem; }
+  .vdt-testimonials__stage { height: clamp(380px, 55vh, 520px); }
+  .vdt-testimonials__column { width: 240px; }
+  .vdt-testimonials__rotor {
+    transform: translateX(-40px) translateZ(-40px) rotateX(12deg) rotateY(-6deg) rotateZ(10deg);
+  }
+}

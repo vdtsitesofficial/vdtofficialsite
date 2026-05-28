@@ -1,0 +1,1024 @@
+/* ============================================================
+ * VDT — Our Process · horizontal scroll-story (drop-in)
+ *
+ * Every rule below is scoped under `.vdt-process-shell` so
+ * absolutely nothing leaks into the surrounding laptop-zoom-v2
+ * page — including the zoom hero's sticky animation. No `:root`
+ * overrides, no global resets, no html/body styles, no new
+ * font-face/keyframe names that could shadow anything else on
+ * the page.
+ *
+ * The section uses the host page's cream canvas (#f4efe6 ==
+ * laptop-zoom-v2's --canvas) so the background visually matches
+ * the portfolio above and testimonials below. Font families fall
+ * back to fonts the host page already loads — no new font links
+ * required.
+ * ============================================================ */
+
+.vdt-process-shell {
+  /* All design tokens scoped to this wrapper — they inherit to
+     descendants via CSS-variable cascade but never escape outward. */
+  --vps-bg:         #f4efe6;
+  --vps-ink:        #0d0d0d;
+  --vps-ink-2:      #2a2724;
+  --vps-muted:      #6b6660;
+  --vps-line:       rgba(13, 13, 13, 0.10);
+  --vps-red:        #dc2626;
+  --vps-red-bright: #ef4444;
+  --vps-card-bg:    #ffffff;
+
+  /* Use only fonts the host laptop-zoom-v2 page already loads
+     (Anton / Inter / Syne / Cormorant Garamond / Unbounded@900 /
+     JetBrains Mono@700). No new font links — keeps the hero
+     untouched. */
+  --vps-font-display: "Unbounded", "Anton", "Inter", sans-serif;
+  --vps-font-body:    "Inter", ui-sans-serif, system-ui, sans-serif;
+  --vps-font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  --vps-ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+
+  display: block;
+  background: var(--vps-bg);
+  color: var(--vps-ink);
+  font-family: var(--vps-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scoped reset — only descendants of .vdt-process-shell. */
+.vdt-process-shell *,
+.vdt-process-shell *::before,
+.vdt-process-shell *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ============================================================
+ * Process section — outer scroll runway + pinned stage
+ * ============================================================ */
+.vdt-process-shell .process {
+  position: relative;
+  /* Runway is sized to match the JS END_FRAC = 0.75 cap in process-scroll.js.
+     Original 500vh ran the full 400vw track; 375vh runs 300vw (section ends
+     right at the start of Launch). Adjust both values together if you change one. */
+  height: 375vh;
+  background: var(--vps-bg);
+}
+.vdt-process-shell .process__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+.vdt-process-shell .process__track {
+  position: absolute;
+  inset: 0;
+  width: 500vw;
+  height: 100vh;
+  will-change: transform;
+}
+
+
+/* ── River ── */
+.vdt-process-shell .process__river-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+  overflow: visible;
+}
+.vdt-process-shell .process__river {
+  fill: none;
+  stroke: var(--vps-red);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 99999;
+  stroke-dashoffset: 99999;
+  transition: stroke-width .15s linear;
+}
+.vdt-process-shell .process__river--glow {
+  stroke: rgba(220, 38, 38, 0.5);
+  filter: blur(18px);
+  opacity: 0;
+  transition: opacity .6s ease, stroke-width .15s linear;
+}
+.vdt-process-shell .process.is-flowing .process__river--glow { opacity: 1; }
+
+
+/* ── Slides ── */
+.vdt-process-shell .slide {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
+.vdt-process-shell .slide--title  { left: 0; }
+.vdt-process-shell .slide--1      { left: 100vw; }
+.vdt-process-shell .slide--2      { left: 200vw; }
+.vdt-process-shell .slide--3      { left: 300vw; }
+.vdt-process-shell .slide--4      { left: 400vw; }
+
+
+/* ── Slide 0 · Title ── */
+.vdt-process-shell .slide--title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vdt-process-shell .title-card {
+  text-align: center;
+  pointer-events: none;
+  margin-bottom: 16vh;
+}
+.vdt-process-shell .title-card__eyebrow {
+  font-family: var(--vps-font-mono);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--vps-muted);
+  margin-bottom: 1.4rem;
+}
+.vdt-process-shell .title-card__heading {
+  font-family: var(--vps-font-display);
+  font-weight: 900;
+  font-size: clamp(3.6rem, 11vw, 9rem);
+  letter-spacing: -.035em;
+  line-height: .92;
+  color: var(--vps-ink);
+}
+
+.vdt-process-shell .title-guide {
+  position: absolute;
+  top: 8vh;
+  left: 6vw;
+  max-width: 22ch;
+  z-index: 3;
+}
+.vdt-process-shell .title-guide__eyebrow {
+  font-family: var(--vps-font-mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--vps-red);
+  margin-bottom: .55rem;
+}
+.vdt-process-shell .title-guide__text {
+  font-family: var(--vps-font-body);
+  font-size: .92rem;
+  line-height: 1.45;
+  color: var(--vps-ink-2);
+  margin-bottom: .85rem;
+}
+.vdt-process-shell .title-guide__arrow {
+  display: inline-block;
+  color: var(--vps-red);
+  animation: vdt-vps-arrow 2.2s ease-in-out infinite;
+}
+@keyframes vdt-vps-arrow {
+  0%, 100% { transform: translateX(0); opacity: .9; }
+  50%      { transform: translateX(8px); opacity: .55; }
+}
+
+
+/* ── Stage slides ──
+   Both .slide__text and .slide__visual are positioned absolutely
+   against the .slide (100vw × 100vh). Per-stage rules at the bottom
+   of each stage's section override top/left/width/height.
+   Source of truth: /_path-editor.html (Layout CSS output). */
+.vdt-process-shell .slide--stage {
+  display: block;
+  padding: 0;
+}
+.vdt-process-shell .slide__text {
+  position: absolute;
+  /* Default — overridden per-stage by editor output */
+  top: 5%; left: 2%; width: 40%; height: 80%;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .8s var(--vps-ease-out),
+    transform .9s var(--vps-ease-out),
+    filter .8s var(--vps-ease-out);
+  pointer-events: none;
+}
+.vdt-process-shell .slide.is-active .slide__text {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.vdt-process-shell .slide.is-active.is-passed .slide__text {
+  opacity: .35;
+  filter: saturate(.55);
+}
+
+.vdt-process-shell .stage__title-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: .95rem;
+}
+.vdt-process-shell .stage__num {
+  flex-shrink: 0;
+  width: clamp(64px, 5.4vw, 88px);
+  height: clamp(64px, 5.4vw, 88px);
+  border-radius: 50%;
+  background: var(--vps-card-bg);
+  border: 2.5px solid var(--vps-red);
+  color: var(--vps-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--vps-font-display);
+  font-weight: 900;
+  font-size: clamp(1.2rem, 1.55vw, 1.55rem);
+  letter-spacing: 0;
+  box-shadow:
+    0 10px 22px -10px rgba(220, 38, 38, .28),
+    0 2px 6px -2px rgba(13, 13, 13, .08);
+}
+.vdt-process-shell .stage__title {
+  font-family: var(--vps-font-display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 5.6vw, 4.8rem);
+  letter-spacing: -.035em;
+  line-height: .92;
+  color: var(--vps-ink);
+  margin-bottom: 0;
+}
+.vdt-process-shell .stage__subtitle {
+  font-family: var(--vps-font-display);
+  font-weight: 900;
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  color: var(--vps-red);
+  margin-bottom: 1rem;
+  max-width: 30ch;
+}
+.vdt-process-shell .stage__desc {
+  font-size: clamp(.9rem, .98vw, 1rem);
+  line-height: 1.55;
+  color: var(--vps-ink-2);
+  margin-bottom: 1.2rem;
+  max-width: 44ch;
+}
+.vdt-process-shell .stage__points {
+  list-style: none;
+  display: grid;
+  gap: .48rem;
+  padding: 0;
+  margin: 0;
+}
+.vdt-process-shell .stage__points li {
+  font-family: var(--vps-font-body);
+  font-size: clamp(.88rem, .98vw, 1rem);
+  font-weight: 500;
+  color: var(--vps-ink);
+  padding-left: 1.55rem;
+  position: relative;
+  line-height: 1.4;
+}
+.vdt-process-shell .stage__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .32em;
+  width: .92rem;
+  height: .92rem;
+  border-radius: 50%;
+  background: var(--vps-red);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+}
+
+
+/* ── Visual column ── */
+.vdt-process-shell .slide__visual {
+  position: absolute;
+  inset: 0;            /* span the full .slide so mock %s are slide-relative */
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .9s var(--vps-ease-out) .1s,
+    transform 1s var(--vps-ease-out) .1s,
+    filter .8s var(--vps-ease-out);
+}
+.vdt-process-shell .slide.is-active .slide__visual {
+  opacity: 1;
+  transform: translateY(0);
+}
+.vdt-process-shell .slide.is-active.is-passed .slide__visual {
+  opacity: .4;
+  filter: saturate(.6);
+}
+.vdt-process-shell .mock {
+  position: absolute;
+  background: var(--vps-card-bg);
+  border: 1px solid var(--vps-line);
+  border-radius: 16px;
+  box-shadow:
+    0 30px 60px -24px rgba(13, 13, 13, 0.22),
+    0 8px 20px -8px rgba(13, 13, 13, 0.08);
+  overflow: hidden;
+}
+.vdt-process-shell .mock-card__label {
+  font-family: var(--vps-font-mono);
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--vps-muted);
+}
+.vdt-process-shell .mock-card__caption {
+  font-family: var(--vps-font-body);
+  font-size: .82rem;
+  line-height: 1.35;
+  color: var(--vps-ink-2);
+  font-weight: 500;
+}
+
+
+/* ── Stage 1 · Discover ── */
+.vdt-process-shell .slide--1 .slide__visual { font-family: var(--vps-font-body); }
+.vdt-process-shell .slide--1 .slide__text {
+  top:    38.3%;
+  left:   40%;
+  width:  39.6%;
+  height: 57%;
+}
+.vdt-process-shell .mock--notepad {
+  top: 8%; left: 0%; width: 62%; height: 58%;
+  background: linear-gradient(180deg, #fffbe6 0%, #fff5cb 100%);
+  border-color: rgba(170, 140, 30, 0.25);
+  padding: 1.5rem 1.6rem;
+  display: flex; flex-direction: column; gap: .9rem;
+  transform: rotate(-2.5deg);
+}
+.vdt-process-shell .mock-notepad__header {
+  font-family: var(--vps-font-mono);
+  font-size: .68rem; font-weight: 700; letter-spacing: .28em;
+  color: rgba(13, 13, 13, 0.6);
+  padding-bottom: .65rem;
+  border-bottom: 1px solid rgba(170, 140, 30, 0.35);
+}
+.vdt-process-shell .mock-notepad__line {
+  height: 10px; border-radius: 5px;
+  background: linear-gradient(90deg, rgba(13, 13, 13, 0.55), rgba(13, 13, 13, 0.30));
+}
+.vdt-process-shell .mock-notepad__line--short { width: 60%; }
+
+.vdt-process-shell .mock--sticky {
+  width: 26%; aspect-ratio: 1 / 1;
+  padding: 1.1rem 1rem;
+  display: flex; flex-direction: column; gap: .55rem;
+  box-shadow:
+    0 20px 40px -16px rgba(13, 13, 13, 0.30),
+    0 4px 10px -4px rgba(13, 13, 13, 0.10);
+}
+.vdt-process-shell .mock--sticky-1 {
+  top: 2%; right: 30%;
+  background: #ffd9d6;
+  border-color: rgba(220, 38, 38, .22);
+  transform: rotate(4deg);
+}
+.vdt-process-shell .mock--sticky-2 {
+  top: 22%; right: 8%;
+  background: #fff2cf;
+  border-color: rgba(200, 160, 50, .25);
+  transform: rotate(-3deg);
+}
+.vdt-process-shell .mock-sticky__tag {
+  font-family: var(--vps-font-mono);
+  font-size: .56rem; font-weight: 700; letter-spacing: .22em;
+  color: rgba(13, 13, 13, 0.7);
+  margin-bottom: .25rem;
+}
+.vdt-process-shell .mock-sticky__line {
+  height: 7px; border-radius: 3.5px;
+  background: rgba(13, 13, 13, 0.30);
+}
+.vdt-process-shell .mock-sticky__line--short { width: 65%; }
+
+.vdt-process-shell .mock--persona {
+  bottom: 4%; right: 16%; width: 50%;
+  padding: 1.2rem 1.3rem;
+  display: flex; gap: .9rem; align-items: center;
+  border-radius: 18px; transform: rotate(2deg);
+}
+.vdt-process-shell .mock-persona__avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--vps-red), var(--vps-red-bright));
+  flex-shrink: 0;
+}
+.vdt-process-shell .mock-persona__body {
+  display: flex; flex-direction: column; gap: 6px; flex: 1;
+}
+.vdt-process-shell .mock-persona__name {
+  height: 11px; width: 75%; background: var(--vps-ink); border-radius: 2px;
+}
+.vdt-process-shell .mock-persona__role {
+  height: 7px; width: 55%; background: rgba(13, 13, 13, 0.35);
+  border-radius: 2px; margin-bottom: 3px;
+}
+.vdt-process-shell .mock-persona__bar {
+  height: 5px; background: rgba(13, 13, 13, 0.18); border-radius: 2px;
+}
+.vdt-process-shell .mock-persona__bar--short { width: 65%; }
+
+.vdt-process-shell .mock--arrow {
+  position: absolute;
+  background: transparent; border: 0; box-shadow: none;
+  width: 14%; height: 8%;
+  top: 6%; left: 56%;
+  color: rgba(13, 13, 13, 0.45);
+  overflow: visible;
+}
+
+/* Discovery Brief — small editorial dossier card.
+   Sits to the right of the Discover text column. */
+.vdt-process-shell .mock--brief {
+  top: 62%; left: 62%; width: 17%; height: 30%;
+  padding: .8rem .9rem .75rem;
+  display: flex;
+  flex-direction: column;
+  gap: .42rem;
+}
+.vdt-process-shell .mock-brief__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--vps-line);
+  padding-bottom: .42rem;
+}
+.vdt-process-shell .mock-brief__tag {
+  font-family: var(--vps-font-mono);
+  font-size: .46rem; font-weight: 700; letter-spacing: .22em;
+  color: var(--vps-muted);
+}
+.vdt-process-shell .mock-brief__date {
+  font-family: var(--vps-font-mono);
+  font-size: .46rem; font-weight: 700; letter-spacing: .22em;
+  color: var(--vps-red);
+}
+.vdt-process-shell .mock-brief__title-row {
+  display: flex; flex-direction: column;
+  align-items: flex-start;
+  margin: .05rem 0 .25rem;
+}
+.vdt-process-shell .mock-brief__title {
+  font-family: var(--vps-font-display);
+  font-weight: 900;
+  font-size: 1.3rem; line-height: .95;
+  letter-spacing: -.025em;
+  color: var(--vps-ink);
+  margin: 0;
+}
+.vdt-process-shell .mock-brief__underline {
+  display: block;
+  width: 64%; height: 6px;
+  margin-top: .22rem;
+  color: var(--vps-red);
+}
+.vdt-process-shell .mock-brief__section {
+  display: flex; flex-direction: column;
+  gap: .2rem;
+}
+.vdt-process-shell .mock-brief__label {
+  font-family: var(--vps-font-mono);
+  font-size: .42rem; font-weight: 700; letter-spacing: .22em;
+  color: var(--vps-muted);
+}
+.vdt-process-shell .mock-brief__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex; flex-direction: column;
+  gap: .18rem;
+}
+.vdt-process-shell .mock-brief__list li {
+  font-family: var(--vps-font-body);
+  font-size: .62rem;
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--vps-ink);
+  padding-left: .8rem;
+  position: relative;
+}
+.vdt-process-shell .mock-brief__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .3em;
+  width: .54rem; height: .54rem;
+  border-radius: 50%;
+  background: var(--vps-red);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+}
+
+
+/* ── Stage 2 · Design ── */
+.vdt-process-shell .slide--2 .slide__visual { font-family: var(--vps-font-body); }
+.vdt-process-shell .slide--2 .slide__text {
+  top:    21.8%;
+  left:   9.8%;
+  width:  39.6%;
+  height: 57%;
+}
+.vdt-process-shell .mock--browser {
+  top: 22.4%; left: 36.2%; width: 25.1%; height: 34.2%;
+  border-radius: 14px 14px 12px 12px;
+  display: flex; flex-direction: column;
+}
+.vdt-process-shell .mock-browser__chrome {
+  height: 30px;
+  background: linear-gradient(180deg, #f7f5f1, #ece7dc);
+  border-bottom: 1px solid var(--vps-line);
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+.vdt-process-shell .mock-browser__chrome > span {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: rgba(13, 13, 13, .14);
+}
+.vdt-process-shell .mock-browser__chrome > span:nth-child(1) { background: #ff5f57; }
+.vdt-process-shell .mock-browser__chrome > span:nth-child(2) { background: #febc2e; }
+.vdt-process-shell .mock-browser__chrome > span:nth-child(3) { background: #28c840; }
+.vdt-process-shell .mock-browser__address {
+  flex: 1; margin: 0 12px; height: 17px;
+  background: #fff;
+  border: 1px solid var(--vps-line);
+  border-radius: 8px;
+  font-family: var(--vps-font-mono);
+  font-size: .55rem; color: var(--vps-muted);
+  display: flex; align-items: center;
+  padding: 0 .55rem;
+}
+.vdt-process-shell .mock-browser__body {
+  flex: 1; display: flex; flex-direction: column;
+  background: #fff; padding: 1rem 1.1rem 0; gap: .85rem;
+  min-height: 0;
+}
+.vdt-process-shell .mock-browser__topbar {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.vdt-process-shell .mock-browser__brand {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: .68rem; letter-spacing: .04em;
+  color: var(--vps-ink);
+}
+.vdt-process-shell .mock-browser__nav {
+  display: flex; gap: .85rem;
+  font-family: var(--vps-font-mono);
+  font-size: .5rem; font-weight: 700; letter-spacing: .14em;
+  color: var(--vps-muted);
+}
+.vdt-process-shell .mock-browser__hero {
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: 1rem; flex: 1; min-height: 0; align-items: stretch;
+}
+.vdt-process-shell .mock-browser__copy {
+  display: flex; flex-direction: column; gap: .5rem;
+  justify-content: center; padding-right: .25rem;
+}
+.vdt-process-shell .mock-browser__h1 {
+  font-family: var(--vps-font-display);
+  font-weight: 900;
+  font-size: clamp(.88rem, 1.4vw, 1.3rem);
+  line-height: 1.05; letter-spacing: -.018em;
+  color: var(--vps-ink); margin-bottom: .15rem;
+}
+.vdt-process-shell .mock-browser__sub {
+  height: 6px; border-radius: 3px;
+  background: rgba(13, 13, 13, 0.18);
+}
+.vdt-process-shell .mock-browser__sub--short { width: 55%; }
+.vdt-process-shell .mock-browser__cta {
+  margin-top: .55rem; align-self: flex-start;
+  background: var(--vps-red); color: #fff;
+  font-family: var(--vps-font-mono);
+  font-size: .55rem; font-weight: 700; letter-spacing: .18em;
+  padding: .55rem .85rem; border-radius: 999px;
+}
+.vdt-process-shell .mock-browser__art {
+  position: relative;
+  background: linear-gradient(180deg, #e8e1cf 0%, #d8cdb4 100%);
+  border-radius: 8px; overflow: hidden;
+}
+.vdt-process-shell .mock-browser__art-lamp {
+  position: absolute;
+  top: 12%; right: 18%; width: 14%; height: 38%;
+  background:
+    radial-gradient(ellipse at 50% 90%, rgba(255, 220, 140, .55) 0%, transparent 70%),
+    #1a1a1a;
+  border-radius: 0 0 50% 50% / 0 0 20% 20%;
+}
+.vdt-process-shell .mock-browser__art-plant {
+  position: absolute;
+  bottom: 22%; left: 18%; width: 30%; height: 32%;
+  background: radial-gradient(ellipse at 50% 60%, #2d5d3a 0%, #1f4128 70%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 20% 20%;
+}
+.vdt-process-shell .mock-browser__art-floor {
+  position: absolute;
+  left: 0; right: 0; bottom: 0; height: 22%;
+  background: linear-gradient(180deg, rgba(160, 130, 90, .65), rgba(140, 110, 70, .85));
+}
+.vdt-process-shell .mock-browser__strip {
+  flex-shrink: 0;
+  background: var(--vps-ink);
+  margin: 0 -1.1rem;
+  padding: .6rem 1.1rem;
+  display: flex; justify-content: space-between; gap: .5rem;
+  color: #fff;
+  font-family: var(--vps-font-mono);
+  font-size: .55rem; font-weight: 700; letter-spacing: .14em;
+}
+.vdt-process-shell .mock-browser__strip span { display: inline-flex; align-items: center; gap: .35rem; }
+.vdt-process-shell .mock-browser__strip i {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--vps-red); display: inline-block;
+}
+
+.vdt-process-shell .mock--phone {
+  top: 121.6%; left: 19.8%; width: 5.7%; height: 12.1%;
+  background: linear-gradient(180deg, #2a2a2a, #0d0d0d);
+  border: 4px solid #1a1a1a;
+  border-radius: 22px;
+  padding: 6%;
+  box-shadow:
+    0 30px 50px -20px rgba(13, 13, 13, 0.45),
+    inset 0 0 0 2px #2a2a2a;
+}
+.vdt-process-shell .mock-phone__screen {
+  height: 100%;
+  background: #fff; border-radius: 14px;
+  padding: .7rem .6rem .55rem;
+  display: flex; flex-direction: column; gap: .4rem;
+}
+.vdt-process-shell .mock-phone__brand {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: .42rem; letter-spacing: .05em;
+  color: var(--vps-ink);
+}
+.vdt-process-shell .mock-phone__h1 {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: .55rem; line-height: 1.1;
+  color: var(--vps-ink); margin-top: .15rem;
+}
+.vdt-process-shell .mock-phone__sub {
+  height: 4px; border-radius: 2px;
+  background: rgba(13, 13, 13, 0.16);
+}
+.vdt-process-shell .mock-phone__sub--short { width: 55%; }
+.vdt-process-shell .mock-phone__cta {
+  background: var(--vps-red); color: #fff;
+  font-family: var(--vps-font-mono);
+  font-size: .38rem; font-weight: 700; letter-spacing: .18em;
+  padding: .35rem .55rem; border-radius: 999px;
+  align-self: flex-start; margin-top: .15rem;
+}
+.vdt-process-shell .mock-phone__art {
+  flex: 1;
+  background: linear-gradient(180deg, #e8e1cf, #d4c6a6);
+  border-radius: 6px; margin-top: .25rem;
+}
+
+.vdt-process-shell .mock--palette {
+  top: 51.2%; left: 31.3%; width: 13.6%; height: 12.5%;
+  padding: 1.2rem 1.3rem 1.1rem;
+  display: flex; flex-direction: column; gap: .8rem;
+}
+.vdt-process-shell .mock-palette__row { display: flex; gap: .55rem; }
+.vdt-process-shell .mock-palette__row > span {
+  flex: 1; aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, .08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15);
+}
+
+.vdt-process-shell .mock--type {
+  top: 49.4%; left: 45.4%; width: 10.1%; height: 16%;
+  padding: 1.2rem 1.3rem 1.1rem;
+  display: flex; flex-direction: column; gap: .55rem;
+}
+.vdt-process-shell .mock-type__sample {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: 2.4rem; line-height: 1;
+  color: var(--vps-ink); letter-spacing: -.03em;
+  margin: .2rem 0 .1rem;
+}
+.vdt-process-shell .mock-type__name {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: .85rem;
+  color: var(--vps-ink);
+}
+
+
+/* ── Stage 3 · Build ── */
+.vdt-process-shell .slide--3 .slide__visual { font-family: var(--vps-font-body); }
+.vdt-process-shell .slide--3 .slide__text {
+  top:    39.7%;
+  left:   -8.2%;
+  width:  39.6%;
+  height: 57%;
+}
+.vdt-process-shell .mock--code {
+  top: 60%; left: 15.6%; width: 23%; height: 29.6%;
+  background: #1a1a1a; color: #ededed;
+  border-color: #2a2a2a; padding: 0;
+}
+.vdt-process-shell .mock-code__bar {
+  height: 30px;
+  background: #232323;
+  border-bottom: 1px solid #0a0a0a;
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 12px;
+}
+.vdt-process-shell .mock-code__bar > span {
+  width: 11px; height: 11px; border-radius: 50%;
+}
+.vdt-process-shell .mock-code__bar > span:nth-child(1) { background: #ff5f57; }
+.vdt-process-shell .mock-code__bar > span:nth-child(2) { background: #febc2e; }
+.vdt-process-shell .mock-code__bar > span:nth-child(3) { background: #28c840; }
+.vdt-process-shell .mock-code__bar em {
+  margin-left: 10px; font-style: normal;
+  font-family: var(--vps-font-mono);
+  font-size: .62rem; color: #888;
+}
+.vdt-process-shell .mock-code__body {
+  padding: 1rem 1.2rem;
+  font-family: var(--vps-font-mono);
+  font-size: .82rem; line-height: 1.55;
+}
+.vdt-process-shell .mock-code__body pre { white-space: pre; color: #ededed; }
+.vdt-process-shell .mock-code__body .cm { color: #ff9e3b; }
+.vdt-process-shell .mock-code__body .ct { color: #75b7e7; }
+.vdt-process-shell .mock-code__body .ca { color: #b59cf6; }
+.vdt-process-shell .mock-code__body .cs { color: #9bd16e; }
+.vdt-process-shell .mock-code__body .cv { color: #ededed; }
+
+/* Pre-flight QA checklist — replaces the old generic browser mock.
+   Lists the quality checks VDT runs before any site goes live, ending in
+   a red "READY TO SHIP" pill. Position carried over from the previous
+   .mock--build-browser values you'd dragged in the editor. */
+.vdt-process-shell .mock--qa {
+  top: 70.7%; left: 6.7%; width: 15.1%; height: 26.2%;
+  padding: .85rem 1rem .85rem;
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.vdt-process-shell .mock-qa__list {
+  list-style: none;
+  margin: .05rem 0 0;
+  padding: 0;
+  flex: 1;
+  display: flex; flex-direction: column;
+  gap: .32rem;
+}
+.vdt-process-shell .mock-qa__list li {
+  font-family: var(--vps-font-body);
+  font-size: .78rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--vps-ink);
+  padding-left: 1.05rem;
+  position: relative;
+}
+.vdt-process-shell .mock-qa__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .3em;
+  width: .7rem; height: .7rem;
+  border-radius: 50%;
+  background: var(--vps-red);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+}
+.vdt-process-shell .mock-qa__ship {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .9rem;
+  background: var(--vps-red);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--vps-font-mono);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  align-self: flex-start;
+  box-shadow: 0 8px 18px -8px rgba(220, 38, 38, .55);
+}
+.vdt-process-shell .mock-qa__ship-dot {
+  width: 7px; height: 7px;
+  background: #fff;
+  border-radius: 50%;
+  animation: vdt-vps-live-pulse 1.6s ease-in-out infinite;
+}
+
+.vdt-process-shell .mock--build-phone {
+  top: 114.6%; left: -87.8%; width: 6.5%; height: 13.6%;
+  background: linear-gradient(180deg, #2a2a2a, #0d0d0d);
+  border: 4px solid #1a1a1a;
+  border-radius: 24px; padding: 6%;
+  transform: rotate(-3deg);
+}
+.vdt-process-shell .mock-build-phone__screen {
+  height: 100%; background: #fff;
+  border-radius: 14px;
+  padding: .8rem .7rem;
+  display: flex; flex-direction: column; gap: .55rem;
+}
+.vdt-process-shell .mock-build-phone__hero {
+  height: 30%;
+  background: radial-gradient(ellipse at 50% 50%, var(--vps-red), var(--vps-red-bright));
+  border-radius: 6px;
+}
+.vdt-process-shell .mock-build-phone__row {
+  height: 5px; border-radius: 3px;
+  background: rgba(13, 13, 13, .14);
+}
+.vdt-process-shell .mock-build-phone__row--short { width: 60%; }
+
+.vdt-process-shell .mock--speed {
+  top: 79.9%; left: 20.8%; width: 13.6%; height: 13.7%;
+  padding: 1.3rem 1.4rem 1.2rem;
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.vdt-process-shell .mock-speed__big {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: 3.2rem; line-height: 1;
+  color: var(--vps-ink); letter-spacing: -.04em;
+}
+.vdt-process-shell .mock-speed__big small {
+  font-size: 1rem; font-weight: 700;
+  color: var(--vps-muted); letter-spacing: 0;
+}
+
+
+/* ── Stage 4 · Launch ── */
+.vdt-process-shell .slide--4 .slide__visual { font-family: var(--vps-font-body); }
+.vdt-process-shell .slide--4 .slide__text {
+  top:    20.2%;
+  left:   -49.5%;
+  width:  39.6%;
+  height: 57%;
+}
+.vdt-process-shell .mock--live {
+  top: 42.5%; left: -34.1%; width: 17.2%; height: 5.1%;
+  padding: .8rem 1.15rem;
+  display: inline-flex; align-items: center; gap: .65rem;
+  border-radius: 999px;
+  font-family: var(--vps-font-mono);
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  color: var(--vps-ink);
+}
+.vdt-process-shell .mock-live__dot {
+  width: 8px; height: 8px;
+  background: #22c55e; border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.22);
+  animation: vdt-vps-live-pulse 1.6s ease-in-out infinite;
+}
+@keyframes vdt-vps-live-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.22); }
+  50%      { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.08); }
+}
+.vdt-process-shell .mock-live__label { letter-spacing: .14em; }
+.vdt-process-shell .mock-live__ms {
+  color: var(--vps-muted);
+  padding-left: .45rem;
+  border-left: 1px solid var(--vps-line);
+}
+
+.vdt-process-shell .mock--analytics {
+  top: 47.9%; left: -35.8%; width: 20.8%; height: 36.5%;
+  padding: 1.4rem 1.5rem 1.2rem;
+  display: flex; flex-direction: column; gap: .7rem;
+}
+.vdt-process-shell .mock-analytics__big {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: 2.6rem; line-height: 1;
+  letter-spacing: -.035em;
+  color: var(--vps-ink); margin-top: -.15rem;
+}
+.vdt-process-shell .mock-analytics__chart {
+  flex: 1;
+  display: flex; align-items: flex-end; gap: 8px;
+  padding-bottom: .3rem;
+  border-bottom: 1px solid var(--vps-line);
+}
+.vdt-process-shell .mock-analytics__bar {
+  flex: 1; height: var(--h);
+  background: linear-gradient(180deg, var(--vps-red-bright), var(--vps-red));
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 -2px 10px rgba(220, 38, 38, .2);
+}
+.vdt-process-shell .mock-analytics__legend {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem; padding-top: .25rem;
+}
+.vdt-process-shell .mock-analytics__legend > span {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.vdt-process-shell .mock-analytics__legend b {
+  font-family: var(--vps-font-display);
+  font-weight: 900; font-size: 1.05rem;
+  color: var(--vps-ink);
+}
+.vdt-process-shell .mock-analytics__legend i {
+  font-style: normal;
+  font-family: var(--vps-font-mono);
+  font-size: .54rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--vps-muted);
+}
+
+.vdt-process-shell .mock--launch-devices {
+  top: 108.9%; left: -128%; width: 11.5%; height: 36.5%;
+  background: transparent;
+  border: 0; box-shadow: none; overflow: visible;
+}
+.vdt-process-shell .mock-launch__laptop {
+  position: absolute;
+  top: 22%; left: 0; right: 14%;
+  border-radius: 10px;
+}
+.vdt-process-shell .mock-launch__laptop-screen {
+  width: 100%; aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(220, 38, 38, .6) 0%, transparent 60%),
+    linear-gradient(180deg, #1a1a1a, #0a0a0a);
+  border-radius: 8px 8px 2px 2px;
+  border: 2px solid #2a2a2a;
+  border-bottom: 0;
+  box-shadow:
+    inset 0 0 0 4px #000,
+    0 18px 30px -14px rgba(13, 13, 13, .35);
+}
+.vdt-process-shell .mock-launch__laptop-base {
+  height: 7px;
+  background: linear-gradient(180deg, #4a4a4a, #1a1a1a);
+  border-radius: 0 0 10px 10px;
+  width: 112%; margin-left: -6%;
+}
+.vdt-process-shell .mock-launch__phone {
+  position: absolute;
+  right: 0; bottom: 6%; width: 32%;
+  aspect-ratio: 9 / 19;
+  background: linear-gradient(180deg, #2a2a2a, #0a0a0a);
+  border: 3px solid #1a1a1a;
+  border-radius: 18px;
+  box-shadow: 0 22px 35px -12px rgba(13, 13, 13, .4);
+}
+.vdt-process-shell .mock-launch__phone-notch {
+  position: absolute;
+  top: 6px; left: 50%; transform: translateX(-50%);
+  width: 30%; height: 4px; background: #000;
+  border-radius: 0 0 6px 6px; z-index: 2;
+}
+.vdt-process-shell .mock-launch__phone-screen {
+  position: absolute; inset: 4px;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(220, 38, 38, .55) 0%, transparent 60%),
+    #0a0a0a;
+  border-radius: 14px;
+}
+
+
+/* ── Pips ── */
+.vdt-process-shell .process__pips {
+  position: absolute;
+  bottom: 4.5vh; left: 6vw;
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 12px; z-index: 6;
+  pointer-events: none;
+}
+.vdt-process-shell .process__pip {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(13, 13, 13, 0.16);
+  transition: background .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+.vdt-process-shell .process__pip.is-active {
+  background: var(--vps-red);
+  transform: scale(1.4);
+  box-shadow: 0 0 0 5px rgba(220, 38, 38, 0.18);
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .vdt-process-shell .stage__title { font-size: clamp(2.6rem, 6vw, 4.6rem); }
+  .vdt-process-shell .slide--stage { grid-template-columns: 1fr; gap: 2rem; padding: 0 5vw; }
+  .vdt-process-shell .slide__visual { min-height: 38vh; }
+}
