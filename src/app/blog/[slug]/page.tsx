@@ -134,7 +134,14 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main className="max-w-2xl mx-auto px-6 pt-12 sm:pt-16 pb-10">
+      <main
+        className="max-w-2xl mx-auto px-6 pt-12 sm:pt-16 pb-10"
+        style={{
+          maxWidth: "720px",
+          margin: "0 auto",
+          padding: "56px 24px 80px",
+        }}
+      >
         {/* Breadcrumb */}
         <nav
           aria-label="Breadcrumb"

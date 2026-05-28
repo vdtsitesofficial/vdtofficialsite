@@ -6,8 +6,11 @@ import { getAllPosts, SITE_URL } from "@/lib/blog";
 const INK = "#1a1a1a";
 const MUTED = "#6f6a60";
 const ACCENT = "#b85a3e";
+const RULE = "rgba(26,26,26,0.10)";
+const CARD_BG = "#fbf7ee"; // a tick warmer than the page canvas for separation
 const SERIF = "'Cormorant Garamond', 'Iowan Old Style', Georgia, serif";
 const BODY = "'Inter', system-ui, sans-serif";
+const MONO = "'JetBrains Mono', ui-monospace, monospace";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -31,78 +34,257 @@ function formatDate(iso: string): string {
   });
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * Blog index page.
+ *
+ * Layout (top → bottom):
+ *   1. Centered hero with eyebrow, big serif title, kicker subtitle
+ *   2. Hairline divider
+ *   3. Featured-post card (first/newest post): full container width,
+ *      generous padding, large title
+ *   4. Recent posts grid (remaining posts): 2-col on desktop, 1-col
+ *      on mobile; smaller cards with the same shape
+ *
+ * Everything uses inline styles to avoid specificity wars with the
+ * lab's style.css (loaded by blog/layout.tsx for design tokens).
+ * ────────────────────────────────────────────────────────────────── */
 export default function BlogIndexPage() {
   const posts = getAllPosts();
+  const [featured, ...rest] = posts;
 
   return (
-    <main className="max-w-3xl mx-auto px-6 pt-16 sm:pt-24 pb-8">
-      <header className="mb-14">
+    <main
+      style={{
+        maxWidth: "1080px",
+        margin: "0 auto",
+        padding: "64px 32px 96px",
+        fontFamily: BODY,
+        color: INK,
+      }}
+    >
+      {/* ── Hero ─────────────────────────────────────── */}
+      <section
+        style={{
+          textAlign: "center",
+          paddingBottom: "56px",
+          marginBottom: "56px",
+          borderBottom: `1px solid ${RULE}`,
+        }}
+      >
         <p
-          className="text-[11px] tracking-[0.32em] uppercase mb-4"
-          style={{ color: ACCENT, fontFamily: BODY }}
+          style={{
+            fontFamily: MONO,
+            fontSize: "11px",
+            letterSpacing: "0.32em",
+            textTransform: "uppercase",
+            color: ACCENT,
+            marginBottom: "20px",
+          }}
         >
           The VDT Sites Blog
         </p>
         <h1
-          className="text-4xl sm:text-5xl leading-[1.05] tracking-tight mb-4"
-          style={{ fontFamily: SERIF, fontWeight: 500, color: INK }}
+          style={{
+            fontFamily: SERIF,
+            fontWeight: 500,
+            fontSize: "clamp(2.6rem, 5vw, 4.2rem)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.01em",
+            color: INK,
+            marginBottom: "20px",
+          }}
         >
           Straight answers about websites.
         </h1>
         <p
-          className="text-[17px] leading-[1.7] max-w-xl"
-          style={{ color: MUTED, fontFamily: BODY }}
+          style={{
+            fontFamily: BODY,
+            fontSize: "17px",
+            lineHeight: 1.65,
+            color: MUTED,
+            maxWidth: "560px",
+            margin: "0 auto",
+          }}
         >
           No jargon, no fluff. Practical advice on web design, pricing, and SEO
           for small business owners.
         </p>
-      </header>
+      </section>
 
-      <ul className="space-y-3">
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <Link
-              href={`/blog/${post.slug}`}
-              className="group block rounded-2xl p-6 sm:p-8 transition-colors"
-              style={{ border: "1px solid rgba(21,17,11,0.12)" }}
-            >
-              <div
-                className="flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase mb-3"
-                style={{ color: MUTED, fontFamily: BODY }}
-              >
-                <span style={{ color: ACCENT }}>{post.category}</span>
-                <span aria-hidden>·</span>
-                <time dateTime={post.publishedAt}>
-                  {formatDate(post.publishedAt)}
-                </time>
-                <span aria-hidden>·</span>
-                <span>{post.readingMinutes} min read</span>
-              </div>
-              <h2
-                className="text-2xl sm:text-3xl leading-tight tracking-tight mb-3"
-                style={{ fontFamily: SERIF, fontWeight: 500, color: INK }}
-              >
-                {post.title}
-              </h2>
-              <p
-                className="text-[16px] leading-[1.65] mb-4"
-                style={{ color: MUTED, fontFamily: BODY }}
-              >
-                {post.excerpt}
-              </p>
-              <span
-                className="inline-flex items-center gap-2 text-[13px] tracking-wide"
-                style={{ color: ACCENT, fontFamily: BODY }}
-              >
-                Read article
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {/* ── Featured post ────────────────────────────── */}
+      {featured && <FeaturedCard post={featured} />}
+
+      {/* ── Recent posts grid ────────────────────────── */}
+      {rest.length > 0 && (
+        <>
+          <h2
+            style={{
+              fontFamily: MONO,
+              fontSize: "11px",
+              letterSpacing: "0.32em",
+              textTransform: "uppercase",
+              color: MUTED,
+              marginTop: "72px",
+              marginBottom: "24px",
+            }}
+          >
+            More articles
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
+              gap: "20px",
+            }}
+          >
+            {rest.map((post) => (
+              <CompactCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </>
+      )}
     </main>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────
+ * Featured card — biggest visual weight, used for the newest post.
+ * ───────────────────────────────────────────────────────────────────── */
+type PostLike = ReturnType<typeof getAllPosts>[number];
+
+function FeaturedCard({ post }: { post: PostLike }) {
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      style={{
+        display: "block",
+        textDecoration: "none",
+        background: CARD_BG,
+        border: `1px solid ${RULE}`,
+        borderRadius: "20px",
+        padding: "56px 56px 48px",
+        transition: "transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 0.61, 0.36, 1)",
+      }}
+      className="vdt-blog-card vdt-blog-card--featured"
+    >
+      <MetaRow post={post} />
+      <h2
+        style={{
+          fontFamily: SERIF,
+          fontWeight: 500,
+          fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.015em",
+          color: INK,
+          marginBottom: "18px",
+          marginTop: "18px",
+        }}
+      >
+        {post.title}
+      </h2>
+      <p
+        style={{
+          fontFamily: BODY,
+          fontSize: "17px",
+          lineHeight: 1.7,
+          color: MUTED,
+          maxWidth: "70ch",
+          marginBottom: "28px",
+        }}
+      >
+        {post.excerpt}
+      </p>
+      <span
+        style={{
+          fontFamily: BODY,
+          fontSize: "14px",
+          fontWeight: 500,
+          letterSpacing: "0.02em",
+          color: ACCENT,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        Read article
+        <span className="vdt-blog-arrow" style={{ display: "inline-block" }}>
+          →
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────
+ * Compact card — used for older posts in the "More articles" grid.
+ * ───────────────────────────────────────────────────────────────────── */
+function CompactCard({ post }: { post: PostLike }) {
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      style={{
+        display: "block",
+        textDecoration: "none",
+        background: "transparent",
+        border: `1px solid ${RULE}`,
+        borderRadius: "16px",
+        padding: "28px 28px 24px",
+        transition: "background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1)",
+      }}
+      className="vdt-blog-card"
+    >
+      <MetaRow post={post} compact />
+      <h3
+        style={{
+          fontFamily: SERIF,
+          fontWeight: 500,
+          fontSize: "1.4rem",
+          lineHeight: 1.2,
+          letterSpacing: "-0.01em",
+          color: INK,
+          marginTop: "14px",
+          marginBottom: "12px",
+        }}
+      >
+        {post.title}
+      </h3>
+      <p
+        style={{
+          fontFamily: BODY,
+          fontSize: "14px",
+          lineHeight: 1.55,
+          color: MUTED,
+        }}
+      >
+        {post.excerpt}
+      </p>
+    </Link>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────
+ * Category · Date · Read time strip.
+ * ───────────────────────────────────────────────────────────────────── */
+function MetaRow({ post, compact }: { post: PostLike; compact?: boolean }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        fontFamily: MONO,
+        fontSize: compact ? "10px" : "11px",
+        letterSpacing: "0.22em",
+        textTransform: "uppercase",
+        color: MUTED,
+      }}
+    >
+      <span style={{ color: ACCENT }}>{post.category}</span>
+      <span aria-hidden>·</span>
+      <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+      <span aria-hidden>·</span>
+      <span>{post.readingMinutes} min read</span>
+    </div>
   );
 }

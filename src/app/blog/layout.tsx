@@ -30,6 +30,27 @@ export default function BlogLayout({
       />
       <link rel="stylesheet" href="/lab/style.css" />
 
+      {/* Blog-only hover styles (inline styles in the page can't do :hover). */}
+      <style>{`
+        .vdt-blog-card {
+          will-change: transform, background;
+        }
+        .vdt-blog-card:hover {
+          background: #fbf7ee;
+          transform: translateY(-2px);
+        }
+        .vdt-blog-card--featured:hover {
+          box-shadow: 0 22px 50px -28px rgba(26, 26, 26, 0.22);
+        }
+        .vdt-blog-card:hover .vdt-blog-arrow {
+          transform: translateX(4px);
+          transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .vdt-blog-arrow {
+          transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+      `}</style>
+
       <div
         className="min-h-screen flex flex-col"
         style={{
