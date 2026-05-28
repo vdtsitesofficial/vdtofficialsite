@@ -76,6 +76,38 @@ const DEFAULTS = {
 
 const T = { ...DEFAULTS };       // live tuning values (mutated by sliders)
 
+// =============================================================
+// Mobile geometry overrides
+//
+// The DEFAULTS are calibrated for desktop landscape. On portrait
+// phones the laptop ends up too small and sitting too high in the
+// scene. Apply per-viewport overrides at init and on resize so the
+// laptop visually dominates the home screen.
+//
+// Tuning (per user direction):
+//   - laptopY: +30 pp (61.8 → 91.8) — moves the laptop down 30%
+//   - laptopW: ×1.4   (81.3 → ~113.8) — scales it up 40%
+//   - laptopX: forced to 50 — perfectly centered horizontally
+//
+// Re-runs on resize so a landscape rotation flips back to desktop
+// numbers. Tick loop reads T fresh every frame so the change takes
+// effect on the next paint.
+// =============================================================
+function applyViewportTuning() {
+  const isMobile = window.innerWidth <= 720;
+  if (isMobile) {
+    T.laptopY = DEFAULTS.laptopY + 30;
+    T.laptopW = DEFAULTS.laptopW * 1.4;
+    T.laptopX = 50;
+  } else {
+    T.laptopY = DEFAULTS.laptopY;
+    T.laptopW = DEFAULTS.laptopW;
+    T.laptopX = DEFAULTS.laptopX;
+  }
+}
+applyViewportTuning();
+window.addEventListener("resize", applyViewportTuning, { passive: true });
+
 // FIXED reference point for the LAPTOP's anchor + transform-origin.
 // These are where the dark screen actually SITS on the laptop PNG
 // — measured directly from the asset. Used by:
