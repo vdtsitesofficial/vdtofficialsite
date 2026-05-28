@@ -41,8 +41,10 @@
     // vdtsites.ca mail, we point the FROM at the apex directly.
     "CONTACT_FROM_EMAIL": "VDT Test <noreply@vdtsites.ca>",
     // Displayed to the user as the contact destination; actual delivery
-    // happens via the SEND_EMAIL binding above.
-    "CONTACT_TO_EMAIL": "info@vdtsites.ca",
+    // happens via the SEND_EMAIL binding above. NOTE: this address must
+    // be a verified destination in Cloudflare Email Routing for the
+    // account, or send_email returns a delivery error.
+    "CONTACT_TO_EMAIL": "vdtsites@gmail.com",
     // Allowlist of admin emails that may sign in to /admin. Comma-separated.
     // Replace with the real admin addresses (both must be verified Email
     // Routing destinations so their sign-in PIN can be delivered).
