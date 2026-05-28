@@ -10,11 +10,12 @@ import {
   type BlogPost,
 } from "@/lib/blog";
 
-const INK = "#15110B";
-const MUTED = "#5C554C";
-const ACCENT = "#B45309";
-const SERIF = "'Fraunces', 'Iowan Old Style', Georgia, serif";
-const BODY = "'Hanken Grotesk', system-ui, sans-serif";
+// Aligned with the homepage's lab tokens (see public/lab/style.css :root).
+const INK = "#1a1a1a";
+const MUTED = "#6f6a60";
+const ACCENT = "#b85a3e";
+const SERIF = "'Cormorant Garamond', 'Iowan Old Style', Georgia, serif";
+const BODY = "'Inter', system-ui, sans-serif";
 
 type RouteParams = { slug: string };
 

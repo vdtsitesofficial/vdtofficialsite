@@ -1,12 +1,12 @@
 import { Block, headingId } from "@/lib/blog";
 
-/* Editorial palette — fixed (the blog isn't subject to the carousel
-   theme system; a blog needs to stay legible and consistent). */
-const INK = "#15110B";
-const MUTED = "#5C554C";
-const ACCENT = "#B45309";
-const SERIF = "'Fraunces', 'Iowan Old Style', Georgia, serif";
-const BODY = "'Hanken Grotesk', system-ui, sans-serif";
+/* Editorial palette — aligned with the homepage lab tokens
+   (see public/lab/style.css :root) so blog reads as the same brand. */
+const INK = "#1a1a1a";
+const MUTED = "#6f6a60";
+const ACCENT = "#b85a3e";
+const SERIF = "'Cormorant Garamond', 'Iowan Old Style', Georgia, serif";
+const BODY = "'Inter', system-ui, sans-serif";
 
 /**
  * Renders a blog post's content blocks as clean, semantic HTML.
