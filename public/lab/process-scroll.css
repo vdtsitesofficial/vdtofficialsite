@@ -1022,3 +1022,132 @@
   .vdt-process-shell .slide--stage { grid-template-columns: 1fr; gap: 2rem; padding: 0 5vw; }
   .vdt-process-shell .slide__visual { min-height: 38vh; }
 }
+
+/* ============================================================
+   MOBILE — vertical stack mode (≤720px)
+
+   On phones, the horizontal scroll-story is replaced by a normal
+   vertical scroll. process-scroll.js bails out of its update()
+   loop at this breakpoint so it stops setting transform on the
+   track. CSS here flattens everything: the .process outer height
+   becomes auto (no sticky runway), the track is a flex column,
+   each .slide is a full-width vertical block, and the river SVG
+   + pips are hidden because they only make sense on a horizontal
+   track. The per-stage .slide__text / .mock--* % positions are
+   forcibly reset so each stage's content stacks naturally.
+   ============================================================ */
+@media (max-width: 720px) {
+  .vdt-process-shell .process {
+    height: auto;
+  }
+  .vdt-process-shell .process__pin {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+  .vdt-process-shell .process__track {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    transform: none !important;
+  }
+  .vdt-process-shell .slide {
+    position: relative;
+    left: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto;
+    min-height: auto;
+    padding: 4.5rem 1.25rem 4rem;
+  }
+  .vdt-process-shell .slide--title {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vdt-process-shell .slide--stage {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    padding: 4rem 1.25rem 5rem !important;
+    border-top: 1px solid var(--vps-line);
+  }
+
+  /* Hide the river + the bottom-left pip indicator — they belong to the
+     horizontal-scroll story and don't translate to a vertical layout. */
+  .vdt-process-shell .process__river-svg,
+  .vdt-process-shell .process__pips { display: none !important; }
+
+  /* Force .slide__text + .slide__visual back to normal flow, overriding
+     any per-stage .slide--N .slide__text { top, left, width, height } rules
+     that were dialed in via the path editor for desktop. */
+  .vdt-process-shell .slide__text,
+  .vdt-process-shell .slide--1 .slide__text,
+  .vdt-process-shell .slide--2 .slide__text,
+  .vdt-process-shell .slide--3 .slide__text,
+  .vdt-process-shell .slide--4 .slide__text {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+  }
+  .vdt-process-shell .slide__visual {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Each mock resets to normal flow + sane sizing. The original
+     drag-coords from the editor were absolute % values inside the
+     visual column — meaningless when the column is just a vertical
+     stack. */
+  .vdt-process-shell .mock {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 360px;
+    height: auto !important;
+    min-height: 180px;
+    aspect-ratio: auto !important;
+    transform: none !important;
+    margin: 1rem auto !important;
+  }
+
+  /* Stage title row keeps red number badge inline with the heading. */
+  .vdt-process-shell .stage__title-row { margin-bottom: 0.6rem; }
+  .vdt-process-shell .stage__title { font-size: clamp(2rem, 9vw, 3rem); }
+  .vdt-process-shell .stage__subtitle { font-size: 0.95rem; max-width: none; }
+  .vdt-process-shell .stage__desc { max-width: none; font-size: 0.92rem; }
+  .vdt-process-shell .stage__points li { font-size: 0.9rem; }
+
+  /* Title card — center it nicely in the title slide. */
+  .vdt-process-shell .title-card { text-align: center; padding: 0 1rem; }
+  .vdt-process-shell .title-card__heading {
+    font-size: clamp(2.4rem, 12vw, 4rem) !important;
+  }
+
+  /* Discovery brief — let it sit naturally below the Discover text. */
+  .vdt-process-shell .mock--brief {
+    max-width: 300px;
+  }
+}

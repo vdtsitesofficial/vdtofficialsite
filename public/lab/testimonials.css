@@ -335,10 +335,51 @@
 
 /* ── Responsive ── */
 @media (max-width: 720px) {
-  .vdt-testimonials { padding: 3rem 1rem 1.5rem; }
-  .vdt-testimonials__stage { height: clamp(380px, 55vh, 520px); }
-  .vdt-testimonials__column { width: 240px; }
-  .vdt-testimonials__rotor {
-    transform: translateX(-40px) translateZ(-40px) rotateX(12deg) rotateY(-6deg) rotateZ(10deg);
+  /* On mobile the 3D rotor + multi-column wall feels cramped (only
+     2 partial columns fit on a 390px viewport, and the 3D tilt cuts
+     off edges). We collapse the whole thing to a clean vertical list
+     of full-width cards: kill perspective, kill rotor transform,
+     stack columns top-to-bottom, freeze the upward marquee animation
+     so the user can read at their own pace. */
+  .vdt-testimonials { padding: 4rem 1rem 2rem; }
+  .vdt-testimonials__stage {
+    height: auto !important;
+    overflow: visible !important;
+    border-radius: 0;
+    margin-top: 2rem;
   }
+  .vdt-testimonials__perspective {
+    position: relative !important;
+    inset: auto;
+    perspective: none !important;
+    display: block;
+  }
+  .vdt-testimonials__rotor {
+    transform: none !important;
+    transform-style: flat;
+    position: relative;
+  }
+  .vdt-testimonials__columns {
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+    align-items: stretch;
+  }
+  .vdt-testimonials__column {
+    width: 100% !important;
+    max-width: none;
+  }
+  .vdt-testimonials__block {
+    animation: none !important;
+    transform: none !important;
+  }
+  /* Make cards more luxurious on mobile — bigger padding, larger quote. */
+  .vdt-testimonials__card {
+    padding: 26px 22px;
+  }
+  .vdt-testimonials__card-quote {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  /* CTA strip below stage — give it room. */
+  .vdt-testimonials__cta { margin-top: 2.5rem; }
 }

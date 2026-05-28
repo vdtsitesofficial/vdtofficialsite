@@ -47,7 +47,20 @@
   // wheel-tick before the track starts translating.
   const DWELL = 0.02;
 
+  // On narrow viewports the section reflows to a vertical stack (see
+  // the @media (max-width: 720px) block in process-scroll.css) and the
+  // horizontal-scroll mechanism doesn't apply. Bail out of every frame
+  // so we don't fight the CSS by writing transform: translate3d(...) on
+  // a track that's been flattened. Also resets any leftover transform
+  // from a desktop view that the user resized to mobile.
+  const MOBILE_BP = 720;
+
   function update() {
+    if (window.innerWidth <= MOBILE_BP) {
+      if (track.style.transform) track.style.transform = '';
+      rivers.forEach((p) => { p.style.strokeDashoffset = '0'; });
+      return;
+    }
     const rect = section.getBoundingClientRect();
     const vh   = window.innerHeight;
     const total = section.offsetHeight - vh;
