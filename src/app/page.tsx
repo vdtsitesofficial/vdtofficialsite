@@ -55,6 +55,69 @@ const LAB_MODULES = `
 
   const yearEl = document.querySelector('[data-vdt-fl-year]');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  // Signal to the anchor-link interceptor below that every lab module
+  // has finished its first applyLayout()/render(). Header nav clicks
+  // that fire before this flag will queue and wait for it.
+  window.__vdtLabReady = true;
+  window.dispatchEvent(new Event('vdt-lab-ready'));
+`;
+
+// Anchor-link interceptor. Catches clicks on [href^="#"] and waits for
+// window.__vdtLabReady (set at the end of LAB_MODULES above) before
+// scrolling. Without this, clicking Portfolio in the header during the
+// first ~300ms after page load lands on a carousel whose JS hasn't
+// applied its 3D-transform CSS variables yet — the cards appear stacked
+// instead of unfolded.
+const ANCHOR_DEFER = `
+  (function () {
+    const MAX_WAIT_MS = 2000;
+    const POLL_MS = 50;
+
+    function smoothScrollTo(hash) {
+      const id = hash.replace(/^#/, '');
+      if (!id) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.location.hash = hash;
+    }
+
+    function awaitReady(then) {
+      if (window.__vdtLabReady) { then(); return; }
+      let waited = 0;
+      const iv = setInterval(() => {
+        waited += POLL_MS;
+        if (window.__vdtLabReady || waited >= MAX_WAIT_MS) {
+          clearInterval(iv);
+          then();
+        }
+      }, POLL_MS);
+    }
+
+    document.addEventListener('click', (e) => {
+      // Only handle plain left-clicks on anchor links pointing at this
+      // page's sections. Let cmd/ctrl-click, middle-click, etc. through
+      // (so "open in new tab" still works).
+      if (e.defaultPrevented) return;
+      if (e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      // Same-page anchors: '#xxx' or '/#xxx' (this page is /)
+      let hash = '';
+      if (href.startsWith('#')) hash = href;
+      else if (href === '/' || href === '') hash = '';
+      else if (href.startsWith('/#')) hash = href.slice(1);
+      else return; // external/other-route, let browser handle it
+
+      e.preventDefault();
+      awaitReady(() => smoothScrollTo(hash));
+    });
+  })();
 `;
 
 export default function Home() {
@@ -979,6 +1042,13 @@ export default function Home() {
       <Script src="/lab/process-scroll.js" strategy="afterInteractive" />
       <Script id="lab-modules" type="module" strategy="afterInteractive">
         {LAB_MODULES}
+      </Script>
+
+      {/* Defer anchor-link scrolls until lab JS has finished initial
+          layout. Prevents Portfolio/Contact clicks landing on a
+          pre-init carousel or pre-render Three.js logo. */}
+      <Script id="anchor-defer" strategy="afterInteractive">
+        {ANCHOR_DEFER}
       </Script>
     </>
   );
