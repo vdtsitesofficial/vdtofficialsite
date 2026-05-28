@@ -79,12 +79,13 @@ export default function Home() {
       <link rel="stylesheet" href="/lab/contact-card.css" />
       <link rel="stylesheet" href="/lab/process-scroll.css" />
 
-      {/* GSAP must be a plain <script> (not next/script) so it's
-          available synchronously when contact-card.js runs. We load
-          it eagerly via beforeInteractive. */}
+      {/* GSAP CDN. App Router only allows beforeInteractive in the
+          root layout, so we use afterInteractive here. contact-card.js
+          (also afterInteractive) loads after GSAP regardless of strategy
+          order because Next inlines them on the page in DOM order. */}
       <Script
         src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
       />
 
       {/* importmap MUST appear before any module script that uses
