@@ -556,7 +556,12 @@ export default function BlogLayout({
           className="site-chrome is-visible is-stuck"
           style={{ opacity: 1, pointerEvents: "auto" }}
         >
-          <Link className="dest-brand" href="/">
+          {/* Plain <a> on cross-route links so navigation back to the
+              homepage triggers a full reload — required because next/script
+              dedupes by src and the lab modules (initVdtHero, etc.) won't
+              re-execute on soft navigation, and the importmap can only be
+              parsed before any module loads. */}
+          <a className="dest-brand" href="/">
             <svg
               className="dest-mark"
               viewBox="0 0 100 100"
@@ -576,14 +581,14 @@ export default function BlogLayout({
               />
             </svg>
             <span>VDT&nbsp;SITES</span>
-          </Link>
+          </a>
           <nav className="dest-nav">
-            <Link href="/">Home</Link>
+            <a href="/">Home</a>
             <Link href="/blog">Blog</Link>
-            <Link href="/#portfolio">Portfolio</Link>
-            <Link href="/#contact" className="dest-cta">
+            <a href="/#portfolio">Portfolio</a>
+            <a href="/#contact" className="dest-cta">
               Contact&nbsp;Us
-            </Link>
+            </a>
           </nav>
         </header>
 
@@ -605,15 +610,15 @@ export default function BlogLayout({
               }}
             >
               <span>&copy; {new Date().getFullYear()} VDT Sites</span>
-              <Link href="/" className="hover:underline">
+              <a href="/" className="hover:underline">
                 Home
-              </Link>
+              </a>
               <Link href="/blog" className="hover:underline">
                 Blog
               </Link>
-              <Link href="/#contact" className="hover:underline">
+              <a href="/#contact" className="hover:underline">
                 Contact
-              </Link>
+              </a>
             </div>
             <a
               href="https://vdtsites.com"

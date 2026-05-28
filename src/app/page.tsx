@@ -117,6 +117,19 @@ const ANCHOR_DEFER = `
       e.preventDefault();
       awaitReady(() => smoothScrollTo(hash));
     });
+
+    // Initial-load hash handling: when the homepage is hit with a hash
+    // already in the URL (e.g., user followed /#portfolio from /blog),
+    // the browser instantly jumps to the anchor before lab JS has had
+    // a chance to render the destination. We reset scroll to top right
+    // away, then smooth-scroll to the hash once __vdtLabReady is set.
+    if (window.location.hash) {
+      const initialHash = window.location.hash;
+      window.scrollTo(0, 0);
+      // Suppress any further default browser scroll-restoration to the hash.
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      awaitReady(() => smoothScrollTo(initialHash));
+    }
   })();
 `;
 

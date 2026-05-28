@@ -172,7 +172,11 @@ export default async function BlogPostPage({
         {/* ── HEADER ─────────────────────────────────────────────── */}
         <header className="vdt-article__header">
           <nav aria-label="Breadcrumb" className="vdt-article__crumbs">
-            <Link href="/">Home</Link>
+            {/* Plain <a> for cross-route navigation back to the homepage —
+                forces a full reload so the lab JS (Three.js logo, portfolio
+                carousel, fluid footer, testimonials) all re-initialize and
+                the importmap is parsed by the browser on fresh page load. */}
+            <a href="/">Home</a>
             <span className="sep" aria-hidden>
               /
             </span>
@@ -242,12 +246,12 @@ export default async function BlogPostPage({
             <h2 className="vdt-coda__cta-title">
               Thinking about a website? Tell us about it.
             </h2>
-            <Link href="/#contact" className="vdt-coda__cta-btn">
+            <a href="/#contact" className="vdt-coda__cta-btn">
               <span>Get a free quote</span>
               <span className="arrow" aria-hidden>
                 →
               </span>
-            </Link>
+            </a>
           </aside>
 
           <div>
