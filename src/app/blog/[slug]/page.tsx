@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BlogArticle from "@/components/BlogArticle";
+import BlogReadingChrome from "@/components/BlogReadingChrome";
 import {
   getAllPosts,
   getPostBySlug,
@@ -9,13 +10,6 @@ import {
   SITE_URL,
   type BlogPost,
 } from "@/lib/blog";
-
-// Aligned with the homepage's lab tokens (see public/lab/style.css :root).
-const INK = "#1a1a1a";
-const MUTED = "#6f6a60";
-const ACCENT = "#b85a3e";
-const SERIF = "'Cormorant Garamond', 'Iowan Old Style', Georgia, serif";
-const BODY = "'Inter', system-ui, sans-serif";
 
 type RouteParams = { slug: string };
 
@@ -67,6 +61,14 @@ function formatDate(iso: string): string {
   });
 }
 
+function shortDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
 function wordCount(post: BlogPost): number {
   return post.content.reduce((sum, block) => {
     if (block.kind === "ul") {
@@ -76,6 +78,33 @@ function wordCount(post: BlogPost): number {
   }, 0);
 }
 
+function monogram(name: string): string {
+  return name
+    .split(/\s+/)
+    .map((p) => p[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
+/* ────────────────────────────────────────────────────────────────────
+ * The post page.
+ *
+ * Layout (top → bottom):
+ *   • Hairline reading-progress bar (fixed, top of viewport)
+ *   • Breadcrumb strip
+ *   • Article header
+ *       - mono kicker (CATEGORY ─────)
+ *       - asymmetric serif title
+ *       - italic lede (description)
+ *       - byline with monogram avatar + meta
+ *   • Two-column body (lg+): marginalia TOC | prose
+ *   • Coda
+ *       - signature strip (italic — VDT Sites, Nanaimo BC | DATE · WORD COUNT)
+ *       - CTA card
+ *       - back-to-index link
+ * ──────────────────────────────────────────────────────────────────── */
 export default async function BlogPostPage({
   params,
 }: {
@@ -89,6 +118,7 @@ export default async function BlogPostPage({
   const sections = post.content.filter(
     (b): b is Extract<typeof b, { kind: "h2" }> => b.kind === "h2",
   );
+  const words = wordCount(post);
 
   /* BlogPosting structured data — earns the rich article treatment in
      search and feeds Google's understanding of authorship + dates. */
@@ -99,7 +129,7 @@ export default async function BlogPostPage({
     description: post.description,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
-    wordCount: wordCount(post),
+    wordCount: words,
     articleSection: post.category,
     keywords: post.keywords.join(", "),
     inLanguage: "en-CA",
@@ -112,7 +142,6 @@ export default async function BlogPostPage({
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
   };
 
-  /* Breadcrumb structured data — Home > Blog > Article. */
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -134,129 +163,101 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main
-        className="max-w-2xl mx-auto px-6 pt-12 sm:pt-16 pb-10"
-        style={{
-          maxWidth: "720px",
-          margin: "0 auto",
-          padding: "56px 24px 80px",
-        }}
-      >
-        {/* Breadcrumb */}
-        <nav
-          aria-label="Breadcrumb"
-          className="text-[11px] tracking-[0.18em] uppercase mb-10 flex items-center gap-2 flex-wrap"
-          style={{ color: MUTED, fontFamily: BODY }}
-        >
-          <Link href="/" className="hover:underline">Home</Link>
-          <span aria-hidden>/</span>
-          <Link href="/blog" className="hover:underline">Blog</Link>
-          <span aria-hidden>/</span>
-          <span style={{ color: INK }}>{post.category}</span>
-        </nav>
+      {/* Hairline reading progress at the very top of the viewport.
+          Width is driven by BlogReadingChrome (client). */}
+      <div className="vdt-article__progress" aria-hidden="true" />
+      <BlogReadingChrome />
 
-        {/* Header */}
-        <article>
-          <header className="mb-10">
-            <p
-              className="text-[11px] tracking-[0.28em] uppercase mb-5"
-              style={{ color: ACCENT, fontFamily: BODY }}
-            >
-              {post.category}
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl leading-[1.08] tracking-tight mb-6"
-              style={{ fontFamily: SERIF, fontWeight: 500, color: INK }}
-            >
-              {post.title}
-            </h1>
-            <div
-              className="flex items-center gap-3 text-[13px] flex-wrap"
-              style={{ color: MUTED, fontFamily: BODY }}
-            >
-              <span>By {post.author}</span>
-              <span aria-hidden>·</span>
-              <time dateTime={post.publishedAt}>
-                {formatDate(post.publishedAt)}
-              </time>
-              <span aria-hidden>·</span>
-              <span>{post.readingMinutes} min read</span>
-            </div>
-          </header>
-
-          {/* Table of contents */}
-          <nav
-            aria-label="On this page"
-            className="rounded-xl p-5 mb-4"
-            style={{
-              background: "#FAF8F4",
-              border: "1px solid rgba(21,17,11,0.10)",
-            }}
-          >
-            <p
-              className="text-[10px] tracking-[0.28em] uppercase mb-3"
-              style={{ color: MUTED, fontFamily: BODY }}
-            >
-              On this page
-            </p>
-            <ul className="space-y-1.5">
-              {sections.map((s) => (
-                <li key={s.text}>
-                  <a
-                    href={`#${headingId(s.text)}`}
-                    className="text-[14px] leading-snug hover:underline"
-                    style={{ color: ACCENT, fontFamily: BODY }}
-                  >
-                    {s.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
+      <article className="vdt-article">
+        {/* ── HEADER ─────────────────────────────────────────────── */}
+        <header className="vdt-article__header">
+          <nav aria-label="Breadcrumb" className="vdt-article__crumbs">
+            <Link href="/">Home</Link>
+            <span className="sep" aria-hidden>
+              /
+            </span>
+            <Link href="/blog">Blog</Link>
+            <span className="sep" aria-hidden>
+              /
+            </span>
+            <span className="here">{post.category}</span>
           </nav>
 
-          {/* Body */}
-          <BlogArticle content={post.content} />
+          <p className="vdt-article__kicker">{post.category}</p>
 
-          {/* End CTA */}
-          <aside
-            className="mt-16 rounded-2xl p-8 text-center"
-            style={{ background: "#15110B", color: "#FAF5EC" }}
-          >
-            <p
-              className="text-2xl sm:text-3xl leading-tight tracking-tight mb-3"
-              style={{ fontFamily: SERIF, fontWeight: 500 }}
-            >
-              Thinking about a website?
-            </p>
-            <p
-              className="text-[15px] leading-relaxed mb-6 max-w-md mx-auto"
-              style={{ color: "rgba(250,245,236,0.72)", fontFamily: BODY }}
-            >
-              VDT Sites builds fast, modern, SEO-ready websites for small
-              businesses. Tell us about your project and we&apos;ll reply
-              within 24 hours.
-            </p>
-            <Link
-              href="/#contact"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-[11px] tracking-[0.24em] uppercase transition-transform hover:-translate-y-0.5"
-              style={{ background: ACCENT, color: "#FFFFFF", fontFamily: BODY }}
-            >
-              Get a free quote →
+          <h1 className="vdt-article__title">{post.title}</h1>
+
+          <p className="vdt-article__lede">{post.description}</p>
+
+          <div className="vdt-article__byline">
+            <span className="vdt-article__avatar" aria-hidden="true">
+              {monogram(post.author)}
+            </span>
+            <div className="vdt-article__byline-text">
+              <span>
+                By <strong>{post.author}</strong>
+              </span>
+              <span className="vdt-article__byline-meta">
+                <time dateTime={post.publishedAt}>
+                  {formatDate(post.publishedAt)}
+                </time>
+                {"  ·  "}
+                {post.readingMinutes} min read
+                {"  ·  "}
+                {words.toLocaleString()} words
+              </span>
+            </div>
+          </div>
+        </header>
+
+        {/* ── MARGINALIA TOC ─────────────────────────────────────── */}
+        <aside className="vdt-article__aside">
+          <nav aria-label="On this page" className="vdt-toc">
+            <div className="vdt-toc__label">In this piece</div>
+            <ol className="vdt-toc__list">
+              {sections.map((s) => (
+                <li key={s.text} className="vdt-toc__item">
+                  <a href={`#${headingId(s.text)}`}>{s.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+
+        {/* ── PROSE BODY ─────────────────────────────────────────── */}
+        <div className="vdt-article__body">
+          <BlogArticle content={post.content} />
+        </div>
+
+        {/* ── CODA ───────────────────────────────────────────────── */}
+        <div className="vdt-article__coda">
+          <div className="vdt-coda__sig">
+            <span>— VDT Sites, Nanaimo BC</span>
+            <span className="stamp">
+              {shortDate(post.publishedAt)} · {words.toLocaleString()} words
+            </span>
+          </div>
+
+          <aside className="vdt-coda__cta">
+            <h2 className="vdt-coda__cta-title">
+              Thinking about a website? Tell us about it.
+            </h2>
+            <Link href="/#contact" className="vdt-coda__cta-btn">
+              <span>Get a free quote</span>
+              <span className="arrow" aria-hidden>
+                →
+              </span>
             </Link>
           </aside>
 
-          {/* Back link */}
-          <div className="mt-10">
-            <Link
-              href="/blog"
-              className="text-[13px] tracking-wide hover:underline"
-              style={{ color: ACCENT, fontFamily: BODY }}
-            >
-              ← All articles
+          <div>
+            <Link href="/blog" className="vdt-coda__back">
+              <span aria-hidden>←</span>
+              <span>All articles</span>
             </Link>
           </div>
-        </article>
-      </main>
+        </div>
+      </article>
     </>
   );
 }

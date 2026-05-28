@@ -1,75 +1,73 @@
 import { Block, headingId } from "@/lib/blog";
 
-/* Editorial palette — aligned with the homepage lab tokens
-   (see public/lab/style.css :root) so blog reads as the same brand. */
-const INK = "#1a1a1a";
-const MUTED = "#6f6a60";
-const ACCENT = "#b85a3e";
-const SERIF = "'Cormorant Garamond', 'Iowan Old Style', Georgia, serif";
-const BODY = "'Inter', system-ui, sans-serif";
+/* ────────────────────────────────────────────────────────────────────
+ * BlogArticle — editorial long-form renderer.
+ *
+ * Emits semantic HTML with minimal inline noise. The visual layer
+ * (drop cap, em-dash bullets, sectional ornaments, italic h3) lives
+ * in blog/layout.tsx's <style> block under the .vdt-prose namespace.
+ *
+ * h2 elements get data-num="I" / "II" / "III" — the CSS pulls that
+ * into a small mono kicker above each section title.
+ *
+ * Section breaks: every h2 except the first is preceded by a
+ * <div class="vdt-ornament">…❦…</div> fleuron so the eye gets a
+ * pause between sections.
+ * ──────────────────────────────────────────────────────────────────── */
 
-/**
- * Renders a blog post's content blocks as clean, semantic HTML.
- * Headings carry slugified ids so the table of contents can deep-link
- * and search engines can surface passage anchors.
- */
+const ROMAN = [
+  "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+  "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+];
+
+function roman(n: number): string {
+  return ROMAN[n - 1] ?? String(n);
+}
+
 export default function BlogArticle({ content }: { content: Block[] }) {
+  let h2Index = 0;
+
   return (
-    <div>
+    <div className="vdt-prose">
       {content.map((block, i) => {
         if (block.kind === "h2") {
+          h2Index += 1;
+          const num = roman(h2Index);
+          // Section break before every h2 except the first.
+          const showOrnament = h2Index > 1;
           return (
-            <h2
-              key={i}
-              id={headingId(block.text)}
-              className="scroll-mt-24 text-3xl sm:text-4xl leading-[1.1] tracking-tight mt-16 mb-5"
-              style={{ fontFamily: SERIF, fontWeight: 500, color: INK }}
-            >
-              {block.text}
-            </h2>
+            <div key={i}>
+              {showOrnament && (
+                <div className="vdt-ornament" aria-hidden="true">
+                  <span className="vdt-ornament__mark">&#10086;</span>
+                </div>
+              )}
+              <h2 id={headingId(block.text)} data-num={num}>
+                {block.text}
+              </h2>
+            </div>
           );
         }
+
         if (block.kind === "h3") {
           return (
-            <h3
-              key={i}
-              id={headingId(block.text)}
-              className="scroll-mt-24 text-xl sm:text-2xl leading-snug tracking-tight mt-10 mb-3"
-              style={{ fontFamily: SERIF, fontWeight: 500, color: INK }}
-            >
+            <h3 key={i} id={headingId(block.text)}>
               {block.text}
             </h3>
           );
         }
+
         if (block.kind === "ul") {
           return (
-            <ul key={i} className="my-5 space-y-2.5 pl-1">
+            <ul key={i}>
               {block.items.map((item, j) => (
-                <li
-                  key={j}
-                  className="flex gap-3 text-[17px] leading-[1.6]"
-                  style={{ fontFamily: BODY, color: MUTED }}
-                >
-                  <span
-                    aria-hidden
-                    className="mt-2.5 size-1.5 rounded-full shrink-0"
-                    style={{ background: ACCENT }}
-                  />
-                  <span>{item}</span>
-                </li>
+                <li key={j}>{item}</li>
               ))}
             </ul>
           );
         }
-        return (
-          <p
-            key={i}
-            className="my-5 text-[17px] leading-[1.75]"
-            style={{ fontFamily: BODY, color: MUTED }}
-          >
-            {block.text}
-          </p>
-        );
+
+        return <p key={i}>{block.text}</p>;
       })}
     </div>
   );
