@@ -61,6 +61,12 @@
   .vdt-contact-card .cards-row { grid-template-columns: 1fr; }
 }
 
+/* Phone: shrink card padding so inputs have breathing room. */
+@media (max-width: 480px) {
+  .vdt-contact-card .cc-card { padding: 36px 22px; }
+  .vdt-contact-card { padding: 4rem 1rem 3rem; }
+}
+
 /* Ambient red bloom — removed per user request. The cards still
    carry their own per-corner red blush via .cc-color-splash, but
    nothing tints the background of the section itself. */

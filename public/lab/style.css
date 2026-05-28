@@ -104,7 +104,10 @@ body { overflow-x: hidden; }
      for the zoom translate/scale; styling that property statically
      would be clobbered. To stretch the letters horizontally beyond
      this, edit main.js's transform string to add scaleX().) */
-  font-size: clamp(96px, 19vw, 340px);
+  /* Mobile-safe clamp: min reduced 96→52px so "BUILT FOR YOU" fits
+     a ~390px-wide phone without overflowing horizontally
+     (white-space is nowrap below). */
+  font-size: clamp(52px, 19vw, 340px);
   line-height: 0.88;
   letter-spacing: 0.01em;
   color: #ffffff;
@@ -381,9 +384,16 @@ body { overflow-x: hidden; }
 .zh-nav a:hover::after { transform: scaleX(1); }
 
 @media (max-width: 720px) {
-  .zoom-header { padding: 18px 22px; }
-  .zh-nav { gap: 18px; }
-  .zh-nav a { font-size: 12px; }
+  .zoom-header { padding: 14px 16px; }
+  .zh-mark { width: 28px; height: 28px; }
+  .zh-brand span { font-size: 12px; letter-spacing: 0.04em; }
+  .zh-nav { gap: 12px; }
+  .zh-nav a { font-size: 11px; letter-spacing: 0.04em; }
+}
+@media (max-width: 380px) {
+  .zh-brand span { display: none; }
+  .zh-nav { gap: 9px; }
+  .zh-nav a { font-size: 10px; }
 }
 
 /* ============================================================
@@ -692,10 +702,35 @@ body { overflow-x: hidden; }
    ============================================================ */
 
 @media (max-width: 720px) {
-  .site-chrome { padding: 18px 22px; }
-  .dest-nav { gap: 14px; }
-  .dest-nav a:not(.dest-cta) { display: none; }
+  /* Tighten the chrome itself. */
+  .site-chrome { padding: 14px 16px; }
+
+  /* Brand mark shrinks slightly so it doesn't dominate. */
+  .dest-mark  { width: 28px; height: 28px; }
+  .dest-brand span { font-size: 12px; letter-spacing: 0.04em; }
+
+  /* Show ALL nav links on mobile (previous rule hid non-CTA, which
+     left users with no way to reach Home/Blog/Portfolio). Smaller
+     font + tighter gap keeps the row fitting on a 390px viewport. */
+  .dest-nav { gap: 10px; }
+  .dest-nav a {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .dest-cta {
+    padding: 8px 12px;
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+  }
+
   .dest-placeholder, .real-inner { padding: 0 6vw; }
+}
+
+/* Very narrow phones (≤380px) — collapse non-CTA labels further. */
+@media (max-width: 380px) {
+  .dest-brand span { display: none; }
+  .dest-nav { gap: 8px; }
+  .dest-nav a { font-size: 10px; }
 }
 
 /* ============================================================
