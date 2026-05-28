@@ -697,3 +697,15 @@ body { overflow-x: hidden; }
   .dest-nav a:not(.dest-cta) { display: none; }
   .dest-placeholder, .real-inner { padding: 0 6vw; }
 }
+
+/* ============================================================
+   Anchor scroll behavior
+   - Smooth-scroll the page when anchor links are clicked
+   - scroll-margin-top offsets the fixed .site-chrome header so
+     #portfolio / #contact land below it instead of behind it.
+   ============================================================ */
+html { scroll-behavior: smooth; }
+#portfolio,
+#contact {
+  scroll-margin-top: 100px;
+}

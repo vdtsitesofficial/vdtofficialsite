@@ -116,8 +116,8 @@ export default function Home() {
         <nav className="zh-nav">
           <a href="/">Home</a>
           <a href="/blog">Blog</a>
-          <a href="/portfolio">Portfolio</a>
-          <a href="/contact">Contact&nbsp;Us</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact&nbsp;Us</a>
         </nav>
       </header>
 
@@ -141,8 +141,8 @@ export default function Home() {
         <nav className="dest-nav">
           <a href="/">Home</a>
           <a href="/blog">Blog</a>
-          <a href="/portfolio">Portfolio</a>
-          <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact" className="dest-cta">Contact&nbsp;Us</a>
         </nav>
       </header>
 
@@ -260,7 +260,7 @@ export default function Home() {
 
       {/* Section 2: REAL LANDING (portfolio) */}
       <section className="real-landing">
-        <section className="vdt-portfolio" data-vdt-portfolio>
+        <section id="portfolio" className="vdt-portfolio" data-vdt-portfolio>
           <div className="vdt-portfolio__intro">
             <p className="vdt-portfolio__eyebrow">Selected Portfolio</p>
             <h2 className="vdt-portfolio__title">
@@ -822,7 +822,7 @@ export default function Home() {
       </section>
 
       {/* VDT Contact Card */}
-      <section className="vdt-contact-card">
+      <section id="contact" className="vdt-contact-card">
         <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
           <defs>
             <linearGradient id="cc-accent-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -938,7 +938,7 @@ export default function Home() {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="#work">Work</a>
+              <a href="#portfolio">Work</a>
             </li>
             <li>
               <a href="/blog">Blog</a>
