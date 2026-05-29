@@ -211,7 +211,7 @@ export default function Home() {
         id="mobile-tuner"
         style={{
           position: "fixed",
-          bottom: 16,
+          top: 12,
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 1000,
