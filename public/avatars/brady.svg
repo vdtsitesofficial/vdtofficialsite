@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Brady Kozubal — Google review">
-  <!-- Sienna / burnt orange. -->
+  <!-- Forest green — deep, professional, sits beautifully on cream. -->
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#c2410c"/>
-      <stop offset="100%" stop-color="#7c2d12"/>
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="100%" stop-color="#14532d"/>
     </linearGradient>
   </defs>
   <circle cx="40" cy="40" r="40" fill="url(#bg)"/>
