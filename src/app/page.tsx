@@ -202,6 +202,119 @@ export default function Home() {
         </nav>
       </header>
 
+      {/* Mobile laptop tuner — appears only when ?tune is in the URL
+          (e.g. vdtsites.com/?tune). Lets you live-drag the laptop's Y
+          (vertical), W (size), and X (horizontal) on a phone, see the
+          numbers, then Copy them as JSON to paste back. Hidden in the
+          DOM by default — the anchor-defer script below shows it. */}
+      <div
+        id="mobile-tuner"
+        style={{
+          position: "fixed",
+          bottom: 16,
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 1000,
+          width: "min(360px, calc(100vw - 24px))",
+          padding: "14px 16px 12px",
+          background: "rgba(13,13,13,0.92)",
+          color: "#f4efe6",
+          borderRadius: 14,
+          fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+          fontSize: 12,
+          letterSpacing: "0.02em",
+          boxShadow: "0 18px 40px -12px rgba(0,0,0,0.5)",
+          backdropFilter: "blur(12px)",
+          display: "none",
+        }}
+        aria-hidden="true"
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 10,
+            paddingBottom: 8,
+            borderBottom: "1px solid rgba(244,239,230,0.15)",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 10,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              opacity: 0.7,
+            }}
+          >
+            Laptop tuner
+          </span>
+          <button
+            id="mt-copy"
+            type="button"
+            style={{
+              padding: "5px 10px",
+              fontFamily: "inherit",
+              fontSize: 10,
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              background: "#dc2626",
+              color: "#fff",
+              border: "none",
+              borderRadius: 999,
+              cursor: "pointer",
+            }}
+          >
+            Copy
+          </button>
+        </div>
+        {/* Y slider */}
+        <label style={{ display: "block", marginBottom: 8 }}>
+          <span style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+            <span>Y · vertical</span>
+            <span id="mt-y-val" style={{ opacity: 0.8 }}>—</span>
+          </span>
+          <input
+            id="mt-y"
+            type="range"
+            min="0"
+            max="140"
+            step="0.5"
+            style={{ width: "100%", accentColor: "#dc2626" }}
+          />
+        </label>
+        {/* W slider */}
+        <label style={{ display: "block", marginBottom: 8 }}>
+          <span style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+            <span>W · size</span>
+            <span id="mt-w-val" style={{ opacity: 0.8 }}>—</span>
+          </span>
+          <input
+            id="mt-w"
+            type="range"
+            min="40"
+            max="180"
+            step="0.5"
+            style={{ width: "100%", accentColor: "#dc2626" }}
+          />
+        </label>
+        {/* X slider */}
+        <label style={{ display: "block" }}>
+          <span style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+            <span>X · horizontal</span>
+            <span id="mt-x-val" style={{ opacity: 0.8 }}>—</span>
+          </span>
+          <input
+            id="mt-x"
+            type="range"
+            min="0"
+            max="100"
+            step="0.5"
+            style={{ width: "100%", accentColor: "#dc2626" }}
+          />
+        </label>
+      </div>
+
       {/* Fixed post-zoom site chrome */}
       <header id="site-chrome" className="site-chrome">
         <a className="dest-brand" href="/">
@@ -1094,6 +1207,78 @@ export default function Home() {
           pre-init carousel or pre-render Three.js logo. */}
       <Script id="anchor-defer" strategy="afterInteractive">
         {ANCHOR_DEFER}
+      </Script>
+
+      {/* Mobile laptop tuner activator. Only runs if the URL has
+          ?tune (any value). Wires the 3 sliders to T.laptopY /
+          T.laptopW / T.laptopX, displays live values, and provides
+          a Copy button that writes a JSON snippet to the clipboard
+          so the user can paste the dialed-in numbers back into
+          main.js's applyViewportTuning. */}
+      <Script id="mobile-tuner-activator" strategy="afterInteractive">
+        {`
+        (function () {
+          const usp = new URLSearchParams(window.location.search);
+          if (!usp.has('tune')) return;
+          const panel = document.getElementById('mobile-tuner');
+          if (!panel) return;
+          panel.style.display = 'block';
+          panel.setAttribute('aria-hidden', 'false');
+
+          function wait(then) {
+            if (window.__vdtT) { then(); return; }
+            const iv = setInterval(() => {
+              if (window.__vdtT) { clearInterval(iv); then(); }
+            }, 50);
+          }
+
+          wait(function () {
+            const T = window.__vdtT;
+            const ySlider = document.getElementById('mt-y');
+            const wSlider = document.getElementById('mt-w');
+            const xSlider = document.getElementById('mt-x');
+            const yVal = document.getElementById('mt-y-val');
+            const wVal = document.getElementById('mt-w-val');
+            const xVal = document.getElementById('mt-x-val');
+
+            ySlider.value = T.laptopY;
+            wSlider.value = T.laptopW;
+            xSlider.value = T.laptopX;
+            yVal.textContent = (+T.laptopY).toFixed(1);
+            wVal.textContent = (+T.laptopW).toFixed(1);
+            xVal.textContent = (+T.laptopX).toFixed(1);
+
+            ySlider.addEventListener('input', () => {
+              T.laptopY = parseFloat(ySlider.value);
+              yVal.textContent = T.laptopY.toFixed(1);
+            });
+            wSlider.addEventListener('input', () => {
+              T.laptopW = parseFloat(wSlider.value);
+              wVal.textContent = T.laptopW.toFixed(1);
+            });
+            xSlider.addEventListener('input', () => {
+              T.laptopX = parseFloat(xSlider.value);
+              xVal.textContent = T.laptopX.toFixed(1);
+            });
+
+            document.getElementById('mt-copy').addEventListener('click', () => {
+              const snippet = 'T.laptopY = ' + T.laptopY.toFixed(1) +
+                              '; T.laptopW = ' + T.laptopW.toFixed(1) +
+                              '; T.laptopX = ' + T.laptopX.toFixed(1) + ';';
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(snippet).then(() => {
+                  const btn = document.getElementById('mt-copy');
+                  const old = btn.textContent;
+                  btn.textContent = 'Copied';
+                  setTimeout(() => { btn.textContent = old; }, 1200);
+                });
+              } else {
+                alert(snippet);
+              }
+            });
+          });
+        })();
+        `}
       </Script>
     </>
   );

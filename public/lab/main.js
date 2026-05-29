@@ -108,6 +108,15 @@ function applyViewportTuning() {
 applyViewportTuning();
 window.addEventListener("resize", applyViewportTuning, { passive: true });
 
+// Expose T globally so the mobile tuner panel (in page.tsx) can mutate
+// the live values directly from <input> change events. The tick loop
+// reads T fresh every frame so writes here take effect on the next
+// paint. Only used when ?tune is set in the URL — there's no leak in
+// normal production usage.
+if (typeof window !== "undefined") {
+  window.__vdtT = T;
+}
+
 // FIXED reference point for the LAPTOP's anchor + transform-origin.
 // These are where the dark screen actually SITS on the laptop PNG
 // — measured directly from the asset. Used by:
