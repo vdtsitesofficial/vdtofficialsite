@@ -103,9 +103,9 @@ function applyViewportTuning() {
   const isMobile = window.innerWidth <= 720;
   if (isMobile) {
     // Mobile values dialed in via the live tuner.
-    T.laptopY = 55.5;
+    T.laptopY = 74.5;
     T.laptopW = 180.0;
-    T.laptopX = 50.0;
+    T.laptopX = 50.5;
     // Text drops 10pp lower than the desktop default so "BUILT FOR YOU"
     // clears the laptop's top edge on a phone.
     T.textY   = DEFAULTS.textY + 10;
