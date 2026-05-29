@@ -744,3 +744,168 @@ html { scroll-behavior: smooth; }
 #contact {
   scroll-margin-top: 100px;
 }
+
+
+/* ============================================================
+   COMPREHENSIVE MOBILE POLISH (≤720px)
+
+   Preserves the desktop experience (laptop zoom, horizontal-scroll
+   process story, 3D-rotor testimonials, 3D-tilted portfolio
+   carousel) and just tunes each section's typography, spacing,
+   and tap targets so they all read cleanly on a 390×844 phone.
+
+   This block is intentionally additive (after every other lab CSS
+   media query above) so any per-section mobile rule declared
+   earlier still wins where it's more specific, but everything not
+   already covered gets a sensible mobile default here.
+   ============================================================ */
+@media (max-width: 720px) {
+
+  /* ── Scroll-cue micro-text inside the zoom hero ── */
+  .scroll-cue {
+    font-size: 11px;
+    bottom: 24px;
+  }
+  .scroll-cue svg { width: 18px; height: 18px; }
+
+  /* ── vdt-hero (the post-zoom content that lives INSIDE the
+        laptop screen overlay). Inside a phone-sized laptop the
+        screen rect is small, so everything in here needs to be
+        much tighter. ── */
+  .vdt-hero {
+    padding: 1.25rem 1rem;
+  }
+  .vdt-hero__title {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 0.95;
+  }
+  .vdt-hero__pitch {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .vdt-hero__locale {
+    font-size: 0.78rem;
+    gap: 0.4rem;
+  }
+  .vdt-hero__ctas {
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+    align-items: stretch;
+  }
+  .vdt-hero__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.78rem;
+    min-height: 44px;            /* 44px tap-target floor */
+  }
+  .vdt-hero__btn-icon { width: 14px; height: 14px; }
+  .vdt-hero__gem { transform: scale(0.85); }
+
+
+  /* ── Portfolio carousel ── */
+  .vdt-portfolio__intro { padding: 0 1rem; }
+  .vdt-portfolio__eyebrow { font-size: 10px; letter-spacing: 0.22em; }
+  .vdt-portfolio__title {
+    font-size: clamp(2.1rem, 9vw, 3rem);
+    line-height: 0.95;
+  }
+  .vdt-portfolio__counter { font-size: 13px; }
+  .vdt-portfolio__counter-current { font-size: 18px; }
+  .vdt-portfolio__meta-name { font-size: 1.2rem; }
+  .vdt-portfolio__meta-tags { font-size: 10px; letter-spacing: 0.22em; }
+  .vdt-portfolio__meta-hint { font-size: 11px; }
+  .vdt-portfolio__nav-btn { min-height: 48px; min-width: 48px; }
+
+
+  /* ── Process scroll: keep the horizontal story. Each stage is
+        still 100vw × 100vh, but on a phone the text col needs to
+        own more of the slide and use bigger type. The path-editor
+        coords don't translate well to portrait — widen the text
+        column and shrink the heading scale so the content is
+        legible without changing the section's mechanics. ── */
+  .vdt-process-shell .stage__title { font-size: clamp(2.4rem, 10vw, 3.2rem); }
+  .vdt-process-shell .stage__subtitle { font-size: 0.95rem; }
+  .vdt-process-shell .stage__desc { font-size: 0.92rem; line-height: 1.55; }
+  .vdt-process-shell .stage__points li { font-size: 0.88rem; line-height: 1.4; }
+  .vdt-process-shell .stage__num {
+    width: clamp(48px, 12vw, 60px);
+    height: clamp(48px, 12vw, 60px);
+    font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  }
+  .vdt-process-shell .stage__title-row {
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+  /* Override the path-editor per-stage positions so the text col
+     occupies the readable top-third of the slide on every stage. */
+  .vdt-process-shell .slide__text,
+  .vdt-process-shell .slide--1 .slide__text,
+  .vdt-process-shell .slide--2 .slide__text,
+  .vdt-process-shell .slide--3 .slide__text,
+  .vdt-process-shell .slide--4 .slide__text {
+    top: 6% !important;
+    left: 5% !important;
+    width: 90% !important;
+    height: 60% !important;
+  }
+  /* Title slide pip indicators sit at bottom — keep them out of the
+     thumb-zone but visible. */
+  .vdt-process-shell .process__pips { bottom: 18px; left: 18px; gap: 8px; }
+  .vdt-process-shell .process__pip { width: 8px; height: 8px; }
+  /* Title card scales down. */
+  .vdt-process-shell .title-card__eyebrow { font-size: 0.7rem; }
+  .vdt-process-shell .title-card__heading {
+    font-size: clamp(2.6rem, 12vw, 4rem) !important;
+  }
+  .vdt-process-shell .title-guide { top: 4vh; left: 4vw; max-width: 16ch; }
+  .vdt-process-shell .title-guide__eyebrow { font-size: 0.65rem; }
+  .vdt-process-shell .title-guide__text { font-size: 0.8rem; }
+
+
+  /* ── Testimonials: keep the 3D rotor look. Just gently
+        reposition the rotor so a single card lands more centered
+        in the viewport and rotate angles soften (less depth
+        feels less crowded on a small screen). ── */
+  .vdt-testimonials__intro { padding: 0 1.25rem; }
+  .vdt-testimonials__title {
+    font-size: clamp(2.1rem, 9vw, 3rem);
+    line-height: 0.96;
+  }
+  .vdt-testimonials__lede { font-size: 0.95rem; }
+  .vdt-testimonials__card-quote { font-size: 0.92rem; line-height: 1.55; }
+  .vdt-testimonials__card-avatar { width: 36px !important; height: 36px !important; }
+  .vdt-testimonials__cta-btn { min-height: 44px; padding: 12px 22px; }
+
+
+  /* ── Contact card ── */
+  .vdt-contact-card .cc-name { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .vdt-contact-card .cc-form input,
+  .vdt-contact-card .cc-form textarea {
+    font-size: 16px;             /* iOS won't zoom on focus at ≥16px */
+    padding: 14px 16px;
+    min-height: 48px;
+  }
+  .vdt-contact-card .cc-form textarea { min-height: 120px; }
+  .vdt-contact-card .cc-submit { min-height: 52px; font-size: 0.95rem; }
+  .vdt-contact-card .cc-label { font-size: 0.78rem; }
+
+
+  /* ── General tap-target floor for any interactive element we
+        didn't already size explicitly above. iOS HIG min is 44px.
+        Applies only on phones so desktop stays compact. ── */
+  a[href], button {
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.15);
+  }
+}
+
+/* Smaller phones (≤380px). The brand wordmark next to the mark
+   already gets hidden by the earlier ≤380px rule — keep it there.
+   This block adds a few extra touches for very narrow screens. */
+@media (max-width: 380px) {
+  .vdt-hero__title { font-size: clamp(1.8rem, 8vw, 2.2rem); }
+  .vdt-hero__btn { padding: 0.75rem 1rem; font-size: 0.72rem; }
+  .vdt-process-shell .stage__title { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .vdt-process-shell .title-card__heading { font-size: 2.4rem !important; }
+}
