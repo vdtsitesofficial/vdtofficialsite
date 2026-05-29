@@ -137,11 +137,11 @@ function applyViewportTuning() {
   const isMobile = window.innerWidth <= 720;
   if (isMobile) {
     // Mobile values dialed in via the live tuner.
-    // laptopY moved up 20pp (74.5 → 54.5). Side benefit: a more
-    // centered cream destination lowers computeTargetScale (the
-    // top edge is closer), so the zoom needs less scale and the
-    // images stay under the GPU texture limit longer.
-    T.laptopY = 54.5;
+    // laptopY raised in two steps (74.5 → 54.5 → 24.5). Higher anchor
+    // = cream destination nearer viewport center = lower
+    // computeTargetScale, so the zoom needs less scale and images stay
+    // under the GPU texture limit longer (helps scroll smoothness).
+    T.laptopY = 24.5;
     T.laptopW = 180.0;
     T.laptopX = 50.5;
     // Text drops 10pp lower than the desktop default so "BUILT FOR YOU"
