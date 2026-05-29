@@ -69,6 +69,26 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300..700&display=swap"
           rel="stylesheet"
         />
+
+        {/* Preload the homepage zoom-hero images. They're the largest
+            assets above the fold (~3.9 MB on mobile combined) and the
+            lab JS waits for both to load before fading out the loading
+            overlay. Preloading shaves the perceived blank window on
+            slow networks. The bg-image preloads are media-gated so
+            phones don't pull the desktop asset and vice versa. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/lab/assets/background-mobile.png"
+          media="(max-width: 720px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/lab/assets/background.png"
+          media="(min-width: 721px)"
+        />
+        <link rel="preload" as="image" href="/lab/assets/laptop.png" />
       </head>
       <body>{children}</body>
     </html>

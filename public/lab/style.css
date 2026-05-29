@@ -56,8 +56,52 @@ body { overflow-x: hidden; }
      (≈26vh) was dead slack after the zoom locked at progress=0.78.
      Dropping to 175vh cuts the runway to 75vh and the post-lock
      slack to ~17vh — about one wheel-tick of pause before the
-     page transitions into the portfolio below. */
+     page transitions into the portfolio below.
+
+     Two-line cascade: `vh` is the fallback for older browsers;
+     `lvh` is the large viewport unit and is preferred on modern
+     UAs. Locking to lvh keeps the outer hero's rect.height stable
+     during Chrome Android / iOS Safari toolbar collapse — matches
+     the inner .zoom-stage which already uses 100lvh. */
   height: 175vh;
+  height: 175lvh;
+}
+
+/* ── Loading overlay ──
+   Sits over the entire viewport while the bg-image and laptop PNG
+   are still downloading. Without this, slow mobile networks see a
+   blank dark area for ~3s before the photo arrives (the lab JS only
+   gated its kickoff on the laptop image, not the bg). The overlay
+   is removed via class toggle once main.js has confirmed both
+   images are .complete; the transition fades it out smoothly. */
+.zoom-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f0c09;        /* matches the photo's dark wood floor */
+  color: #f4efe6;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 600ms var(--ease) 100ms,
+              visibility 0s linear 800ms;
+  pointer-events: none;
+}
+.zoom-loading.is-ready {
+  opacity: 0;
+  visibility: hidden;
+}
+.zoom-loading__mark {
+  width: 48px;
+  height: 48px;
+  color: #dc2626;
+  animation: zoom-loading-pulse 1.6s ease-in-out infinite;
+}
+@keyframes zoom-loading-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.08); }
 }
 
 .zoom-stage {
@@ -791,8 +835,14 @@ html { scroll-behavior: smooth; }
      thumb-scrolling pixel-by-pixel, 175vh felt like a lot of scroll
      happened before the laptop visibly grew. 120vh keeps the
      interaction tight: ~20vh of pre-lock dwell, ~78vh of active
-     zoom, ~22vh of post-lock slack. */
-  .zoom-hero { height: 120vh; }
+     zoom, ~22vh of post-lock slack.
+
+     Same vh + lvh cascade as the base rule so the outer hero stays
+     stable during toolbar collapse. */
+  .zoom-hero {
+    height: 120vh;
+    height: 120lvh;
+  }
 
   /* ── vdt-hero (the post-zoom content that lives INSIDE the
         laptop screen overlay). Inside a phone-sized laptop the

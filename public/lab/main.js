@@ -291,9 +291,18 @@ let targetScale = computeTargetScale();
 let progress = 0;
 let smooth   = 0;
 
+// Cached at init and refreshed on real resize. Reading rect.height
+// LIVE every frame meant Chrome Android's toolbar collapse — which
+// changes `vh` mid-scroll — would drift the `total` denominator and
+// make `progress` jump even when scroll position barely moved. The
+// outer .zoom-hero is now in lvh too, but caching is the belt-and-
+// suspenders that ensures the math is fully isolated from per-frame
+// viewport jitter.
+let heroHeight = hero.getBoundingClientRect().height;
+
 function computeProgress() {
   const rect = hero.getBoundingClientRect();
-  const total = rect.height - view.h;
+  const total = heroHeight - view.h;
   const scrolled = Math.min(Math.max(-rect.top, 0), total);
   progress = total > 0 ? scrolled / total : 0;
 }
@@ -318,6 +327,11 @@ function onResize() {
 
   view.w = newW;
   view.h = measureStageHeight();
+  // Refresh the cached hero height alongside view dimensions. Both
+  // are now in lvh / stable units so this only updates when there's
+  // a genuine layout change (orientation, browser window resize),
+  // not on toolbar transitions.
+  heroHeight = hero.getBoundingClientRect().height;
   targetScale = computeTargetScale();
 }
 window.addEventListener("resize", onResize, { passive: true });
@@ -618,17 +632,33 @@ function smoothstep(a, b, x) {
   return t * t * (3 - 2 * t);
 }
 
-// kick once the laptop image is loaded (we don't actually need the
-// dimensions, but waiting avoids a one-frame flash of unstyled wrap)
-if (laptopImage.complete) {
-  targetScale = computeTargetScale();
-  tick();
-} else {
-  laptopImage.addEventListener("load", () => {
-    targetScale = computeTargetScale();
-    tick();
+// Wait for BOTH the background photo and the laptop PNG to finish
+// downloading before we kick off the RAF loop and fade out the
+// loading overlay. The old gate only awaited the laptop image, so on
+// slow mobile networks the loop could start while the bg-image was
+// still pending — the user saw a transparent zoom-stage over the
+// body-cream with a laptop floating in nothing. Now the loading
+// overlay (#zoom-loading in page.tsx, styled in style.css) covers
+// the area in dark photo-matching color until both are ready.
+function loadImage(img) {
+  return new Promise(function (resolve) {
+    if (!img) { resolve(); return; }
+    if (img.complete && img.naturalWidth > 0) { resolve(); return; }
+    img.addEventListener("load",  resolve, { once: true });
+    img.addEventListener("error", resolve, { once: true });
   });
 }
+
+Promise.all([loadImage(bgImage), loadImage(laptopImage)]).then(function () {
+  // Reveal the hero.
+  const loadingEl = document.querySelector(".zoom-loading");
+  if (loadingEl) loadingEl.classList.add("is-ready");
+  // Re-cache geometry now that the bg-image's intrinsic size is known
+  // (its natural dimensions can affect object-fit cover layout).
+  heroHeight = hero.getBoundingClientRect().height;
+  targetScale = computeTargetScale();
+  tick();
+});
 
 // =============================================================
 // LIVE TUNING PANEL WIRING

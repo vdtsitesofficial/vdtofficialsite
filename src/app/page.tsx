@@ -344,6 +344,32 @@ export default function Home() {
 
       {/* Section 1: ZOOM HERO */}
       <section className="zoom-hero">
+        {/* Loading overlay — fades out once main.js has confirmed
+            both bg-image and laptop.png are .complete. Without this,
+            slow mobile networks saw a transparent zoom-stage with the
+            cream body bleeding through for ~3 seconds before the
+            photo painted. Static dark base (#0f0c09) matches the
+            photo's wood floor so the fade is seamless. */}
+        <div className="zoom-loading" aria-hidden="true">
+          <svg
+            className="zoom-loading__mark"
+            viewBox="0 0 100 100"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          >
+            <path
+              d="M6,18 L84,18 L45,91 Z
+                 M16,24 L84,24 L80,30 L19,30 Z
+                 M48,30 L48,90 L45,94 L42,89 L42,30 Z
+                 M54,36 L68,36 L60,50 L60,65 L54,76 Z
+                 M36,63 L36,36 L14,36 L17,42 L25,42 Z"
+            />
+          </svg>
+        </div>
+
         <div className="zoom-stage">
           {/* Background plate. Browser picks the right asset by media query;
               the fallback <img.bg-image> stays in the DOM either way so
