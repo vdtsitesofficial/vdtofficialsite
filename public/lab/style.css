@@ -58,19 +58,28 @@ body { overflow-x: hidden; }
      slack to ~17vh — about one wheel-tick of pause before the
      page transitions into the portfolio below. */
   height: 175vh;
+  /* Failsafe dark base so any pixel the sticky stage doesn't paint
+     (e.g. iOS Safari momentarily exposing the strip beneath the
+     sticky during toolbar collapse) shows a dark photo-matching
+     tone rather than the body's cream and breaking the framing. */
+  background: #0f0c09;
 }
 
 .zoom-stage {
   position: sticky;
   top: 0;
-  /* Static fallback for browsers without dvh support. */
+  /* 100vh on iOS Safari is fixed at the LARGEST viewport (toolbar
+     collapsed). Using it means the sticky always covers the entire
+     visible viewport even when Safari's toolbar is visible — the
+     bottom strip of the sticky simply sits behind the toolbar
+     overlay, which is fine (the photo continues underneath, so
+     nothing visually breaks). 100dvh did the opposite — it shrank
+     with the toolbar, leaving a strip of body cream peeking through
+     at the bottom of the sticky. */
   height: 100vh;
-  /* Dynamic viewport unit accounts for iOS Safari's collapsing URL
-     bar / bottom toolbar — without this, the sticky stage gets
-     pushed past the actual visible viewport when Safari's UI shows,
-     and a strip of the page underneath bleeds through at the bottom
-     during scroll. */
-  height: 100dvh;
+  /* 100lvh is the explicit "large" viewport unit. Modern browsers
+     prefer it; older ones fall back to the 100vh above. */
+  height: 100lvh;
   width: 100%;
   overflow: hidden;
   /* 3D viewing context — lets the cream overlay use rotateX/Y to
