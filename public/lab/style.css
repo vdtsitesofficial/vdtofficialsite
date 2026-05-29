@@ -58,11 +58,6 @@ body { overflow-x: hidden; }
      slack to ~17vh — about one wheel-tick of pause before the
      page transitions into the portfolio below. */
   height: 175vh;
-  /* Failsafe dark base so any pixel the sticky stage doesn't paint
-     (e.g. iOS Safari momentarily exposing the strip beneath the
-     sticky during toolbar collapse) shows a dark photo-matching
-     tone rather than the body's cream and breaking the framing. */
-  background: #0f0c09;
 }
 
 .zoom-stage {
@@ -782,6 +777,22 @@ html { scroll-behavior: smooth; }
      white bar, plus it duplicated the scroll-to-discover affordance
      touch users already have from the very large laptop hero. */
   .scroll-cue { display: none !important; }
+
+  /* "BUILT FOR YOU" tighter on phones — was clamp(52px, 19vw, 340px)
+     which rendered at 74px / ~445px wide on a 390px viewport, wall-
+     to-wall and overflowing. 10vw at 390px = 39px, ~235px wide phrase
+     with ~78px of breathing room each side. */
+  .hero-text {
+    font-size: clamp(32px, 10vw, 70px) !important;
+  }
+
+  /* Shortened mobile zoom runway. Desktop's 175vh was calibrated
+     for a wheel-scroll cadence; on a phone where the user is
+     thumb-scrolling pixel-by-pixel, 175vh felt like a lot of scroll
+     happened before the laptop visibly grew. 120vh keeps the
+     interaction tight: ~20vh of pre-lock dwell, ~78vh of active
+     zoom, ~22vh of post-lock slack. */
+  .zoom-hero { height: 120vh; }
 
   /* ── vdt-hero (the post-zoom content that lives INSIDE the
         laptop screen overlay). Inside a phone-sized laptop the
