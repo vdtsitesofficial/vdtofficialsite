@@ -830,18 +830,19 @@ html { scroll-behavior: smooth; }
     font-size: clamp(32px, 10vw, 70px) !important;
   }
 
-  /* Shortened mobile zoom runway. Desktop's 175vh was calibrated
-     for a wheel-scroll cadence; on a phone where the user is
-     thumb-scrolling pixel-by-pixel, 175vh felt like a lot of scroll
-     happened before the laptop visibly grew. 120vh keeps the
-     interaction tight: ~20vh of pre-lock dwell, ~78vh of active
-     zoom, ~22vh of post-lock slack.
-
-     Same vh + lvh cascade as the base rule so the outer hero stays
-     stable during toolbar collapse. */
+  /* LONGER mobile zoom runway, not shorter. The mobile zoom is a much
+     bigger scale change than desktop (~10x vs ~4.4x) because the
+     laptop is anchored low (laptopY 74.5%), so the cream destination
+     has to grow far larger to reach the top edge of the viewport. A
+     bigger zoom needs MORE scroll distance to scrub through smoothly.
+     200lvh − 100lvh (stage) = ~100lvh of actual runway ≈ 844px on a
+     phone — about 2-3 thumb-flicks — so the user can move through the
+     zoom gradually instead of one flick snapping past the whole thing.
+     (The earlier 120vh value made the runway only ~20lvh ≈ 169px,
+     which is why the zoom felt like it snapped rather than scrubbed.) */
   .zoom-hero {
-    height: 120vh;
-    height: 120lvh;
+    height: 200vh;
+    height: 200lvh;
   }
 
   /* ── vdt-hero (the post-zoom content that lives INSIDE the

@@ -484,21 +484,18 @@ function updateOverlay(currentScale) {
 function tick() {
   computeProgress();
 
-  // Mobile: snap smooth straight to progress so there's no catch-up
-  // lag. Touch scrolling already has natural momentum from iOS — the
-  // exponential easing on top of that made every scroll feel like
-  // "scroll happens, then zoom plays catch-up 80ms later." Desktop
-  // wheel scrolling is jittery enough that the smoothing still helps
-  // there, so keep the original behavior above 720px.
-  if (window.innerWidth <= 720) {
-    smooth = progress;
-  } else {
-    smooth += (progress - smooth) * 0.20;
-    // Snap to target when within a barely-perceptible threshold so
-    // the exponential smoothing doesn't asymptote forever after the
-    // user has stopped scrolling.
-    if (Math.abs(progress - smooth) < 0.0015) smooth = progress;
-  }
+  // Exponential smoothing on EVERY platform. The previous mobile
+  // special-case (smooth = progress) applied each discrete scroll
+  // event directly, which on a phone's coarse momentum-scroll events
+  // produced visible stutter — the zoom jumped between scroll
+  // positions instead of gliding. With the longer mobile runway
+  // (200lvh → ~844px of scrub room) the smoothing lag is
+  // proportionally tiny, so the "scroll, then catch up" feeling the
+  // special-case was trying to avoid no longer applies — that
+  // perceived lag was actually the toolbar-re-anchor bug, now fixed
+  // by the width-gated resize handler.
+  smooth += (progress - smooth) * 0.20;
+  if (Math.abs(progress - smooth) < 0.0015) smooth = progress;
 
   // Clamp the eased visual smoothing at the new lock-complete point
   // (0.78). Beyond that, the bg's scale, the dynamic perspective,
@@ -509,15 +506,12 @@ function tick() {
   // is pure slack room before the page transitions to the post-zoom
   // real-landing section.
   const visualSmooth = Math.min(smooth, 0.78);
-  // Mobile uses ease-out-quad (strong start, gentle finish) so the
-  // zoom takes off the moment the user starts scrolling — at 20%
-  // scroll, visual is at 36% (vs 6.4% with cubic). Desktop keeps
-  // easeInOutCubic (slow start, slow end) — it reads more
-  // "cinematic" with a wheel and there's no perceived lag at the
-  // start because wheel deltas tend to be larger per tick.
-  const e = window.innerWidth <= 720
-    ? (1 - (1 - visualSmooth) * (1 - visualSmooth))  // ease-out-quad
-    : easeInOutCubic(visualSmooth);
+  // easeInOutCubic on every platform. The mobile ease-out-quad was
+  // too aggressive at the start (20% scroll → 36% zoom): combined
+  // with the old short runway it made the first flick jump the zoom
+  // most of the way instantly, which read as glitchy. The cubic's
+  // gentle start + the longer runway give a smooth, scrubbable zoom.
+  const e = easeInOutCubic(visualSmooth);
 
   // keep targetScale in sync with whatever the sliders currently say
   targetScale = computeTargetScale();
