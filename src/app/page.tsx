@@ -417,11 +417,26 @@ export default function Home() {
           </div>
 
           <div className="laptop-wrap">
-            <img
-              className="laptop-image"
-              src="/lab/assets/laptop.png"
-              alt="Laptop displaying a website built by VDT Sites — modern, fast website design"
-            />
+            {/* Mobile gets a smaller laptop PNG (820px vs 1536px). The
+                zoom scales the laptop ~10x on mobile; at 1536px the
+                scaled texture crossed the GPU's 4096px max around 30%
+                progress, which is where the zoom started dropping
+                frames. 820px pushes that crossing to ~50% and halves
+                the texture memory. Aspect is identical (820×547 =
+                1536×1024 ratio) so main.js's hardcoded LAPTOP_IMAGE_
+                ASPECT is unaffected. The <img.laptop-image> stays in
+                the DOM either way so main.js's querySelector works. */}
+            <picture>
+              <source
+                media="(max-width: 720px)"
+                srcSet="/lab/assets/laptop-mobile.png"
+              />
+              <img
+                className="laptop-image"
+                src="/lab/assets/laptop.png"
+                alt="Laptop displaying a website built by VDT Sites — modern, fast website design"
+              />
+            </picture>
           </div>
 
           <div id="screen-overlay" className="screen-overlay" aria-hidden="false">

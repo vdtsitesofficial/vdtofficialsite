@@ -88,7 +88,18 @@ export default function RootLayout({
           href="/lab/assets/background.png"
           media="(min-width: 721px)"
         />
-        <link rel="preload" as="image" href="/lab/assets/laptop.png" />
+        <link
+          rel="preload"
+          as="image"
+          href="/lab/assets/laptop-mobile.png"
+          media="(max-width: 720px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/lab/assets/laptop.png"
+          media="(min-width: 721px)"
+        />
       </head>
       <body>{children}</body>
     </html>

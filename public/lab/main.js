@@ -305,6 +305,24 @@ let targetScale = computeTargetScale();
 // =============================================================
 let progress = 0;
 let smooth   = 0;
+// Set true once the mobile fixed perspective has been written, so the
+// tick loop only writes it a single time (see the perspective block).
+let perspectivePinned = false;
+
+// Pause the in-laptop Three.js canvas (hero.js checks
+// window.__vdtPauseHeroCanvas) while the user is actively scrolling on
+// mobile, freeing the GPU for the zoom transform. Resume ~150ms after
+// scroll stops. Re-checks innerWidth per event so a desktop user (or
+// post-rotation) keeps the canvas live.
+let _heroCanvasIdleTimer = null;
+window.addEventListener("scroll", function () {
+  if (window.innerWidth > 720) { window.__vdtPauseHeroCanvas = false; return; }
+  window.__vdtPauseHeroCanvas = true;
+  if (_heroCanvasIdleTimer) clearTimeout(_heroCanvasIdleTimer);
+  _heroCanvasIdleTimer = setTimeout(function () {
+    window.__vdtPauseHeroCanvas = false;
+  }, 150);
+}, { passive: true });
 
 // Cached at init and refreshed on real resize. Reading rect.height
 // LIVE every frame meant Chrome Android's toolbar collapse — which
@@ -589,7 +607,21 @@ function tick() {
   // laptop scale. The cream's foreshortening then scales linearly
   // with size (matching the photo's behaviour) and the cream's
   // edges keep aligning with the laptop screen at every scale.
-  stage.style.perspective = `${(1500 * laptopScale).toFixed(0)}px`;
+  //
+  // PERF: rewriting `perspective` every frame forces the browser to
+  // recompute the entire 3D rendering context for .zoom-stage and all
+  // its descendants — one of the heavier per-frame costs and a real
+  // contributor to the mid-zoom frame drops on phones. On mobile we
+  // set a single large fixed perspective once. At 4000px the tilt is
+  // nearly flat (barely perceptible on a small screen) but the
+  // per-frame 3D recompute is eliminated. Desktop keeps the dynamic
+  // perspective for the precise cream/laptop foreshortening match.
+  if (view.w > 720) {
+    stage.style.perspective = `${(1500 * laptopScale).toFixed(0)}px`;
+  } else if (!perspectivePinned) {
+    stage.style.perspective = "4000px";
+    perspectivePinned = true;
+  }
 
   positionLaptop(laptopScale);
   updateOverlay(laptopScale);

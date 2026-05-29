@@ -274,10 +274,20 @@ export function initVdtHero(opts = {}) {
   let running = true;
   function tick() {
     if (!running) return;
-    const t = clock.getElapsedTime();
-    logo.rotation.y = t * 0.5;
-    logo.rotation.x = Math.sin(t * 0.6) * 0.05;
-    renderer.render(scene, camera);
+    // Keep the RAF alive but SKIP the WebGL render when the page is
+    // actively scrolling on mobile. The laptop-zoom hero's scroll loop
+    // sets window.__vdtPauseHeroCanvas during scroll; the spinning logo
+    // inside the (tiny, being-zoomed) laptop screen isn't perceptible
+    // mid-scroll anyway, and freeing the GPU from this WebGL draw on
+    // every frame removes a big chunk of the mid-zoom frame drops on
+    // phones. We still advance the clock so the logo resumes from the
+    // right rotation, just skip the expensive renderer.render().
+    if (!window.__vdtPauseHeroCanvas) {
+      const t = clock.getElapsedTime();
+      logo.rotation.y = t * 0.5;
+      logo.rotation.x = Math.sin(t * 0.6) * 0.05;
+      renderer.render(scene, camera);
+    }
     rafId = requestAnimationFrame(tick);
   }
   rafId = requestAnimationFrame(tick);
