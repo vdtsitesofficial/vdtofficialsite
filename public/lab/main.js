@@ -432,14 +432,22 @@ function updateOverlay(currentScale) {
 // =============================================================
 function tick() {
   computeProgress();
-  smooth += (progress - smooth) * 0.20;
 
-  // Snap to target when within a barely-perceptible threshold so the
-  // exponential smoothing doesn't asymptote forever after the user has
-  // stopped scrolling. Without this, the cream destination subtly keeps
-  // settling for many frames after the visible zoom appears complete —
-  // that's the late "wobble" the user was noticing.
-  if (Math.abs(progress - smooth) < 0.0015) smooth = progress;
+  // Mobile: snap smooth straight to progress so there's no catch-up
+  // lag. Touch scrolling already has natural momentum from iOS — the
+  // exponential easing on top of that made every scroll feel like
+  // "scroll happens, then zoom plays catch-up 80ms later." Desktop
+  // wheel scrolling is jittery enough that the smoothing still helps
+  // there, so keep the original behavior above 720px.
+  if (window.innerWidth <= 720) {
+    smooth = progress;
+  } else {
+    smooth += (progress - smooth) * 0.20;
+    // Snap to target when within a barely-perceptible threshold so
+    // the exponential smoothing doesn't asymptote forever after the
+    // user has stopped scrolling.
+    if (Math.abs(progress - smooth) < 0.0015) smooth = progress;
+  }
 
   // Clamp the eased visual smoothing at the new lock-complete point
   // (0.78). Beyond that, the bg's scale, the dynamic perspective,
@@ -450,7 +458,15 @@ function tick() {
   // is pure slack room before the page transitions to the post-zoom
   // real-landing section.
   const visualSmooth = Math.min(smooth, 0.78);
-  const e = easeInOutCubic(visualSmooth);
+  // Mobile uses ease-out-quad (strong start, gentle finish) so the
+  // zoom takes off the moment the user starts scrolling — at 20%
+  // scroll, visual is at 36% (vs 6.4% with cubic). Desktop keeps
+  // easeInOutCubic (slow start, slow end) — it reads more
+  // "cinematic" with a wheel and there's no perceived lag at the
+  // start because wheel deltas tend to be larger per tick.
+  const e = window.innerWidth <= 720
+    ? (1 - (1 - visualSmooth) * (1 - visualSmooth))  // ease-out-quad
+    : easeInOutCubic(visualSmooth);
 
   // keep targetScale in sync with whatever the sliders currently say
   targetScale = computeTargetScale();
