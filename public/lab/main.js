@@ -94,6 +94,12 @@ const T = { ...DEFAULTS };       // live tuning values (mutated by sliders)
 // effect on the next paint.
 // =============================================================
 function applyViewportTuning() {
+  // When the mobile tuner panel is active (?tune in URL), the user is
+  // manually dragging T.laptopY / W / X via sliders. Any resize event
+  // (e.g. iOS Safari's URL bar collapsing on scroll) would otherwise
+  // wipe their values back to the defaults — bail out so manual tuning
+  // sticks.
+  if (typeof window !== "undefined" && window.__vdtTunerActive) return;
   const isMobile = window.innerWidth <= 720;
   if (isMobile) {
     T.laptopY = DEFAULTS.laptopY + 30;

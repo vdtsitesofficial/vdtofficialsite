@@ -226,6 +226,8 @@ export default function Home() {
           boxShadow: "0 18px 40px -12px rgba(0,0,0,0.5)",
           backdropFilter: "blur(12px)",
           display: "none",
+          pointerEvents: "auto",
+          touchAction: "manipulation",
         }}
         aria-hidden="true"
       >
@@ -1220,6 +1222,9 @@ export default function Home() {
         (function () {
           const usp = new URLSearchParams(window.location.search);
           if (!usp.has('tune')) return;
+          // Set the flag IMMEDIATELY (before main.js may have polled)
+          // so applyViewportTuning() bails out on the very first resize.
+          window.__vdtTunerActive = true;
           const panel = document.getElementById('mobile-tuner');
           if (!panel) return;
           panel.style.display = 'block';
