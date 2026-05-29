@@ -102,13 +102,18 @@ function applyViewportTuning() {
   if (typeof window !== "undefined" && window.__vdtTunerActive) return;
   const isMobile = window.innerWidth <= 720;
   if (isMobile) {
-    T.laptopY = DEFAULTS.laptopY + 30;
-    T.laptopW = DEFAULTS.laptopW * 1.4;
-    T.laptopX = 50;
+    // Mobile values dialed in via the live tuner.
+    T.laptopY = 55.5;
+    T.laptopW = 180.0;
+    T.laptopX = 50.0;
+    // Text drops 10pp lower than the desktop default so "BUILT FOR YOU"
+    // clears the laptop's top edge on a phone.
+    T.textY   = DEFAULTS.textY + 10;
   } else {
     T.laptopY = DEFAULTS.laptopY;
     T.laptopW = DEFAULTS.laptopW;
     T.laptopX = DEFAULTS.laptopX;
+    T.textY   = DEFAULTS.textY;
   }
 }
 applyViewportTuning();

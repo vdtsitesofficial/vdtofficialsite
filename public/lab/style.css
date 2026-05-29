@@ -63,7 +63,14 @@ body { overflow-x: hidden; }
 .zoom-stage {
   position: sticky;
   top: 0;
+  /* Static fallback for browsers without dvh support. */
   height: 100vh;
+  /* Dynamic viewport unit accounts for iOS Safari's collapsing URL
+     bar / bottom toolbar — without this, the sticky stage gets
+     pushed past the actual visible viewport when Safari's UI shows,
+     and a strip of the page underneath bleeds through at the bottom
+     during scroll. */
+  height: 100dvh;
   width: 100%;
   overflow: hidden;
   /* 3D viewing context — lets the cream overlay use rotateX/Y to
@@ -761,12 +768,11 @@ html { scroll-behavior: smooth; }
    ============================================================ */
 @media (max-width: 720px) {
 
-  /* ── Scroll-cue micro-text inside the zoom hero ── */
-  .scroll-cue {
-    font-size: 11px;
-    bottom: 24px;
-  }
-  .scroll-cue svg { width: 18px; height: 18px; }
+  /* Scroll cue is hidden on mobile — the indicator text + arrow
+     sat in iOS Safari's bottom toolbar zone and read like a stray
+     white bar, plus it duplicated the scroll-to-discover affordance
+     touch users already have from the very large laptop hero. */
+  .scroll-cue { display: none !important; }
 
   /* ── vdt-hero (the post-zoom content that lives INSIDE the
         laptop screen overlay). Inside a phone-sized laptop the
