@@ -37,12 +37,20 @@ const screenGlare   = document.getElementById("screen-glare");
 
 // ---------- viewport ----------
 // view.h reads .zoom-stage's rendered height (which is 100lvh in CSS).
-// On iOS Safari, window.innerHeight changes when the URL bar collapses
-// or expands during scroll — using it would re-compute the laptop's cy
-// every frame the toolbar is mid-animation, snapping the laptop's
-// position around during the zoom. 100lvh is fixed at the largest
-// possible viewport for the duration of the page session, so reading
-// from the stage stays stable regardless of toolbar state.
+// On mobile, Chrome's bottom navigation bar (and iOS Safari's URL
+// bar) collapse during scroll. Even though the bar collapses, the
+// VISIBLE viewport grows — but 100lvh is fixed at the largest
+// possible viewport size and doesn't change. Even so, some browsers
+// fire resize events during the toolbar transition with intermediate
+// heights, which would otherwise re-anchor the laptop mid-scroll and
+// make it look like the hero is "filling in" the space left by the
+// toolbar (the bug the user noticed).
+//
+// Fix: cache the measurement and only refresh it on a WIDTH change
+// (orientation flip, browser window resize). Height-only changes
+// during scroll are ignored. Desktop resize (which usually changes
+// width) still works as expected because width-changes pass the
+// guard.
 function measureStageHeight() {
   const r = stage ? stage.getBoundingClientRect() : null;
   return r && r.height > 0 ? r.height : window.innerHeight;
@@ -294,7 +302,21 @@ function computeProgress() {
 // resize
 // =============================================================
 function onResize() {
-  view.w = window.innerWidth;
+  const newW = window.innerWidth;
+
+  // Gate height refreshes behind width changes — but only on mobile.
+  // On Chrome Android and iOS Safari the browser toolbar collapses
+  // during scroll and fires resize events with intermediate heights
+  // mid-gesture, which would otherwise re-anchor the laptop and make
+  // it look like the hero is "filling in" the space the toolbar left
+  // (the bug the user spotted). Width stays the same during those,
+  // so on ≤720px viewports we only react to width changes (orientation
+  // flip, split-screen toggle). Desktop is unconditional: if the user
+  // drags the browser's bottom edge on a Mac and changes height only,
+  // we DO want the laptop to re-anchor — that's a real layout change.
+  if (newW <= 720 && newW === view.w) return;
+
+  view.w = newW;
   view.h = measureStageHeight();
   targetScale = computeTargetScale();
 }
