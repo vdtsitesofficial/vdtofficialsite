@@ -39,7 +39,7 @@
     // FROM address. Must live on a domain (or subdomain) that has Email
     // Routing enabled in this Cloudflare account. Since nothing else uses
     // vdtsites.ca mail, we point the FROM at the apex directly.
-    "CONTACT_FROM_EMAIL": "VDT Test <noreply@vdtsites.ca>",
+    "CONTACT_FROM_EMAIL": "VDT Contact Form <noreply@vdtsites.ca>",
     // Displayed to the user as the contact destination; actual delivery
     // happens via the SEND_EMAIL binding above. NOTE: this address must
     // be a verified destination in Cloudflare Email Routing for the

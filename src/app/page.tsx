@@ -140,9 +140,10 @@ const ANCHOR_DEFER = `
 export default function Home() {
   return (
     <>
-      {/* Lab head deps — Next hoists <link>/<script> elements into <head>. */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      {/* Lab head deps — Next hoists <link>/<script> elements into <head>.
+          Font preconnects are NOT repeated here (they're already in
+          app/layout.tsx's <head>); the browser dedupes them but it bloats
+          the HTML otherwise. */}
       <link
         href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap"
         rel="stylesheet"
@@ -178,7 +179,7 @@ export default function Home() {
 
       {/* Pre-zoom transparent header */}
       <header id="zoom-header" className="zoom-header">
-        <a className="zh-brand" href="#">
+        <a className="zh-brand" href="/">
           <svg
             className="zh-mark"
             viewBox="0 0 100 100"
@@ -241,13 +242,23 @@ export default function Home() {
             <img
               className="bg-image"
               src="/lab/assets/background.png"
-              alt=""
+              alt="VDT Sites — custom website design for small businesses, set in a warm modern workspace"
             />
           </picture>
-          <h1 className="hero-text">BUILT&nbsp;FOR&nbsp;YOU</h1>
+          {/* "BUILT FOR YOU" is a visual poster, not the page's semantic
+              heading. The real H1 lives inside the post-zoom hero (Website
+              Design). Demoting this from <h1> to a presentational <div>
+              avoids the multi-H1 SEO ding. */}
+          <div className="hero-text" role="presentation" aria-hidden="true">
+            BUILT&nbsp;FOR&nbsp;YOU
+          </div>
 
           <div className="laptop-wrap">
-            <img className="laptop-image" src="/lab/assets/laptop.png" alt="" />
+            <img
+              className="laptop-image"
+              src="/lab/assets/laptop.png"
+              alt="Laptop displaying a website built by VDT Sites — modern, fast website design"
+            />
           </div>
 
           <div id="screen-overlay" className="screen-overlay" aria-hidden="false">
@@ -301,11 +312,14 @@ export default function Home() {
                   </div>
 
                   <div className="vdt-hero__ctas">
+                    {/* In-page anchors — relative href and no target so the
+                        anchor-defer interceptor catches them and smooth-
+                        scrolls (it only matches /#X patterns, not absolute
+                        URLs). target="_blank" was opening these in a new
+                        tab which was never the intent. */}
                     <a
                       className="vdt-hero__btn vdt-hero__btn--primary"
-                      href="https://vdtsites.com/#contact"
-                      target="_blank"
-                      rel="noopener"
+                      href="/#contact"
                     >
                       <svg className="vdt-hero__btn-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path
@@ -319,7 +333,7 @@ export default function Home() {
                       </svg>
                       Start Your Project
                     </a>
-                    <a className="vdt-hero__btn" href="https://vdtsites.com/#work" target="_blank" rel="noopener">
+                    <a className="vdt-hero__btn" href="/#portfolio">
                       <svg className="vdt-hero__btn-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path
                           d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"

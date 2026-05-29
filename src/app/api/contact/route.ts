@@ -112,13 +112,13 @@ export async function POST(req: Request) {
     env?.CONTACT_FROM_EMAIL ??
     process.env.CONTACT_FROM_EMAIL ??
     "VDT Test <noreply@example.com>";
-  const subject = `VDT Test inquiry from ${name}`;
+  const subject = `New inquiry from ${name} — VDT Sites contact form`;
   const text = [
     `From: ${name} <${email}>`,
     "",
     message,
     "",
-    "Sent from VDTTest contact form",
+    "Sent from the vdtsites.com contact form",
   ].join("\n");
 
   // Persist to KV first so the submission is captured in /admin even
@@ -130,14 +130,49 @@ export async function POST(req: Request) {
     message: message.trim(),
   });
 
-  const result = await deliver(from, to, subject, text, email);
+  // Fire-and-forget the email send. Cloudflare's send_email binding to
+  // an off-account destination (e.g. vdtsites@gmail.com) takes ~5-6s,
+  // which would otherwise freeze the form's submit button. We hand the
+  // delivery promise to ctx.waitUntil() so the Worker keeps the
+  // connection alive long enough to finish the send AFTER the response
+  // has been returned to the user. If KV save failed we fall back to a
+  // synchronous await so we can still 502 cleanly.
+  const cfCtx = await getCloudflareCtx();
+  if (stored) {
+    const deliverPromise = deliver(from, to, subject, text, email);
+    if (cfCtx?.ctx?.waitUntil) {
+      cfCtx.ctx.waitUntil(deliverPromise);
+    } else {
+      // Dev / no ctx — fire but don't await so the response is fast.
+      void deliverPromise.catch(() => {});
+    }
+    return NextResponse.json({ ok: true });
+  }
 
-  // Only a hard failure (neither stored nor emailed) is an error.
-  if (!stored && !result.ok) {
+  // KV save failed. Try email synchronously as a last-resort fallback.
+  const result = await deliver(from, to, subject, text, email);
+  if (!result.ok) {
     return NextResponse.json(
       { error: "Could not send. Try again later." },
       { status: 502 },
     );
   }
   return NextResponse.json({ ok: true });
+}
+
+// Helper for the fire-and-forget pattern above. Returns the whole
+// Cloudflare context (env + ctx) so we can grab ctx.waitUntil.
+async function getCloudflareCtx(): Promise<{
+  env?: unknown;
+  ctx?: { waitUntil: (p: Promise<unknown>) => void };
+} | null> {
+  try {
+    const mod = await import("@opennextjs/cloudflare");
+    return mod.getCloudflareContext() as {
+      env?: unknown;
+      ctx?: { waitUntil: (p: Promise<unknown>) => void };
+    };
+  } catch {
+    return null;
+  }
 }
