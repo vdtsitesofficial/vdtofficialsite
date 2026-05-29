@@ -643,14 +643,23 @@ function smoothstep(a, b, x) {
 function loadImage(img) {
   return new Promise(function (resolve) {
     if (!img) { resolve(); return; }
+    // Always attach the listeners FIRST so we never miss an event due
+    // to picture/source weirdness on iOS or a race between script
+    // execution and a cached image. Then check complete — if it's
+    // already done we resolve immediately, otherwise the listeners
+    // will catch the eventual load/error.
+    img.addEventListener("load",  function () { resolve(); }, { once: true });
+    img.addEventListener("error", function () { resolve(); }, { once: true });
     if (img.complete && img.naturalWidth > 0) { resolve(); return; }
-    img.addEventListener("load",  resolve, { once: true });
-    img.addEventListener("error", resolve, { once: true });
+    // Safety net: if the image somehow neither completes nor fires an
+    // event in 5 seconds, force-resolve so the loading overlay can't
+    // hang forever. Better to show a partially-painted hero than a
+    // dark overlay with a pulsing logo indefinitely.
+    setTimeout(resolve, 5000);
   });
 }
 
-Promise.all([loadImage(bgImage), loadImage(laptopImage)]).then(function () {
-  // Reveal the hero.
+function revealHero() {
   const loadingEl = document.querySelector(".zoom-loading");
   if (loadingEl) loadingEl.classList.add("is-ready");
   // Re-cache geometry now that the bg-image's intrinsic size is known
@@ -658,7 +667,25 @@ Promise.all([loadImage(bgImage), loadImage(laptopImage)]).then(function () {
   heroHeight = hero.getBoundingClientRect().height;
   targetScale = computeTargetScale();
   tick();
-});
+}
+
+Promise.all([loadImage(bgImage), loadImage(laptopImage)])
+  .then(revealHero)
+  .catch(function () {
+    // Defensive — even on an unexpected rejection, get the hero on
+    // screen rather than leaving the loading overlay stuck.
+    revealHero();
+  });
+
+// Extra belt-and-suspenders for iOS — if the overlay is somehow still
+// visible 8s after script start, force it away. This bypasses anything
+// upstream that might have silently failed.
+setTimeout(function () {
+  const loadingEl = document.querySelector(".zoom-loading");
+  if (loadingEl && !loadingEl.classList.contains("is-ready")) {
+    revealHero();
+  }
+}, 8000);
 
 // =============================================================
 // LIVE TUNING PANEL WIRING
