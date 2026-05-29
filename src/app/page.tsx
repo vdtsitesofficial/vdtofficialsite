@@ -370,6 +370,28 @@ export default function Home() {
           </svg>
         </div>
 
+        {/* Failsafe overlay clearer. This inline script runs during HTML
+            parsing — BEFORE main.js loads — so it's immune to any crash
+            in main.js or the other lab modules. Codex traced the
+            "infinite loading" bug to main.js throwing at an unguarded
+            DOM query before it ever reaches its own image-load gate, so
+            the overlay's reveal logic never ran. This guarantees the
+            overlay always clears: on window 'load' (all images in) and,
+            as a hard cap, after 5s no matter what. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+              function reveal(){
+                var el = document.querySelector('.zoom-loading');
+                if (el) el.classList.add('is-ready');
+              }
+              if (document.readyState === 'complete') { reveal(); }
+              else { window.addEventListener('load', reveal, { once: true }); }
+              setTimeout(reveal, 5000);
+            })();`,
+          }}
+        />
+
         <div className="zoom-stage">
           {/* Background plate. Browser picks the right asset by media query;
               the fallback <img.bg-image> stays in the DOM either way so

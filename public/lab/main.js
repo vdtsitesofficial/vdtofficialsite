@@ -28,12 +28,27 @@ const heroText      = document.querySelector(".hero-text");
 const laptopWrap    = document.querySelector(".laptop-wrap");
 const laptopImage   = document.querySelector(".laptop-image");
 const overlay       = document.getElementById("screen-overlay");
-const overlayInner  = overlay.querySelector(".screen-inner");
+// Guard against a null #screen-overlay. Codex traced the "infinite
+// loading overlay" bug to THIS line throwing when overlay was null:
+// `overlay.querySelector(...)` is a hard crash that aborts the whole
+// script before it ever reaches the image-load gate that clears
+// .zoom-loading. The `?.` makes it a no-op instead of a throw.
+const overlayInner  = overlay ? overlay.querySelector(".screen-inner") : null;
 const zoomMask      = document.getElementById("zoom-mask");
 const hero          = document.querySelector(".zoom-hero");
 const siteChrome    = document.getElementById("site-chrome");
 const zoomHeader    = document.getElementById("zoom-header");
 const screenGlare   = document.getElementById("screen-glare");
+
+// If any element the zoom engine depends on is missing, bail out
+// gracefully — clear the loading overlay so the page is still usable
+// rather than stuck behind a dark screen. This is the belt to the
+// inline-script suspenders in page.tsx.
+if (!stage || !bgImage || !laptopWrap || !laptopImage || !overlay || !hero) {
+  const loadingEl = document.querySelector(".zoom-loading");
+  if (loadingEl) loadingEl.classList.add("is-ready");
+  throw new Error("[vdt-hero] required DOM nodes missing — aborted, overlay cleared");
+}
 
 // ---------- viewport ----------
 // view.h reads .zoom-stage's rendered height (which is 100lvh in CSS).
