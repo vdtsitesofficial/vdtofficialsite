@@ -32,40 +32,40 @@ export const DEFAULT_TESTIMONIALS = [
     rating: 5,
     quote:
       "Really happy with the overall experience. Everything was smooth, communication was great, and the final result looked very professional.",
-    avatar: "./avatars/peter.jpg",
+    avatar: "/avatars/peter.svg",
   },
   {
     name: "Brady Kozubal",
     rating: 5,
     quote: "Super professional support, and very customer friendly website.",
-    avatar: "./avatars/brady.jpg",
+    avatar: "/avatars/brady.svg",
   },
   {
     name: "Yoko Ho",
     rating: 5,
     quote:
       "Super happy with my experience! Super friendly, knowledgeable, and paid attention to all wants and needs! The whole process felt smooth and stress-free. Highly recommend to anyone looking for quality work and great service :)",
-    avatar: "./avatars/yoko.jpg",
+    avatar: "/avatars/yoko.svg",
   },
   {
     name: "Jay Cool",
     rating: 5,
     quote:
       "We're really happy with the service & product they made us. The team was easy to work with, responsive, and delivered exactly what we wanted. Highly recommend!",
-    avatar: "./avatars/jay.jpg",
+    avatar: "/avatars/jay.svg",
   },
   {
     name: "Heinz R",
     rating: 5,
     quote: "Excellent service and highly recommended ⭐⭐⭐⭐⭐",
-    avatar: "./avatars/heinz.jpg",
+    avatar: "/avatars/heinz.svg",
   },
   {
     name: "Enrico Del Mundo",
     rating: 5,
     quote:
       "Definitely recommend these two amazing guys. Great delivery time and performance!",
-    avatar: "./avatars/enrico.jpg",
+    avatar: "/avatars/enrico.svg",
   },
 ];
 
