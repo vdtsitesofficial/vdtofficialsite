@@ -36,7 +36,18 @@ const zoomHeader    = document.getElementById("zoom-header");
 const screenGlare   = document.getElementById("screen-glare");
 
 // ---------- viewport ----------
-const view = { w: window.innerWidth, h: window.innerHeight };
+// view.h reads .zoom-stage's rendered height (which is 100lvh in CSS).
+// On iOS Safari, window.innerHeight changes when the URL bar collapses
+// or expands during scroll — using it would re-compute the laptop's cy
+// every frame the toolbar is mid-animation, snapping the laptop's
+// position around during the zoom. 100lvh is fixed at the largest
+// possible viewport for the duration of the page session, so reading
+// from the stage stays stable regardless of toolbar state.
+function measureStageHeight() {
+  const r = stage ? stage.getBoundingClientRect() : null;
+  return r && r.height > 0 ? r.height : window.innerHeight;
+}
+const view = { w: window.innerWidth, h: measureStageHeight() };
 
 // =============================================================
 // GEOMETRY — driven by the live tuning panel (see #cp in the HTML)
@@ -236,13 +247,33 @@ function positionLaptop(scale) {
 function computeTargetScale() {
   const f = fracs();
   const { w: lw, h: lh } = laptopDims();
-  const scaleW = view.w / (lw * f.sWFrac);
-  const scaleH = view.h / (lh * f.sHFrac);
-  // Bigger buffer than before (×1.18) because if the live screen
-  // rect is offset from the fixed laptop anchor, the rect needs
-  // to be larger than viewport in both axes to cover it before
-  // the clamp finishes locking the overlay to viewport.
-  return Math.max(scaleW, scaleH) * 1.18;
+  const sw = lw * f.sWFrac;
+  const sh = lh * f.sHFrac;
+
+  // Where the cream screen rect's CENTER lands in viewport coords at
+  // scale 1. Crucially this is NOT viewport center — when laptopY is
+  // far from 50% (e.g. 74.5% on mobile), the cream sits well below
+  // viewport center, so it needs more scale on the FAR side (the top
+  // edge) than on the near side to reach the viewport border.
+  const cx = view.w * f.laptopXFrac + lw * (f.sCxFrac - FIXED.cx);
+  const cy = view.h * f.laptopYFrac + lh * (f.sCyFrac - FIXED.cy);
+
+  // For the cream to span from its center out to each viewport edge,
+  // the cream's half-dimension at full scale must be ≥ the distance
+  // from cream-center to that edge. So:
+  //   scaleLeft  = 2 * cx        / sw   (so cream's left  reaches x=0)
+  //   scaleRight = 2 * (vw - cx) / sw   (so cream's right reaches x=vw)
+  //   scaleTop   = 2 * cy        / sh   (so cream's top   reaches y=0)
+  //   scaleBot   = 2 * (vh - cy) / sh   (so cream's bot   reaches y=vh)
+  // The biggest of these is the scale at which the cream just reaches
+  // every viewport edge; the ×1.18 buffer makes sure the rect is
+  // SLIGHTLY larger than viewport at lock-complete so there's never a
+  // sub-pixel sliver of background visible during the clamp.
+  const scaleLeft  = (2 * cx)            / sw;
+  const scaleRight = (2 * (view.w - cx)) / sw;
+  const scaleTop   = (2 * cy)            / sh;
+  const scaleBot   = (2 * (view.h - cy)) / sh;
+  return Math.max(scaleLeft, scaleRight, scaleTop, scaleBot) * 1.18;
 }
 let targetScale = computeTargetScale();
 
@@ -264,7 +295,7 @@ function computeProgress() {
 // =============================================================
 function onResize() {
   view.w = window.innerWidth;
-  view.h = window.innerHeight;
+  view.h = measureStageHeight();
   targetScale = computeTargetScale();
 }
 window.addEventListener("resize", onResize, { passive: true });
