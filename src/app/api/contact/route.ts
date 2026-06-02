@@ -107,12 +107,16 @@ export async function POST(req: Request) {
   }
 
   const env = await getEnv();
-  const to = env?.CONTACT_TO_EMAIL ?? process.env.CONTACT_TO_EMAIL ?? "you@example.com";
-  const from =
-    env?.CONTACT_FROM_EMAIL ??
-    process.env.CONTACT_FROM_EMAIL ??
-    "VDT Test <noreply@example.com>";
-  const subject = `New inquiry from ${name} — VDT Sites contact form`;
+  // No placeholder fallbacks: if the addresses aren't configured we DON'T send
+  // (never email an example.com stranger). The submission is still saved to KV
+  // below, so the lead is captured in /admin regardless.
+  const to = env?.CONTACT_TO_EMAIL ?? process.env.CONTACT_TO_EMAIL ?? null;
+  const from = env?.CONTACT_FROM_EMAIL ?? process.env.CONTACT_FROM_EMAIL ?? null;
+  const emailConfigured = Boolean(to && from);
+  // Strip CR/LF from the user-supplied name before it enters the Subject
+  // header (header-injection guard); the body keeps the original text.
+  const safeName = name.trim().replace(/[\r\n]+/g, " ");
+  const subject = `New inquiry from ${safeName} — VDT Sites contact form`;
   const text = [
     `From: ${name} <${email}>`,
     "",
@@ -139,18 +143,28 @@ export async function POST(req: Request) {
   // synchronous await so we can still 502 cleanly.
   const cfCtx = await getCloudflareCtx();
   if (stored) {
-    const deliverPromise = deliver(from, to, subject, text, email);
-    if (cfCtx?.ctx?.waitUntil) {
-      cfCtx.ctx.waitUntil(deliverPromise);
-    } else {
-      // Dev / no ctx — fire but don't await so the response is fast.
-      void deliverPromise.catch(() => {});
+    // Lead captured in KV. Send the notification only if email is configured.
+    if (emailConfigured) {
+      const deliverPromise = deliver(from!, to!, subject, text, email);
+      if (cfCtx?.ctx?.waitUntil) {
+        cfCtx.ctx.waitUntil(deliverPromise);
+      } else {
+        // Dev / no ctx — fire but don't await so the response is fast.
+        void deliverPromise.catch(() => {});
+      }
     }
     return NextResponse.json({ ok: true });
   }
 
-  // KV save failed. Try email synchronously as a last-resort fallback.
-  const result = await deliver(from, to, subject, text, email);
+  // KV save failed. If email isn't configured we have no way to capture the
+  // message — fail visibly. Otherwise try email synchronously as a fallback.
+  if (!emailConfigured) {
+    return NextResponse.json(
+      { error: "Could not send. Try again later." },
+      { status: 502 },
+    );
+  }
+  const result = await deliver(from!, to!, subject, text, email);
   if (!result.ok) {
     return NextResponse.json(
       { error: "Could not send. Try again later." },

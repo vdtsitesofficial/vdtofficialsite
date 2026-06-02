@@ -152,7 +152,24 @@ export function initVdtTestimonials(opts = {}) {
     });
   });
 
+  // Pause the marquee when the section is off-screen. There are 6 columns x 4
+  // repeats = 24 blocks, each running an infinite transform animation with
+  // will-change:transform. Left running, all 24 composite every frame even
+  // while the user is scrolling the hero/process far above — a major source of
+  // mobile scroll jank. The IntersectionObserver toggles a class that sets
+  // animation-play-state:paused (see testimonials.css), so they only animate
+  // when actually on screen. Default (no class) = running, so if IO is
+  // unavailable the marquee still works.
+  let io;
+  if (typeof IntersectionObserver !== 'undefined') {
+    io = new IntersectionObserver((entries) => {
+      root.classList.toggle('vdt-testimonials--offscreen', !entries[0].isIntersecting);
+    }, { rootMargin: '120px' });
+    io.observe(root);
+  }
+
   return function cleanup() {
+    if (io) io.disconnect();
     // no listeners to remove right now; keeps the API symmetric with the
     // other VDT drop-in modules so callers can always `const tear = init(...)`
   };

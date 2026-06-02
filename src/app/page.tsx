@@ -16,6 +16,7 @@
  * ─────────────────────────────────────────────────────────────── */
 
 import Script from "next/script";
+import { LAB_V } from "@/lib/labVersion";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
 const IMPORTMAP = JSON.stringify({
@@ -30,10 +31,10 @@ const IMPORTMAP = JSON.stringify({
 // template string (rather than scattered <script> tags) ensures the
 // imports resolve in a single module graph and the order is fixed.
 const LAB_MODULES = `
-  import { initVdtTestimonials } from '/lab/testimonials.js';
-  import { initVdtHero }         from '/lab/hero.js';
-  import { initVdtPortfolio }    from '/lab/portfolio.js';
-  import { initFluidFooter }     from '/lab/footer.js';
+  import { initVdtTestimonials } from '/lab/testimonials.js?v=${LAB_V}';
+  import { initVdtHero }         from '/lab/hero.js?v=${LAB_V}';
+  import { initVdtPortfolio }    from '/lab/portfolio.js?v=${LAB_V}';
+  import { initFluidFooter }     from '/lab/footer.js?v=${LAB_V}';
 
   const tRoot = document.querySelector('[data-vdt-testimonials]');
   if (tRoot) initVdtTestimonials({ root: tRoot });
@@ -152,13 +153,15 @@ export default function Home() {
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=JetBrains+Mono:wght@700&display=swap"
         rel="stylesheet"
       />
-      <link rel="stylesheet" href="/lab/style.css" />
-      <link rel="stylesheet" href="/lab/hero.css" />
-      <link rel="stylesheet" href="/lab/portfolio.css" />
-      <link rel="stylesheet" href="/lab/footer.css" />
-      <link rel="stylesheet" href="/lab/testimonials.css" />
-      <link rel="stylesheet" href="/lab/contact-card.css" />
-      <link rel="stylesheet" href="/lab/process-scroll.css" />
+      <link rel="stylesheet" href={`/lab/style.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/hero.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/portfolio.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/footer.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/testimonials.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/process-scroll.css?v=${LAB_V}`} />
+      {/* Premium mobile tap-to-enter overlay (scoped #m-intro, ≤720px only) */}
+      <link rel="stylesheet" href={`/lab/mobile-intro.css?v=${LAB_V}`} />
 
       {/* GSAP CDN. App Router only allows beforeInteractive in the
           root layout, so we use afterInteractive here. contact-card.js
@@ -301,7 +304,7 @@ export default function Home() {
           />
         </label>
         {/* X slider */}
-        <label style={{ display: "block" }}>
+        <label style={{ display: "block", marginBottom: 8 }}>
           <span style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
             <span>X · horizontal</span>
             <span id="mt-x-val" style={{ opacity: 0.8 }}>—</span>
@@ -312,6 +315,22 @@ export default function Home() {
             min="0"
             max="100"
             step="0.5"
+            style={{ width: "100%", accentColor: "#dc2626" }}
+          />
+        </label>
+        {/* Screen-Y slider — moves the cream SCREEN up/down ON the laptop,
+            independent of the laptop body. +up / -down. */}
+        <label style={{ display: "block" }}>
+          <span style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+            <span>Screen · up / down</span>
+            <span id="mt-sy-val" style={{ opacity: 0.8 }}>—</span>
+          </span>
+          <input
+            id="mt-sy"
+            type="range"
+            min="-20"
+            max="20"
+            step="0.25"
             style={{ width: "100%", accentColor: "#dc2626" }}
           />
         </label>
@@ -356,7 +375,7 @@ export default function Home() {
             viewBox="0 0 100 100"
             fill="none"
             stroke="currentColor"
-            strokeWidth="3"
+            strokeWidth="4"
             strokeLinejoin="round"
             strokeLinecap="round"
           >
@@ -400,11 +419,11 @@ export default function Home() {
           <picture>
             <source
               media="(max-width: 720px)"
-              srcSet="/lab/assets/background-mobile.png"
+              srcSet={`/lab/assets/background-mobile.png?v=${LAB_V}`}
             />
             <img
               className="bg-image"
-              src="/lab/assets/background.png"
+              src={`/lab/assets/background.png?v=${LAB_V}`}
               alt="VDT Sites — custom website design for small businesses, set in a warm modern workspace"
             />
           </picture>
@@ -413,7 +432,10 @@ export default function Home() {
               Design). Demoting this from <h1> to a presentational <div>
               avoids the multi-H1 SEO ding. */}
           <div className="hero-text" role="presentation" aria-hidden="true">
-            BUILT&nbsp;FOR&nbsp;YOU
+            <span className="hero-text__main">BUILT&nbsp;FOR&nbsp;YOU</span>
+            <span className="hero-text__tag">
+              Student&nbsp;Pricing, <em>Agency&nbsp;Quality</em>
+            </span>
           </div>
 
           <div className="laptop-wrap">
@@ -429,17 +451,17 @@ export default function Home() {
             <picture>
               <source
                 media="(max-width: 720px)"
-                srcSet="/lab/assets/laptop-mobile.png"
+                srcSet={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
               />
               <img
                 className="laptop-image"
-                src="/lab/assets/laptop.png"
+                src={`/lab/assets/laptop.png?v=${LAB_V}`}
                 alt="Laptop displaying a website built by VDT Sites — modern, fast website design"
               />
             </picture>
           </div>
 
-          <div id="screen-overlay" className="screen-overlay" aria-hidden="false">
+          <div id="screen-overlay" className="screen-overlay is-preview" aria-hidden="false">
             <div className="screen-inner">
               <div className="vdt-hero" data-vdt-hero>
                 <svg className="vdt-hero__cursor" viewBox="0 0 20 28" fill="none" aria-hidden="true">
@@ -541,6 +563,78 @@ export default function Home() {
               <path d="M12 5 L12 19 M6 13 L12 19 L18 13" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
+        </div>
+
+        {/* Phone-only call to action. Hidden on desktop via CSS (scroll
+            drives the zoom there). On mobile main.js locks scrolling on
+            load and this button triggers the cheap scale+fade "enter"
+            animation. The inline onClick is a belt-and-suspenders fallback
+            in case the main.js click listener hasn't attached yet. */}
+        <button
+          id="mobile-enter"
+          className="mobile-enter is-gone"
+          type="button"
+          onClick={() => {
+            const w = window as unknown as { __vdtEnterMobile?: () => void };
+            if (typeof window !== "undefined" && w.__vdtEnterMobile) {
+              w.__vdtEnterMobile();
+            }
+          }}
+        >
+          <span>Click&nbsp;to&nbsp;Enter</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* ═══════════════════════════════════════════════════════
+            PREMIUM MOBILE TAP-TO-ENTER OVERLAY (#m-intro)
+            Shown only ≤720px (mobile-intro.css). Upgrades the basic
+            CLICK-TO-ENTER to a cream-screen takeover. Its tap calls
+            window.__vdtEnterMobile() (mobile-intro.js) to reveal the
+            real hero underneath, then fades out.
+            ═══════════════════════════════════════════════════════ */}
+        <div id="m-intro" data-state="idle">
+          <div className="m-room" aria-hidden="true"></div>
+
+          <div className="m-scene">
+            <div className="m-laptop">
+              <img src={`/lab/assets/laptop-mobile.png?v=${LAB_V}`} alt="" draggable={false} />
+            </div>
+          </div>
+
+          <div className="m-topbar">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
+              <path d="M6,18 L84,18 L45,91 Z M16,24 L84,24 L80,30 L19,30 Z M48,30 L48,90 L45,94 L42,89 L42,30 Z M54,36 L68,36 L60,50 L60,65 L54,76 Z M36,63 L36,36 L14,36 L17,42 L25,42 Z" />
+            </svg>
+            <span>VDT&nbsp;SITES</span>
+          </div>
+
+          <div className="m-glow" aria-hidden="true"></div>
+          <div className="m-surface" aria-hidden="true"></div>
+
+          <div className="m-screen-label" aria-hidden="true"><span>VDT&nbsp;SITES</span></div>
+
+          <div className="m-sweep" aria-hidden="true"></div>
+          <span className="m-bloom" aria-hidden="true"></span>
+
+          <div className="m-headline">
+            {/* Splash copy, not the document heading — the single page <h1>
+                is "Website Design" in the hero. Kept as a styled <p> so we
+                don't have two <h1>s on mobile. */}
+            <p className="m-htitle">BUILT<br />FOR&nbsp;YOU</p>
+            <p>Student pricing, <em>agency quality.</em></p>
+          </div>
+
+          <div className="m-invite">
+            <span className="m-invite__pulse" aria-hidden="true"></span>
+            <span className="m-invite__text">Tap anywhere to enter</span>
+          </div>
+
+          <div className="m-vignette" aria-hidden="true"></div>
+          <div className="m-grain" aria-hidden="true"></div>
+
+          <button className="m-taplayer" type="button" aria-label="Tap anywhere to enter the VDT site"></button>
         </div>
       </section>
 
@@ -1260,9 +1354,12 @@ export default function Home() {
           afterInteractive guarantees execution post-hydration so the
           DOM nodes above are all in place when the lab JS queries
           for them. */}
-      <Script src="/lab/main.js" strategy="afterInteractive" />
-      <Script src="/lab/contact-card.js" strategy="afterInteractive" />
-      <Script src="/lab/process-scroll.js" strategy="afterInteractive" />
+      <Script src={`/lab/main.js?v=${LAB_V}`} strategy="afterInteractive" />
+      {/* Premium mobile tap-to-enter overlay driver. Loads after main.js
+          so window.__vdtEnterMobile() exists; no-ops on desktop. */}
+      <Script src={`/lab/mobile-intro.js?v=${LAB_V}`} strategy="afterInteractive" />
+      <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
+      <Script src={`/lab/process-scroll.js?v=${LAB_V}`} strategy="afterInteractive" />
       <Script id="lab-modules" type="module" strategy="afterInteractive">
         {LAB_MODULES}
       </Script>
@@ -1300,45 +1397,84 @@ export default function Home() {
             }, 50);
           }
 
+          const LS_KEY = 'vdtMobileTuner';
+
           wait(function () {
             const T = window.__vdtT;
-            const ySlider = document.getElementById('mt-y');
-            const wSlider = document.getElementById('mt-w');
-            const xSlider = document.getElementById('mt-x');
-            const yVal = document.getElementById('mt-y-val');
-            const wVal = document.getElementById('mt-w-val');
-            const xVal = document.getElementById('mt-x-val');
+            const ySlider  = document.getElementById('mt-y');
+            const wSlider  = document.getElementById('mt-w');
+            const xSlider  = document.getElementById('mt-x');
+            const sySlider = document.getElementById('mt-sy');
+            const yVal  = document.getElementById('mt-y-val');
+            const wVal  = document.getElementById('mt-w-val');
+            const xVal  = document.getElementById('mt-x-val');
+            const syVal = document.getElementById('mt-sy-val');
+            const copyBtn = document.getElementById('mt-copy');
 
-            ySlider.value = T.laptopY;
-            wSlider.value = T.laptopW;
-            xSlider.value = T.laptopX;
-            yVal.textContent = (+T.laptopY).toFixed(1);
-            wVal.textContent = (+T.laptopW).toFixed(1);
-            xVal.textContent = (+T.laptopX).toFixed(1);
+            // Bail cleanly if any control is missing (e.g. markup changed)
+            // so a null deref can't crash the whole activator.
+            if (!ySlider || !wSlider || !xSlider || !sySlider ||
+                !yVal || !wVal || !xVal || !syVal || !copyBtn) return;
+
+            // Restore any previously-saved drag so tuning survives reloads.
+            try {
+              const saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+              if (saved) {
+                if (typeof saved.laptopY === 'number') T.laptopY = saved.laptopY;
+                if (typeof saved.laptopW === 'number') T.laptopW = saved.laptopW;
+                if (typeof saved.laptopX === 'number') T.laptopX = saved.laptopX;
+                if (typeof saved.screenY === 'number') T.screenY = saved.screenY;
+              }
+            } catch (e) {}
+
+            function persist() {
+              try {
+                localStorage.setItem(LS_KEY, JSON.stringify({
+                  laptopY: T.laptopY, laptopW: T.laptopW,
+                  laptopX: T.laptopX, screenY: T.screenY,
+                }));
+              } catch (e) {}
+            }
+
+            function syncUI() {
+              ySlider.value  = T.laptopY;
+              wSlider.value  = T.laptopW;
+              xSlider.value  = T.laptopX;
+              sySlider.value = T.screenY || 0;
+              yVal.textContent  = (+T.laptopY).toFixed(1);
+              wVal.textContent  = (+T.laptopW).toFixed(1);
+              xVal.textContent  = (+T.laptopX).toFixed(1);
+              syVal.textContent = (+(T.screenY || 0)).toFixed(2);
+            }
+            syncUI();
 
             ySlider.addEventListener('input', () => {
               T.laptopY = parseFloat(ySlider.value);
-              yVal.textContent = T.laptopY.toFixed(1);
+              yVal.textContent = T.laptopY.toFixed(1); persist();
             });
             wSlider.addEventListener('input', () => {
               T.laptopW = parseFloat(wSlider.value);
-              wVal.textContent = T.laptopW.toFixed(1);
+              wVal.textContent = T.laptopW.toFixed(1); persist();
             });
             xSlider.addEventListener('input', () => {
               T.laptopX = parseFloat(xSlider.value);
-              xVal.textContent = T.laptopX.toFixed(1);
+              xVal.textContent = T.laptopX.toFixed(1); persist();
+            });
+            sySlider.addEventListener('input', () => {
+              T.screenY = parseFloat(sySlider.value);
+              syVal.textContent = T.screenY.toFixed(2); persist();
             });
 
-            document.getElementById('mt-copy').addEventListener('click', () => {
+            copyBtn.addEventListener('click', () => {
               const snippet = 'T.laptopY = ' + T.laptopY.toFixed(1) +
                               '; T.laptopW = ' + T.laptopW.toFixed(1) +
-                              '; T.laptopX = ' + T.laptopX.toFixed(1) + ';';
+                              '; T.laptopX = ' + T.laptopX.toFixed(1) +
+                              '; T.screenY = ' + (+(T.screenY || 0)).toFixed(2) + ';';
               if (navigator.clipboard) {
                 navigator.clipboard.writeText(snippet).then(() => {
-                  const btn = document.getElementById('mt-copy');
-                  const old = btn.textContent;
-                  btn.textContent = 'Copied';
-                  setTimeout(() => { btn.textContent = old; }, 1200);
+                  const old = copyBtn.textContent;
+                  copyBtn.textContent = 'Copied';
+                  setTimeout(() => { copyBtn.textContent = old; }, 1200);
                 });
               } else {
                 alert(snippet);

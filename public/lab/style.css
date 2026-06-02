@@ -50,6 +50,32 @@ body { overflow-x: hidden; }
    ZOOM HERO
    ============================================================ */
 
+/* Mobile intro lock — added to <html> by main.js on phones so the user
+   can't scroll past the CLICK TO ENTER intro before tapping. Removed once
+   the enter animation finishes, restoring normal scrolling.
+   NOTE: iOS Safari ignores `overflow: hidden` on <body> for touch scroll,
+   so we also pin the body with position:fixed + touch-action:none, which
+   reliably blocks the gesture. Since the intro is always at scroll 0 there
+   is no scroll position to preserve. */
+html.vdt-mobile-intro {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+html.vdt-mobile-intro body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* CLICK TO ENTER is a phone-only control — hidden by default; the mobile
+   @media block below promotes it to inline-flex. */
+.mobile-enter { display: none; }
+
 .zoom-hero {
   position: relative;
   /* Was 220vh — that gave 120vh of scroll runway, of which 22%
@@ -94,14 +120,35 @@ body { overflow-x: hidden; }
   visibility: hidden;
 }
 .zoom-loading__mark {
-  width: 48px;
-  height: 48px;
-  color: #dc2626;
-  animation: zoom-loading-pulse 1.6s ease-in-out infinite;
+  width: 86px;
+  height: 86px;
+  color: #f4efe6;                /* VDT mark in warm white on the dark plate */
+  /* A soft, slow breathe on the whole mark gives the logo life while the
+     path itself self-draws (see the path rule below). */
+  animation: zoom-loading-breathe 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(244, 239, 230, 0.18));
 }
-@keyframes zoom-loading-pulse {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50%      { opacity: 1;    transform: scale(1.08); }
+/* Self-drawing trace. The VDT mark's outline draws on, holds for a beat,
+   then the dash flows out the bottom — a continuous, premium "tracing"
+   loader rather than a flat pulse. 720 ≈ the path's total length (707px,
+   measured) so the whole mark is covered by one dash. */
+.zoom-loading__mark path {
+  stroke-dasharray: 720;
+  animation: zoom-loading-trace 2.6s ease-in-out infinite;
+}
+@keyframes zoom-loading-trace {
+  0%   { stroke-dashoffset: 720; }
+  45%  { stroke-dashoffset: 0; }
+  58%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -720; }
+}
+@keyframes zoom-loading-breathe {
+  0%, 100% { opacity: 0.78; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zoom-loading__mark { animation: none; opacity: 1; }
+  .zoom-loading__mark path { animation: none; stroke-dashoffset: 0; }
 }
 
 .zoom-stage {
@@ -151,6 +198,10 @@ body { overflow-x: hidden; }
   position: absolute;
   z-index: 2;
   left: 50%;
+  /* Stack the big poster line + the tagline, centered. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-poster);
   font-weight: 400;                /* Anton has only one weight */
   /* Bumped up from clamp(72,13vw,220) so "BUILT FOR YOU" reads
@@ -161,8 +212,11 @@ body { overflow-x: hidden; }
      this, edit main.js's transform string to add scaleX().) */
   /* Mobile-safe clamp: min reduced 96→52px so "BUILT FOR YOU" fits
      a ~390px-wide phone without overflowing horizontally
-     (white-space is nowrap below). */
-  font-size: clamp(52px, 19vw, 340px);
+     (white-space is nowrap below). Desktop trimmed from 19vw/340 →
+     16vw/290 so the poster isn't quite full-height, leaving a clean dark
+     band beneath it for the tagline (it was crowding the laptop before).
+     Mobile has its own override in the @media block. */
+  font-size: clamp(48px, 16vw, 290px);
   line-height: 0.88;
   letter-spacing: 0.01em;
   color: #ffffff;
@@ -174,6 +228,28 @@ body { overflow-x: hidden; }
   pointer-events: none;
   will-change: opacity, transform;
   user-select: none;
+}
+/* Tagline under "BUILT FOR YOU". Separate font/size from the poster line;
+   it inherits the parent's fade/transform so it travels with the poster
+   during the zoom. */
+.hero-text__tag {
+  margin-top: clamp(0.5rem, 1.4vw, 1.4rem);
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  /* Scaled up on desktop (cap 1.2rem → 2rem, 1.5vw → 2.4vw) so it reads as
+     a confident subtitle to "BUILT FOR YOU". The min stays 0.78rem so the
+     mobile size is unchanged (the vw term never reaches the min on phones). */
+  font-size: clamp(0.78rem, 2.4vw, 2rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: #f4efe6;
+  /* Heavier shadow so it stays crisp over the busy room photo. */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 22px rgba(0, 0, 0, 0.55);
+}
+.hero-text__tag em {
+  font-style: normal;
+  color: #ef4444;   /* ember accent on "Agency Quality" */
 }
 
 /* ── laptop layer ──
@@ -827,7 +903,14 @@ html { scroll-behavior: smooth; }
      to-wall and overflowing. 10vw at 390px = 39px, ~235px wide phrase
      with ~78px of breathing room each side. */
   .hero-text {
-    font-size: clamp(32px, 10vw, 70px) !important;
+    /* Much bigger on mobile (was 10vw). "BUILT FOR YOU" is a single
+       white-space:nowrap line, so its width scales linearly with the
+       font size and the text-width-to-viewport ratio is constant across
+       phone widths. 16vw sits below the desktop base (19vw), so it fills
+       most of the width while keeping a comfortable gutter on each side
+       — it never touches the screen edges. Floor/cap keep tiny and
+       large phones sane. */
+    font-size: clamp(46px, 16vw, 150px) !important;
   }
 
   /* LONGER mobile zoom runway, not shorter. The mobile zoom is a much
@@ -840,9 +923,74 @@ html { scroll-behavior: smooth; }
      zoom gradually instead of one flick snapping past the whole thing.
      (The earlier 120vh value made the runway only ~20lvh ≈ 169px,
      which is why the zoom felt like it snapped rather than scrubbed.) */
+  /* Mobile zoom is now TAP-driven (CLICK TO ENTER), not scroll-driven, so
+     the hero is a single fixed screen with no scroll runway. The dark
+     background fills the small strip the raised scene leaves at the bottom
+     (see the .zoom-stage translate below) — it matches the room's shadow
+     tone so it reads as continuous. */
   .zoom-hero {
-    height: 200vh;
-    height: 200lvh;
+    height: 100vh;
+    height: 100lvh;
+    background: #0f0c09;
+  }
+
+  /* Raise the WHOLE intro scene (room + laptop + cream screen + BUILT FOR
+     YOU) up together so it isn't bottom-heavy. Moving the scene as one
+     keeps the laptop sitting on the countertop (the counter is the bottom
+     of the photo and can't move up on its own). Removed on enter
+     (main.js sets the stage transform to none for the full-screen hero). */
+  .zoom-stage {
+    transform: translateY(-7%);
+  }
+
+  /* The "enter" animation: one cheap composited scale + fade of the whole
+     laptop scene, zooming toward the laptop screen, then it cross-fades to
+     the full-screen hero (handled in main.js). transform + opacity only —
+     no layout, no per-frame JS — so it's smooth on any phone. */
+  .zoom-stage.is-entering {
+    /* keep the -7% lift while scaling so the zoom starts from the raised
+       position (no jump when the enter animation begins) */
+    transform: translateY(-7%) scale(1.7);
+    opacity: 0;
+    transform-origin: 50% 58%;   /* ~the laptop screen centre */
+    transition: transform 0.8s cubic-bezier(0.5, 0, 0.2, 1),
+                opacity   0.8s ease-in;
+  }
+
+  /* CLICK TO ENTER button — phone-only call to action on the intro. */
+  .mobile-enter {
+    position: absolute;
+    left: 50%;
+    bottom: 18%;                 /* raised to match the lifted scene */
+    transform: translateX(-50%);
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f4efe6;
+    background: rgba(13, 12, 9, 0.55);
+    border: 1.5px solid rgba(244, 239, 230, 0.8);
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+    animation: mobile-enter-pulse 2.4s ease-in-out infinite;
+  }
+  .mobile-enter.is-gone {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    animation: none;
+  }
+  @keyframes mobile-enter-pulse {
+    0%, 100% { opacity: 0.85; }
+    50%      { opacity: 1; }
   }
 
   /* ── vdt-hero (the post-zoom content that lives INSIDE the
@@ -864,18 +1012,30 @@ html { scroll-behavior: smooth; }
     font-size: 0.78rem;
     gap: 0.4rem;
   }
+  /* PERF: trim wasteful will-change hints on phones. left/top/width/height
+     can't be GPU-accelerated, so hinting them only reserves layer memory on
+     low-RAM devices (can backfire into MORE jank). Keep just transform. */
+  .laptop-wrap { will-change: transform; }
+  .screen-overlay { will-change: transform; }
+
   .vdt-hero__ctas {
-    flex-direction: column;
-    gap: 0.6rem;
+    flex-direction: row;          /* side-by-side, not stacked */
+    flex-wrap: nowrap;
+    gap: 0.5rem;
     width: 100%;
     align-items: stretch;
+    justify-content: center;
   }
   .vdt-hero__btn {
-    width: 100%;
+    flex: 1 1 0;                  /* equal half-widths on one row */
+    min-width: 0;
     justify-content: center;
-    padding: 0.85rem 1.2rem;
-    font-size: 0.78rem;
-    min-height: 44px;            /* 44px tap-target floor */
+    padding: 0.6rem 0.5rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.06em;
+    gap: 0.35rem;
+    min-height: 40px;            /* tap-target floor */
+    white-space: nowrap;
   }
   .vdt-hero__btn-icon { width: 14px; height: 14px; }
   .vdt-hero__gem { transform: scale(0.85); }
@@ -894,6 +1054,11 @@ html { scroll-behavior: smooth; }
   .vdt-portfolio__meta-tags { font-size: 10px; letter-spacing: 0.22em; }
   .vdt-portfolio__meta-hint { font-size: 11px; }
   .vdt-portfolio__nav-btn { min-height: 48px; min-width: 48px; }
+
+  /* The 40px top padding aligns the hero/real-landing seam during the
+     DESKTOP scroll-zoom slide-up. Mobile uses tap-to-enter (no slide-up),
+     so it's just a dead cream gap under the hero CTAs — remove it. */
+  .real-landing { padding-top: 0; }
 
 
   /* ── Process scroll: keep the horizontal story. Each stage is
@@ -915,18 +1080,11 @@ html { scroll-behavior: smooth; }
     gap: 0.75rem;
     margin-bottom: 0.65rem;
   }
-  /* Override the path-editor per-stage positions so the text col
-     occupies the readable top-third of the slide on every stage. */
-  .vdt-process-shell .slide__text,
-  .vdt-process-shell .slide--1 .slide__text,
-  .vdt-process-shell .slide--2 .slide__text,
-  .vdt-process-shell .slide--3 .slide__text,
-  .vdt-process-shell .slide--4 .slide__text {
-    top: 6% !important;
-    left: 5% !important;
-    width: 90% !important;
-    height: 60% !important;
-  }
+  /* (Per-stage text positioning is now handled by the flex-column rebuild
+     at the end of process-scroll.css. The old absolute top/left + fixed
+     height:60% here fought that rebuild — the (0,3,0) specificity forced
+     the text into a 60%-tall box that squashed the content. Removed so the
+     flex layout's natural height wins.) */
   /* Title slide pip indicators sit at bottom — keep them out of the
      thumb-zone but visible. */
   .vdt-process-shell .process__pips { bottom: 18px; left: 18px; gap: 8px; }
@@ -957,7 +1115,10 @@ html { scroll-behavior: smooth; }
 
 
   /* ── Contact card ── */
-  .vdt-contact-card .cc-name { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .vdt-contact-card .cc-name {
+    font-size: clamp(1.9rem, 9vw, 2.7rem);   /* was 10vw/3rem — overflowed ~360px */
+    overflow-wrap: anywhere;
+  }
   .vdt-contact-card .cc-form input,
   .vdt-contact-card .cc-form textarea {
     font-size: 16px;             /* iOS won't zoom on focus at ≥16px */

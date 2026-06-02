@@ -167,6 +167,85 @@
   }
   .vdt-hero__nav { display: none; }
   .vdt-hero__header-spacer { display: none; }
+
+  /* ── Compact mobile composition ──
+     The hero renders inside the laptop's LANDSCAPE screen (the cover/zoom
+     experience). The default layout spreads the WEBSITES/WORTH/OWNING
+     ghost wordmark across the full PORTRAIT height and stacks a tall
+     240px logo + text + CTAs — a tall column that, when fit into the short
+     landscape screen, shrinks so much the wordmark only spans ~58% of the
+     width (looked "squished"). Tightening the composition into a compact
+     centred band lets it fit the landscape screen at a larger scale, so
+     the wordmark spans the screen edge-to-edge AND everything stays
+     visible. (main.js frames this band — keep BAND_TOP/BAND_BOT there in
+     sync with this block.) */
+  /* Compound selectors (.vdt-hero descendant) raise specificity above the
+     base single-class rules that appear LATER in this file, so these win
+     regardless of source order. */
+  .vdt-hero .vdt-hero__ghost {
+    justify-content: center;   /* cluster the 3 words in the centre … */
+    gap: 0.02em;               /* … stacked tight instead of spread out */
+    opacity: .08;
+    padding: 0;
+  }
+  .vdt-hero .vdt-hero__stage { gap: 0.8rem; }               /* tighten rhythm */
+  .vdt-hero .vdt-hero__canvas { width: 168px; height: 155px; }  /* smaller logo */
+
+  /* Centre the locale line under the pitch (it wraps to two lines). */
+  .vdt-hero .vdt-hero__locale { text-align: center; }
+  .vdt-hero .vdt-hero__locale span { text-align: center; }
+  /* Headline can wrap rather than bleed off the side if it ever gets close. */
+  .vdt-hero .vdt-hero__title { flex-wrap: wrap; justify-content: center; row-gap: 0.1em; }
+
+  /* ── Two hero contexts share ONE .vdt-hero element ──
+     The SAME hero is shown (a) scaled DOWN inside the laptop screen as the
+     intro preview, and (b) at FULL viewport size after "enter". main.js puts
+     `is-preview` on #screen-overlay for the intro and removes it on enter.
+     - PREVIEW: let the big ghost wordmark BLEED so it spans the small laptop
+       screen (the user wanted it edge-to-edge there); the overlay clips it.
+     - FULL SCREEN: clip the hero and size the ghost + headline to FIT the
+       real viewport so nothing is cut off sideways. */
+  #screen-overlay.is-preview .vdt-hero { overflow: visible; }
+  #screen-overlay.is-preview .vdt-hero .vdt-hero__ghost { font-size: 84px; }
+
+  #screen-overlay:not(.is-preview) .vdt-hero { overflow: hidden; }
+  #screen-overlay:not(.is-preview) .vdt-hero .vdt-hero__ghost {
+    font-size: clamp(46px, 13.5vw, 64px);   /* fits the viewport, no bleed */
+  }
+  #screen-overlay:not(.is-preview) .vdt-hero .vdt-hero__title {
+    font-size: clamp(1.7rem, 6.4vw, 2.3rem); /* fits "Website Design" on one line */
+  }
+
+  /* The logo's bob + drop-shadow glow are back ON for mobile (the spinning
+     logo would look flat without the glow) now that the click-to-enter
+     model removed the scroll-zoom jank. The remaining decorative loops
+     (halo pulse, headline shimmer, CTA dot) stay frozen on phones — they're
+     not part of the logo and add little. */
+  .vdt-hero .vdt-hero__halo,
+  .vdt-hero .vdt-hero__w1,
+  .vdt-hero .vdt-hero__dot { animation: none; }
+
+  /* The logo canvas's vdt-hero-glow animation pulses a filter: drop-shadow on
+     EVERY frame, which forces the canvas element to repaint continuously —
+     even while the WebGL render is paused during scroll. That was a real
+     scroll cost. Swap it for a STATIC drop-shadow on mobile: the logo still
+     glows, but nothing repaints per frame. */
+  .vdt-hero .vdt-hero__canvas {
+    animation: none;
+    filter: drop-shadow(0 0 16px hsla(0, 78%, 52%, 0.5));
+  }
+
+  /* CTA side-by-side direction/gap lives in style.css's mobile block; the
+     LABEL size must be set here (hero.css loads last) so it actually wins
+     over hero.css's base .vdt-hero__btn font — otherwise "START YOUR
+     PROJECT" overflows the half-width button. */
+  .vdt-hero .vdt-hero__btn {
+    font-size: 0.5rem;
+    letter-spacing: 0.015em;
+    padding: 0.55rem 0.3rem;
+    gap: 0.3rem;
+  }
+  .vdt-hero .vdt-hero__btn-icon { width: 11px; height: 11px; flex-shrink: 0; }
 }
 
 /* ── stage layout ── */
@@ -391,6 +470,12 @@
   gap: .75rem;
   justify-content: center;
   animation: vdt-hero-up .8s ease-out 1.6s both;
+  /* The hero lives inside #screen-overlay, which is pointer-events:none
+     so it never captures scroll/clicks during the zoom. Re-enable
+     interaction on the CTA row so "Start Your Project" / "View Our
+     Work" are actually clickable in the locked hero (a descendant
+     can opt back into pointer events even under a none ancestor). */
+  pointer-events: auto;
 }
 
 .vdt-hero__btn {

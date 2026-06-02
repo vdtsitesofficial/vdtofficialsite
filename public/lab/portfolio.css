@@ -286,7 +286,18 @@
 
 /* ── Responsive ── */
 @media (max-width: 720px) {
-  .vdt-portfolio { padding: 3rem 1rem 1.5rem; }
-  .vdt-portfolio__stage { height: clamp(320px, 50vh, 480px); }
+  /* Clip the 3D carousel's peeking side cards at the section edge. On a
+     narrow phone they extend ~150px past the viewport (the wider mobile card
+     made it worse), and iOS doesn't reliably honor body{overflow-x:hidden},
+     so the page got a white bar on the right and everything looked off-centre.
+     overflow-x:clip contains it without creating a scroll container. */
+  .vdt-portfolio { padding: 3rem 1rem 1.5rem; overflow-x: clip; }
+  /* The card is ~16/10 and ~322px wide on a phone (≈200px tall), but the
+     stage was clamp(320–480px) tall, so the card floated in the middle of
+     a much taller box leaving big cream voids above/below. Drive the stage
+     height from the card geometry instead so it wraps the card snugly. */
+  .vdt-portfolio__stage { height: clamp(205px, 60vw, 260px); margin-top: 0.75rem; }
+  .vdt-portfolio__card { width: min(86vw, 340px); }
+  .vdt-portfolio__reflection { bottom: -4%; height: 8%; }
   .vdt-portfolio__nav-btn { width: 48px; height: 48px; }
 }

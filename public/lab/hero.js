@@ -274,21 +274,27 @@ export function initVdtHero(opts = {}) {
   let running = true;
   function tick() {
     if (!running) return;
-    // Keep the RAF alive but SKIP the WebGL render when the page is
-    // actively scrolling on mobile. The laptop-zoom hero's scroll loop
-    // sets window.__vdtPauseHeroCanvas during scroll; the spinning logo
-    // inside the (tiny, being-zoomed) laptop screen isn't perceptible
-    // mid-scroll anyway, and freeing the GPU from this WebGL draw on
-    // every frame removes a big chunk of the mid-zoom frame drops on
-    // phones. We still advance the clock so the logo resumes from the
-    // right rotation, just skip the expensive renderer.render().
+    // The logo spins on every platform now. window.__vdtPauseHeroCanvas
+    // gates the WebGL render so the spin never competes with heavy work:
+    // the laptop-zoom scroll loop sets it during mobile page scrolling, and
+    // the mobile tap-to-enter flow (main.js) sets it for the duration of
+    // the enter zoom. The RAF stays alive and the clock keeps advancing so
+    // the spin resumes from the right angle. (Previously the logo was held
+    // static on phones to fight the old scroll-zoom jank; the click-to-enter
+    // model removed that jank, so it can spin again.)
     if (!window.__vdtPauseHeroCanvas) {
       const t = clock.getElapsedTime();
       logo.rotation.y = t * 0.5;
       logo.rotation.x = Math.sin(t * 0.6) * 0.05;
       renderer.render(scene, camera);
+      rafId = requestAnimationFrame(tick);
+    } else {
+      // Paused (page scrolling, or hero scrolled out of view): don't wake the
+      // main thread every ~16ms just to no-op the render. Poll back ~6x/sec
+      // instead. The clock keeps real time, so the spin resumes from the
+      // correct angle when unpaused.
+      rafId = setTimeout(tick, 160);
     }
-    rafId = requestAnimationFrame(tick);
   }
   rafId = requestAnimationFrame(tick);
 
@@ -316,8 +322,24 @@ export function initVdtHero(opts = {}) {
   }
 
   let ambientInterval;
-  if (enableAmbientParticles) {
+  // Skip the continuously-spawning drifting particles on phones (each is an
+  // animated DOM node compositing every frame → mobile zoom stutter) and for
+  // reduced-motion users. On desktop, also stop spawning once the hero has
+  // scrolled off screen so we don't keep creating/removing compositing nodes
+  // behind the fold. (Click bursts are still allowed; they're one-off.)
+  const heroReducedMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let heroOnScreen = true;
+  if (enableAmbientParticles && window.innerWidth > 720 && !heroReducedMotion) {
+    if ("IntersectionObserver" in window) {
+      const heroIO = new IntersectionObserver(
+        (entries) => { heroOnScreen = entries.some((e) => e.isIntersecting); },
+        { threshold: 0 },
+      );
+      heroIO.observe(particleHost);
+    }
     ambientInterval = setInterval(() => {
+      if (!heroOnScreen || window.__vdtPauseHeroCanvas) return;
       const w = particleHost.clientWidth;
       const h = particleHost.clientHeight;
       if (!w || !h) return;

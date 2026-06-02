@@ -35,33 +35,56 @@
     });
   }
 
-  // Lazy-fire when scrolled into view
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          runEntry();
-          io.disconnect();
-        }
-      });
-    }, { threshold: 0.15 });
-    io.observe(root);
-  } else {
-    runEntry();
+  // Lazy-fire when scrolled into view. For reduced-motion users, skip the
+  // entrance animation entirely — the elements are already in their natural
+  // (visible) end-state, so they simply appear with no movement.
+  const reducedMotionEntry =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reducedMotionEntry) {
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            runEntry();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      io.observe(root);
+    } else {
+      runEntry();
+    }
   }
 
-  /* WATERMARK DRIFT (continuous) */
-  gsap.to(q(".cc-watermark"), {
-    y: -20, x: 10, duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut",
-  });
+  /* WATERMARK DRIFT + COLOUR SPLASH FLOAT (continuous, desktop only).
+     These repeat:-1 tweens keep GSAP's rAF ticker awake for the whole session.
+     Skip on phones and for reduced-motion users, and pause them whenever the
+     contact section is off screen so GSAP's ticker can idle (no perpetual
+     rAF / per-frame cost while the user is up the page). */
+  const prefersReducedMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (window.innerWidth > 720 && !prefersReducedMotion) {
+    const driftA = gsap.to(q(".cc-watermark"), {
+      y: -20, x: 10, duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut",
+    });
+    const driftB = gsap.to(q(".cc-color-splash"), {
+      x: 20, y: 20, scale: 1.12, duration: 12, repeat: -1, yoyo: true, ease: "sine.inOut",
+    });
+    if ("IntersectionObserver" in window) {
+      const driftIO = new IntersectionObserver((entries) => {
+        const vis = entries.some((e) => e.isIntersecting);
+        if (vis) { driftA.play(); driftB.play(); }
+        else     { driftA.pause(); driftB.pause(); }
+      }, { threshold: 0.01 });
+      driftIO.observe(root);
+    }
+  }
 
-  /* COLOUR SPLASH FLOAT (continuous) */
-  gsap.to(q(".cc-color-splash"), {
-    x: 20, y: 20, scale: 1.12, duration: 12, repeat: -1, yoyo: true, ease: "sine.inOut",
-  });
-
-  /* CARD MAGNETIC INTERACTION (per-card) */
-  q(".cc-card").forEach((card) => {
+  /* CARD MAGNETIC INTERACTION (per-card). Mouse only — skip on touch /
+     coarse-pointer devices, where synthesized mousemove events would make the
+     card jump/tilt oddly under a finger tap. */
+  const finePointer = !(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+  if (finePointer) q(".cc-card").forEach((card) => {
     card.addEventListener("mousemove", (e) => {
       const r = card.getBoundingClientRect();
       const x = e.clientX - r.left - r.width / 2;

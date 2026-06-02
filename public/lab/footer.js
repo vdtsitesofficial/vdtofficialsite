@@ -567,11 +567,18 @@ export function initFluidFooter(opts = {}) {
     gl.drawArrays(gl.POINTS, 0, particleData.count);
   }
 
-  // ── main loop ──
+  // ── main loop (gated to on-screen only) ──
+  // The footer sits far below the fold; running a full Navier-Stokes step
+  // (advect ×2, divergence, 25 Jacobi pressure iterations, gradient-subtract,
+  // particle draw) every frame for the whole session would drain GPU/battery
+  // even when nobody can see it. Pause the loop whenever the footer is off
+  // screen and resume when it scrolls into view.
   const minMs = coarse ? 33 : 0;     // ~30fps cap on touch devices
   let raf = 0;
   let lastT = performance.now();
+  let running = false;
   function frame() {
+    if (!running) return;
     raf = requestAnimationFrame(frame);
     const now = performance.now();
     if (now - lastT < minMs) return;
@@ -579,10 +586,25 @@ export function initFluidFooter(opts = {}) {
     step(params.dt);
     render();
   }
-  frame();
+  function startLoop() {
+    if (running) return;
+    running = true;
+    lastT = performance.now();
+    raf = requestAnimationFrame(frame);
+  }
+  function stopLoop() {
+    running = false;
+    cancelAnimationFrame(raf);
+  }
+  const visObserver = new IntersectionObserver(
+    (entries) => { entries.some((e) => e.isIntersecting) ? startLoop() : stopLoop(); },
+    { threshold: 0.01 },
+  );
+  visObserver.observe(wrap);
 
   return function cleanup() {
-    cancelAnimationFrame(raf);
+    stopLoop();
+    visObserver.disconnect();
     ro.disconnect();
     window.removeEventListener("pointermove",   onMove);
     window.removeEventListener("pointerup",     onLeave);

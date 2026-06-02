@@ -117,6 +117,12 @@ export const SESSION_SECONDS = 8 * 60 * 60; // 8 hours
 const PIN_TTL_SECONDS = 10 * 60; // 10 minutes
 const MAX_PIN_ATTEMPTS = 5;
 const PIN_PREFIX = "pin:";
+// Password-step brute-force throttle: at most MAX_PW_ATTEMPTS failed
+// email+password attempts per address within the rolling window before the
+// password step is refused. Auto-clears on success or after the TTL.
+const MAX_PW_ATTEMPTS = 10;
+const PWFAIL_TTL_SECONDS = 15 * 60; // 15 minutes
+const PWFAIL_PREFIX = "pwfail:";
 
 const enc = new TextEncoder();
 
@@ -175,6 +181,36 @@ function passwordOk(env: Env, password: string): boolean {
   const expected = env.ADMIN_PASSWORD ?? "";
   if (!expected) return false;
   return constantTimeEqual(password, expected);
+}
+
+/* ---- password-step throttle (fail-open) ---------------------------------- */
+
+async function isThrottled(kv: AdminKV, email: string): Promise<boolean> {
+  try {
+    const raw = await kv.get(PWFAIL_PREFIX + normalizeEmail(email));
+    return raw != null && Number(raw) >= MAX_PW_ATTEMPTS;
+  } catch {
+    return false; // never lock out the real admin on a storage hiccup
+  }
+}
+
+async function recordPwFailure(kv: AdminKV, email: string): Promise<void> {
+  try {
+    const key = PWFAIL_PREFIX + normalizeEmail(email);
+    const raw = await kv.get(key);
+    const n = (raw != null ? Number(raw) : 0) + 1;
+    await kv.put(key, String(n), { expirationTtl: PWFAIL_TTL_SECONDS });
+  } catch {
+    /* ignore — throttling is best-effort */
+  }
+}
+
+async function clearPwFailures(kv: AdminKV, email: string): Promise<void> {
+  try {
+    await kv.delete(PWFAIL_PREFIX + normalizeEmail(email));
+  } catch {
+    /* ignore */
+  }
 }
 
 /* ---- PIN ----------------------------------------------------------------- */
@@ -332,14 +368,22 @@ export async function requestPin(
   if (!env?.ADMIN_KV) {
     return { ok: false, error: "Admin storage is unavailable." };
   }
+  // Brute-force throttle (fail-open): refuse the password step after too many
+  // recent failures for this address. Generic message so we don't reveal
+  // whether the email is valid.
+  if (await isThrottled(env.ADMIN_KV, email)) {
+    return { ok: false, error: "Too many attempts. Please try again later." };
+  }
   if (
     !email?.trim() ||
     !password ||
     !isAllowedEmail(env, email) ||
     !passwordOk(env, password)
   ) {
+    await recordPwFailure(env.ADMIN_KV, email);
     return { ok: false, error: "Invalid email or password." };
   }
+  await clearPwFailures(env.ADMIN_KV, email);
   const pin = await issuePin(env.ADMIN_KV, email);
   const sent = await sendPinEmail(env, normalizeEmail(email), pin);
   if (!sent) {
@@ -384,13 +428,18 @@ export async function confirmPin(
 export async function adminGate(): Promise<
   { ok: true; email: string } | { ok: false }
 > {
-  if (process.env.NODE_ENV !== "production") {
-    return { ok: true, email: "dev@localhost" };
+  const env = await getCfEnv();
+  // Dev-preview bypass is gated on the ABSENCE of the Workers runtime, not on
+  // NODE_ENV alone. The deployed Worker always has `env`, so it can never take
+  // this branch even if NODE_ENV were somehow misconfigured — fail closed.
+  if (!env) {
+    if (process.env.NODE_ENV !== "production") {
+      return { ok: true, email: "dev@localhost" };
+    }
+    return { ok: false };
   }
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return { ok: false };
-  const env = await getCfEnv();
-  if (!env) return { ok: false };
   const email = await verifySessionToken(env, token);
   if (!email) return { ok: false };
   // Touch headers() so this stays a dynamic, per-request evaluation.

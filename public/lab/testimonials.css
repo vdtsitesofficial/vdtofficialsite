@@ -171,6 +171,13 @@
 .vdt-testimonials__column:hover .vdt-testimonials__block {
   animation-play-state: paused;
 }
+/* Pause ALL marquee animations while the section is off-screen (class toggled
+   by an IntersectionObserver in testimonials.js). 24 infinite transform
+   animations compositing every frame while the user is elsewhere on the page
+   was a major mobile scroll-jank source. */
+.vdt-testimonials--offscreen .vdt-testimonials__block {
+  animation-play-state: paused !important;
+}
 @keyframes vdt-testimonials-up {
   from { transform: translateY(0); }
   to   { transform: translateY(calc(-100% - var(--vdt-ts-gap))); }
@@ -337,8 +344,22 @@
 @media (max-width: 720px) {
   .vdt-testimonials { padding: 3rem 1rem 1.5rem; }
   .vdt-testimonials__stage { height: clamp(380px, 55vh, 520px); }
-  .vdt-testimonials__column { width: 240px; }
+  /* Show ~4 columns on mobile by narrowing the cards and scaling the whole
+     rotor down (was 240px / no scale, which only showed ~2 columns). */
+  .vdt-testimonials__column { width: 150px; }
   .vdt-testimonials__rotor {
-    transform: translateX(-40px) translateZ(-40px) rotateX(12deg) rotateY(-6deg) rotateZ(10deg);
+    transform: translateX(-20px) translateZ(-40px) rotateX(12deg) rotateY(-6deg) rotateZ(10deg) scale(0.8);
+  }
+  /* Smaller card text to suit the narrower scaled-down columns. */
+  .vdt-testimonials__card-quote { font-size: 0.72rem; line-height: 1.45; }
+  .vdt-testimonials__card { padding: 0.85rem; }
+
+  /* The "5.0 ★★★★★ on Google · N reviews" eyebrow is mono + wide tracking;
+     let it wrap instead of overflowing narrow phones. */
+  .vdt-testimonials__eyebrow {
+    white-space: normal;
+    flex-wrap: wrap;
+    justify-content: center;
+    letter-spacing: 0.12em;
   }
 }

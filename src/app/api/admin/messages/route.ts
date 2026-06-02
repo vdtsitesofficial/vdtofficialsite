@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const gate = await adminGate();
   if (!gate.ok) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   return NextResponse.json({ messages: await listMessages() });
 }
@@ -17,7 +17,7 @@ export async function GET() {
 export async function DELETE(req: Request) {
   const gate = await adminGate();
   if (!gate.ok) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = (await req.json().catch(() => ({}))) as { id?: string };
   if (!id) {

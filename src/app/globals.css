@@ -59,3 +59,27 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ============================================================
+   Reduced-motion support (WCAG 2.3.3).
+   Only applies for visitors who have turned on "Reduce Motion"
+   in their OS/browser — everyone else sees the full experience
+   unchanged. Quiets the auto-playing/looping animations
+   (testimonials marquee, scroll-cue bob, contact-card drifts,
+   carousel slides, the lab hero/process motion) and disables
+   smooth-scroll so anchor jumps are instant. Essential opacity
+   fades are kept very short rather than removed so nothing ends
+   up stuck invisible.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

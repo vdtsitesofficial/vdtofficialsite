@@ -72,6 +72,14 @@ function measureStageHeight() {
 }
 const view = { w: window.innerWidth, h: measureStageHeight() };
 
+// Phones get a completely different interaction model: instead of the
+// scroll-driven zoom (which is too heavy per-frame on mobile and ties the
+// animation to janky scroll/toolbar events), the hero loads frozen on the
+// intro with a CLICK TO ENTER button. A tap plays a cheap GPU scale+fade
+// and then snaps to the locked full-screen hero. See the mobile-enter
+// block lower down. Desktop keeps the scroll-driven zoom.
+const IS_MOBILE = view.w <= 720;
+
 // =============================================================
 // GEOMETRY — driven by the live tuning panel (see #cp in the HTML)
 //
@@ -97,6 +105,10 @@ const DEFAULTS = {
   screenR:   33.5,    // image %
   screenT:   40.1,    // image %
   screenB:   28.8,    // image %
+  screenY:   0,       // image % — vertical NUDGE of the cream on the laptop.
+                      // +up / -down. Shifts screenT/screenB oppositely so the
+                      // cream slides without changing size. Lets you seat the
+                      // screen on the laptop without touching laptop position.
   homeX:     0,       // px
   homeY:     40,      // px
   homeS:     1.0,     // multiplier
@@ -128,34 +140,54 @@ const T = { ...DEFAULTS };       // live tuning values (mutated by sliders)
 // effect on the next paint.
 // =============================================================
 function applyViewportTuning() {
-  // When the mobile tuner panel is active (?tune in URL), the user is
-  // manually dragging T.laptopY / W / X via sliders. Any resize event
-  // (e.g. iOS Safari's URL bar collapsing on scroll) would otherwise
-  // wipe their values back to the defaults — bail out so manual tuning
-  // sticks.
-  if (typeof window !== "undefined" && window.__vdtTunerActive) return;
   const isMobile = window.innerWidth <= 720;
   if (isMobile) {
     // Mobile values dialed in via the live tuner.
-    // laptopY raised in two steps (74.5 → 54.5 → 24.5). Higher anchor
-    // = cream destination nearer viewport center = lower
-    // computeTargetScale, so the zoom needs less scale and images stay
-    // under the GPU texture limit longer (helps scroll smoothness).
-    T.laptopY = 24.5;
+    // laptopY history: 74.5 → 54.5 → 24.5 (raised), then 24.5 → 54.5
+    // (dropped 30pp back down, +10pp more → 64.5, then -5pp → 59.5 per
+    // user requests). Higher anchor = cream destination nearer viewport
+    // center = lower computeTargetScale, so the zoom needs less scale and
+    // images stay under the GPU texture limit longer (helps scroll
+    // smoothness).
+    T.laptopY = 59.5;
     T.laptopW = 180.0;
     T.laptopX = 50.5;
     // Text drops 10pp lower than the desktop default so "BUILT FOR YOU"
     // clears the laptop's top edge on a phone.
     T.textY   = DEFAULTS.textY + 10;
+    // With "cover" fit on mobile (see updateOverlay), the inner hero
+    // overflows the screen vertically. Top-align it (homeY = 0) so the
+    // site fills the laptop screen from the very top — the desktop
+    // default of 40px would leave a cream band above the homepage.
+    T.homeY   = 0;
   } else {
     T.laptopY = DEFAULTS.laptopY;
     T.laptopW = DEFAULTS.laptopW;
     T.laptopX = DEFAULTS.laptopX;
-    T.textY   = DEFAULTS.textY;
+    // Raised 5pp above the default so the "STUDENT PRICING, AGENCY QUALITY"
+    // tagline (the bottom of the BUILT FOR YOU block) clears the laptop's
+    // top edge on desktop instead of tucking under it.
+    T.textY   = DEFAULTS.textY - 5;
+    T.homeY   = DEFAULTS.homeY;
   }
 }
+// Establish the correct per-viewport baseline ONCE at init — this must run
+// regardless of the tuner so that opening ?tune on a phone starts from the
+// MOBILE geometry (not the desktop defaults). Previously this bailed when
+// __vdtTunerActive was set, so a phone tuning session silently calibrated
+// the desktop layout.
 applyViewportTuning();
-window.addEventListener("resize", applyViewportTuning, { passive: true });
+// On resize, re-apply the baseline — but NOT while the tuner is active, so
+// a manual drag (or iOS Safari's URL-bar collapse firing a resize) doesn't
+// wipe the user's values back to the baseline.
+window.addEventListener(
+  "resize",
+  function () {
+    if (typeof window !== "undefined" && window.__vdtTunerActive) return;
+    applyViewportTuning();
+  },
+  { passive: true }
+);
 
 // Expose T globally so the mobile tuner panel (in page.tsx) can mutate
 // the live values directly from <input> change events. The tick loop
@@ -199,8 +231,14 @@ const FIXED = {
 function fracs() {
   const sL = T.screenL / 100;
   const sR = T.screenR / 100;
-  const sT = T.screenT / 100;
-  const sB = T.screenB / 100;
+  // screenY nudges the cream vertically on the laptop: +up / -down.
+  // Applied as equal-and-opposite shifts to the top/bottom insets so the
+  // cream's HEIGHT is unchanged (1 - sT - sB stays constant) — only its
+  // centre moves. Both screenRect() and computeTargetScale() read fracs(),
+  // so the zoom pivot follows the nudge automatically and stays aligned.
+  const yOff = (T.screenY || 0) / 100;
+  const sT = T.screenT / 100 - yOff;
+  const sB = T.screenB / 100 + yOff;
   return {
     laptopWFrac: T.laptopW / 100,
     laptopXFrac: T.laptopX / 100,
@@ -214,8 +252,26 @@ function fracs() {
   };
 }
 
+// Desktop laptop sizing. The laptop is centred, so narrowing the window
+// shouldn't shrink it. We keep the tuned width-based size on WIDE windows
+// (so the full-width look the user already likes is preserved exactly), but
+// add a viewport-HEIGHT floor so that as the window narrows the laptop stops
+// shrinking with width and holds a consistent size — only capped down once
+// the window is genuinely too narrow to hold it (W_CAP). (Mobile keeps the
+// pure width-based size since the tap-to-enter intro is calibrated to it.)
+const DESKTOP_LAPTOP_H_FLOOR = 1.35; // min laptop width as a multiple of vh
+const DESKTOP_LAPTOP_W_CAP   = 0.95; // never wider than 95% of the viewport
 function laptopDims() {
-  const w = view.w * (T.laptopW / 100);
+  let w;
+  if (IS_MOBILE) {
+    w = view.w * (T.laptopW / 100);
+  } else {
+    const widthBased = view.w * (T.laptopW / 100);
+    w = Math.min(
+      Math.max(widthBased, view.h * DESKTOP_LAPTOP_H_FLOOR),
+      view.w * DESKTOP_LAPTOP_W_CAP
+    );
+  }
   const h = w * LAPTOP_IMAGE_ASPECT;
   return { w, h };
 }
@@ -324,7 +380,13 @@ window.addEventListener("scroll", function () {
   window.__vdtPauseHeroCanvas = true;
   if (_heroCanvasIdleTimer) clearTimeout(_heroCanvasIdleTimer);
   _heroCanvasIdleTimer = setTimeout(function () {
-    window.__vdtPauseHeroCanvas = false;
+    // Only resume the WebGL logo spin if the hero is actually on screen. Once
+    // the user has scrolled down to Process / Portfolio / Contact, the hero
+    // (and its canvas) are off screen — keeping the GPU loop running there was
+    // pure waste and added to the scroll jank. Resume only when it's visible.
+    var r = hero.getBoundingClientRect();
+    var inView = r.bottom > 0 && r.top < view.h;
+    window.__vdtPauseHeroCanvas = !inView;
   }, 150);
 }, { passive: true });
 
@@ -336,9 +398,19 @@ window.addEventListener("scroll", function () {
 // suspenders that ensures the math is fully isolated from per-frame
 // viewport jitter.
 let heroHeight = hero.getBoundingClientRect().height;
+// Cache the hero's top each frame (read ONCE, at the start of the frame in
+// computeProgress) so the tick loop can derive heroBottom without a second
+// getBoundingClientRect() call AFTER it has written styles — that second
+// read was forcing a synchronous reflow every frame (layout thrash), a
+// real contributor to the mobile zoom stutter.
+let heroTop = 0;
 
 function computeProgress() {
+  // On mobile the zoom is NOT scroll-driven — `progress` is set explicitly
+  // by the tap-to-enter flow (enterMobile). Skip the scroll read entirely.
+  if (IS_MOBILE) return;
   const rect = hero.getBoundingClientRect();
+  heroTop = rect.top;
   const total = heroHeight - view.h;
   const scrolled = Math.min(Math.max(-rect.top, 0), total);
   progress = total > 0 ? scrolled / total : 0;
@@ -370,6 +442,10 @@ function onResize() {
   // not on toolbar transitions.
   heroHeight = hero.getBoundingClientRect().height;
   targetScale = computeTargetScale();
+  // Mobile runs no continuous rAF loop (see tick), so re-render once after a
+  // real layout change (orientation flip / split-screen) to re-fit the hero.
+  // Desktop's loop handles this already, so this is mobile-only.
+  if (IS_MOBILE) tick();
 }
 window.addEventListener("resize", onResize, { passive: true });
 
@@ -402,12 +478,48 @@ function updateOverlay(currentScale) {
   // fine-tune where the destination sits within the laptop screen.
   const fitW = projW / view.w;
   const fitH = projH / view.h;
-  const naturalScale = Math.max(0.001, Math.min(fitW, fitH));
+  // Desktop: the hero is landscape and so is the laptop screen, so
+  // "contain" (min) fits it edge-to-edge with no letterboxing.
+  //
+  // Mobile: the hero is PORTRAIT (e.g. 375×812) but the laptop's depicted
+  // screen is LANDSCAPE (~223×140). To show the ENTIRE brand composition
+  // on the laptop screen — the full "WEBSITES WORTH OWNING" poster words
+  // (~19–80% down), the logo and the "Website Design" headline (and the
+  // CTAs) — we CONTAIN by height. A tall portrait band can't also fill a
+  // wide landscape screen, so this leaves cream margins on the sides; in
+  // return nothing is cropped. We fit a tight content band (BAND_TOP..
+  // BAND_BOT) rather than the full hero so the empty top/bottom padding
+  // isn't wasted and the content renders as large as possible.
+  const isMobile = view.w <= 720;
+  // Mobile content band (frac of hero). The compact mobile hero (see the
+  // @media block in hero.css) centres its whole composition — ghost
+  // wordmark + logo + headline + CTAs — between ~25% and ~75%. Framing
+  // that tight band (rather than the full hero) lets the contain fit scale
+  // the composition up enough that "WEBSITES WORTH OWNING" spans the
+  // laptop screen edge-to-edge while everything stays visible. Keep these
+  // in sync with hero.css's compact block.
+  const BAND_TOP = 0.25, BAND_BOT = 0.75;
+  const naturalScale = isMobile
+    ? Math.max(0.001, projH / ((BAND_BOT - BAND_TOP) * view.h))
+    : Math.max(0.001, Math.min(fitW, fitH));
   const baseScale  = naturalScale + (1 - naturalScale) * lock;
   const innerScale = baseScale * T.homeS;
 
   const innerOffsetX = (ow - innerScale * view.w) / 2 + T.homeX;
-  const innerOffsetY = 0                              + T.homeY;
+  // Vertical framing of the inner hero inside the cream window.
+  //
+  // Mobile: centre the content band in the window at rest, then ease that
+  // shift back to 0 as the zoom locks so the inner ends perfectly aligned
+  // (full hero, top-anchored) at lock-complete — a seamless handoff to
+  // .real-landing.
+  let innerOffsetY;
+  if (isMobile) {
+    const BAND_MID = (BAND_TOP + BAND_BOT) / 2;
+    const restCenter = projH / 2 - BAND_MID * naturalScale * view.h;
+    innerOffsetY = restCenter * (1 - lock);
+  } else {
+    innerOffsetY = 0 + T.homeY;
+  }
 
   // BEVEL — corner radius of the cream overlay.
   // Sized as a fraction of the CURRENT screen rect width so it
@@ -436,7 +548,11 @@ function updateOverlay(currentScale) {
   // practice so the fade is invisible either way.
   const fade     = 1 - lock;
   const tiltFade = 1 - smoothstep(0.78, 0.92, smooth);
-  const tiltX    = T.tiltX * tiltFade;
+  // No 3D tilt on phones: rotateX forces the browser to maintain a 3D
+  // rendering context for the stage every frame (an extra render pass and
+  // a real source of mobile zoom stutter). Flat on mobile, tilted on
+  // desktop where there's GPU headroom.
+  const tiltX    = view.w <= 720 ? 0 : T.tiltX * tiltFade;
   const tiltY    = T.tiltY * fade;
   const rotZ     = T.rotZ  * fade;
 
@@ -463,7 +579,10 @@ function updateOverlay(currentScale) {
   // composite read as one continuous surface instead of "sticker
   // pasted on top".
   const bezelPx     = (T.bezel / 100) * projW * (1 - lock);
-  const bezelBlurPx = bezelPx * 0.5;
+  // The blurred drop-shadow bezel is repainted every frame; the BLUR is the
+  // expensive part on phones. Drop the blur on mobile (sharp bezel, near-
+  // identical look at small size) so the per-frame paint is cheap.
+  const bezelBlurPx = view.w <= 720 ? 0 : bezelPx * 0.5;
 
   // Round the overlay's box geometry to whole pixels so both left
   // and right edges fall on identical pixel boundaries. Without
@@ -662,10 +781,27 @@ function tick() {
   siteChrome.style.opacity = String(chromeAmt);
   siteChrome.classList.toggle("is-visible", chromeAmt > 0.5);
 
-  const heroBottom = hero.getBoundingClientRect().bottom;
+  // Derive heroBottom from the cached top (set in computeProgress at the
+  // start of this frame) + cached height — NO new getBoundingClientRect()
+  // here, so we don't force a reflow after the frame's style writes.
+  const heroBottom = heroTop + heroHeight;
   siteChrome.classList.toggle("is-stuck", heroBottom < view.h * 0.5);
 
-  requestAnimationFrame(tick);
+  // PREVIEW vs FULL-SCREEN state. While the hero is still the small in-laptop
+  // preview (not yet locked to the viewport) it's "is-preview"; once locked
+  // it's the real full-screen hero. CSS uses this (mobile only) to let the
+  // ghost wordmark bleed in the preview but FIT the viewport at full screen
+  // so nothing gets cut off sideways.
+  overlay.classList.toggle("is-preview", smooth < 0.85);
+
+  // Loop ONLY on desktop, where the zoom is scroll-driven and needs a fresh
+  // frame continuously. On phones the hero is static (progress is pinned at 0
+  // before the tap-to-enter and 1 after — never scroll-driven), so a perpetual
+  // rAF that rewrites ~30 inline styles every frame just burns the main thread
+  // and makes the whole page scroll janky. On mobile we instead call tick()
+  // explicitly at the only moments it matters: the intro render (revealHero),
+  // right after enter (enterMobile phase 2), and on a real resize (onResize).
+  if (!IS_MOBILE) requestAnimationFrame(tick);
 }
 
 // ---------- easing ----------
@@ -712,6 +848,88 @@ function revealHero() {
   heroHeight = hero.getBoundingClientRect().height;
   targetScale = computeTargetScale();
   tick();
+  if (IS_MOBILE) setupMobileEnter();
+}
+
+// ============================================================
+// MOBILE: tap-to-enter (replaces the scroll-driven zoom)
+//
+// The page loads frozen on the intro (progress 0) with scrolling locked,
+// so the user can't scroll past before entering. Tapping CLICK TO ENTER
+// runs a cheap GPU scale+fade of the whole laptop scene, then snaps the
+// engine straight to its locked full-screen-hero end state (no heavy
+// per-frame morph frames) and unlocks scrolling for the rest of the page.
+// ============================================================
+let mobileEntered = false;
+function enterMobile() {
+  if (mobileEntered) return;
+  mobileEntered = true;
+
+  const btn = document.getElementById("mobile-enter");
+  if (btn) btn.classList.add("is-gone");
+
+  // Pause the WebGL logo spin for the duration of the enter zoom so it
+  // doesn't compete with the (cheap, composited) scale+fade. It resumes in
+  // phase 2 once we're in the full-screen hero.
+  window.__vdtPauseHeroCanvas = true;
+
+  // Phase 1 — cheap composited zoom + fade of the laptop scene. The class
+  // sets a scale()+opacity transition (see style.css). The engine keeps
+  // rendering its children inside, but the whole stage is one GPU layer.
+  stage.classList.add("is-entering");
+
+  // Phase 2 — once the fade-out finishes, jump the engine straight to the
+  // locked end state while the stage is invisible, reset its transform,
+  // then fade the full-screen hero back in. Snapping (not easing) avoids
+  // the expensive morph frames entirely.
+  window.setTimeout(function () {
+    progress = 1;
+    smooth = 1;
+    stage.classList.remove("is-entering");
+    stage.style.transition = "none";
+    stage.style.transform = "none";
+    stage.style.opacity = "0";
+    // Force a reflow so the "none" transition + opacity:0 commit before we
+    // start the fade-in (otherwise the browser batches them and skips it).
+    void stage.offsetWidth;
+    stage.style.transition = "opacity 0.45s ease";
+    stage.style.opacity = "1";
+    // Unlock scrolling so portfolio / testimonials / contact are reachable,
+    // and remove the non-passive touch blocker so it doesn't slow scrolling.
+    document.documentElement.classList.remove("vdt-mobile-intro");
+    document.removeEventListener("touchmove", blockIntroScroll, { passive: false });
+    // Resume the logo spin now that the enter zoom is done.
+    window.__vdtPauseHeroCanvas = false;
+    // The mobile rAF loop is off (see tick), so render the locked full-screen
+    // hero exactly once here. smooth was set to 1 above, so this single frame
+    // writes the final state; nothing changes after, so no loop is needed.
+    tick();
+  }, 820);
+}
+
+// Non-passive touchmove blocker — the most reliable cross-browser scroll
+// lock (CSS alone is flaky on iOS). Swallows the gesture while the intro
+// lock class is present. Stored so we can REMOVE it after entering: a
+// lingering non-passive touchmove listener would otherwise slow down the
+// post-enter scrolling.
+function blockIntroScroll(e) {
+  if (document.documentElement.classList.contains("vdt-mobile-intro")) {
+    e.preventDefault();
+  }
+}
+
+function setupMobileEnter() {
+  // Lock scrolling and freeze on the intro.
+  document.documentElement.classList.add("vdt-mobile-intro");
+  document.addEventListener("touchmove", blockIntroScroll, { passive: false });
+  progress = 0;
+  smooth = 0;
+  window.__vdtEnterMobile = enterMobile;
+  const btn = document.getElementById("mobile-enter");
+  if (btn) {
+    btn.classList.remove("is-gone");
+    btn.addEventListener("click", enterMobile);
+  }
 }
 
 Promise.all([loadImage(bgImage), loadImage(laptopImage)])

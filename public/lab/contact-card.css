@@ -25,7 +25,9 @@
 
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  /* svh = small-viewport height: stable on mobile (doesn't jump when the
+     browser's address bar shows/hides like 100vh does). */
+  min-height: 80svh;
   display: grid;
   place-items: center;
   /* Flat cream — exact same value as `.real-landing` (var(--canvas) =
@@ -65,6 +67,49 @@
 @media (max-width: 480px) {
   .vdt-contact-card .cc-card { padding: 36px 22px; }
   .vdt-contact-card { padding: 4rem 1rem 3rem; }
+  /* The base .cc-name is 48px (= 3rem) with no media query. style.css tries
+     to shrink it on mobile, but that rule has equal specificity and loads
+     EARLIER, so the 48px base wins and the name renders full-size on phones
+     (the size that overflowed narrow screens originally). Reduce it here —
+     contact-card.css loads after style.css, so this reliably wins. */
+  .vdt-contact-card .cc-name {
+    /* !important is required: the base `.cc-name{font-size:48px}` rule sits
+       LATER in this file, so at equal specificity it would otherwise win and
+       the name would render at 48px on mobile (overflowing/clipping "Contact"
+       in the form card). */
+    font-size: 34px !important;
+    letter-spacing: -1px;
+    overflow-wrap: anywhere;
+  }
+  /* The form card's "Contact Us" is two spans laid out as a nowrap flex ROW
+     (one line on desktop). On a narrow phone the row gets squeezed and, with
+     overflow-wrap:anywhere above, each word breaks MID-WORD ("Contact"→
+     "Cont"/"act", "Us"→"U"/"s"), which side-by-side reads "Cont U / act s".
+     On mobile, stack the two words instead — "Contact" on its own line, "Us"
+     beneath — and forbid the mid-word break. */
+  .vdt-contact-card .cc-card.cc-form-card .cc-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .vdt-contact-card .cc-card.cc-form-card .cc-name span {
+    display: block;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+}
+
+/* Mobile scroll perf: backdrop-filter: blur(18px) re-computes the blurred
+   backdrop EVERY frame while the card is on screen during a scroll — one of
+   the heaviest per-frame costs on a phone and a real source of scroll jank.
+   Drop it on mobile and make the card background more opaque so it still
+   reads as a clean frosted panel without the live blur. */
+@media (max-width: 720px) {
+  .vdt-contact-card .cc-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.92);
+  }
 }
 
 /* Ambient red bloom — removed per user request. The cards still

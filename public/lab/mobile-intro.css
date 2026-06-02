@@ -1,0 +1,404 @@
+/* =============================================================
+   VDT — Mobile "Tap anywhere to enter" intro overlay
+   -------------------------------------------------------------
+   A self-contained fixed overlay (#m-intro) shown ONLY on mobile
+   (≤720px — toggled in style.css). It plays the premium tap-to-
+   enter takeover, then fades out to reveal the real (normal-flow)
+   mobile page underneath: hero → portfolio → testimonials →
+   process → contact → footer.
+
+   Everything is scoped under #m-intro so it can't touch the
+   desktop scroll-zoom. The overlay is display:none by default;
+   style.css flips it to block at ≤720px.
+   ============================================================= */
+
+#m-intro {
+  --cream:      #f4efe6;
+  --cream-2:    #ece4d6;
+  --ink:        #141414;
+  --muted:      #6b6660;
+  --red:        #dc2626;
+  --red-bright: #ef4444;
+
+  --ease-takeover: cubic-bezier(0.66, 0, 0.20, 1);
+  --ease-soft:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.30, 1);
+
+  /* laptop placement (tunable) — mirrors the standalone prototype */
+  --lap-width: 200%;
+  --lap-top:   63%;
+
+  /* screen clip-rect (set by mobile-intro.js) */
+  --clip-top: 55%;
+  --clip-right: 30%;
+  --clip-bottom: 30%;
+  --clip-left: 30%;
+  --clip-radius: 10px;
+  --screen-w: 240px;
+
+  display: none;                 /* shown on mobile via style.css */
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #0d0b0a;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* whole-overlay fade used when the takeover hands off to the page */
+  transition: opacity 0.6s ease;
+}
+#m-intro[data-state="done"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Show the overlay ONLY on phones. This media query lives in this
+   file (loaded AFTER style.css), so it reliably wins over the base
+   `#m-intro { display: none }` above regardless of cascade order. */
+@media (max-width: 720px) {
+  #m-intro { display: block; }
+}
+
+#m-intro *, #m-intro *::before, #m-intro *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── room background ── */
+#m-intro .m-room {
+  position: absolute;
+  inset: 0;
+  /* mobile-optimized room photo (135KB vs the 1.9MB full asset) */
+  background: url("./assets/background-mobile.png") center 50% / cover no-repeat, #14110d;
+  z-index: 1;
+  transform-origin: 50% 63%;
+  transition: transform 1.15s var(--ease-takeover), opacity 0.9s ease, filter 1.0s ease;
+  /* Promote to its own GPU layer so the camera-push (transform) +
+     fade (opacity) run on the compositor thread, not main-thread
+     paint. translateZ(0) forces the layer up front so there's no
+     mid-animation promotion hitch. */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* ── laptop scene ── */
+#m-intro .m-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform-origin: 50% 63%;
+  transition: transform 1.15s var(--ease-takeover), opacity 0.85s ease 0.1s, filter 0.9s ease;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+#m-intro .m-laptop {
+  position: absolute;
+  left: 50%;
+  top: var(--lap-top);
+  width: var(--lap-width);
+  transform: translate(-50%, -50%);
+}
+#m-intro .m-laptop img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 24px rgba(0,0,0,0.5)) drop-shadow(0 40px 60px rgba(0,0,0,0.35));
+}
+
+/* ── brand wordmark ── */
+#m-intro .m-topbar {
+  position: absolute;
+  top: 26px;
+  left: 22px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(255,255,255,0.9);
+  transition: opacity 0.4s ease, transform 0.6s var(--ease-soft);
+}
+#m-intro .m-topbar svg { width: 22px; height: 22px; color: var(--red); display: block; }
+#m-intro .m-topbar span {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+}
+
+/* ── glow on the laptop screen ── */
+#m-intro .m-glow {
+  position: absolute;
+  z-index: 4;
+  top: var(--clip-top); left: var(--clip-left); right: var(--clip-right); bottom: var(--clip-bottom);
+  border-radius: var(--clip-radius);
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(255,240,220,0.30) 0%, rgba(220,38,38,0.16) 45%, transparent 72%);
+  box-shadow: 0 0 40px 6px rgba(255,235,210,0.18), 0 0 90px 20px rgba(220,38,38,0.12);
+  animation: m-glow-breathe 4s ease-in-out infinite;
+  transition: opacity 0.5s ease;
+  will-change: opacity, transform;
+}
+@keyframes m-glow-breathe {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 0.65; transform: scale(1.015); }
+}
+
+/* ── cream takeover surface (the "white filling up") ── */
+#m-intro .m-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: radial-gradient(ellipse 120% 80% at 50% 36%, var(--cream) 0%, var(--cream-2) 100%);
+  clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left) round var(--clip-radius));
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  /* Force a dedicated GPU layer: the gradient is rasterized to a
+     texture ONCE, then the clip-path reveal just changes the
+     compositor's clip on that cached texture each frame instead of
+     re-painting the gradient over a growing full-screen area. This
+     is the single biggest win for the white-fill smoothness.
+     `contain: paint` stops the surface's repaints from invalidating
+     any sibling layers. */
+  will-change: clip-path;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: paint;
+}
+
+/* ── "VDT SITES" ghost on the screen ── */
+#m-intro .m-screen-label {
+  position: absolute;
+  z-index: 6;
+  top: var(--clip-top); left: var(--clip-left); right: var(--clip-right); bottom: var(--clip-bottom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+#m-intro .m-screen-label span {
+  font-family: "Anton", "Inter", sans-serif;
+  font-weight: 400;
+  font-size: calc(var(--screen-w) * 0.165);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--ink);
+  opacity: 0.12;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* ── light sweep ── */
+#m-intro .m-sweep {
+  position: absolute;
+  inset: -20% -60%;
+  z-index: 9;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0) 60%);
+  transform: translateX(-120%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ── tap bloom ── */
+#m-intro .m-bloom {
+  position: absolute;
+  z-index: 8;
+  top: 50%; left: 50%;
+  width: 40px; height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,235,210,0.5) 35%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ── poster headline ── */
+#m-intro .m-headline {
+  position: absolute;
+  z-index: 6;
+  left: 0; right: 0;
+  top: 28.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+  transition: opacity 0.4s ease, transform 0.6s var(--ease-soft);
+}
+#m-intro .m-headline .m-htitle {
+  font-family: "Anton", "Inter", sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 16vw, 3.6rem);
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 0 1px rgba(0,0,0,0.4);
+}
+#m-intro .m-headline p {
+  margin-top: 14px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+#m-intro .m-headline em { font-style: normal; color: var(--red-bright); }
+
+/* ── invite (bottom) ── */
+#m-intro .m-invite {
+  position: absolute;
+  z-index: 7;
+  left: 0; right: 0;
+  bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  transition: opacity 0.35s ease, transform 0.5s var(--ease-soft);
+}
+#m-intro .m-invite__text {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+  animation: m-invite-breathe 3s ease-in-out infinite;
+}
+@keyframes m-invite-breathe { 0%,100% { opacity: 0.72; } 50% { opacity: 1; } }
+#m-intro .m-invite__pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: m-invite-dot 2.4s var(--ease-out) infinite;
+}
+@keyframes m-invite-dot {
+  0%   { box-shadow: 0 0 0 0 rgba(220,38,38,0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(220,38,38,0); }
+  100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
+}
+
+/* ── cinematic overlays ── */
+#m-intro .m-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: radial-gradient(ellipse 75% 65% at 50% 50%, transparent 55%, rgba(0,0,0,0.5) 100%);
+}
+#m-intro .m-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── tap layer ── */
+#m-intro .m-taplayer {
+  position: absolute;
+  inset: 0;
+  z-index: 13;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+#m-intro[data-state="entering"] .m-taplayer,
+#m-intro[data-state="done"]     .m-taplayer { display: none; }
+
+/* =========================================================
+   ENTERING — the takeover sequence
+   ========================================================= */
+#m-intro[data-state="entering"] .m-invite,
+#m-intro[data-state="done"]     .m-invite { opacity: 0; transform: translateY(12px); pointer-events: none; }
+
+#m-intro[data-state="entering"] .m-topbar,
+#m-intro[data-state="done"]     .m-topbar { opacity: 0; transform: translateY(-6px); }
+
+#m-intro[data-state="entering"] .m-headline,
+#m-intro[data-state="done"]     .m-headline { opacity: 0; transform: translateY(-14px) scale(0.98); }
+
+#m-intro[data-state="entering"] .m-screen-label,
+#m-intro[data-state="done"]     .m-screen-label { opacity: 0; }
+
+/* Drop the film grain during the takeover. mix-blend-mode: overlay
+   forces a full-viewport blend pass on EVERY frame — one of the
+   heaviest per-frame costs on mobile. At 6% opacity over a 1s
+   high-motion animation it's imperceptible, so hiding it for the
+   duration is a free smoothness win. */
+#m-intro[data-state="entering"] .m-grain,
+#m-intro[data-state="done"]     .m-grain { display: none; }
+
+#m-intro[data-state="entering"] .m-glow { animation: m-glow-flare 0.9s var(--ease-out) forwards; }
+@keyframes m-glow-flare { 0% { opacity: 0.6; } 22% { opacity: 1; } 100% { opacity: 0; } }
+
+/* Keep translateZ(0) in the animated transform so the layer stays
+   compositor-promoted through the push (a bare scale() would drop
+   the GPU-layer hint mid-animation). */
+#m-intro[data-state="entering"] .m-room,
+#m-intro[data-state="done"]     .m-room { transform: scale(1.18) translateZ(0); opacity: 0; filter: brightness(1.25); }
+/* blur(2px) removed: the scene is fading to 0 behind the cream fill
+   by the time a blur would register, so it never reads visually —
+   but animating an SVG/raster blur every frame is the single most
+   expensive op on mobile GPUs. Brightness (a cheap per-pixel
+   multiply) stays, preserving the visible light-bloom flash. */
+#m-intro[data-state="entering"] .m-scene,
+#m-intro[data-state="done"]     .m-scene { transform: scale(1.28) translateZ(0); opacity: 0; filter: brightness(1.4); }
+
+#m-intro[data-state="entering"] .m-surface,
+#m-intro[data-state="done"]     .m-surface { animation: m-takeover 1.0s var(--ease-takeover) forwards; }
+@keyframes m-takeover {
+  0% {
+    clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left) round var(--clip-radius));
+  }
+  9% {
+    clip-path: inset(
+      calc(var(--clip-top) + 6px) calc(var(--clip-right) + 6px)
+      calc(var(--clip-bottom) + 6px) calc(var(--clip-left) + 6px) round calc(var(--clip-radius) + 3px));
+  }
+  100% { clip-path: inset(0px 0px 0px 0px round 0px); }
+}
+
+#m-intro[data-state="entering"] .m-bloom { animation: m-bloom 0.7s var(--ease-out) forwards; }
+@keyframes m-bloom {
+  0%   { transform: scale(0);  opacity: 0.9; }
+  60%  { opacity: 0.5; }
+  100% { transform: scale(14); opacity: 0; }
+}
+
+/* light sweep just before the overlay fades to the page */
+#m-intro[data-state="entering"] .m-sweep { animation: m-sweep 0.9s var(--ease-out) 0.55s; }
+@keyframes m-sweep {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translateX(120%);  opacity: 0; }
+}
+
+/* reduced motion — no heavy transforms; tap still works */
+@media (prefers-reduced-motion: reduce) {
+  #m-intro .m-glow, #m-intro .m-invite__text, #m-intro .m-invite__pulse { animation: none !important; }
+  #m-intro .m-room, #m-intro .m-scene, #m-intro .m-surface, #m-intro .m-bloom, #m-intro .m-sweep {
+    transition: none !important; animation: none !important;
+  }
+}
+
+/* Body scroll lock while the intro is up (added by mobile-intro.js) */
+body.m-intro-lock { overflow: hidden; }
+
+/* Production's basic "CLICK TO ENTER" button is replaced by this
+   premium overlay — hide it on mobile so it can't flash through.
+   The underlying enterMobile() flow it used to trigger is still
+   driven, now by the overlay's tap calling window.__vdtEnterMobile(). */
+@media (max-width: 720px) {
+  .mobile-enter { display: none !important; }
+}

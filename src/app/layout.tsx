@@ -1,7 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { LAB_V } from "@/lib/labVersion";
 
 const SITE_URL = "https://vdtsites.com";
+
+// viewport-fit=cover lets the page draw into the notch / home-bar safe-area
+// insets on modern phones; themeColor tints the mobile browser chrome cream.
+export const viewport: Viewport = {
+  themeColor: "#f4efe6",
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -79,25 +87,25 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/lab/assets/background-mobile.png"
+          href={`/lab/assets/background-mobile.png?v=${LAB_V}`}
           media="(max-width: 720px)"
         />
         <link
           rel="preload"
           as="image"
-          href="/lab/assets/background.png"
+          href={`/lab/assets/background.png?v=${LAB_V}`}
           media="(min-width: 721px)"
         />
         <link
           rel="preload"
           as="image"
-          href="/lab/assets/laptop-mobile.png"
+          href={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
           media="(max-width: 720px)"
         />
         <link
           rel="preload"
           as="image"
-          href="/lab/assets/laptop.png"
+          href={`/lab/assets/laptop.png?v=${LAB_V}`}
           media="(min-width: 721px)"
         />
       </head>

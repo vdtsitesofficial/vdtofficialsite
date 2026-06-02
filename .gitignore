@@ -23,3 +23,9 @@ tsconfig.tsbuildinfo
 .vercel
 .deploy-secrets.tmp
 *.deploy-secrets*
+
+# dev/debug scratch (never ship)
+/_render_*.js
+/public/lab/_*
+/public/lab/assets/*.old.png
+/public/lab/assets/*.full.png

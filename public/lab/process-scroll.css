@@ -1022,3 +1022,202 @@
   .vdt-process-shell .slide--stage { grid-template-columns: 1fr; gap: 2rem; padding: 0 5vw; }
   .vdt-process-shell .slide__visual { min-height: 38vh; }
 }
+
+/* ── Mobile (≤720px): rebuild each step as a readable vertical card ──
+   Desktop positions .slide__text and the .mock visuals with absolute
+   per-stage % coordinates tuned for a wide screen, which cram them into
+   illegible slivers on a phone. We keep the horizontal swipe (each slide
+   is still 100vw) but lay each slide out as a centered flex COLUMN:
+   readable text on top, ONE representative visual below, decorative extras
+   hidden. !important is required to beat the per-stage absolute-position
+   rules above. */
+@media (max-width: 720px) {
+  /* Size the pin + slides to the VISIBLE viewport (svh = small viewport,
+     which is stable and always on-screen) instead of 100vh (the LARGEST
+     viewport, i.e. with the address bar hidden). With 100vh the content was
+     being centred in a box taller than what's actually visible, so it got
+     pushed off-screen / read as vertically compressed. svh makes each slide
+     exactly one visible screen. */
+  /* Mobile scrolls the FULL track (END_FRAC=1.0 in process-scroll.js) so all
+     4 stages incl. Launch show. The runway is lengthened to match so the
+     journey paces comfortably (was 375vh, tuned for the desktop 0.75). */
+  /* 440svh (was 420) gives the extra ~5% scroll runway the 20vw gap below
+     adds, so the journey paces the same as before. */
+  .vdt-process-shell .process { height: 440svh; }
+  .vdt-process-shell .process__pin { height: 100svh; }
+  .vdt-process-shell .process__track { height: 100svh; }
+  .vdt-process-shell .slide { height: 100svh; }
+
+  /* ── Extra blank GAP (20vw) between the OUR PROCESS title slide and the
+     Discover slide (mobile only) ──
+     The underline gets to run flat through the title AND most of this gap
+     before the line rises into Discover. The track widens to fit, and the
+     four stage slides shift right by the gap — which carries their text with
+     them. process-scroll.js shifts every river crest/trough by the SAME 20vw
+     (and widens the SVG viewBox to 5200), so each stage's wave still lines up
+     with that stage's text exactly — the red line stays as clear of the
+     content as it was before the gap. */
+  .vdt-process-shell .process__track { width: 520vw; }
+  .vdt-process-shell .slide--1 { left: 120vw; }
+  .vdt-process-shell .slide--2 { left: 220vw; }
+  .vdt-process-shell .slide--3 { left: 320vw; }
+  .vdt-process-shell .slide--4 { left: 420vw; }
+
+  /* ── The red line is ON TOP and is the desktop curve, re-tuned for portrait ──
+     process-scroll.js feeds in MOBILE_RIVER_D: the desktop line's shape with
+     each of its four swings widened into a BROAD crest/trough that holds high
+     (~20%) or low (~80%) across the whole width of its stage, with the steep
+     travel confined to the hand-offs BETWEEN stages (so within each screen the
+     line is a clean, gentle, near-flat arc — no sudden turns). It opens as a
+     straight underline beneath OUR PROCESS. Crests are HIGH on data-line="top"
+     stages (1,3) and LOW on data-line="bottom" stages (2,4). The content is
+     then parked just inside the OPEN lobe — its TOP just under a high crest, or
+     its BOTTOM just above a low trough — so the line frames each step and never
+     touches the text (measured ~25-40px clearance across the full content
+     width). Draw mechanics (offset by journeyProgress) match desktop, so the
+     reveal timing is identical. The exact crest/lobe geometry was tuned against
+     live 408px-wide mobile renders. */
+  .vdt-process-shell .process__river-svg { z-index: 4; inset: 0; height: 100%; }
+  .vdt-process-shell .slide { z-index: 2; }
+  /* The glow path's strokeDashoffset + strokeWidth are rewritten every scroll
+     frame, and a blurred SVG stroke over a ~1900px-wide path is one of the most
+     expensive things to repaint on a phone — a real source of the scroll jank.
+     Hide the glow entirely on mobile; the solid stroke line still reads fine. */
+  .vdt-process-shell .process__river--glow { display: none !important; }
+
+  .vdt-process-shell .slide--stage {
+    display: flex !important;
+    flex-direction: column;
+    /* Centre the column so its edges stay inside the broad crest/trough. */
+    align-items: center;
+    gap: clamp(0.5rem, 1.6svh, 0.95rem);
+  }
+  /* data-line="top" (crest, Discover/Build): text BELOW the crest. The new
+     sine dips toward the midline at the slide edges, so the reserve is a bit
+     larger than the old flat-top design (44svh) to keep the text's top edge
+     clear of the line where it crosses. */
+  .vdt-process-shell .slide--stage[data-line="top"] {
+    justify-content: flex-start !important;
+    padding: 44svh 7vw 4svh !important;
+  }
+  /* data-line="bottom" (trough, Design): text ABOVE the trough. */
+  .vdt-process-shell .slide--stage[data-line="bottom"] {
+    justify-content: flex-end !important;
+    padding: 4svh 7vw 44svh !important;
+  }
+  /* LAUNCH (slide--4): the line is cut at the trough mid-slide, leaving the
+     top-right empty — so override the trough layout and park Launch's text in
+     the TOP-RIGHT of the slide. */
+  .vdt-process-shell .slide--4 {
+    justify-content: flex-start !important;   /* top */
+    align-items: flex-end !important;          /* right — block hugs the right edge */
+    padding: 7svh 6vw 4svh !important;
+  }
+  /* Block sits top-right, but text reads left-to-right INSIDE it so the
+     bullet markers stay tight against their text (no "marker … text" gap). */
+  .vdt-process-shell .slide--4 .slide__text { margin-left: auto; text-align: left; }
+  .vdt-process-shell .slide--4 .slide__text * { text-align: left; }
+
+  /* Text — normal flow, capped to a centred column whose edges stay inside the
+     broad crest. The line clearance is handled by the 30svh reserve above. */
+  .vdt-process-shell .slide__text {
+    position: static !important;
+    width: 100% !important;
+    max-width: 270px;
+    height: auto !important;
+    transform: none;
+    flex: 0 0 auto;
+  }
+  /* Drop the long explanatory paragraph on phones. It restates the subtitle,
+     and removing it is what lets the rest of the step (title, subtitle, the
+     four checkpoints, and the visual) fit inside the line-cleared lobe at a
+     readable size. The subtitle still carries the stage's point. */
+  .vdt-process-shell .slide__text .stage__desc { display: none !important; }
+  .vdt-process-shell .slide.is-active .slide__text { transform: none; }
+  .vdt-process-shell .stage__title-row { gap: .75rem; margin-bottom: .5rem; }
+  .vdt-process-shell .stage__num {
+    width: 42px !important; height: 42px !important;
+    font-size: 1rem !important; border-width: 2px;
+  }
+  .vdt-process-shell .stage__title { font-size: 2rem !important; }
+  .vdt-process-shell .stage__subtitle {
+    font-size: .92rem !important; max-width: none !important; margin-bottom: .4rem;
+  }
+  .vdt-process-shell .stage__desc {
+    font-size: .84rem !important; max-width: none !important;
+    margin-bottom: .55rem !important; line-height: 1.45;
+  }
+  .vdt-process-shell .stage__points { font-size: .82rem; gap: .3rem; }
+  .vdt-process-shell .stage__points li { line-height: 1.34; }
+
+  /* Visual — one representative mock in flow, sized to the lobe. Explicit
+     height (not auto) so the mocks whose interiors use flex:1 / % heights
+     fill correctly instead of collapsing. */
+  .vdt-process-shell .slide__visual {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    /* CRITICAL: the @media(max-width:1100px) rule sets min-height:38vh on the
+       visual (~325px on a phone), which inflated every step by ~220px and was
+       the real reason the content overflowed up into the line. Kill it so the
+       visual wraps its single mock tightly. */
+    min-height: 0 !important;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: .15rem;
+  }
+  .vdt-process-shell .slide--1 .mock--brief,
+  .vdt-process-shell .slide--2 .mock--browser,
+  .vdt-process-shell .slide--3 .mock--qa,
+  .vdt-process-shell .slide--4 .mock--analytics {
+    position: relative !important;
+    top: auto !important; left: auto !important;
+    right: auto !important; bottom: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+  /* Render each mock at its FULL design size (so its internals — chrome bars,
+     charts, checklists — keep their intended proportions and nothing CLIPS,
+     which is what was cutting them off before), then `zoom` the whole thing
+     down to ~130px tall to fit the lobe. zoom (not transform) shrinks the
+     layout box too, so flex centring and the line-clearance math stay correct.
+     The two mocks with flex:1 interiors (browser, analytics) need an explicit
+     design height; brief/qa size to content. */
+  .vdt-process-shell .slide--1 .mock--brief    { width: 238px !important; height: auto !important;  zoom: 0.52; }
+  .vdt-process-shell .slide--2 .mock--browser  { width: 350px !important; height: 268px !important; zoom: 0.48; }
+  .vdt-process-shell .slide--3 .mock--qa       { width: 210px !important; height: 208px !important; zoom: 0.60; }
+  .vdt-process-shell .slide--4 .mock--analytics{ width: 290px !important; height: 286px !important; zoom: 0.46; }
+
+  /* Hide the secondary / decorative / clipped mocks on mobile — including
+     stage 1's scattered notepad/sticky/persona/arrow (they were positioned
+     at desktop %s and overlapped on a phone). One clean mock per stage. */
+  .vdt-process-shell .slide--1 .mock--notepad,
+  .vdt-process-shell .slide--1 .mock--sticky,
+  .vdt-process-shell .slide--1 .mock--persona,
+  .vdt-process-shell .slide--1 .mock--arrow,
+  .vdt-process-shell .slide--2 .mock--phone,
+  .vdt-process-shell .slide--2 .mock--palette,
+  .vdt-process-shell .slide--2 .mock--type,
+  .vdt-process-shell .slide--3 .mock--code,
+  .vdt-process-shell .slide--3 .mock--build-phone,
+  .vdt-process-shell .slide--3 .mock--speed,
+  .vdt-process-shell .slide--4 .mock--live,
+  .vdt-process-shell .slide--4 .mock--launch-devices {
+    display: none !important;
+  }
+
+  /* Title slide. The river opens as a straight underline at y540 (≈54% of the
+     slide). Seat "OUR PROCESS" just above that so the flat line reads as its
+     underline, and keep it on one line so the gap is predictable. */
+  .vdt-process-shell .title-guide { max-width: 80vw; }
+  .vdt-process-shell .title-card { margin-bottom: 10vh; }
+  /* 32px keeps "OUR PROCESS" on ONE line within a ~375-408px phone (the
+     style.css clamp rendered it ~49px, which overflowed and clipped both
+     ends). nowrap holds it on one line so the straight underline spans it. */
+  .vdt-process-shell .title-card__heading { font-size: 32px !important; white-space: nowrap !important; }
+  .vdt-process-shell .stage__desc { margin-bottom: 0.55rem; }
+}
