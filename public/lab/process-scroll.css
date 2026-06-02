@@ -1122,9 +1122,15 @@
      left, gentler fall on the right), so its visual peak sits a touch right of
      the slide centre. Nudge the Discover text right so it reads as centred
      under the hump. (Uses position/left, not transform — the .is-active rule
-     resets transform on .slide__text.) */
+     resets transform on .slide__text.)
+     top:auto is REQUIRED: the desktop `.slide--1 .slide__text` rule sets
+     `top: 38.3%`, which is inert while the text is position:static but
+     re-activates the moment we switch to position:relative — without this
+     reset it drops the text ~38% down the slide. We only want a horizontal
+     shift, so the vertical reserve stays governed by the 44svh top padding. */
   .vdt-process-shell .slide--1 .slide__text {
     position: relative !important;
+    top: auto !important;
     left: 8vw;
   }
 
