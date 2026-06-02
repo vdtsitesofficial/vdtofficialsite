@@ -1118,6 +1118,16 @@
   .vdt-process-shell .slide--4 .slide__text { margin-left: auto; text-align: left; }
   .vdt-process-shell .slide--4 .slide__text * { text-align: left; }
 
+  /* DISCOVER (slide--1): the crest is slightly asymmetric (steeper rise on the
+     left, gentler fall on the right), so its visual peak sits a touch right of
+     the slide centre. Nudge the Discover text right so it reads as centred
+     under the hump. (Uses position/left, not transform — the .is-active rule
+     resets transform on .slide__text.) */
+  .vdt-process-shell .slide--1 .slide__text {
+    position: relative !important;
+    left: 8vw;
+  }
+
   /* Text — normal flow, capped to a centred column whose edges stay inside the
      broad crest. The line clearance is handled by the 30svh reserve above. */
   .vdt-process-shell .slide__text {
