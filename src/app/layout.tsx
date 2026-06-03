@@ -65,6 +65,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Ahrefs Web Analytics — privacy-friendly, cookieless traffic
+            analytics. Loaded async so it never blocks render. Kept as a raw
+            tag (not next/script) so it appears in the server-rendered <head>,
+            which is what Ahrefs' "Recheck installation" verifier fetches. */}
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="shx6O+0bxWu7n6CPgofN2g"
+          async
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* Site-wide font baseline. The OLD showcase design loaded Fraunces,
