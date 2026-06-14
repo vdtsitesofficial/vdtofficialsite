@@ -14,16 +14,19 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "VDT Sites: Web Design for Small Business in Nanaimo, BC",
+    default: "Website Design Nanaimo & Vancouver Island | VDT Sites",
     template: "%s | VDT Sites",
   },
   description:
-    "VDT Sites is a two-person web design studio in Nanaimo, BC. We build fast, modern, SEO-ready websites for small businesses.",
+    "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
   keywords: [
+    "website design Nanaimo",
     "web design Nanaimo",
+    "website design Vancouver Island",
+    "web design Vancouver Island",
+    "Nanaimo web designer",
     "small business websites",
     "web developer BC",
-    "website design Vancouver Island",
     "VDT Sites",
   ],
   authors: [{ name: "VDT Sites" }],
@@ -35,15 +38,15 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: SITE_URL,
     siteName: "VDT Sites",
-    title: "VDT Sites: Web Design for Small Business in Nanaimo, BC",
+    title: "Website Design Nanaimo & Vancouver Island | VDT Sites",
     description:
-      "A two-person web design studio in Nanaimo, BC. Fast, modern, SEO-ready websites for small businesses.",
+      "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "VDT Sites: Web Design for Small Business",
+    title: "Website Design Nanaimo & Vancouver Island | VDT Sites",
     description:
-      "A two-person web design studio in Nanaimo, BC. Fast, modern websites for small businesses.",
+      "Custom website design for small businesses in Nanaimo and across Vancouver Island.",
   },
   robots: {
     index: true,

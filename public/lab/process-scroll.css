@@ -1041,9 +1041,11 @@
   /* Mobile scrolls the FULL track (END_FRAC=1.0 in process-scroll.js) so all
      4 stages incl. Launch show. The runway is lengthened to match so the
      journey paces comfortably (was 375vh, tuned for the desktop 0.75). */
-  /* 440svh (was 420) gives the extra ~5% scroll runway the 20vw gap below
-     adds, so the journey paces the same as before. */
-  .vdt-process-shell .process { height: 440svh; }
+  /* 500svh (was 440): process-scroll.js now finishes the horizontal travel at
+     82% of the journey (TRACK_END) and HOLDS Launch on screen for the last 18%
+     — the extra runway keeps the per-stage pacing the same as before while
+     funding that hold (440 * 0.82 ≈ 360 of travel vs the old ~340). */
+  .vdt-process-shell .process { height: 500svh; }
   .vdt-process-shell .process__pin { height: 100svh; }
   .vdt-process-shell .process__track { height: 100svh; }
   .vdt-process-shell .slide { height: 100svh; }

@@ -562,24 +562,8 @@ export default function BlogLayout({
               re-execute on soft navigation, and the importmap can only be
               parsed before any module loads. */}
           <a className="dest-brand" href="/">
-            <svg
-              className="dest-mark"
-              viewBox="0 0 100 100"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.6"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M6,18 L84,18 L45,91 Z
-                   M16,24 L84,24 L80,30 L19,30 Z
-                   M48,30 L48,90 L45,94 L42,89 L42,30 Z
-                   M54,36 L68,36 L60,50 L60,65 L54,76 Z
-                   M36,63 L36,36 L14,36 L17,42 L25,42 Z"
-              />
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="dest-mark" src="/vdt-glass-logo.png" alt="VDT Sites" />
             <span>VDT&nbsp;SITES</span>
           </a>
           <nav className="dest-nav">

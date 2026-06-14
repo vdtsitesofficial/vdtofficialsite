@@ -180,21 +180,52 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: IMPORTMAP }}
       />
 
+      {/* Local-business structured data — the machine-readable card Google
+          uses for local rankings ("website design Nanaimo / Vancouver Island").
+          NAP matches the public contact card (vault: Projects/VDT/Contact Card). */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "@id": "https://vdtsites.com/#business",
+            name: "VDT Sites",
+            description:
+              "Custom website design for small businesses in Nanaimo and across Vancouver Island, BC.",
+            url: "https://vdtsites.com",
+            telephone: "+1-250-616-2087",
+            email: "vdtsites@gmail.com",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Nanaimo",
+              addressRegion: "BC",
+              addressCountry: "CA",
+            },
+            areaServed: [
+              { "@type": "City", name: "Nanaimo" },
+              { "@type": "City", name: "Parksville" },
+              { "@type": "City", name: "Ladysmith" },
+              { "@type": "City", name: "Victoria" },
+              { "@type": "Place", name: "Vancouver Island" },
+            ],
+            sameAs: ["https://www.instagram.com/vdtsites"],
+            priceRange: "$$",
+            knowsAbout: [
+              "website design",
+              "web development",
+              "SEO",
+              "small business websites",
+            ],
+          }),
+        }}
+      />
+
       {/* Pre-zoom transparent header */}
       <header id="zoom-header" className="zoom-header">
         <a className="zh-brand" href="/">
-          <svg
-            className="zh-mark"
-            viewBox="0 0 100 100"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.6"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            <path d="M6,18 L84,18 L45,91 Z M16,24 L84,24 L80,30 L19,30 Z M48,30 L48,90 L45,94 L42,89 L42,30 Z M54,36 L68,36 L60,50 L60,65 L54,76 Z M36,63 L36,36 L14,36 L17,42 L25,42 Z" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="zh-mark" src="/vdt-glass-logo.png" alt="VDT Sites" />
           <span>VDT&nbsp;SITES</span>
         </a>
         <nav className="zh-nav">
@@ -339,18 +370,8 @@ export default function Home() {
       {/* Fixed post-zoom site chrome */}
       <header id="site-chrome" className="site-chrome">
         <a className="dest-brand" href="/">
-          <svg
-            className="dest-mark"
-            viewBox="0 0 100 100"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.6"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            <path d="M6,18 L84,18 L45,91 Z M16,24 L84,24 L80,30 L19,30 Z M48,30 L48,90 L45,94 L42,89 L42,30 Z M54,36 L68,36 L60,50 L60,65 L54,76 Z M36,63 L36,36 L14,36 L17,42 L25,42 Z" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="dest-mark" src="/vdt-glass-logo.png" alt="VDT Sites" />
           <span>VDT&nbsp;SITES</span>
         </a>
         <nav className="dest-nav">
@@ -506,7 +527,7 @@ export default function Home() {
                         />
                       </svg>
                       <span>
-                        Based in <strong>Nanaimo, BC</strong> · Working with businesses across Canada
+                        Website design studio in <strong>Nanaimo, BC</strong> · Serving <strong>Vancouver Island</strong> &amp; beyond
                       </span>
                     </p>
                   </div>
@@ -604,9 +625,8 @@ export default function Home() {
           </div>
 
           <div className="m-topbar">
-            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
-              <path d="M6,18 L84,18 L45,91 Z M16,24 L84,24 L80,30 L19,30 Z M48,30 L48,90 L45,94 L42,89 L42,30 Z M54,36 L68,36 L60,50 L60,65 L54,76 Z M36,63 L36,36 L14,36 L17,42 L25,42 Z" />
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/vdt-glass-logo.png" alt="VDT Sites" style={{ width: 22, height: 22, display: "block" }} />
             <span>VDT&nbsp;SITES</span>
           </div>
 
@@ -1310,7 +1330,9 @@ export default function Home() {
           <div className="vdt-fl__brand">
             <span className="vdt-fl__brand-name">VDT&nbsp;Sites</span>
             <span className="vdt-fl__brand-blurb">
-              Modern websites for small businesses. The place to build.
+              Website design studio in Nanaimo, BC. We build fast, modern websites for
+              small businesses across Vancouver Island — Parksville, Ladysmith,
+              Victoria, and beyond.
             </span>
           </div>
           <ul className="vdt-fl__nav">
@@ -1342,7 +1364,7 @@ export default function Home() {
 
         <div className="vdt-fl__bottom">
           <span id="vdt-fl-copy">
-            © <span data-vdt-fl-year></span> VDT Sites · Built in BC, Canada
+            © <span data-vdt-fl-year></span> VDT Sites · Built in Nanaimo, BC
           </span>
           <a className="vdt-fl__credit" href="https://vdtsites.com" target="_blank" rel="noreferrer">
             Site by VDTSITES.COM

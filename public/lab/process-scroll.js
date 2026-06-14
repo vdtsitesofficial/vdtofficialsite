@@ -55,9 +55,13 @@
   // a smooth lead-in rises into Discover. The line is CUT at the Launch
   // trough (4700 = halfway through the Launch slide) — no tail — so Launch's
   // text can sit in the now-empty top-right of that slide.
+  // NOTE: the flat lead-in sits at y=540 (54%), NOT the sine midline (500).
+  // The title-card CSS seats "OUR PROCESS" just above the 54% mark (see the
+  // .title-card comment in process-scroll.css) — when this segment was at 500
+  // the line cut THROUGH the heading on phones instead of underlining it.
   const MOBILE_RIVER_D =
-    "M 0 500 L 1200 500 " +                       // flat underline (title + gap)
-    "C 1400 500, 1500 285, 1700 285 " +           // smooth lead-in → Discover crest
+    "M 0 540 L 1200 540 " +                       // flat underline (title + gap) at y540
+    "C 1400 540, 1500 285, 1700 285 " +           // smooth lead-in → Discover crest
     "C 2100 285, 2300 715, 2700 715 " +           // Discover crest → Design trough
     "C 3100 715, 3300 285, 3700 285 " +           // Design trough → Build crest
     "C 4100 285, 4300 715, 4700 715";             // Build crest → Launch trough  (CUT — line ends here)
@@ -100,12 +104,13 @@
   // fires on EVERY page scroll (even while the section is far off-screen), so
   // reading offsetHeight / pin height / scrollWidth on each scroll forced a
   // synchronous layout on every scroll anywhere on the page. Cache them.
-  let geomVh = 0, geomTotal = 1, geomTravel = 0;
+  let geomVh = 0, geomTotal = 1, geomTravel = 0, geomMeasuredW = 0;
   function measureGeom() {
     geomVh = (pin && pin.getBoundingClientRect().height) || window.innerHeight;
     geomTotal = Math.max(1, section.offsetHeight - geomVh);
     const endFrac = window.innerWidth <= 720 ? 1.0 : 0.75;
     geomTravel = (track.scrollWidth - window.innerWidth) * endFrac;
+    geomMeasuredW = window.innerWidth;
   }
 
   function measure() {
@@ -137,9 +142,17 @@
   // Stage-activation points (journeyProgress where each stage's text fades
   // in). Mobile's 20vw gap pushes every stage centre later in the scroll, so
   // mobile uses shifted milestones; desktop keeps the authored values.
+  // Mobile milestones are scaled by TRACK_END (the track finishes early to
+  // give Launch a hold — see update()), so each stage still fades in at the
+  // same TRACK position as before.
   const MILESTONES = (window.innerWidth <= 720)
-    ? [0.14, 0.42, 0.66, 0.90]
+    ? [0.12, 0.35, 0.54, 0.74]
     : [0.10, 0.40, 0.65, 0.90];
+  // Mobile: the horizontal track completes at 82% of the pinned journey and
+  // then HOLDS for the final 18% — without this, Launch only became fully
+  // visible at the exact moment the section unpinned, so it scrolled away
+  // instantly ("04 barely visible"). Desktop pacing is unchanged.
+  const TRACK_END = window.innerWidth <= 720 ? 0.82 : 1.0;
   // DWELL is the "scroll but title doesn't move" runway before the track
   // starts translating. Desktop keeps a tiny 0.02 (~one wheel-tick). Mobile
   // sets 0 so the horizontal journey engages the instant the section pins —
@@ -155,13 +168,20 @@
     // testimonials, etc. too — wasted per-frame work all over the page.
     if (rect.bottom <= 0 || rect.top >= geomVh) return;
 
+    // Self-heal a stale measurement (missed resize / rotation, or geometry
+    // captured before the stylesheet applied): if the viewport width changed
+    // since measureGeom ran, or the cached travel is degenerate, re-measure.
+    // innerWidth is cheap to read (no forced layout) — costs nothing per frame.
+    if (window.innerWidth !== geomMeasuredW || geomTravel <= 0) measureGeom();
+
     let progress = -rect.top / geomTotal;
     progress = Math.max(0, Math.min(1, progress));
 
     const journeyProgress = Math.max(0, Math.min(1,
       (progress - DWELL) / (1 - DWELL)));
 
-    track.style.transform = `translate3d(${-journeyProgress * geomTravel}px, 0, 0)`;
+    const trackProgress = Math.min(1, journeyProgress / TRACK_END);
+    track.style.transform = `translate3d(${-trackProgress * geomTravel}px, 0, 0)`;
 
     // Desktop only: scroll-driven progressive draw. Mobile drew the line fully
     // once in applyRiverPath() and skips this per-frame SVG rewrite entirely
