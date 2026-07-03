@@ -769,6 +769,56 @@ export default function Home() {
                   </div>
                 </div>
               </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
+                href="https://sherrikozubal.com"
+                target="_blank"
+                rel="noopener"
+                data-name="Sherri Kozubal"
+                data-tags="Hypnotherapy · Bookings"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/sherrikozubal.png"
+                      alt="Sherri Kozubal landing page"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
+                href="https://paulvanryssel.ca"
+                target="_blank"
+                rel="noopener"
+                data-name="Paul Van Ryssel"
+                data-tags="Civic · Campaign"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/paulvanryssel.png"
+                      alt="Paul Van Ryssel landing page"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
             </div>
             <div className="vdt-portfolio__reflection" aria-hidden="true"></div>
           </div>
@@ -783,7 +833,7 @@ export default function Home() {
             <div className="vdt-portfolio__counter" aria-live="polite">
               <span className="vdt-portfolio__counter-current" data-vdt-counter-current>01</span>
               <span className="vdt-portfolio__counter-sep">/</span>
-              <span className="vdt-portfolio__counter-total" data-vdt-counter-total>04</span>
+              <span className="vdt-portfolio__counter-total" data-vdt-counter-total>06</span>
             </div>
 
             <button className="vdt-portfolio__nav-btn" data-vdt-dir="next" aria-label="Next project">
