@@ -30,6 +30,12 @@
   padding: 3.2rem 1.2rem 1.6rem;
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   color: var(--vdt-pf-ink);
+  /* The 3D side cards poke past the right viewport edge; nothing above
+     this section clips (html overflow-x is visible), so without this the
+     document gains ~8vw of horizontal scrollable overflow — Android
+     tablets render the whole page zoomed out and iOS can rubber-band
+     sideways. `clip` (not `hidden`) avoids creating a scroll container. */
+  overflow-x: clip;
 }
 
 /* ── Intro ── */

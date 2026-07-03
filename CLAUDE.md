@@ -1,6 +1,6 @@
-# VDTTest
+# VDTTest — PRODUCTION vdtsites.com
 
-Sandbox / skills-practice site. Not for a client.
+Started as a sandbox, now the live production codebase for vdtsites.com (Cloudflare worker `vdtsites`). `npm run deploy` ships to production — the homepage mounts the laptop-zoom-v2 lab (mirrored into `public/lab/`; lab source lives in `C:\Websites\VDT\laptop-zoom-v2`, keep both in sync).
 
 **Vault notes:** `C:\Websites\.claude\Obsidian\Sem's\Projects\VDTTest\Overview.md`
 
