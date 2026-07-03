@@ -673,6 +673,31 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="https://sherrikozubal.com"
+                target="_blank"
+                rel="noopener"
+                data-name="Sherri Kozubal"
+                data-tags="Hypnotherapy · Bookings"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/sherrikozubal.png"
+                      alt="Sherri Kozubal landing page"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="https://mocoffee.ca"
                 target="_blank"
                 rel="noopener"
@@ -773,31 +798,6 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://sherrikozubal.com"
-                target="_blank"
-                rel="noopener"
-                data-name="Sherri Kozubal"
-                data-tags="Hypnotherapy · Bookings"
-              >
-                <div className="vdt-portfolio__card-frame">
-                  <div className="vdt-portfolio__card-bezel">
-                    <span className="vdt-portfolio__card-cam"></span>
-                  </div>
-                  <div className="vdt-portfolio__card-screen">
-                    <img
-                      className="vdt-portfolio__card-shot"
-                      src="/lab/shots/sherrikozubal.png"
-                      alt="Sherri Kozubal landing page"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </a>
-
-              <a
-                className="vdt-portfolio__card"
-                role="listitem"
                 href="https://paulvanryssel.ca"
                 target="_blank"
                 rel="noopener"
@@ -845,10 +845,10 @@ export default function Home() {
 
           <div className="vdt-portfolio__meta" aria-live="polite">
             <p className="vdt-portfolio__meta-tags" data-vdt-meta-tags>
-              Hospitality · E-Commerce
+              Hypnotherapy · Bookings
             </p>
             <h3 className="vdt-portfolio__meta-name" data-vdt-meta-name>
-              MO Coffee
+              Sherri Kozubal
             </h3>
             <p className="vdt-portfolio__meta-hint">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8">
