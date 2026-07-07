@@ -983,7 +983,7 @@ export default function Home() {
                       <span></span>
                       <span></span>
                       <span></span>
-                      <div className="mock-browser__address">vdtsites.ca</div>
+                      <div className="mock-browser__address">vdtsites.com</div>
                     </div>
                     <div className="mock-browser__body">
                       <div className="mock-browser__topbar">
@@ -1149,7 +1149,7 @@ export default function Home() {
                 <div className="slide__visual">
                   <div className="mock mock--live" aria-hidden="true">
                     <span className="mock-live__dot"></span>
-                    <span className="mock-live__label">LIVE · vdtsites.ca</span>
+                    <span className="mock-live__label">LIVE · vdtsites.com</span>
                     <span className="mock-live__ms">Online</span>
                   </div>
                   <div className="mock mock--analytics" aria-hidden="true">
