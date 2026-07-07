@@ -1416,6 +1416,11 @@ export default function Home() {
           <span id="vdt-fl-copy">
             © <span data-vdt-fl-year></span> VDT Sites · Built in Nanaimo, BC
           </span>
+          <nav aria-label="Legal" style={{ display: "flex", gap: "1.25em" }}>
+            <a className="vdt-fl__credit" href="/terms-of-service">Terms</a>
+            <a className="vdt-fl__credit" href="/privacy-policy">Privacy</a>
+            <a className="vdt-fl__credit" href="/cookie-policy">Cookies</a>
+          </nav>
           <a className="vdt-fl__credit" href="https://vdtsites.com" target="_blank" rel="noreferrer">
             Site by VDTSITES.COM
           </a>

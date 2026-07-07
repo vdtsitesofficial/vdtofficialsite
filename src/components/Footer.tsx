@@ -10,8 +10,34 @@ export default function Footer() {
     >
       <div className="mx-auto max-w-5xl px-6 sm:px-12 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
         <span style={{ fontFamily: "var(--theme-font-body)" }}>
-          &copy; {new Date().getFullYear()} VDT Test
+          &copy; {new Date().getFullYear()} VDT Sites
         </span>
+        <nav
+          aria-label="Legal"
+          className="flex items-center gap-5 font-mono uppercase tracking-[0.18em] text-[10px]"
+        >
+          <a
+            href="/terms-of-service"
+            className="transition-opacity hover:opacity-70"
+            style={{ color: "var(--theme-ink-muted)" }}
+          >
+            Terms
+          </a>
+          <a
+            href="/privacy-policy"
+            className="transition-opacity hover:opacity-70"
+            style={{ color: "var(--theme-ink-muted)" }}
+          >
+            Privacy
+          </a>
+          <a
+            href="/cookie-policy"
+            className="transition-opacity hover:opacity-70"
+            style={{ color: "var(--theme-ink-muted)" }}
+          >
+            Cookies
+          </a>
+        </nav>
         <a
           href="https://vdtsites.com"
           target="_blank"
