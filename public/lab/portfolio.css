@@ -306,4 +306,15 @@
   .vdt-portfolio__card { width: min(86vw, 340px); }
   .vdt-portfolio__reflection { bottom: -4%; height: 8%; }
   .vdt-portfolio__nav-btn { width: 48px; height: 48px; }
+  /* On phones the laptop-monitor frame (top bezel + camera + thick border)
+     reads as a clunky mockup. Strip it back to a thin black bevel so the
+     screenshot itself is the star. */
+  .vdt-portfolio__card-frame {
+    grid-template-rows: 1fr;
+    gap: 0;
+    padding: 5px;
+    border-radius: 12px;
+  }
+  .vdt-portfolio__card-bezel { display: none; }
+  .vdt-portfolio__card-screen { border-radius: 8px; }
 }
