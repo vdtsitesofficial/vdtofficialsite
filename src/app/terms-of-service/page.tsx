@@ -41,7 +41,7 @@ export default function TermsOfServicePage() {
             VDT Sites Terms of Service
           </h1>
           <p className="mt-6 text-sm text-[#6e6e73]">
-            Last Updated: May 13, 2026
+            Last Updated: July 6, 2026
           </p>
         </header>
 
@@ -141,6 +141,9 @@ export default function TermsOfServicePage() {
             VDT Sites accepts payment through Stripe invoicing or Stripe checkout. For one-time fees, VDT Sites may also accept Interac e-Transfer. VDT Sites does not accept cash unless expressly agreed otherwise in writing.
           </p>
           <p>
+            Unless stated otherwise, all fees, deposits, and other amounts are in Canadian dollars (CAD).
+          </p>
+          <p>
             Payment terms, due dates, amounts, and billing frequency will be stated on the invoice, subscription, proposal, or other written communication.
           </p>
           <p>
@@ -153,10 +156,13 @@ export default function TermsOfServicePage() {
 
         <Section title="7. Deposits">
           <p>
-            VDT Sites generally does not require deposits before starting work unless otherwise discussed and agreed with the client.
+            Unless otherwise agreed in writing, VDT Sites requires a deposit of 50% of the agreed project or build fee before work begins. The remaining balance is due on completion of the project.
           </p>
           <p>
-            If a deposit is agreed, the deposit is non-refundable unless VDT Sites states otherwise in writing. Deposits compensate VDT Sites for reserving time, planning, initial work, administrative effort, and opportunity cost.
+            Before VDT Sites has started work, the deposit is refundable if the client cancels the project. Once VDT Sites has started work, the deposit is non-refundable. The deposit compensates VDT Sites for reserving time, planning, initial work, administrative effort, and opportunity cost.
+          </p>
+          <p>
+            The specific deposit amount, balance, and payment schedule for a project are generally stated in a proposal, invoice, or other written communication. For some projects, VDT Sites may agree in writing to a different deposit amount, milestone payments, or another payment arrangement. Monthly hosting and other recurring fees are billed separately and are not part of the deposit.
           </p>
         </Section>
 
