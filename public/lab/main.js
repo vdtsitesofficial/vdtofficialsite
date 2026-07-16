@@ -426,6 +426,32 @@ let heroHeight = hero.getBoundingClientRect().height;
 // real contributor to the mobile zoom stutter.
 let heroTop = 0;
 
+// ── Header-clearance clamp for "BUILT FOR YOU" ──
+// The poster is centred at T.textY% of the viewport height. On WIDE but
+// SHORT windows the block (16vw font) grows while its anchor rides up, so
+// its top edge climbed underneath the fixed .zoom-header (logo + nav).
+// Cache the block's half-height and the header's bottom edge (measured at
+// rest — cheap, refreshed only on resize/reveal/font-load, never per frame)
+// and let tick() clamp the resting centre so the text top always clears the
+// header. offsetHeight is transform-independent, so mid-zoom scaling of the
+// text never feeds back into the measurement.
+let heroTextHalf = 0;
+let headerSafePx = 76;
+function measureHeroTextSafety() {
+  if (heroText) heroTextHalf = heroText.offsetHeight / 2;
+  const zh = document.getElementById("zoom-header");
+  if (zh) {
+    const r = zh.getBoundingClientRect();
+    // +10px breathing room under the nav links
+    if (r.height > 0) headerSafePx = r.bottom + 10;
+  }
+}
+measureHeroTextSafety();
+// Web fonts (Anton) change the block's height when they swap in.
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(measureHeroTextSafety);
+}
+
 function computeProgress() {
   // On mobile the zoom is NOT scroll-driven — `progress` is set explicitly
   // by the tap-to-enter flow (enterMobile). Skip the scroll read entirely.
@@ -463,6 +489,7 @@ function onResize() {
   // not on toolbar transitions.
   heroHeight = hero.getBoundingClientRect().height;
   targetScale = computeTargetScale();
+  measureHeroTextSafety();
   // Mobile runs no continuous rAF loop (see tick), so re-render once after a
   // real layout change (orientation flip / split-screen) to re-fit the hero.
   // Desktop's loop handles this already, so this is mobile-only.
@@ -716,14 +743,19 @@ function tick() {
   // laptop anchor) so the headline travels along the same radial
   // vector the rest of the scene is expanding along.
   const textScale  = bgScale;
-  const dxFraction = 0.5            - zxFrac;     // text's natural x = 50%
-  const dyFraction = (T.textY / 100) - zyFrac;
+  // Resting centre: T.textY% of the viewport, clamped so the block's top
+  // edge stays below the fixed header (see measureHeroTextSafety). The
+  // effective fraction feeds the drift math so the zoom vector stays
+  // anchored to where the text actually sits.
+  const textTopPx  = Math.max(view.h * (T.textY / 100), headerSafePx + heroTextHalf);
+  const dxFraction = 0.5                  - zxFrac;   // text's natural x = 50%
+  const dyFraction = (textTopPx / view.h) - zyFrac;
   const textDxPx   = (textScale - 1) * dxFraction * view.w;
   const textDyPx   = (textScale - 1) * dyFraction * view.h;
   // 0.75 = 75% opacity at rest
   const HERO_TEXT_REST_OPACITY = 0.75;
   const textOpacity = HERO_TEXT_REST_OPACITY * (1 - smoothstep(0.05, 0.45, smooth));
-  heroText.style.top       = `${T.textY.toFixed(1)}%`;
+  heroText.style.top       = `${textTopPx.toFixed(1)}px`;
   heroText.style.opacity   = String(textOpacity);
   heroText.style.transform =
     `translate(calc(-50% + ${textDxPx.toFixed(1)}px), ` +
@@ -868,6 +900,7 @@ function revealHero() {
   // (its natural dimensions can affect object-fit cover layout).
   heroHeight = hero.getBoundingClientRect().height;
   targetScale = computeTargetScale();
+  measureHeroTextSafety();
   tick();
   if (IS_MOBILE) setupMobileEnter();
 }
