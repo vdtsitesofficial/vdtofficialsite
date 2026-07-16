@@ -426,25 +426,49 @@ let heroHeight = hero.getBoundingClientRect().height;
 // real contributor to the mobile zoom stutter.
 let heroTop = 0;
 
-// ── Header-clearance clamp for "BUILT FOR YOU" ──
-// The poster is centred at T.textY% of the viewport height. On WIDE but
-// SHORT windows the block (16vw font) grows while its anchor rides up, so
-// its top edge climbed underneath the fixed .zoom-header (logo + nav).
-// Cache the block's half-height and the header's bottom edge (measured at
-// rest — cheap, refreshed only on resize/reveal/font-load, never per frame)
-// and let tick() clamp the resting centre so the text top always clears the
-// header. offsetHeight is transform-independent, so mid-zoom scaling of the
-// text never feeds back into the measurement.
+// ── Safe-band fit for "BUILT FOR YOU" ──
+// The poster is centred at T.textY% of the viewport height with a 16vw
+// font, so its box only fits "naturally" on tall-enough windows. It must
+// live in the BAND between the fixed .zoom-header's bottom edge and the
+// laptop's visible lid top (a pure header clamp just traded "under the
+// nav" for "tagline behind the laptop" on 1900x900 desktops). Within the
+// band the block slides to its tuned anchor; when the band is smaller
+// than the block, the block additionally scales down to fit (tick()
+// multiplies textFitScale into the zoom transform). All inputs are
+// resize-stable, so everything is cached here — measured on resize /
+// reveal / font-load only, never per frame. offsetHeight is transform-
+// independent, so the fit scale never feeds back into the measurement.
+const LAPTOP_LID_TOP_FRAC = 0.3926; // first opaque row of laptop.png (lid top)
 let heroTextHalf = 0;
 let headerSafePx = 76;
+let textCenterPx = 0;
+let textFitScale = 1;
 function measureHeroTextSafety() {
-  if (heroText) heroTextHalf = heroText.offsetHeight / 2;
+  if (!heroText) return;
+  const blockH = heroText.offsetHeight;
+  heroTextHalf = blockH / 2;
   const zh = document.getElementById("zoom-header");
   if (zh) {
     const r = zh.getBoundingClientRect();
     // +10px breathing room under the nav links
     if (r.height > 0) headerSafePx = r.bottom + 10;
   }
+  // Laptop lid top at rest (scale 1): positionLaptop() puts the image's
+  // top edge at laptopCy - lh*FIXED.cy; the lid starts LID_FRAC down it.
+  const lh = laptopDims().h;
+  const laptopCy = view.h * (T.laptopY / 100);
+  const lidTopPx = laptopCy - lh * FIXED.cy + lh * LAPTOP_LID_TOP_FRAC;
+  const bandTop = headerSafePx;
+  const bandBottom = lidTopPx - 6; // small air above the lid
+  const bandH = Math.max(40, bandBottom - bandTop);
+  textFitScale = Math.min(1, bandH / Math.max(1, blockH));
+  const half = heroTextHalf * textFitScale;
+  const lo = bandTop + half;
+  const hi = bandBottom - half;
+  const desired = view.h * (T.textY / 100);
+  textCenterPx = hi >= lo
+    ? Math.min(Math.max(desired, lo), hi)
+    : (bandTop + bandBottom) / 2;
 }
 measureHeroTextSafety();
 // Web fonts (Anton) change the block's height when they swap in.
@@ -743,24 +767,23 @@ function tick() {
   // laptop anchor) so the headline travels along the same radial
   // vector the rest of the scene is expanding along.
   const textScale  = bgScale;
-  // Resting centre: T.textY% of the viewport, clamped so the block's top
-  // edge stays below the fixed header (see measureHeroTextSafety). The
-  // effective fraction feeds the drift math so the zoom vector stays
-  // anchored to where the text actually sits.
-  const textTopPx  = Math.max(view.h * (T.textY / 100), headerSafePx + heroTextHalf);
-  const dxFraction = 0.5                  - zxFrac;   // text's natural x = 50%
-  const dyFraction = (textTopPx / view.h) - zyFrac;
+  // Resting centre + fit scale come from measureHeroTextSafety(): the
+  // block is slid (and if needed shrunk) into the band between the fixed
+  // header and the laptop's lid. The effective fraction feeds the drift
+  // math so the zoom vector stays anchored to where the text actually sits.
+  const dxFraction = 0.5                     - zxFrac;   // text's natural x = 50%
+  const dyFraction = (textCenterPx / view.h) - zyFrac;
   const textDxPx   = (textScale - 1) * dxFraction * view.w;
   const textDyPx   = (textScale - 1) * dyFraction * view.h;
   // 0.75 = 75% opacity at rest
   const HERO_TEXT_REST_OPACITY = 0.75;
   const textOpacity = HERO_TEXT_REST_OPACITY * (1 - smoothstep(0.05, 0.45, smooth));
-  heroText.style.top       = `${textTopPx.toFixed(1)}px`;
+  heroText.style.top       = `${textCenterPx.toFixed(1)}px`;
   heroText.style.opacity   = String(textOpacity);
   heroText.style.transform =
     `translate(calc(-50% + ${textDxPx.toFixed(1)}px), ` +
               `calc(-50% + ${textDyPx.toFixed(1)}px)) ` +
-    `scale(${textScale.toFixed(3)})`;
+    `scale(${(textScale * textFitScale).toFixed(3)})`;
 
   // ── LAPTOP / CREAM OVERLAY ──
   // Locked to bgScale so the cream destination grows at exactly
