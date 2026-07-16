@@ -80,6 +80,27 @@ const view = { w: window.innerWidth, h: measureStageHeight() };
 // block lower down. Desktop keeps the scroll-driven zoom.
 const IS_MOBILE = view.w <= 720;
 
+// ── Mode-boundary resize guard ──
+// The interaction model (scroll-zoom vs tap-to-enter) is chosen ONCE at load
+// from IS_MOBILE, and process-scroll.js likewise freezes its pacing consts at
+// its own 840px gate. If the window later crosses one of those boundaries
+// (e.g. a half-width window loaded, then maximized on a Mac), every per-mode
+// assumption breaks at once — most visibly, mobile mode runs no rAF loop, so
+// on a widened window the "BUILT FOR YOU" hero text keeps its uncentered
+// left:50% anchor and overflows the right edge of the screen. Hot-swapping
+// modes at runtime isn't safe (scroll locks, intro overlay, tuned T values),
+// so reload once after the resize settles — the page re-initialises cleanly
+// in the correct mode. Height-only reflows (iOS toolbar) never trigger this.
+const _modeBucket = function (w) { return w <= 720 ? 0 : w <= 840 ? 1 : 2; };
+const _loadModeBucket = _modeBucket(view.w);
+let _modeReloadTimer = null;
+window.addEventListener("resize", function () {
+  clearTimeout(_modeReloadTimer);
+  _modeReloadTimer = setTimeout(function () {
+    if (_modeBucket(window.innerWidth) !== _loadModeBucket) window.location.reload();
+  }, 300);
+}, { passive: true });
+
 // =============================================================
 // GEOMETRY — driven by the live tuning panel (see #cp in the HTML)
 //

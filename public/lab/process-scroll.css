@@ -227,8 +227,13 @@
 }
 .vdt-process-shell .stage__num {
   flex-shrink: 0;
-  width: clamp(64px, 5.4vw, 88px);
-  height: clamp(64px, 5.4vw, 88px);
+  /* All desktop text in this section scales with vw (caps = the tuned
+     1920px look) so the text column keeps the same proportions as the
+     %-positioned mock cards at every window width. rem-floored sizes
+     were outgrowing the slides on 1100-1700px windows and colliding
+     with the mocks. */
+  width: clamp(44px, 4.6vw, 88px);
+  height: clamp(44px, 4.6vw, 88px);
   border-radius: 50%;
   background: var(--vps-card-bg);
   border: 2.5px solid var(--vps-red);
@@ -238,7 +243,7 @@
   justify-content: center;
   font-family: var(--vps-font-display);
   font-weight: 900;
-  font-size: clamp(1.2rem, 1.55vw, 1.55rem);
+  font-size: clamp(0.85rem, 1.3vw, 1.55rem);
   letter-spacing: 0;
   box-shadow:
     0 10px 22px -10px rgba(220, 38, 38, .28),
@@ -247,7 +252,7 @@
 .vdt-process-shell .stage__title {
   font-family: var(--vps-font-display);
   font-weight: 900;
-  font-size: clamp(2.6rem, 5.6vw, 4.8rem);
+  font-size: clamp(2rem, 4vw, 4.8rem);
   letter-spacing: -.035em;
   line-height: .92;
   color: var(--vps-ink);
@@ -256,7 +261,7 @@
 .vdt-process-shell .stage__subtitle {
   font-family: var(--vps-font-display);
   font-weight: 900;
-  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  font-size: clamp(0.8rem, 1.05vw, 1.25rem);
   line-height: 1.25;
   letter-spacing: -.01em;
   color: var(--vps-red);
@@ -264,7 +269,7 @@
   max-width: 30ch;
 }
 .vdt-process-shell .stage__desc {
-  font-size: clamp(.9rem, .98vw, 1rem);
+  font-size: clamp(.75rem, .84vw, 1rem);
   line-height: 1.55;
   color: var(--vps-ink-2);
   margin-bottom: 1.2rem;
@@ -279,10 +284,11 @@
 }
 .vdt-process-shell .stage__points li {
   font-family: var(--vps-font-body);
-  font-size: clamp(.88rem, .98vw, 1rem);
+  font-size: clamp(.72rem, .84vw, 1rem);
   font-weight: 500;
   color: var(--vps-ink);
-  padding-left: 1.55rem;
+  /* em (not rem) so the check-dot gutter shrinks with the text */
+  padding-left: 1.55em;
   position: relative;
   line-height: 1.4;
 }
@@ -291,8 +297,8 @@
   position: absolute;
   left: 0;
   top: .32em;
-  width: .92rem;
-  height: .92rem;
+  width: .92em;
+  height: .92em;
   border-radius: 50%;
   background: var(--vps-red);
   -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='black'/><path d='M7 12 L11 16 L17 9' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
@@ -1016,22 +1022,52 @@
 }
 
 
-/* ── Responsive ── */
-@media (max-width: 1100px) {
-  .vdt-process-shell .stage__title { font-size: clamp(2.6rem, 6vw, 4.6rem); }
-  .vdt-process-shell .slide--stage { grid-template-columns: 1fr; gap: 2rem; padding: 0 5vw; }
-  .vdt-process-shell .slide__visual { min-height: 38vh; }
+/* ── Responsive ──
+   841-1280px windows: the vw-scaled text (above) keeps proportions, but a
+   few mock cards still graze the longest text lines because the text's rem
+   FLOORS kick in down here. Nudge exactly those cards outward. Values were
+   verified against live glyph-rect measurements at 1112/1200/1280 wide. */
+@media (min-width: 841px) and (max-width: 1280px) {
+  /* Discover: brief card → further right, clear of the checklist */
+  .vdt-process-shell .mock--brief    { left: 66%; top: 64%; }
+  /* Design: browser + swatch cards → right, clear of title/subtitle/desc */
+  .vdt-process-shell .mock--browser  { left: 41%; }
+  .vdt-process-shell .mock--palette  { left: 36%; top: 53.5%; }
+  .vdt-process-shell .mock--type     { left: 50%; }
+  /* Build: code + QA cards → left/down, clear of the checklist */
+  .vdt-process-shell .mock--code     { top: 63%; left: 17%; }
+  .vdt-process-shell .mock--qa       { left: 4.5%; top: 73%; }
+  .vdt-process-shell .mock--speed    { left: 22.5%; top: 82%; }
+  /* Launch: live pill + analytics → left, clear of the checklist */
+  .vdt-process-shell .mock--live      { left: -30%; }
+  .vdt-process-shell .mock--analytics { left: -38%; top: 50%; }
+}
+/* 841-1023px (half-screen windows on 1680-2048 displays): the subtitle's
+   longest line still grazes the Design browser mock — one more nudge right. */
+@media (min-width: 841px) and (max-width: 1023px) {
+  .vdt-process-shell .mock--browser  { left: 44%; }
+}
+/* Tiny desktop windows (wide but very short): the rem-floored text column
+   is taller than the slide can absorb, so the floating cards can't be
+   placed anywhere safe. The cards are decorative — drop them and let the
+   text + river carry the story. */
+@media (min-width: 841px) and (max-height: 660px) {
+  .vdt-process-shell .slide--stage .mock { display: none !important; }
 }
 
-/* ── Mobile (≤720px): rebuild each step as a readable vertical card ──
+/* ── Mobile/tablet-portrait (≤840px): rebuild each step as a readable
+   vertical card ──
    Desktop positions .slide__text and the .mock visuals with absolute
    per-stage % coordinates tuned for a wide screen, which cram them into
    illegible slivers on a phone. We keep the horizontal swipe (each slide
    is still 100vw) but lay each slide out as a centered flex COLUMN:
    readable text on top, ONE representative visual below, decorative extras
    hidden. !important is required to beat the per-stage absolute-position
-   rules above. */
-@media (max-width: 720px) {
+   rules above. The 840px gate (was 720) pulls PORTRAIT TABLETS into this
+   layout too — the desktop absolute %-layout measurably collides with the
+   text on a 768-820px portrait screen. Keep this breakpoint in sync with
+   process-scroll.js (river path / travel / milestones use the same 840). */
+@media (max-width: 840px) {
   /* Size the pin + slides to the VISIBLE viewport (svh = small viewport,
      which is stable and always on-screen) instead of 100vh (the LARGEST
      viewport, i.e. with the address bar hidden). With 100vh the content was
@@ -1166,7 +1202,9 @@
     margin-bottom: .55rem !important; line-height: 1.45;
   }
   .vdt-process-shell .stage__points { font-size: .82rem; gap: .3rem; }
-  .vdt-process-shell .stage__points li { line-height: 1.34; }
+  /* Explicit size: the li's own desktop clamp() would otherwise win over the
+     UL's inherited size and render smaller than the tuned phone layout. */
+  .vdt-process-shell .stage__points li { line-height: 1.34; font-size: .88rem !important; }
 
   /* Visual — one representative mock in flow, sized to the lobe. Explicit
      height (not auto) so the mocks whose interiors use flex:1 / % heights
@@ -1175,10 +1213,8 @@
     position: static !important;
     width: 100% !important;
     height: auto !important;
-    /* CRITICAL: the @media(max-width:1100px) rule sets min-height:38vh on the
-       visual (~325px on a phone), which inflated every step by ~220px and was
-       the real reason the content overflowed up into the line. Kill it so the
-       visual wraps its single mock tightly. */
+    /* Keep min-height pinned to 0 so no other rule can inflate the visual —
+       a historical 38vh min-height here once pushed content up into the line. */
     min-height: 0 !important;
     flex: 0 0 auto;
     display: flex;

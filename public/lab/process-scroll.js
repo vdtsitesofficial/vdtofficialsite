@@ -71,7 +71,7 @@
   rivers.forEach((p) => { p._desktopD = p.getAttribute("d"); });
 
   function applyRiverPath() {
-    const mobile = window.innerWidth <= 720;
+    const mobile = window.innerWidth <= 840;
     // Mobile widens the track to 520vw (20vw blank gap before Discover), so
     // the SVG viewBox must widen to 5200 to keep 10 units = 1vw (same mapping
     // the path crests are designed against). Desktop keeps the authored 5000.
@@ -108,7 +108,7 @@
   function measureGeom() {
     geomVh = (pin && pin.getBoundingClientRect().height) || window.innerHeight;
     geomTotal = Math.max(1, section.offsetHeight - geomVh);
-    const endFrac = window.innerWidth <= 720 ? 1.0 : 0.75;
+    const endFrac = window.innerWidth <= 840 ? 1.0 : 0.75;
     geomTravel = (track.scrollWidth - window.innerWidth) * endFrac;
     geomMeasuredW = window.innerWidth;
   }
@@ -126,7 +126,7 @@
       // x where the flat underline ends (start of the first rise). Desktop is
       // unchanged (original 880); mobile's flat now runs to 1170 (through the
       // title + the 20vw gap) in its 5200 viewBox.
-      const flatEndX = window.innerWidth <= 720 ? 1200 : 880;
+      const flatEndX = window.innerWidth <= 840 ? 1200 : 880;
       let lo = 0, hi = stroke._len;
       for (let i = 0; i < 30; i++) {
         const mid = (lo + hi) / 2;
@@ -145,20 +145,20 @@
   // Mobile milestones are scaled by TRACK_END (the track finishes early to
   // give Launch a hold — see update()), so each stage still fades in at the
   // same TRACK position as before.
-  const MILESTONES = (window.innerWidth <= 720)
+  const MILESTONES = (window.innerWidth <= 840)
     ? [0.12, 0.35, 0.54, 0.74]
     : [0.10, 0.40, 0.65, 0.90];
   // Mobile: the horizontal track completes at 82% of the pinned journey and
   // then HOLDS for the final 18% — without this, Launch only became fully
   // visible at the exact moment the section unpinned, so it scrolled away
   // instantly ("04 barely visible"). Desktop pacing is unchanged.
-  const TRACK_END = window.innerWidth <= 720 ? 0.82 : 1.0;
+  const TRACK_END = window.innerWidth <= 840 ? 0.82 : 1.0;
   // DWELL is the "scroll but title doesn't move" runway before the track
   // starts translating. Desktop keeps a tiny 0.02 (~one wheel-tick). Mobile
   // sets 0 so the horizontal journey engages the instant the section pins —
   // on a phone the dwell read as "scrolling down too far before anything
   // moves sideways".
-  const DWELL = window.innerWidth <= 720 ? 0 : 0.02;
+  const DWELL = window.innerWidth <= 840 ? 0 : 0.02;
 
   function update() {
     const rect = section.getBoundingClientRect();
@@ -187,7 +187,7 @@
     // once in applyRiverPath() and skips this per-frame SVG rewrite entirely
     // (it was the horizontal-scroll jank) — the track translation reveals the
     // line spatially instead.
-    if (window.innerWidth > 720) {
+    if (window.innerWidth > 840) {
       const drawnEase = Math.pow(journeyProgress, 1.15);
       const drawn = initialDrawnFrac + drawnEase * (1 - initialDrawnFrac);
       rivers.forEach((p) => {
@@ -198,7 +198,7 @@
     // Animated stroke-width taper is DESKTOP-only — re-writing strokeWidth each
     // frame re-rasterizes the path (a mobile scroll cost). On mobile the width
     // is fixed once in applyRiverPath().
-    if (window.innerWidth > 720) {
+    if (window.innerWidth > 840) {
       const sw = SW_START + journeyProgress * (SW_END - SW_START);
       rivers.forEach((p) => {
         const isGlow = p.classList.contains("process__river--glow");
