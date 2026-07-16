@@ -1,0 +1,10 @@
+{
+  "readyFlag": "window.__vdtLabReady === true",
+  "settleMs": 500,
+  "ignore": [".vdt-testimonials__columns", ".vdt-hero__ghost"],
+  "scrollTargets": ["#portfolio", "#process", "#contact"],
+  "notes": [
+    "Site-specific invariants (2026-07-16 audit): hero poster must clear BOTH the zoom-header bottom AND the laptop lid top (band-fit in public/lab/main.js, lid = 39.26% of laptop.png); process-section desktop text is vw-scaled with 1920 as the pixel-identical reference; process mobile column layout gates at 840px in BOTH process-scroll.css and process-scroll.js; main.js reloads once when the window crosses the 720/840 mode boundaries.",
+    "Testimonials marquee is JS-animated every frame - hit-testing races against it produce phantom overlaps, hence the ignore."
+  ]
+}
