@@ -107,8 +107,15 @@
   position: absolute;
   top: 50%; left: 50%;
   /* 20% narrower than the package default. Side cards still peek
-     in via the LAYOUT.prevTx / farTx values in portfolio.js. */
-  width: clamp(304px, 46vw, 704px);
+     in via the LAYOUT.prevTx / farTx values in portfolio.js.
+     The 70vh term keeps the card SHORTER than the 45vh stage on
+     wide-but-short viewports (card height = width * 10/16 = 43.75vh
+     worst case). Without it, a ~1500x700 window — e.g. Safari on a
+     Mac, whose tab/bookmark bars and remembered page zoom shrink the
+     effective viewport — rendered the card taller than the stage, so
+     it overflowed its centered box up over the section title and down
+     into the controls. */
+  width: clamp(304px, min(46vw, 70vh), 704px);
   aspect-ratio: 16 / 10;
   --tx: 0;
   --rot: 0deg;

@@ -881,7 +881,12 @@
   height: 57%;
 }
 .vdt-process-shell .mock--live {
-  top: 42.5%; left: -34.1%; width: 17.2%; height: 5.1%;
+  /* Was top 42.5% / left -34.1% — that rode inside the Launch text's
+     horizontal band, and on short windows the rem-floored paragraph reached
+     under it (no single offset cleared every width). Parked BELOW the
+     analytics card instead: that band is structurally text-free at every
+     viewport (checklist bottoms out ~70%, analytics ends at 84.4-86.5%). */
+  top: 88%; left: -34.1%; width: 17.2%; height: 5.1%;
   padding: .8rem 1.15rem;
   display: inline-flex; align-items: center; gap: .65rem;
   border-radius: 999px;
@@ -1038,8 +1043,8 @@
   .vdt-process-shell .mock--code     { top: 63%; left: 17%; }
   .vdt-process-shell .mock--qa       { left: 4.5%; top: 73%; }
   .vdt-process-shell .mock--speed    { left: 22.5%; top: 82%; }
-  /* Launch: live pill + analytics → left, clear of the checklist */
-  .vdt-process-shell .mock--live      { left: -30%; }
+  /* Launch: analytics → left/down, clear of the checklist (the live pill's
+     base position already clears — see .mock--live above) */
   .vdt-process-shell .mock--analytics { left: -38%; top: 50%; }
 }
 /* 841-1023px (half-screen windows on 1680-2048 displays): the subtitle's
@@ -1051,7 +1056,7 @@
    is taller than the slide can absorb, so the floating cards can't be
    placed anywhere safe. The cards are decorative — drop them and let the
    text + river carry the story. */
-@media (min-width: 841px) and (max-height: 660px) {
+@media (min-width: 841px) and (max-height: 745px) {
   .vdt-process-shell .slide--stage .mock { display: none !important; }
 }
 
