@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { LAB_V } from "@/lib/labVersion";
 import ContactCard from "@/components/ContactCard";
+import WorkCarousel from "@/components/WorkCarousel";
 
 /**
  * Google Ads landing page.
@@ -39,22 +40,16 @@ export const metadata: Metadata = {
 
 const SYNE = "'Syne', 'Inter', sans-serif";
 
+/* Ordered strongest-first — the first two load eagerly and are what most
+   visitors see before scrolling the track. */
 const WORK = [
-  {
-    img: "/work/morky.webp",
-    name: "Morky Auto Imports",
-    line: "Japanese imports · Parksville",
-  },
-  {
-    img: "/work/mocoffee.webp",
-    name: "MO Coffee",
-    line: "Online store · Nanaimo",
-  },
-  {
-    img: "/work/therapeutic.webp",
-    name: "Therapeutic Value",
-    line: "Counselling · Nanaimo",
-  },
+  { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo" },
+  { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville" },
+  { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo" },
+  { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo" },
+  { img: "/work/isleair.webp", name: "Isle Air Chicken", line: "Air-fried chicken · Vancouver Island" },
+  { img: "/work/ceva.webp", name: "CEVA Volleyball", line: "Tournament platform · live scoreboards" },
+  { img: "/work/paulvanryssel.webp", name: "Paul Van Ryssel", line: "Campaign website · Nanaimo" },
 ];
 
 const REASONS = [
@@ -146,35 +141,8 @@ export default function LandingPage() {
         </section>
 
         {/* proof — real client work, above the objections */}
-        <section className="px-6 pt-10 md:pt-16">
-          <h2
-            className="text-center text-[13px] font-semibold uppercase tracking-[0.2em] text-[#0d0d0d]/45"
-            style={{ fontFamily: SYNE }}
-          >
-            Recent work
-          </h2>
-          <div className="mx-auto mt-7 grid max-w-5xl gap-6 md:grid-cols-3">
-            {WORK.map((w) => (
-              <figure key={w.name} className="overflow-hidden rounded-2xl bg-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={w.img}
-                  alt={`${w.name} website designed by VDT Sites`}
-                  width={900}
-                  height={675}
-                  loading="lazy"
-                  decoding="async"
-                  className="block w-full"
-                />
-                <figcaption className="px-5 py-4">
-                  <p className="text-[15px] font-semibold" style={{ fontFamily: SYNE }}>
-                    {w.name}
-                  </p>
-                  <p className="mt-0.5 text-[13px] text-[#0d0d0d]/55">{w.line}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+        <section className="pt-10 md:pt-16">
+          <WorkCarousel items={WORK} />
         </section>
 
         {/* the three objections that actually close */}
