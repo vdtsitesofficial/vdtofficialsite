@@ -41,15 +41,17 @@ export const metadata: Metadata = {
 const SYNE = "'Syne', 'Inter', sans-serif";
 
 /* Ordered strongest-first — the first two load eagerly and are what most
-   visitors see before scrolling the track. */
+   visitors see before scrolling the track.
+   Cards link to the live client sites in a NEW TAB: this landing page is
+   paid traffic, so the one thing we can't do is navigate them away from it. */
 const WORK = [
-  { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo" },
-  { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville" },
-  { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo" },
-  { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo" },
-  { img: "/work/isleair.webp", name: "Isle Air Chicken", line: "Air-fried chicken · Vancouver Island" },
-  { img: "/work/ceva.webp", name: "CEVA Volleyball", line: "Tournament platform · live scoreboards" },
-  { img: "/work/paulvanryssel.webp", name: "Paul Van Ryssel", line: "Campaign website · Nanaimo" },
+  { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "https://mocoffee.ca" },
+  { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville", href: "https://morkyautoimports.ca" },
+  { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo", href: "https://therapeuticvalue.ca" },
+  { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo", href: "https://sherrikozubal.com" },
+  { img: "/work/isleair.webp", name: "Isle Air Chicken", line: "Air-fried chicken · Vancouver Island", href: "https://isleairchicken.ca" },
+  { img: "/work/ceva.webp", name: "CEVA Volleyball", line: "Tournament platform · live scoreboards", href: "https://cevavolleyball.vdtsites.workers.dev" },
+  { img: "/work/paulvanryssel.webp", name: "Paul Van Ryssel", line: "Campaign website · Nanaimo", href: "https://paulvanryssel.ca" },
 ];
 
 const REASONS = [
