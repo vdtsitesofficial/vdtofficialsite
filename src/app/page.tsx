@@ -733,7 +733,22 @@ export default function Home() {
 
           <div className="m-scene">
             <div className="m-laptop">
-              <img src={`/lab/assets/laptop-mobile.png?v=${LAB_V}`} alt="" draggable={false} />
+              {/* loading="lazy" is load-bearing, not a nicety: React only
+                  auto-emits a <link rel="preload"> for EAGER images, and the
+                  one it emitted for this <img> carried no media attribute —
+                  so every desktop visitor downloaded this 117KB mobile-only
+                  asset despite #m-intro being display:none above 720px.
+                  Mobile is unaffected: the media-gated preload up in the head
+                  still fetches it eagerly at ≤720px, so it's cached before the
+                  intro renders. Don't make this eager again. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
+                alt=""
+                draggable={false}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
 
