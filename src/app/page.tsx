@@ -229,7 +229,7 @@ export default function Home() {
               { "@type": "City", name: "Burnaby" },
               { "@type": "City", name: "Surrey" },
             ],
-            // Ties this site to the Google Business Profile ("VDTSites",
+            // Ties this site to the Google Business Profile ("VDT Sites",
             // Website designer, Nanaimo) so Google treats the two as ONE
             // entity instead of guessing. Stable CID URL — deliberately NOT
             // a share.google/… short link, those rot (see vault: UniSol

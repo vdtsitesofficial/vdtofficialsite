@@ -99,18 +99,12 @@
   }
 }
 
-/* Mobile scroll perf: backdrop-filter: blur(18px) re-computes the blurred
-   backdrop EVERY frame while the card is on screen during a scroll — one of
-   the heaviest per-frame costs on a phone and a real source of scroll jank.
-   Drop it on mobile and make the card background more opaque so it still
-   reads as a clean frosted panel without the live blur. */
-@media (max-width: 720px) {
-  .vdt-contact-card .cc-card {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(255, 255, 255, 0.92);
-  }
-}
+/* Scroll perf: backdrop-filter: blur(18px) re-computed the blurred backdrop
+   EVERY frame while the card was on screen during a scroll — one of the
+   heaviest per-frame paint costs on any device. Originally dropped on
+   mobile only; now dropped everywhere (2026-07-26, desktop scroll jank fix).
+   The near-opaque background keeps the clean frosted-panel read without the
+   live blur — the base .cc-card rule below carries it. */
 
 /* Ambient red bloom — removed per user request. The cards still
    carry their own per-corner red blush via .cc-color-splash, but
@@ -124,10 +118,8 @@
      Padding scales a bit with width so a wider card breathes more. */
   width: 100%;
   padding: 56px clamp(42px, 5%, 72px);
-  background: var(--cc-card-bg);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 20px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.08),
     0 6px 20px  rgba(0, 0, 0, 0.04),

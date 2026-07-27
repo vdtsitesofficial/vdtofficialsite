@@ -397,7 +397,13 @@ let perspectivePinned = false;
 // post-rotation) keeps the canvas live.
 let _heroCanvasIdleTimer = null;
 window.addEventListener("scroll", function () {
-  if (window.innerWidth > 720) { window.__vdtPauseHeroCanvas = false; return; }
+  if (window.innerWidth > 720) {
+    // Desktop: re-arm the zoom loop (it parks itself once settled — see
+    // the idle gate above tick). The loop's own fast path maintains the
+    // WebGL pause flag from fresh geometry, so nothing else is needed here.
+    wakeZoomLoop();
+    return;
+  }
   window.__vdtPauseHeroCanvas = true;
   if (_heroCanvasIdleTimer) clearTimeout(_heroCanvasIdleTimer);
   _heroCanvasIdleTimer = setTimeout(function () {
@@ -516,8 +522,10 @@ function onResize() {
   measureHeroTextSafety();
   // Mobile runs no continuous rAF loop (see tick), so re-render once after a
   // real layout change (orientation flip / split-screen) to re-fit the hero.
-  // Desktop's loop handles this already, so this is mobile-only.
+  // Desktop's loop may be parked (idle gate), so force one full repaint pass
+  // with the freshly measured geometry.
   if (IS_MOBILE) tick();
+  else wakeZoomLoop(true);
 }
 window.addEventListener("resize", onResize, { passive: true });
 
@@ -694,8 +702,43 @@ function updateOverlay(currentScale) {
 // =============================================================
 // per-frame loop
 // =============================================================
+// ── Desktop idle gate ──
+// The loop used to rAF forever on desktop: ~30 inline style writes per
+// frame (width/height = layout, box-shadow = paint, perspective = 3D
+// context recompute) for the entire session, even parked at the bottom
+// of the page — a top contributor to sitewide scroll jank. Now the loop
+// PARKS once the smoothing has converged; the passive scroll/resize
+// listeners and the tuner sliders re-arm it via wakeZoomLoop(). The
+// converged end state is always written before parking, so stopping is
+// visually lossless. `needsPaint` forces one full style pass for wakes
+// where progress hasn't moved but the output depends on new inputs
+// (resize re-measure, tuner slider drag, initial reveal).
+let tickRunning = false;
+let needsPaint  = true;
+function wakeZoomLoop(force) {
+  if (force) needsPaint = true;
+  if (IS_MOBILE || tickRunning) return;
+  tickRunning = true;
+  requestAnimationFrame(tick);
+}
+window.__vdtWakeZoomLoop = wakeZoomLoop;
+
 function tick() {
+  tickRunning = true;
   computeProgress();
+
+  // Fast path (desktop, parked): smoothing already converged and nothing
+  // requested a repaint — every style below would be rewritten with the
+  // exact same value. Keep the two genuinely scroll-dependent cheap bits
+  // live (fixed-chrome stuck state, WebGL pause flag), skip the ~30 style
+  // writes, and park until the next wake.
+  if (!IS_MOBILE && !needsPaint && smooth === progress) {
+    const heroBottomFast = heroTop + heroHeight;
+    siteChrome.classList.toggle("is-stuck", heroBottomFast < view.h * 0.5);
+    window.__vdtPauseHeroCanvas = heroBottomFast <= 0;
+    tickRunning = false;
+    return;
+  }
 
   // Exponential smoothing on EVERY platform. The previous mobile
   // special-case (smooth = progress) applied each discrete scroll
@@ -870,14 +913,24 @@ function tick() {
   // so nothing gets cut off sideways.
   overlay.classList.toggle("is-preview", smooth < 0.85);
 
-  // Loop ONLY on desktop, where the zoom is scroll-driven and needs a fresh
-  // frame continuously. On phones the hero is static (progress is pinned at 0
-  // before the tap-to-enter and 1 after — never scroll-driven), so a perpetual
-  // rAF that rewrites ~30 inline styles every frame just burns the main thread
-  // and makes the whole page scroll janky. On mobile we instead call tick()
-  // explicitly at the only moments it matters: the intro render (revealHero),
-  // right after enter (enterMobile phase 2), and on a real resize (onResize).
-  if (!IS_MOBILE) requestAnimationFrame(tick);
+  // Scheduling. Mobile: no loop at all — tick() is called explicitly at the
+  // few moments it matters (revealHero, enterMobile phase 2, onResize).
+  // Desktop: keep looping only while the smoothing is still converging;
+  // once settled, park (see the idle-gate note above tick) and let
+  // wakeZoomLoop re-arm on the next scroll/resize/tuner input. Also pause
+  // the WebGL logo spin whenever the hero scene is fully above the
+  // viewport — it used to render at 60fps for the whole session even at
+  // the bottom of the page (the pause flag was only ever driven by the
+  // mobile scroll handler).
+  if (!IS_MOBILE) {
+    window.__vdtPauseHeroCanvas = heroBottom <= 0;
+    needsPaint = false;
+    if (smooth === progress) {
+      tickRunning = false;
+    } else {
+      requestAnimationFrame(tick);
+    }
+  }
 }
 
 // ---------- easing ----------
@@ -1095,11 +1148,14 @@ setTimeout(function () {
     slider.value = T[key];
     num.value    = T[key].toFixed(dec);
 
-    // slider → state + number
+    // slider → state + number. wakeZoomLoop(true) forces a repaint pass —
+    // the desktop loop parks when idle, so T changes wouldn't render live
+    // otherwise.
     slider.addEventListener("input", () => {
       T[key] = parseFloat(slider.value);
       num.value = T[key].toFixed(dec);
       refreshOutput();
+      wakeZoomLoop(true);
     });
 
     // number → state + slider. Listen on `input` so each keystroke
@@ -1110,6 +1166,7 @@ setTimeout(function () {
         T[key] = v;
         slider.value = v;
         refreshOutput();
+        wakeZoomLoop(true);
       }
     });
   });
