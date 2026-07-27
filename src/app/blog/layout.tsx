@@ -570,7 +570,7 @@ export default function BlogLayout({
             <a href="/">Home</a>
             <Link href="/blog">Blog</Link>
             <a href="/#portfolio">Portfolio</a>
-            <a href="/#contact" className="dest-cta">
+            <a href="/contact" className="dest-cta">
               Contact&nbsp;Us
             </a>
           </nav>
@@ -600,7 +600,7 @@ export default function BlogLayout({
               <Link href="/blog" className="hover:underline">
                 Blog
               </Link>
-              <a href="/#contact" className="hover:underline">
+              <a href="/contact" className="hover:underline">
                 Contact
               </a>
             </div>

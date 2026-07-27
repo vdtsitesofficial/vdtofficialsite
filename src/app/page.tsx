@@ -202,14 +202,43 @@ export default function Home() {
               addressRegion: "BC",
               addressCountry: "CA",
             },
+            // Mirrors the Google Business Profile service areas exactly —
+            // if you change one, change the other. VDT serves all of Canada,
+            // but the listed area is deliberately narrowed to Vancouver
+            // Island + the Lower Mainland (Sem's call, 2026-07-26): a tight
+            // radius ranks better than a broad one, and GBP caps at 20 areas.
             areaServed: [
-              { "@type": "City", name: "Nanaimo" },
-              { "@type": "City", name: "Parksville" },
-              { "@type": "City", name: "Ladysmith" },
-              { "@type": "City", name: "Victoria" },
               { "@type": "Place", name: "Vancouver Island" },
+              { "@type": "City", name: "Nanaimo" },
+              { "@type": "City", name: "Lantzville" },
+              { "@type": "City", name: "Parksville" },
+              { "@type": "City", name: "Qualicum Beach" },
+              { "@type": "City", name: "Nanoose Bay" },
+              { "@type": "City", name: "Ladysmith" },
+              { "@type": "City", name: "Chemainus" },
+              { "@type": "City", name: "Duncan" },
+              { "@type": "City", name: "Port Alberni" },
+              { "@type": "City", name: "Courtenay" },
+              { "@type": "City", name: "Comox" },
+              { "@type": "City", name: "Campbell River" },
+              { "@type": "City", name: "Tofino" },
+              { "@type": "City", name: "Victoria" },
+              { "@type": "Place", name: "Metro Vancouver" },
+              { "@type": "City", name: "Vancouver" },
+              { "@type": "City", name: "Richmond" },
+              { "@type": "City", name: "Burnaby" },
+              { "@type": "City", name: "Surrey" },
             ],
-            sameAs: ["https://www.instagram.com/vdtsites"],
+            // Ties this site to the Google Business Profile ("VDTSites",
+            // Website designer, Nanaimo) so Google treats the two as ONE
+            // entity instead of guessing. Stable CID URL — deliberately NOT
+            // a share.google/… short link, those rot (see vault: UniSol
+            // Accounting/Decisions).
+            sameAs: [
+              "https://www.instagram.com/vdtsites",
+              "https://maps.google.com/?cid=10419426377693999665",
+            ],
+            hasMap: "https://maps.google.com/?cid=10419426377693999665",
             priceRange: "$$",
             knowsAbout: [
               "website design",
@@ -232,7 +261,7 @@ export default function Home() {
           <a href="/">Home</a>
           <a href="/blog">Blog</a>
           <a href="#portfolio">Portfolio</a>
-          <a href="#contact">Contact&nbsp;Us</a>
+          <a href="/contact">Contact&nbsp;Us</a>
         </nav>
       </header>
 
@@ -378,7 +407,7 @@ export default function Home() {
           <a href="/">Home</a>
           <a href="/blog">Blog</a>
           <a href="#portfolio">Portfolio</a>
-          <a href="#contact" className="dest-cta">Contact&nbsp;Us</a>
+          <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
         </nav>
       </header>
 
@@ -1302,12 +1331,15 @@ export default function Home() {
                 </svg>
                 <span>vdtsites@gmail.com</span>
               </div>
-              <div className="cc-item">
+              {/* tel: anchor (not a copy-to-clipboard span) — tappable on
+                  mobile, and the Analytics listener counts it as a
+                  phone_call_click conversion. */}
+              <a className="cc-item cc-item--link" href="tel:+12506162087">
                 <svg className="cc-icon" viewBox="0 0 24 24">
                   <path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
                 </svg>
                 <span>250-616-2087</span>
-              </div>
+              </a>
               <div className="cc-item">
                 <svg className="cc-icon" viewBox="0 0 24 24">
                   <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -1316,6 +1348,18 @@ export default function Home() {
                 </svg>
                 <span>@vdtsites</span>
               </div>
+              <a
+                className="cc-item cc-item--link"
+                href="https://maps.google.com/?cid=10419426377693999665"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="cc-icon" viewBox="0 0 24 24">
+                  <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z" />
+                  <circle cx="12" cy="10" r="2.6" />
+                </svg>
+                <span>Read our Google reviews</span>
+              </a>
             </div>
 
             <div className="cc-watermark cc-watermark--sites">SITES</div>
@@ -1396,7 +1440,7 @@ export default function Home() {
               <a href="/blog">Blog</a>
             </li>
             <li>
-              <a href="#contact">Contact</a>
+              <a href="/contact">Contact</a>
             </li>
             <li>
               <a href="mailto:vdtsites@gmail.com">Email</a>

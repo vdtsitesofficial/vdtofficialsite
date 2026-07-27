@@ -9,7 +9,7 @@ type NavVariant = "overlay" | "solid";
 const LINKS = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 /**

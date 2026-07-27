@@ -250,6 +250,15 @@
 .vdt-contact-card .cc-item:hover span::before { opacity: 1; }
 .vdt-contact-card .cc-item:hover span { color: var(--cc-red); }
 
+/* Google Business Profile row. Same flex row + hover treatment as the
+   other .cc-item rows — this only strips the default anchor styling so a
+   real <a> can carry the link (crawlable, unlike the plain <span> rows). */
+.vdt-contact-card .cc-item--link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 /* ─── watermark ─── */
 .vdt-contact-card .cc-watermark {
   position: absolute;

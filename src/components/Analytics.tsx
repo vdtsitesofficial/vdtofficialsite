@@ -1,0 +1,55 @@
+"use client";
+
+import Script from "next/script";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+
+/**
+ * GA4 tag + site-wide conversion events.
+ *
+ * Conversion events (marked as key events in GA4, imported by Google Ads):
+ *  - phone_call_click — any click on an <a href="tel:..."> anywhere on the
+ *    site, captured with one delegated listener so new call buttons are
+ *    tracked automatically.
+ *  - generate_lead — fired by the contact form on confirmed delivery
+ *    (see public/lab/contact-card.js), not from here.
+ */
+export default function Analytics() {
+  const pathname = usePathname();
+  // Never track the admin area — it's Sem, not a visitor.
+  const disabled = !GA_MEASUREMENT_ID || pathname.startsWith("/admin");
+
+  useEffect(() => {
+    if (disabled) return;
+    const onClick = (e: MouseEvent) => {
+      const target = e.target instanceof Element ? e.target : null;
+      const link = target?.closest('a[href^="tel:"]');
+      if (!link) return;
+      window.gtag?.("event", "phone_call_click", {
+        link_text: (link.textContent || "").trim().slice(0, 80),
+        page_location: window.location.href,
+      });
+    };
+    // Capture phase so the event still fires if the tel: navigation begins.
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, [disabled]);
+
+  if (disabled) return null;
+
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="ga4-init" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`}
+      </Script>
+    </>
+  );
+}

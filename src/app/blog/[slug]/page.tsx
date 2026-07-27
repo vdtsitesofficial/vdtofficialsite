@@ -246,7 +246,7 @@ export default async function BlogPostPage({
             <h2 className="vdt-coda__cta-title">
               Thinking about a website? Tell us about it.
             </h2>
-            <a href="/#contact" className="vdt-coda__cta-btn">
+            <a href="/contact" className="vdt-coda__cta-btn">
               <span>Get a free quote</span>
               <span className="arrow" aria-hidden>
                 →

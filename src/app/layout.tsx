@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { LAB_V } from "@/lib/labVersion";
+import Analytics from "@/components/Analytics";
 
 const SITE_URL = "https://vdtsites.com";
 
@@ -112,7 +113,10 @@ export default function RootLayout({
           media="(min-width: 721px)"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

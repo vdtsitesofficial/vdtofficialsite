@@ -145,6 +145,10 @@
         sendBtn.classList.add("cc-sent");
         label.textContent = "Message sent ✓";
         form.reset();
+        // GA4 conversion — only on confirmed delivery, not on attempt.
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "generate_lead", { form_id: "contact_card" });
+        }
       } else {
         sendBtn.classList.add("cc-error");
         label.textContent = "Try again";
@@ -159,8 +163,11 @@
     });
   }
 
-  /* Click-to-copy on the info lines */
+  /* Click-to-copy on the info lines. Skip spans inside real links
+     (tel: phone, Google-reviews map link) — those should navigate,
+     not copy. */
   q(".cc-item span").forEach((el) => {
+    if (el.closest("a")) return;
     el.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(el.textContent.trim());
