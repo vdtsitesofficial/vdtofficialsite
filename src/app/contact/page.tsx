@@ -196,6 +196,10 @@ export default function ContactPage() {
                   <input id="cc-email-input" name="email" type="email" required autoComplete="email" />
                 </div>
                 <div className="cc-field">
+                  <label htmlFor="cc-phone-input">Phone (optional)</label>
+                  <input id="cc-phone-input" name="phone" type="tel" autoComplete="tel" />
+                </div>
+                <div className="cc-field">
                   <label htmlFor="cc-msg-input">Message</label>
                   <textarea id="cc-msg-input" name="message" rows={3} required></textarea>
                 </div>

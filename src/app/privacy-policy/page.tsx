@@ -9,8 +9,11 @@ import type { Metadata } from "next";
  *
  * Content is written to reflect what vdtsites.com actually does: a contact
  * form (name/email/message stored + emailed via Cloudflare), Cloudflare
- * hosting, and Google Fonts. There is deliberately NO Google Analytics or
- * tracking-pixel language here because the site does not run any.
+ * hosting, Google Fonts, and — added 2026-07-26 — Google Analytics that is
+ * CONSENT-GATED: the tag is not loaded at all unless the visitor accepts in
+ * the cookie banner, so declining sends nothing to Google. Keep this page,
+ * /cookie-policy, and components/Analytics.tsx describing the same reality.
+ * Still no advertising pixels or cross-site trackers.
  */
 
 export const metadata: Metadata = {
@@ -40,7 +43,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
             VDT Sites Privacy Policy
           </h1>
-          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 6, 2026</p>
+          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 26, 2026</p>
         </header>
 
         <div className="space-y-6 text-[16px] leading-[1.75] text-[#3a3a3c]">
@@ -77,7 +80,20 @@ export default function PrivacyPolicyPage() {
             <strong>Information collected automatically.</strong> Like most websites, our hosting provider records basic technical data needed to serve and secure the Site — such as IP address, browser type, device type, and the pages requested. This is used for security, performance, and troubleshooting, not for advertising or profiling.
           </p>
           <p>
-            We do <strong>not</strong> run Google Analytics, advertising pixels, social-media trackers, or any third-party analytics or behavioural-tracking tools on this Site.
+            <strong>Analytics — only if you agree.</strong> We use Google Analytics to understand how people find and use the Site. It is <strong>not loaded unless you accept</strong> in the cookie banner. If you accept, Google Analytics collects pages viewed, approximate location derived from your IP address, device and browser type, and how you arrived at the Site. We ask Google to anonymise IP addresses, and we do not enable Google&rsquo;s advertising or personalisation features.
+          </p>
+          <p>
+            If you decline, or simply ignore the banner, Google Analytics is never loaded and <strong>no information about your visit is sent to Google</strong>. You can change your choice at any time from our{" "}
+            <a
+              href="/cookie-policy"
+              className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
+            >
+              Cookie Policy
+            </a>
+            .
+          </p>
+          <p>
+            We do <strong>not</strong> run advertising pixels, social-media trackers, or any behavioural-tracking or ad-profiling tools on this Site.
           </p>
         </Section>
 
@@ -109,6 +125,10 @@ export default function PrivacyPolicyPage() {
             <li>
               <strong>Google Fonts</strong> — the Site loads fonts from Google&rsquo;s servers to render its typography. This means your browser makes a request to Google, which can expose your IP address to Google. Google Fonts does not set cookies for this purpose.
             </li>
+            <li>
+              <strong>Google Analytics</strong> — <em>only if you accept analytics cookies.</em> Google processes usage data on our behalf so we can measure how the Site is found and used. Nothing is loaded or sent unless you accept. See the{" "}
+              <a href="https://policies.google.com/privacy" className="text-[#1d1d1f] underline underline-offset-2 hover:text-black" target="_blank" rel="noreferrer">Google Privacy Policy</a>.
+            </li>
           </ul>
           <p>
             These services handle data under their own privacy policies, which we encourage you to review.
@@ -117,7 +137,7 @@ export default function PrivacyPolicyPage() {
 
         <Section title="5. Cookies">
           <p>
-            This Site uses only essential cookies set by our hosting and security provider (Cloudflare). We do not use analytics, advertising, or tracking cookies. For details, see our{" "}
+            This Site sets essential cookies from our hosting and security provider (Cloudflare), and Google Analytics cookies <strong>only if you accept them</strong>. We use no advertising or cross-site tracking cookies. You can change your choice at any time. For the full list and the button to change it, see our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"

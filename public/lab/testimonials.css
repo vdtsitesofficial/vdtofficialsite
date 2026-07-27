@@ -12,6 +12,12 @@
  * ============================================================ */
 
 .vdt-testimonials {
+  /* Skip layout/paint entirely while the section is far off screen —
+     the marquee DOM is large (24 blocks of cards). contain-intrinsic-size
+     approximates the rendered height so the scrollbar doesn't jump when
+     the real layout swaps in. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
   --vdt-ts-bg:           #f4efe6;
   --vdt-ts-ink:          #0d0d0d;
   --vdt-ts-ink-2:        #2a2724;

@@ -51,6 +51,25 @@ export function initVdtHero(opts = {}) {
 
   if (!canvas) throw new Error('initVdtHero: missing canvas (.vdt-hero__canvas)');
 
+  // ── Software-rendering guard ──────────────────────────────────
+  // When the machine has no working GPU (SwiftShader / Microsoft Basic
+  // Render Driver / llvmpipe — driver-crash fallbacks, weak VMs), a
+  // PMREM-lit spinning Three.js logo plus custom cursor and particles is
+  // exactly the workload that drags the whole page to ~15fps. Skip every
+  // hero extra on those machines: static markup only, native cursor back
+  // (hero.css sets cursor:none expecting the JS cursor), canvas kept in
+  // the layout (visibility, not display) so nothing shifts.
+  const probeGl   = document.createElement('canvas').getContext('webgl');
+  const probeInfo = probeGl && probeGl.getExtension('WEBGL_debug_renderer_info');
+  const glName    = probeInfo ? String(probeGl.getParameter(probeInfo.UNMASKED_RENDERER_WEBGL)) : '';
+  if (!probeGl || /swiftshader|basic render|llvmpipe|softpipe|software/i.test(glName)) {
+    canvas.style.visibility = 'hidden';
+    const swCursor = opts.cursor || root.querySelector('.vdt-hero__cursor');
+    if (swCursor) swCursor.style.display = 'none';
+    root.style.cursor = 'auto';
+    return function cleanup() {};
+  }
+
   // ── h1 click → select text ──────────────────────────────────────
   const title = root.querySelector('.vdt-hero__title');
   function onTitleClick() {

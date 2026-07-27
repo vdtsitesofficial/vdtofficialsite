@@ -132,6 +132,15 @@ export default function AdminDashboard({
                         >
                           {m.email}
                         </a>
+                        {m.phone && (
+                          <a
+                            href={`tel:${m.phone.replace(/[^+\d]/g, "")}`}
+                            className="block text-[13px] hover:underline"
+                            style={{ color: C.accent }}
+                          >
+                            {m.phone}
+                          </a>
+                        )}
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
                         <time

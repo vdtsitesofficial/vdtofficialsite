@@ -5,6 +5,7 @@ type Payload = {
   name: string;
   email: string;
   message: string;
+  phone?: string; // optional callback number
   website?: string; // honeypot
 };
 
@@ -116,9 +117,17 @@ export async function POST(req: Request) {
   // Strip CR/LF from the user-supplied name before it enters the Subject
   // header (header-injection guard); the body keeps the original text.
   const safeName = name.trim().replace(/[\r\n]+/g, " ");
+  // Optional callback number: free-form (people type "250-616-2087" or
+  // "+1 (250) ..."), just bounded and stripped of line breaks. Type-guarded:
+  // a non-string phone in the JSON is ignored, not a 500.
+  const phone = (typeof body.phone === "string" ? body.phone : "")
+    .replace(/[\r\n]+/g, " ")
+    .trim()
+    .slice(0, 40);
   const subject = `New inquiry from ${safeName} — VDT Sites contact form`;
   const text = [
     `From: ${name} <${email}>`,
+    ...(phone ? [`Phone: ${phone}`] : []),
     "",
     message,
     "",
@@ -132,6 +141,7 @@ export async function POST(req: Request) {
     name: name.trim(),
     email: email.trim(),
     message: message.trim(),
+    ...(phone ? { phone } : {}),
   });
 
   // Fire-and-forget the email send. Cloudflare's send_email binding to

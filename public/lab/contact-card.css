@@ -8,6 +8,12 @@
  * ========================================================= */
 
 .vdt-contact-card {
+  /* Skip layout/paint while far off screen (same rationale as the
+     testimonials marquee). The IntersectionObserver entry animation in
+     contact-card.js is unaffected — it fires as the section approaches,
+     after content-visibility has already un-skipped it. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
   /* Brand cream tones — matching the portfolio section above so the
      visual flow continues uninterrupted. Previously cool near-white
      (#fafafa); now the same warm cream gradient + red/gold radial

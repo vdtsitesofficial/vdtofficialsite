@@ -16,6 +16,7 @@
  * ─────────────────────────────────────────────────────────────── */
 
 import Script from "next/script";
+import MobileActionBar from "@/components/MobileActionBar";
 import { LAB_V } from "@/lib/labVersion";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
@@ -522,7 +523,7 @@ export default function Home() {
             />
             <img
               className="bg-image"
-              src={`/lab/assets/background.png?v=${LAB_V}`}
+              src={`/lab/assets/background.webp?v=${LAB_V}`}
               alt="VDT Sites — custom website design for small businesses, set in a warm modern workspace"
             />
           </picture>
@@ -554,7 +555,7 @@ export default function Home() {
               />
               <img
                 className="laptop-image"
-                src={`/lab/assets/laptop.png?v=${LAB_V}`}
+                src={`/lab/assets/laptop.webp?v=${LAB_V}`}
                 alt="Laptop displaying a website built by VDT Sites — modern, fast website design"
               />
             </picture>
@@ -764,7 +765,7 @@ export default function Home() {
                   <div className="vdt-portfolio__card-screen">
                     <img
                       className="vdt-portfolio__card-shot"
-                      src="/lab/shots/sherrikozubal.png"
+                      src="/lab/shots/sherrikozubal.webp"
                       alt="Sherri Kozubal landing page"
                       loading="lazy"
                       decoding="async"
@@ -789,7 +790,7 @@ export default function Home() {
                   <div className="vdt-portfolio__card-screen">
                     <img
                       className="vdt-portfolio__card-shot"
-                      src="/lab/shots/mocoffee.png"
+                      src="/lab/shots/mocoffee.webp"
                       alt="MO Coffee landing page"
                       loading="lazy"
                       decoding="async"
@@ -814,7 +815,7 @@ export default function Home() {
                   <div className="vdt-portfolio__card-screen">
                     <img
                       className="vdt-portfolio__card-shot"
-                      src="/lab/shots/morky.png"
+                      src="/lab/shots/morky.webp"
                       alt="Morky Auto Imports landing page"
                       loading="lazy"
                       decoding="async"
@@ -839,7 +840,7 @@ export default function Home() {
                   <div className="vdt-portfolio__card-screen">
                     <img
                       className="vdt-portfolio__card-shot"
-                      src="/lab/shots/therapeuticvalue.png"
+                      src="/lab/shots/therapeuticvalue.webp"
                       alt="Therapeutic Value landing page"
                       loading="lazy"
                       decoding="async"
@@ -864,7 +865,7 @@ export default function Home() {
                   <div className="vdt-portfolio__card-screen">
                     <img
                       className="vdt-portfolio__card-shot"
-                      src="/lab/shots/ceva.png"
+                      src="/lab/shots/ceva.webp"
                       alt="CEVA Volleyball landing page"
                       loading="lazy"
                       decoding="async"
@@ -889,7 +890,7 @@ export default function Home() {
                   <div className="vdt-portfolio__card-screen">
                     <img
                       className="vdt-portfolio__card-shot"
-                      src="/lab/shots/paulvanryssel.png"
+                      src="/lab/shots/paulvanryssel.webp"
                       alt="Paul Van Ryssel landing page"
                       loading="lazy"
                       decoding="async"
@@ -936,6 +937,38 @@ export default function Home() {
             </p>
           </div>
         </section>
+      </section>
+
+      {/* Mid-page CTA — the only call/contact prompt between the hero and
+          the footer card was 5+ screens of scrolling away; this catches
+          visitors who are sold by the portfolio alone. Cream-on-cream with
+          the standard red CTA so it reads as a beat, not a banner. */}
+      <section
+        aria-label="Get in touch"
+        className="bg-[#f4efe6] px-6 pb-20 pt-2 text-center"
+      >
+        <p
+          className="text-[15px] font-medium text-[#0d0d0d]/70"
+          style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+        >
+          Like what you see? Let&rsquo;s build yours.
+        </p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="tel:+12506162087"
+            className="rounded-full bg-[#dc2626] px-7 py-3 text-[14px] font-bold text-white transition-transform hover:scale-[1.03]"
+            style={{ fontFamily: "'Syne', 'Inter', sans-serif" }}
+          >
+            Call 250-616-2087
+          </a>
+          <a
+            href="#contact"
+            className="rounded-full border border-[#0d0d0d]/25 px-7 py-3 text-[14px] font-semibold text-[#0d0d0d] transition-colors hover:border-[#0d0d0d]/60"
+            style={{ fontFamily: "'Syne', 'Inter', sans-serif" }}
+          >
+            Start a conversation
+          </a>
+        </div>
       </section>
 
       {/* VDT Our Process · horizontal scroll-story */}
@@ -1322,7 +1355,17 @@ export default function Home() {
                 d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
               />
             </svg>
-            5.0 ★★★★★ on Google · 8 reviews
+            {/* Links to the Google Business Profile (stable CID URL) so a
+                skeptical visitor can verify the reviews are real. */}
+            <a
+              href="https://maps.google.com/?cid=10419426377693999665"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-transparent underline-offset-4 transition hover:decoration-current"
+              style={{ color: "inherit" }}
+            >
+              5.0 ★★★★★ on Google · 8 reviews
+            </a>
           </p>
           <h2 className="vdt-testimonials__title">
             Don&rsquo;t take <em>our</em> word for it.
@@ -1537,6 +1580,10 @@ export default function Home() {
                 <input id="cc-email-input" name="email" type="email" required autoComplete="email" />
               </div>
               <div className="cc-field">
+                <label htmlFor="cc-phone-input">Phone (optional)</label>
+                <input id="cc-phone-input" name="phone" type="tel" autoComplete="tel" />
+              </div>
+              <div className="cc-field">
                 <label htmlFor="cc-msg-input">Message</label>
                 <textarea id="cc-msg-input" name="message" rows={3} required></textarea>
               </div>
@@ -1623,6 +1670,10 @@ export default function Home() {
           </a>
         </div>
       </footer>
+
+      {/* Sticky mobile call/message bar (≤720px) — appears after the hero,
+          hides while the contact card is on screen. */}
+      <MobileActionBar />
 
       {/* Lab JS — order matters: main.js + IIFEs first, modules last.
           afterInteractive guarantees execution post-hydration so the

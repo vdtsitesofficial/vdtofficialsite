@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { LAB_V } from "@/lib/labVersion";
 import Analytics from "@/components/Analytics";
+import CookieConsent from "@/components/CookieConsent";
 
 const SITE_URL = "https://vdtsites.com";
 
@@ -97,7 +98,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href={`/lab/assets/background.png?v=${LAB_V}`}
+          href={`/lab/assets/background.webp?v=${LAB_V}`}
           media="(min-width: 721px)"
         />
         <link
@@ -109,13 +110,14 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href={`/lab/assets/laptop.png?v=${LAB_V}`}
+          href={`/lab/assets/laptop.webp?v=${LAB_V}`}
           media="(min-width: 721px)"
         />
       </head>
       <body>
         {children}
         <Analytics />
+        <CookieConsent />
       </body>
     </html>
   );
