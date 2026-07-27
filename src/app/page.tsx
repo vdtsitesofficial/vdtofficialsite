@@ -154,6 +154,40 @@ export default function Home() {
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=JetBrains+Mono:wght@700&display=swap"
         rel="stylesheet"
       />
+      {/* Zoom-hero image preloads. These live HERE, not in the root layout,
+          so only the homepage pays for them — every other route was fetching
+          two large images it never renders. They're the biggest assets above
+          the fold and the lab JS waits for both before fading out the loading
+          overlay, so preloading shaves the perceived blank window on slow
+          networks. Media-gated so phones don't pull the desktop asset.
+          ⚠️ The href here MUST match the <picture>/<img> below exactly —
+          same file AND same ?v= — or the preload is wasted and the image
+          downloads twice. */}
+      <link
+        rel="preload"
+        as="image"
+        href={`/lab/assets/background-mobile.png?v=${LAB_V}`}
+        media="(max-width: 720px)"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={`/lab/assets/background.webp?v=${LAB_V}`}
+        media="(min-width: 721px)"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
+        media="(max-width: 720px)"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={`/lab/assets/laptop.webp?v=${LAB_V}`}
+        media="(min-width: 721px)"
+      />
+
       <link rel="stylesheet" href={`/lab/style.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/hero.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/portfolio.css?v=${LAB_V}`} />

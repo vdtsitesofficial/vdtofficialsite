@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { LAB_V } from "@/lib/labVersion";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 
@@ -83,36 +82,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
 
-        {/* Preload the homepage zoom-hero images. They're the largest
-            assets above the fold (~3.9 MB on mobile combined) and the
-            lab JS waits for both to load before fading out the loading
-            overlay. Preloading shaves the perceived blank window on
-            slow networks. The bg-image preloads are media-gated so
-            phones don't pull the desktop asset and vice versa. */}
-        <link
-          rel="preload"
-          as="image"
-          href={`/lab/assets/background-mobile.png?v=${LAB_V}`}
-          media="(max-width: 720px)"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href={`/lab/assets/background.webp?v=${LAB_V}`}
-          media="(min-width: 721px)"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
-          media="(max-width: 720px)"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href={`/lab/assets/laptop.webp?v=${LAB_V}`}
-          media="(min-width: 721px)"
-        />
+        {/* NOTE: the zoom-hero image preloads used to live here, in the root
+            layout, which meant EVERY route paid for them — /contact, the blog,
+            the legal pages and the ads landing page all fetched two large
+            homepage-only images they never render (the browser flags it as an
+            unused preload). They now live in app/page.tsx alongside the
+            <picture> elements they actually serve. Keep them there. */}
       </head>
       <body>
         {children}
