@@ -159,6 +159,7 @@ export default function Home() {
       <link rel="stylesheet" href={`/lab/footer.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/testimonials.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <link rel="stylesheet" href={`/lab/faq.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/process-scroll.css?v=${LAB_V}`} />
       {/* Premium mobile tap-to-enter overlay (scoped #m-intro, ≤720px only) */}
       <link rel="stylesheet" href={`/lab/mobile-intro.css?v=${LAB_V}`} />
@@ -246,6 +247,54 @@ export default function Home() {
               "SEO",
               "small business websites",
             ],
+          }),
+        }}
+      />
+
+      {/* FAQ structured data. NOTE: Google deprecated FAQ *rich results* on
+          2026-05-07, so this will NOT produce the old dropdowns under the
+          search listing. The markup itself is not deprecated and is still
+          read by Bingbot, PerplexityBot and the RAG crawlers behind ChatGPT
+          and Copilot — which is the point now that Google's own "Ask" feature
+          answers from the profile, the reviews and THIS SITE. Keep in sync
+          with the visible <details> list below. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "@id": "https://vdtsites.com/#faq",
+            mainEntity: [
+              [
+                "How much does a small business website cost?",
+                "Every project is quoted individually based on how many pages and features you need — you get a fixed price up front, so there are no hourly surprises. Most small business sites include design, build, hosting setup and launch. Get in touch and we'll put a quote together for free.",
+              ],
+              [
+                "Do you work with businesses outside Nanaimo?",
+                "Yes. We work with businesses right across Vancouver Island — Parksville, Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria — as well as the Vancouver area. Everything can be handled remotely by phone, email and video call, so distance is never an issue.",
+              ],
+              [
+                "Can I edit my own website after it's built?",
+                "Yes. We build in an editor that lets you change text and images directly on your live page — click the text, type the new version, save. No technical knowledge and no separate dashboard to learn. Bigger changes we handle for you.",
+              ],
+              [
+                "How long does it take to build a website?",
+                "Most small business websites are ready in one to three weeks. The main variable is how quickly we get your content, photos and feedback — the design and build work itself moves fast once we have what we need.",
+              ],
+              [
+                "What does the monthly fee cover?",
+                "Hosting, your domain name, SSL security, backups, monitoring and ongoing support — all in one flat monthly fee. No separate hosting bill, no renewal surprises, and no chasing three different companies when something breaks.",
+              ],
+              [
+                "Do I own my website?",
+                "Yes. Once your project is paid in full the site is yours, and we'll hand over a full export of the code on request. We'd rather keep you because the work is good than because you're locked in.",
+              ],
+            ].map(([q, a]) => ({
+              "@type": "Question",
+              name: q,
+              acceptedAnswer: { "@type": "Answer", text: a },
+            })),
           }),
         }}
       />
@@ -1297,6 +1346,110 @@ export default function Home() {
           <div className="vdt-testimonials__fade vdt-testimonials__fade--bottom" aria-hidden="true"></div>
           <div className="vdt-testimonials__fade vdt-testimonials__fade--left" aria-hidden="true"></div>
           <div className="vdt-testimonials__fade vdt-testimonials__fade--right" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      {/* FAQ — sits between testimonials and contact so objections are
+          answered right before the form. Native <details>: no JS, keyboard
+          accessible, and the answers stay in the DOM whether open or not so
+          crawlers and AI retrieval can read them. */}
+      <section id="faq" className="vdt-faq">
+        <div className="faq-inner">
+          <p className="faq-eyebrow">Questions</p>
+          <h2 className="faq-title">Before you get in touch</h2>
+
+          <div className="faq-list">
+            <details className="faq-item">
+              <summary className="faq-q">
+                How much does a small business website cost?
+                <span className="faq-sign" aria-hidden="true"></span>
+              </summary>
+              <div className="faq-a">
+                <p>
+                  Every project is quoted individually based on how many pages and features you
+                  need &mdash; you get a <strong>fixed price up front</strong>, so there are no
+                  hourly surprises. Most small business sites include design, build, hosting setup
+                  and launch. Get in touch and we&rsquo;ll put a quote together for free.
+                </p>
+              </div>
+            </details>
+
+            <details className="faq-item">
+              <summary className="faq-q">
+                Do you work with businesses outside Nanaimo?
+                <span className="faq-sign" aria-hidden="true"></span>
+              </summary>
+              <div className="faq-a">
+                <p>
+                  Yes. We work with businesses right across Vancouver Island &mdash; Parksville,
+                  Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria &mdash;
+                  as well as the Vancouver area. Everything can be handled remotely by phone, email
+                  and video call, so distance is never an issue.
+                </p>
+              </div>
+            </details>
+
+            <details className="faq-item">
+              <summary className="faq-q">
+                Can I edit my own website after it&rsquo;s built?
+                <span className="faq-sign" aria-hidden="true"></span>
+              </summary>
+              <div className="faq-a">
+                <p>
+                  Yes. We build in an editor that lets you change text and images directly on your
+                  live page &mdash; click the text, type the new version, save. No technical
+                  knowledge and no separate dashboard to learn. Bigger changes we handle for you.
+                </p>
+              </div>
+            </details>
+
+            <details className="faq-item">
+              <summary className="faq-q">
+                How long does it take to build a website?
+                <span className="faq-sign" aria-hidden="true"></span>
+              </summary>
+              <div className="faq-a">
+                <p>
+                  Most small business websites are ready in <strong>one to three weeks</strong>. The
+                  main variable is how quickly we get your content, photos and feedback &mdash; the
+                  design and build work itself moves fast once we have what we need.
+                </p>
+              </div>
+            </details>
+
+            <details className="faq-item">
+              <summary className="faq-q">
+                What does the monthly fee cover?
+                <span className="faq-sign" aria-hidden="true"></span>
+              </summary>
+              <div className="faq-a">
+                <p>
+                  Hosting, your domain name, SSL security, backups, monitoring and ongoing support
+                  &mdash; all in one flat monthly fee. No separate hosting bill, no renewal
+                  surprises, and no chasing three different companies when something breaks.
+                </p>
+              </div>
+            </details>
+
+            <details className="faq-item">
+              <summary className="faq-q">
+                Do I own my website?
+                <span className="faq-sign" aria-hidden="true"></span>
+              </summary>
+              <div className="faq-a">
+                <p>
+                  Yes. Once your project is paid in full the site is yours, and we&rsquo;ll hand
+                  over a full export of the code on request. We&rsquo;d rather keep you because the
+                  work is good than because you&rsquo;re locked in.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <p className="faq-foot">
+            Still wondering about something? <a href="#contact">Ask us directly</a> &mdash; no
+            pressure, no sales pitch.
+          </p>
         </div>
       </section>
 

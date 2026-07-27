@@ -1,0 +1,176 @@
+/* =========================================================
+ * VDT FAQ — scoped stylesheet
+ *
+ * Sits between the testimonials and the contact card. Uses the SAME
+ * cream ground as .vdt-contact-card (#f4efe6 = var(--canvas)) so the
+ * three sections read as one continuous surface with no colour seam.
+ *
+ * Native <details>/<summary>: no JS, keyboard accessible for free, and
+ * the answers stay in the DOM so crawlers and AI retrieval read them
+ * whether or not the accordion is open.
+ * ========================================================= */
+
+.vdt-faq {
+  --faq-bg:        #f4efe6;
+  --faq-card:      rgba(255, 255, 255, 0.75);
+  --faq-card-open: rgba(255, 255, 255, 0.95);
+  --faq-text:      #0d0d0d;
+  --faq-muted:     rgba(13, 13, 13, 0.62);
+  --faq-line:      rgba(13, 13, 13, 0.10);
+  --faq-red:       #dc2626;
+
+  position: relative;
+  background: var(--faq-bg);
+  color: var(--faq-text);
+  padding: 104px 32px 72px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+@media (max-width: 640px) {
+  .vdt-faq { padding: 68px 20px 44px; }
+}
+
+.vdt-faq .faq-inner {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* ─── heading ─── */
+.vdt-faq .faq-eyebrow {
+  margin: 0 0 14px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--faq-muted);
+}
+
+.vdt-faq .faq-title {
+  margin: 0 0 44px;
+  font-family: "Syne", "Inter", sans-serif;
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -1.5px;
+  text-wrap: balance;
+  background: linear-gradient(120deg, #161616 0%, #4a4a4a 50%, #161616 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ─── list ─── */
+.vdt-faq .faq-list {
+  display: grid;
+  gap: 12px;
+}
+
+.vdt-faq .faq-item {
+  background: var(--faq-card);
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px var(--faq-line);
+  overflow: hidden;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.vdt-faq .faq-item[open] {
+  background: var(--faq-card-open);
+  box-shadow:
+    inset 0 0 0 1px rgba(13, 13, 13, 0.06),
+    0 14px 34px rgba(0, 0, 0, 0.05);
+}
+
+/* ─── question ─── */
+.vdt-faq .faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px clamp(20px, 3vw, 30px);
+  cursor: pointer;
+  list-style: none;
+  font-family: "Syne", "Inter", sans-serif;
+  font-size: clamp(16px, 1.9vw, 19px);
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 1.35;
+  color: var(--faq-text);
+  transition: color 0.2s ease;
+}
+
+/* kill the native disclosure triangle in every engine */
+.vdt-faq .faq-q::-webkit-details-marker { display: none; }
+.vdt-faq .faq-q::marker { content: ""; }
+
+.vdt-faq .faq-q:hover { color: var(--faq-red); }
+
+.vdt-faq .faq-item:focus-within .faq-q { color: var(--faq-red); }
+.vdt-faq .faq-q:focus-visible {
+  outline: 2px solid var(--faq-red);
+  outline-offset: -3px;
+  border-radius: 12px;
+}
+
+/* ─── plus / minus ─── */
+.vdt-faq .faq-sign {
+  position: relative;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+}
+.vdt-faq .faq-sign::before,
+.vdt-faq .faq-sign::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--faq-red);
+  transform: translate(-50%, -50%);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+}
+.vdt-faq .faq-sign::after { transform: translate(-50%, -50%) rotate(90deg); }
+.vdt-faq .faq-item[open] .faq-sign::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 0;
+}
+
+/* ─── answer ─── */
+.vdt-faq .faq-a {
+  padding: 0 clamp(20px, 3vw, 30px) 24px;
+  font-size: 15px;
+  line-height: 1.68;
+  color: var(--faq-muted);
+  max-width: 68ch;
+}
+.vdt-faq .faq-a p { margin: 0 0 12px; }
+.vdt-faq .faq-a p:last-child { margin-bottom: 0; }
+.vdt-faq .faq-a strong { color: var(--faq-text); font-weight: 600; }
+
+.vdt-faq .faq-item[open] .faq-a {
+  animation: vdt-faq-reveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes vdt-faq-reveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ─── closing line ─── */
+.vdt-faq .faq-foot {
+  margin: 40px 0 0;
+  font-size: 15px;
+  color: var(--faq-muted);
+}
+.vdt-faq .faq-foot a {
+  color: var(--faq-red);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.35);
+  transition: border-color 0.2s ease;
+}
+.vdt-faq .faq-foot a:hover { border-bottom-color: var(--faq-red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vdt-faq * { animation: none !important; transition: none !important; }
+}
