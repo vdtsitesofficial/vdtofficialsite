@@ -39,6 +39,14 @@ export async function generateMetadata({
       description: cs.metaDescription,
       images: [`${SITE}/work-case/${cs.slug}-hero.webp`],
     },
+    // Without this, the layout's static twitter title/description win the
+    // metadata merge and every case study shares one generic card.
+    twitter: {
+      card: "summary_large_image",
+      title: cs.metaTitle,
+      description: cs.metaDescription,
+      images: [`${SITE}/work-case/${cs.slug}-hero.webp`],
+    },
   };
 }
 

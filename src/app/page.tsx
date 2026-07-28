@@ -216,6 +216,22 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: IMPORTMAP }}
       />
 
+      {/* WebSite entity — declared once here so /work and /blog pages can
+          reference it via isPartOf {"@id": ".../#website"} without dangling. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": "https://vdtsites.com/#website",
+            url: "https://vdtsites.com",
+            name: "VDT Sites",
+            publisher: { "@id": "https://vdtsites.com/#business" },
+          }),
+        }}
+      />
+
       {/* Local-business structured data — the machine-readable card Google
           uses for local rankings ("website design Nanaimo / Vancouver Island").
           NAP matches the public contact card (vault: Projects/VDT/Contact Card). */}
@@ -1694,7 +1710,7 @@ export default function Home() {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="#portfolio">Work</a>
+              <a href="/work">Work</a>
             </li>
             <li>
               <a href="/blog">Blog</a>

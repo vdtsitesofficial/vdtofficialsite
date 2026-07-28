@@ -14,6 +14,19 @@ export const metadata: Metadata = {
   description:
     "Case studies of websites we designed and built for Vancouver Island small businesses: coffee roasters, food trucks, counsellors, importers, campaigns and more.",
   alternates: { canonical: "/work" },
+  openGraph: {
+    title: "Our Work: Small Business Websites on Vancouver Island",
+    description:
+      "Case studies of websites we designed and built for Vancouver Island small businesses.",
+    images: [`${SITE}/work-case/isle-air-chicken-hero.webp`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Work: Small Business Websites on Vancouver Island",
+    description:
+      "Case studies of websites we designed and built for Vancouver Island small businesses.",
+    images: [`${SITE}/work-case/isle-air-chicken-hero.webp`],
+  },
 };
 
 export default function WorkIndexPage() {
