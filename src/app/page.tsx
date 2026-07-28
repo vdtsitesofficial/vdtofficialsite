@@ -801,9 +801,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://sherrikozubal.com"
-                target="_blank"
-                rel="noopener"
+                href="/work/sherri-kozubal"
                 data-name="Sherri Kozubal"
                 data-tags="Hypnotherapy · Bookings"
               >
@@ -826,9 +824,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://mocoffee.ca"
-                target="_blank"
-                rel="noopener"
+                href="/work/mo-coffee"
                 data-name="MO Coffee"
                 data-tags="Hospitality · E-Commerce"
               >
@@ -851,9 +847,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://isleairchicken.ca"
-                target="_blank"
-                rel="noopener"
+                href="/work/isle-air-chicken"
                 data-name="Isle Air Chicken"
                 data-tags="Food Truck · Menu"
               >
@@ -876,9 +870,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://morkyautoimports.ca"
-                target="_blank"
-                rel="noopener"
+                href="/work/morky-auto-imports"
                 data-name="Morky Auto Imports"
                 data-tags="Automotive · Inventory"
               >
@@ -901,9 +893,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://therapeuticvalue.ca"
-                target="_blank"
-                rel="noopener"
+                href="/work/therapeutic-value"
                 data-name="Therapeutic Value"
                 data-tags="Wellness · Bookings"
               >
@@ -926,9 +916,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://cevavolleyball.ca"
-                target="_blank"
-                rel="noopener"
+                href="/work/ceva-volleyball"
                 data-name="CEVA Volleyball"
                 data-tags="Athletics · Programs"
               >
@@ -951,9 +939,7 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
-                href="https://paulvanryssel.ca"
-                target="_blank"
-                rel="noopener"
+                href="/work/paul-van-ryssel"
                 data-name="Paul Van Ryssel"
                 data-tags="Civic · Campaign"
               >
@@ -1007,7 +993,7 @@ export default function Home() {
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M7 17 L17 7 M9 7 L17 7 L17 15" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              Click to visit live site
+              Click to read the case study
             </p>
           </div>
         </section>

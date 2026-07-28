@@ -42,16 +42,18 @@ const SYNE = "'Syne', 'Inter', sans-serif";
 
 /* Ordered strongest-first — the first two load eagerly and are what most
    visitors see before scrolling the track.
-   Cards link to the live client sites in a NEW TAB: this landing page is
-   paid traffic, so the one thing we can't do is navigate them away from it. */
+   Cards link to the /work case studies (2026-07-28): keeps paid visitors
+   on-site and in the funnel instead of handing them to a client's site.
+   Internal links open in the same tab; WorkCarousel only new-tabs
+   external hrefs. */
 const WORK = [
-  { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "https://mocoffee.ca" },
-  { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville", href: "https://morkyautoimports.ca" },
-  { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo", href: "https://therapeuticvalue.ca" },
-  { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo", href: "https://sherrikozubal.com" },
-  { img: "/work/isleair.webp", name: "Isle Air Chicken", line: "Air-fried chicken · Vancouver Island", href: "https://isleairchicken.ca" },
-  { img: "/work/ceva.webp", name: "CEVA Volleyball", line: "Tournament platform · live scoreboards", href: "https://cevavolleyball.vdtsites.workers.dev" },
-  { img: "/work/paulvanryssel.webp", name: "Paul Van Ryssel", line: "Campaign website · Nanaimo", href: "https://paulvanryssel.ca" },
+  { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "/work/mo-coffee" },
+  { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville", href: "/work/morky-auto-imports" },
+  { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo", href: "/work/therapeutic-value" },
+  { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo", href: "/work/sherri-kozubal" },
+  { img: "/work/isleair.webp", name: "Isle Air Chicken", line: "Air-fried chicken · Vancouver Island", href: "/work/isle-air-chicken" },
+  { img: "/work/ceva.webp", name: "CEVA Volleyball", line: "Tournament platform · live scoreboards", href: "/work/ceva-volleyball" },
+  { img: "/work/paulvanryssel.webp", name: "Paul Van Ryssel", line: "Campaign website · Nanaimo", href: "/work/paul-van-ryssel" },
 ];
 
 const REASONS = [

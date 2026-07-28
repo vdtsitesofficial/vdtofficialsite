@@ -101,9 +101,13 @@ export default function WorkCarousel({ items }: { items: WorkItem[] }) {
           <li key={w.name} className="w-[min(82vw,360px)] shrink-0 snap-start">
             <a
               href={w.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Visit the ${w.name} website (opens in a new tab)`}
+              target={w.href.startsWith("/") ? undefined : "_blank"}
+              rel={w.href.startsWith("/") ? undefined : "noopener noreferrer"}
+              aria-label={
+                w.href.startsWith("/")
+                  ? `Read the ${w.name} case study`
+                  : `Visit the ${w.name} website (opens in a new tab)`
+              }
               className="group block h-full overflow-hidden rounded-2xl bg-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(0,0,0,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#dc2626] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
