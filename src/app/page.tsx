@@ -851,6 +851,31 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="https://isleairchicken.ca"
+                target="_blank"
+                rel="noopener"
+                data-name="Isle Air Chicken"
+                data-tags="Food Truck · Menu"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/isleair.webp"
+                      alt="Isle Air Chicken landing page"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="https://morkyautoimports.ca"
                 target="_blank"
                 rel="noopener"
@@ -961,7 +986,7 @@ export default function Home() {
             <div className="vdt-portfolio__counter" aria-live="polite">
               <span className="vdt-portfolio__counter-current" data-vdt-counter-current>01</span>
               <span className="vdt-portfolio__counter-sep">/</span>
-              <span className="vdt-portfolio__counter-total" data-vdt-counter-total>06</span>
+              <span className="vdt-portfolio__counter-total" data-vdt-counter-total>07</span>
             </div>
 
             <button className="vdt-portfolio__nav-btn" data-vdt-dir="next" aria-label="Next project">
