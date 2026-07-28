@@ -16,7 +16,7 @@ import {
  *
  * Accept and Decline are given EQUAL visual weight on purpose. Styling the
  * decline option to be harder to find is a dark pattern and undermines the
- * validity of the consent it collects — which defeats the point of asking.
+ * validity of the consent it collects, which defeats the point of asking.
  *
  * Not a modal: it doesn't trap focus or block the page. Under BC PIPA /
  * PIPEDA an analytics cookie doesn't warrant holding the site hostage, and a
@@ -56,7 +56,7 @@ export default function CookieConsent() {
       <p className="mt-2 text-[14px] leading-[1.6] text-[#3a3a3c]">
         We&rsquo;d like to use Google Analytics to see how people find this site, so we
         know what&rsquo;s working. It sets cookies and shares usage data with Google.
-        Decline and nothing is loaded &mdash; the site works exactly the same either way.
+        Decline and nothing is loaded. The site works exactly the same either way.
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">

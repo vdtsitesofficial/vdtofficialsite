@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LAB_V } from "@/lib/labVersion";
 
 /**
  * Shared chrome for all /blog routes. Loads the lab's design tokens
@@ -28,7 +29,10 @@ export default function BlogLayout({
         href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap"
         rel="stylesheet"
       />
-      <link rel="stylesheet" href="/lab/style.css" />
+      {/* Same ?v= cache-bust the homepage uses. Without it the blog kept
+          serving whatever copy of style.css a browser or the CF edge had
+          already cached, so lab CSS fixes never reached repeat visitors. */}
+      <link rel="stylesheet" href={`/lab/style.css?v=${LAB_V}`} />
 
       {/* Blog styles — hover states, drop caps, marginalia grid, and the
           editorial typographic system. Inline styles in pages can't do

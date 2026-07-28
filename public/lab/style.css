@@ -35,7 +35,19 @@
   --font-poster:  'Anton', 'Impact', system-ui, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Base reset. MUST stay inside @layer base.
+   Unlayered CSS beats every layered rule regardless of specificity, and
+   Tailwind v4 ships its utilities inside @layer utilities. While this reset
+   sat unlayered it silently zeroed EVERY Tailwind p-* / m-* utility on the
+   pages that load this file (the homepage and the blog), which is why the
+   cookie banner, the "Like what you see?" CTA buttons, and the mobile action
+   bar all rendered with their text jammed against their borders.
+   Tailwind's own preflight already applies this same reset in @layer base,
+   so inside Next this rule is redundant; it is kept for the standalone
+   laptop-zoom lab page, which loads no Tailwind. */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+}
 
 html, body {
   background: var(--canvas);
