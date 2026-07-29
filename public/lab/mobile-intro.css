@@ -217,15 +217,62 @@
   background: var(--cream);
   transition: opacity 0.28s ease;
 }
-#m-intro .m-screen-work img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  /* The shots are tall full-page captures. Anchor to the top so the
-     client site's own hero is what lands in this small box. */
-  object-fit: cover;
-  object-position: 50% 0;
+/* CSS-only mock of VDT's own page. Every size derives from --screen-w
+   (set by mobile-intro.js) so it scales with the laptop, and it costs no
+   image bytes. */
+#m-intro .m-sw-bar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--screen-w) * 0.014);
+  padding: calc(var(--screen-w) * 0.022) calc(var(--screen-w) * 0.032);
+  background: #e7dece;
+  border-bottom: 1px solid rgba(20, 20, 20, 0.08);
 }
+#m-intro .m-sw-dot {
+  width: calc(var(--screen-w) * 0.016);
+  height: calc(var(--screen-w) * 0.016);
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.18);
+  flex: 0 0 auto;
+}
+#m-intro .m-sw-url {
+  margin: 0 auto;
+  font-size: calc(var(--screen-w) * 0.036);
+  color: rgba(20, 20, 20, 0.4);
+  letter-spacing: 0.02em;
+}
+#m-intro .m-sw-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--screen-w) * 0.026);
+  padding: calc(var(--screen-w) * 0.052) calc(var(--screen-w) * 0.058);
+}
+#m-intro .m-sw-head {
+  font-family: "Anton", "Inter", sans-serif;
+  font-weight: 400;
+  font-size: calc(var(--screen-w) * 0.086);
+  line-height: 1.03;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+#m-intro .m-sw-cta {
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+  font-size: calc(var(--screen-w) * 0.032);
+  letter-spacing: 0.04em;
+  padding: calc(var(--screen-w) * 0.018) calc(var(--screen-w) * 0.052);
+  border-radius: 999px;
+}
+#m-intro .m-sw-line {
+  display: block;
+  height: calc(var(--screen-w) * 0.011);
+  width: 70%;
+  border-radius: 99px;
+  background: rgba(20, 20, 20, 0.11);
+}
+#m-intro .m-sw-line--short { width: 46%; }
 /* Sheen, so it reads as glass rather than a pasted rectangle. */
 #m-intro .m-screen-work::after {
   content: "";

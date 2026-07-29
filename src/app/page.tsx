@@ -801,21 +801,33 @@ export default function Home() {
           <div className="m-glow" aria-hidden="true"></div>
           <div className="m-surface" aria-hidden="true"></div>
 
-          {/* The laptop screen used to be a blank cream rectangle with a
-              faint VDT wordmark on it, so a visitor deciding whether to tap
-              had nothing to look at. Showing a shipped client site makes the
-              screen itself the argument. mocoffee.webp is deliberate: it is
-              the smallest shot (56KB) and it is dark and high-contrast, so
-              it still reads at ~130px wide. It is the same URL the portfolio
-              carousel uses further down, so the byte is reused, not doubled. */}
+          {/* The laptop screen. This was a blank cream rectangle with a faint
+              VDT wordmark, so there was nothing to look at while deciding
+              whether to tap.
+
+              It briefly showed a real client screenshot instead, which was a
+              mistake: on a fast load it flashes another company's brand for
+              half a second and then becomes VDT's hero, so it reads as a
+              rendering glitch rather than as proof.
+
+              This is a CSS-only mock of VDT's OWN page instead. It costs no
+              image bytes, it is unmistakably VDT, and the zoom stays
+              coherent: you are looking at the site, then you go into it. */}
           <div className="m-screen-work" aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/lab/shots/mocoffee.webp"
-              alt=""
-              draggable={false}
-              decoding="async"
-            />
+            <div className="m-sw-bar">
+              <span className="m-sw-dot"></span>
+              <span className="m-sw-dot"></span>
+              <span className="m-sw-dot"></span>
+              <span className="m-sw-url">vdtsites.com</span>
+            </div>
+            <div className="m-sw-body">
+              <p className="m-sw-head">
+                Websites<br />Worth Owning
+              </p>
+              <span className="m-sw-cta">Get started</span>
+              <span className="m-sw-line"></span>
+              <span className="m-sw-line m-sw-line--short"></span>
+            </div>
           </div>
 
           <div className="m-sweep" aria-hidden="true"></div>
