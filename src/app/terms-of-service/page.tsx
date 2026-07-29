@@ -333,7 +333,10 @@ export default function TermsOfServicePage() {
             If the client provides their own domain, the client remains responsible for domain ownership, renewal, payment, account access, registrar settings, DNS settings, and related issues unless otherwise agreed.
           </p>
           <p>
-            If VDT Sites registers a domain on behalf of the client, VDT Sites may add the client&rsquo;s information to the domain purchase or registration where appropriate. Unless otherwise agreed in writing, the client is intended to be the beneficial owner of the domain after the client has paid all related fees.
+            If VDT Sites registers a domain for the client, VDT Sites is by default listed as the registrant, pays the registration fee, and holds the domain on the client&rsquo;s behalf. A client who would prefer the domain registered in their own name may request this at any time, before or after registration, at no additional charge.
+          </p>
+          <p>
+            Where VDT Sites holds a domain on the client&rsquo;s behalf, the client is the beneficial owner of that domain once all related fees are paid, and VDT Sites will transfer the domain to the client, or to a registrar account of the client&rsquo;s choosing, on written request and at no charge. Transfers remain subject to registrar and registry rules, including any transfer-lock period that applies after an initial registration or a recent transfer.
           </p>
           <p>
             The client is responsible for domain renewal fees, registrar fees, privacy fees, transfer fees, and any third-party costs related to the domain.
