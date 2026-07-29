@@ -357,8 +357,11 @@ export default function Home() {
           <img className="zh-mark" src="/vdt-glass-logo.png" alt="VDT Sites" />
           <span>VDT&nbsp;SITES</span>
         </a>
+        {/* data-nav="home" is hidden at ≤720px (style.css). The brand mark
+            to the left is already the home link, and dropping the duplicate
+            is what buys the wordmark enough room to stop overlapping. */}
         <nav className="zh-nav">
-          <a href="/">Home</a>
+          <a href="/" data-nav="home">Home</a>
           <a href="/blog">Blog</a>
           <a href="#portfolio">Portfolio</a>
           <a href="/contact">Contact&nbsp;Us</a>
@@ -504,7 +507,7 @@ export default function Home() {
           <span>VDT&nbsp;SITES</span>
         </a>
         <nav className="dest-nav">
-          <a href="/">Home</a>
+          <a href="/" data-nav="home">Home</a>
           <a href="/blog">Blog</a>
           <a href="#portfolio">Portfolio</a>
           <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
@@ -745,7 +748,13 @@ export default function Home() {
             real hero underneath, then fades out.
             ═══════════════════════════════════════════════════════ */}
         <div id="m-intro" data-state="idle">
-          <div className="m-room" aria-hidden="true"></div>
+          {/* Versioned URL matches the head preload exactly. See the
+              .m-room note in mobile-intro.css. */}
+          <div
+            className="m-room"
+            aria-hidden="true"
+            style={{ backgroundImage: `url(/lab/assets/background-mobile.png?v=${LAB_V})` }}
+          ></div>
 
           <div className="m-scene">
             <div className="m-laptop">

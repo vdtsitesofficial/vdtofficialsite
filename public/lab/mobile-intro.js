@@ -24,6 +24,60 @@
   const taplayer = intro.querySelector(".m-taplayer");
   if (!laptop || !taplayer) return;
 
+  // Session memory. The intro is a first-impression piece, not a
+  // turnstile — a visitor who taps through, opens a case study and hits
+  // the logo to come home should not be gated a second time.
+  const SEEN_KEY = "vdtIntroSeen";
+  function markSeen() {
+    try { sessionStorage.setItem(SEEN_KEY, "1"); } catch (e) { /* private mode */ }
+  }
+  function hasSeen() {
+    try { return sessionStorage.getItem(SEEN_KEY) === "1"; } catch (e) { return false; }
+  }
+
+  // Read the exit timings straight off the element so they can never
+  // drift from the CSS durations. See the "exit choreography" block in
+  // mobile-intro.css.
+  // 0 is a legitimate value (the reduced-motion block sets these), so only
+  // a missing/unparseable/negative property falls back.
+  function cssMs(name, fallback) {
+    const raw = getComputedStyle(intro).getPropertyValue(name).trim();
+    const n = parseFloat(raw);
+    if (!isFinite(n) || n < 0) return fallback;
+    return raw.endsWith("ms") ? n : n * 1000;
+  }
+
+  // main.js only assigns window.__vdtEnterMobile inside setupMobileEnter(),
+  // which runs after BOTH hero images have loaded — so on the skip path it
+  // usually does not exist yet. Poll on rAF (not a 50ms interval) so the
+  // "Click to Enter" button main.js un-hides never gets a chance to paint.
+  function callEnterMobile() {
+    try {
+      if (typeof window.__vdtEnterMobile === "function") {
+        window.__vdtEnterMobile();
+        return true;
+      }
+    } catch (e) { /* non-fatal — overlay still reveals the page below */ }
+    return false;
+  }
+  // Calls done() once the handoff has actually happened, or once we give
+  // up. done() MUST still run on the give-up path: if main.js never came
+  // up we would otherwise leave the visitor staring at a frozen intro.
+  function callEnterMobileWhenReady(done) {
+    function finish() { if (typeof done === "function") done(); }
+    if (callEnterMobile()) { finish(); return; }
+    // Budget in FRAMES, not wall-clock: rAF is paused while the tab is
+    // hidden, so a wall-clock deadline would quietly expire in a
+    // background tab and hand off to nothing. ~600 frames is roughly 10s
+    // of visible time, comfortably past main.js's own 8s failsafe.
+    let framesLeft = 600;
+    (function poll() {
+      if (callEnterMobile()) { finish(); return; }
+      if (--framesLeft > 0) { requestAnimationFrame(poll); return; }
+      finish();
+    })();
+  }
+
   // Same screen calibration as the desktop zoom + the prototype.
   const SCREEN_INSET = { left: 0.335, right: 0.335, top: 0.401, bottom: 0.288 };
 
@@ -62,32 +116,97 @@
   }
 
   let entered = false;
+  let exitScheduled = false;
+
+  // Fade the overlay out and drop it from the layout. Only ever called
+  // AFTER the handoff to main.js has happened (or been given up on).
+  function scheduleExit() {
+    if (exitScheduled) return;
+    exitScheduled = true;
+    setTimeout(function () { intro.dataset.state = "done"; }, cssMs("--t-done-at", 460));
+    setTimeout(function () { intro.style.display = "none"; }, cssMs("--t-remove-at", 720));
+  }
+
   function enter(x, y) {
     if (entered) return;
     entered = true;
+    // Tell main.js the visitor is through, BEFORE anything async. If
+    // setupMobileEnter() has not run yet it will see this and skip
+    // installing the scroll lock entirely, which is what makes the
+    // give-up path below safe: no lock can arrive after we are gone.
+    window.__vdtIntroPassed = true;
+    markSeen();
     measureScreen();
     placeBloom(x, y);
 
-    // Kick production's real enter flow underneath the overlay: it
-    // snaps the hero to its locked full-screen state and unlocks the
-    // page scroll. We then play our premium takeover on top and fade.
-    try {
-      if (typeof window.__vdtEnterMobile === "function") window.__vdtEnterMobile();
-    } catch (e) { /* non-fatal — overlay still reveals the page below */ }
-
+    // Start the takeover immediately so the tap/swipe feels instant.
     intro.dataset.state = "entering";
 
-    // Once the cream takeover has covered the viewport (~900ms) start
-    // fading the overlay out to reveal the now-locked hero beneath.
-    setTimeout(function () { intro.dataset.state = "done"; }, 900);
-    // Take it out of the layout after the fade completes.
-    setTimeout(function () { intro.style.display = "none"; }, 1600);
+    // Kick production's real enter flow underneath the overlay: it snaps
+    // the hero to its locked full-screen state and unlocks the page scroll.
+    //
+    // This MUST wait for __vdtEnterMobile rather than firing once and
+    // hoping. main.js only defines it inside setupMobileEnter(), which runs
+    // after both hero images load, so on a slow connection a visitor can
+    // easily tap or swipe before it exists. If we dropped the overlay
+    // anyway, setupMobileEnter() would then re-lock scrolling and expose
+    // only #mobile-enter, which is display:none on mobile — a page with no
+    // way in. So the exit is scheduled off the handoff, not off the tap.
+    callEnterMobileWhenReady(scheduleExit);
+  }
+
+  // Already seen this session: never show the overlay at all. Hide it
+  // before the first paint and hand straight off to the real hero.
+  if (hasSeen()) {
+    entered = true;
+    window.__vdtIntroPassed = true;
+    intro.style.transition = "none";
+    intro.style.display = "none";
+    intro.dataset.state = "done";
+    callEnterMobileWhenReady();
+    return;
   }
 
   taplayer.addEventListener("pointerdown", function (e) { enter(e.clientX, e.clientY); }, { passive: true });
   taplayer.addEventListener("keydown", function (e) {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); enter(); }
   });
+
+  // ── Swipe / scroll also dismisses ──────────────────────────────────
+  // Swiping is what people actually do on a page like this, and until now
+  // it did nothing: main.js's non-passive touchmove blocker swallows the
+  // gesture while the intro lock class is on, so the page did not move and
+  // the overlay did not respond. That dead end reads as a broken page.
+  // preventDefault on the blocker does not stop propagation, so these
+  // listeners still see the gesture.
+  let startX = 0, startY = 0, tracking = false;
+  const SWIPE_PX = 10;
+
+  intro.addEventListener("touchstart", function (e) {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    startX = t.clientX;
+    startY = t.clientY;
+    tracking = true;
+  }, { passive: true });
+
+  intro.addEventListener("touchmove", function (e) {
+    if (!tracking) return;
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    // Either direction: an upward swipe (scroll down) and a downward one
+    // both mean "I want to move past this".
+    if (Math.abs(t.clientY - startY) > SWIPE_PX) {
+      tracking = false;
+      enter(startX, startY);
+    }
+  }, { passive: true });
+
+  intro.addEventListener("touchend", function () { tracking = false; }, { passive: true });
+
+  // Trackpad / mouse wheel, for a narrow desktop window sitting under the
+  // 720px breakpoint.
+  intro.addEventListener("wheel", function () { enter(); }, { passive: true });
 
   window.addEventListener("resize", function () { if (!entered) measureUntilValid(20); }, { passive: true });
   if (window.ResizeObserver) {

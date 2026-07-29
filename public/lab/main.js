@@ -990,6 +990,21 @@ function revealHero() {
 // engine straight to its locked full-screen-hero end state (no heavy
 // per-frame morph frames) and unlocks scrolling for the rest of the page.
 // ============================================================
+// Read a duration custom property off :root and return it in ms, so
+// timings live in ONE place (style.css) instead of being duplicated
+// between a CSS transition and a JS setTimeout that silently drift.
+function readCssMs(name, fallback) {
+  try {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue(name).trim();
+    const n = parseFloat(raw);
+    if (!isFinite(n) || n <= 0) return fallback;
+    return raw.endsWith("ms") ? n : n * 1000;
+  } catch (e) {
+    return fallback;
+  }
+}
+
 let mobileEntered = false;
 function enterMobile() {
   if (mobileEntered) return;
@@ -1012,6 +1027,14 @@ function enterMobile() {
   // locked end state while the stage is invisible, reset its transform,
   // then fade the full-screen hero back in. Snapping (not easing) avoids
   // the expensive morph frames entirely.
+  //
+  // Both durations come from --t-mobile-enter / --t-mobile-settle in
+  // style.css so this timeout stays locked to the .is-entering transition
+  // AND to the #m-intro overlay timings in mobile-intro.css. The overlay
+  // masks this sequence, so it must finish before the overlay lifts.
+  const enterMs  = readCssMs("--t-mobile-enter", 500);
+  const settleMs = readCssMs("--t-mobile-settle", 300);
+
   window.setTimeout(function () {
     progress = 1;
     smooth = 1;
@@ -1022,7 +1045,7 @@ function enterMobile() {
     // Force a reflow so the "none" transition + opacity:0 commit before we
     // start the fade-in (otherwise the browser batches them and skips it).
     void stage.offsetWidth;
-    stage.style.transition = "opacity 0.45s ease";
+    stage.style.transition = "opacity " + settleMs + "ms ease";
     stage.style.opacity = "1";
     // Unlock scrolling so portfolio / testimonials / contact are reachable,
     // and remove the non-passive touch blocker so it doesn't slow scrolling.
@@ -1034,7 +1057,7 @@ function enterMobile() {
     // hero exactly once here. smooth was set to 1 above, so this single frame
     // writes the final state; nothing changes after, so no loop is needed.
     tick();
-  }, 820);
+  }, enterMs);
 }
 
 // Non-passive touchmove blocker — the most reliable cross-browser scroll
@@ -1049,12 +1072,27 @@ function blockIntroScroll(e) {
 }
 
 function setupMobileEnter() {
+  // Publish the handoff FIRST so mobile-intro.js can find it the moment
+  // it looks, even if we bail out of the lock below.
+  window.__vdtEnterMobile = enterMobile;
+
+  // The #m-intro overlay may already have let the visitor through before
+  // we got here: it renders immediately, while this function only runs
+  // once both hero images have loaded (up to 5s each on a bad
+  // connection). Locking now would strand them — the overlay is gone and
+  // the #mobile-enter button below is display:none on mobile
+  // (mobile-intro.css), so there would be no way to unlock. Go straight
+  // to the entered state instead. enterMobile() is idempotent.
+  if (window.__vdtIntroPassed) {
+    enterMobile();
+    return;
+  }
+
   // Lock scrolling and freeze on the intro.
   document.documentElement.classList.add("vdt-mobile-intro");
   document.addEventListener("touchmove", blockIntroScroll, { passive: false });
   progress = 0;
   smooth = 0;
-  window.__vdtEnterMobile = enterMobile;
   const btn = document.getElementById("mobile-enter");
   if (btn) {
     btn.classList.remove("is-gone");

@@ -29,6 +29,22 @@
   --rule:       rgba(26,26,26,0.10);
 
   --ease:       cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* ── mobile enter choreography ──────────────────────────────
+     main.js READS these (see enterMobile) so its setTimeout and the
+     .zoom-stage.is-entering transition below can never drift apart.
+
+     These must stay coordinated with the #m-intro overlay timings in
+     mobile-intro.css: the overlay masks this whole sequence, so the
+     hero has to have SNAPPED and started fading up before the overlay
+     lifts at --t-remove-at (720ms), or the visitor briefly sees a
+     half-faded stage. Current handoff:
+       0ms    overlay takeover + stage scale/fade both start
+       500ms  stage snaps to the full-screen hero, starts fading up
+       700ms  overlay fully transparent, hero already ~67% in
+       800ms  hero fully opaque                                  */
+  --t-mobile-enter:  500ms;   /* stage scale + fade out          */
+  --t-mobile-settle: 300ms;   /* hero fade-in after the snap     */
   --font-display: 'Syne', 'Inter', sans-serif;
   --font-body:    'Inter', system-ui, sans-serif;
   --font-serif:   'Cormorant Garamond', serif;
@@ -470,6 +486,12 @@ html.vdt-mobile-intro body {
   color: #ffffff;
   text-decoration: none;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.40);
+  /* Never let the flex parent squeeze the brand narrower than its
+     content. Without this the wordmark keeps its full text width but
+     the .zh-brand BOX shrinks under it, so "SITES" paints on top of
+     the first nav link on 381-399px viewports (iPhone 14/15, Pixel). */
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .zh-mark {
@@ -532,11 +554,19 @@ html.vdt-mobile-intro body {
   .zh-brand span { font-size: 12px; letter-spacing: 0.04em; }
   .zh-nav { gap: 12px; }
   .zh-nav a { font-size: 11px; letter-spacing: 0.04em; }
+  /* The prism mark IS the home link, so drop the duplicate label and
+     let the wordmark and the nav both fit on a phone. */
+  .zh-nav a[data-nav="home"] { display: none; }
 }
 @media (max-width: 380px) {
-  .zh-brand span { display: none; }
   .zh-nav { gap: 9px; }
   .zh-nav a { font-size: 10px; }
+}
+/* Last-resort collapse for the few sub-340px devices still in the wild
+   (Galaxy Fold cover screen). Above this the wordmark always shows.
+   Hiding it at 380px was costing brand presence on every small Android. */
+@media (max-width: 339px) {
+  .zh-brand span { display: none; }
 }
 
 /* ============================================================
@@ -566,6 +596,10 @@ html.vdt-mobile-intro body {
   gap: 10px;
   color: var(--ink);
   text-decoration: none;
+  /* See .zh-brand. Stops the wordmark overlapping .dest-nav when the
+     header runs out of room. */
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 /* Brand red, matching the zoom-header mark. var(--accent) was a
    warmer terra-cotta and made the two headers look like different
@@ -854,12 +888,15 @@ html.vdt-mobile-intro body {
 
   /* Show ALL nav links on mobile (previous rule hid non-CTA, which
      left users with no way to reach Home/Blog/Portfolio). Smaller
-     font + tighter gap keeps the row fitting on a 390px viewport. */
+     font + tighter gap keeps the row fitting on a 390px viewport.
+     "Home" is the exception: the brand mark to the left already goes
+     home, and the duplicate was pushing the row 9px past the viewport. */
   .dest-nav { gap: 10px; }
   .dest-nav a {
     font-size: 11px;
     letter-spacing: 0.04em;
   }
+  .dest-nav a[data-nav="home"] { display: none; }
   .dest-cta {
     padding: 8px 12px;
     font-size: 10px !important;
@@ -871,9 +908,12 @@ html.vdt-mobile-intro body {
 
 /* Very narrow phones (≤380px) — collapse non-CTA labels further. */
 @media (max-width: 380px) {
-  .dest-brand span { display: none; }
   .dest-nav { gap: 8px; }
   .dest-nav a { font-size: 10px; }
+}
+/* See the .zh-brand note above. The wordmark now survives down to 340px. */
+@media (max-width: 339px) {
+  .dest-brand span { display: none; }
 }
 
 /* ============================================================
@@ -965,8 +1005,8 @@ html { scroll-behavior: smooth; }
     transform: translateY(-7%) scale(1.7);
     opacity: 0;
     transform-origin: 50% 58%;   /* ~the laptop screen centre */
-    transition: transform 0.8s cubic-bezier(0.5, 0, 0.2, 1),
-                opacity   0.8s ease-in;
+    transition: transform var(--t-mobile-enter) cubic-bezier(0.5, 0, 0.2, 1),
+                opacity   var(--t-mobile-enter) ease-in;
   }
 
   /* CLICK TO ENTER button — phone-only call to action on the intro. */
