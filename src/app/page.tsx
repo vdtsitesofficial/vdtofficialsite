@@ -360,10 +360,15 @@ export default function Home() {
         {/* data-nav="home" is hidden at ≤720px (style.css). The brand mark
             to the left is already the home link, and dropping the duplicate
             is what buys the wordmark enough room to stop overlapping. */}
+        {/* "Work" points at /work (the eight written case studies), not at
+            the #portfolio carousel below. The carousel is a glance; /work is
+            the proof, and it used to be reachable only from the footer.
+            It also happens to be narrower than "Portfolio", which is what
+            keeps this row fitting on a phone. */}
         <nav className="zh-nav">
           <a href="/" data-nav="home">Home</a>
+          <a href="/work">Work</a>
           <a href="/blog">Blog</a>
-          <a href="#portfolio">Portfolio</a>
           <a href="/contact">Contact&nbsp;Us</a>
         </nav>
       </header>
@@ -508,8 +513,8 @@ export default function Home() {
         </a>
         <nav className="dest-nav">
           <a href="/" data-nav="home">Home</a>
+          <a href="/work">Work</a>
           <a href="/blog">Blog</a>
-          <a href="#portfolio">Portfolio</a>
           <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
         </nav>
       </header>
@@ -522,7 +527,17 @@ export default function Home() {
             cream body bleeding through for ~3 seconds before the
             photo painted. Static dark base (#0f0c09) matches the
             photo's wood floor so the fade is seamless. */}
-        <div className="zoom-loading" aria-hidden="true">
+        {/* suppressHydrationWarning is load-bearing, not cosmetic. The
+            failsafe script below adds .is-ready to this node during HTML
+            parsing, which is BEFORE React hydrates. React then found the
+            live DOM ("zoom-loading is-ready") disagreeing with what it
+            rendered ("zoom-loading"), logged a hydration mismatch on every
+            homepage load, and explicitly refused to patch the difference.
+            Telling React this one node is externally managed is the correct
+            fix: the alternative, moving the reveal into an effect, would
+            lose the whole point of the failsafe, which is to clear the
+            overlay even if the React/main.js path never runs. */}
+        <div className="zoom-loading" aria-hidden="true" suppressHydrationWarning>
           <svg
             className="zoom-loading__mark"
             viewBox="0 0 100 100"
@@ -786,7 +801,22 @@ export default function Home() {
           <div className="m-glow" aria-hidden="true"></div>
           <div className="m-surface" aria-hidden="true"></div>
 
-          <div className="m-screen-label" aria-hidden="true"><span>VDT&nbsp;SITES</span></div>
+          {/* The laptop screen used to be a blank cream rectangle with a
+              faint VDT wordmark on it, so a visitor deciding whether to tap
+              had nothing to look at. Showing a shipped client site makes the
+              screen itself the argument. mocoffee.webp is deliberate: it is
+              the smallest shot (56KB) and it is dark and high-contrast, so
+              it still reads at ~130px wide. It is the same URL the portfolio
+              carousel uses further down, so the byte is reused, not doubled. */}
+          <div className="m-screen-work" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/lab/shots/mocoffee.webp"
+              alt=""
+              draggable={false}
+              decoding="async"
+            />
+          </div>
 
           <div className="m-sweep" aria-hidden="true"></div>
           <span className="m-bloom" aria-hidden="true"></span>

@@ -202,7 +202,39 @@
   contain: paint;
 }
 
-/* ── "VDT SITES" ghost on the screen ── */
+/* ── real client work on the laptop screen ──
+   Occupies exactly the same rect as .m-surface, so the cream takeover
+   wipes over it precisely on enter. Fades out with the same rule as the
+   old ghost wordmark (see the [data-state] block below). */
+#m-intro .m-screen-work {
+  position: absolute;
+  z-index: 6;
+  top: var(--clip-top); left: var(--clip-left);
+  right: var(--clip-right); bottom: var(--clip-bottom);
+  border-radius: var(--clip-radius);
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--cream);
+  transition: opacity 0.28s ease;
+}
+#m-intro .m-screen-work img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* The shots are tall full-page captures. Anchor to the top so the
+     client site's own hero is what lands in this small box. */
+  object-fit: cover;
+  object-position: 50% 0;
+}
+/* Sheen, so it reads as glass rather than a pasted rectangle. */
+#m-intro .m-screen-work::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0) 40%);
+}
+
+/* ── "VDT SITES" ghost on the screen (kept for the no-image fallback) ── */
 #m-intro .m-screen-label {
   position: absolute;
   z-index: 6;
@@ -364,7 +396,9 @@
 #m-intro[data-state="done"]     .m-headline { opacity: 0; transform: translateY(-14px) scale(0.98); }
 
 #m-intro[data-state="entering"] .m-screen-label,
-#m-intro[data-state="done"]     .m-screen-label { opacity: 0; }
+#m-intro[data-state="done"]     .m-screen-label,
+#m-intro[data-state="entering"] .m-screen-work,
+#m-intro[data-state="done"]     .m-screen-work { opacity: 0; }
 
 /* Drop the film grain during the takeover. mix-blend-mode: overlay
    forces a full-viewport blend pass on EVERY frame — one of the
