@@ -364,6 +364,53 @@ export const CASE_STUDIES: CaseStudy[] = [
     result:
       "A campaign that runs its own website: edits its message, grows its list and takes donations cleanly, with the compliance details handled. All we do is watch it deploy itself.",
   },
+  {
+    slug: "unisol-accounting",
+    name: "UniSol Accounting",
+    kicker: "Accounting · Nanaimo, BC",
+    headline: "An accounting website as clear as the advice behind it",
+    intro:
+      "UniSol Accounting was on WordPress and Elementor. We rebuilt it custom, moved the domain across without losing a single search result, and left them able to edit every word themselves.",
+    liveUrl: "https://unisolaccounting.ca",
+    year: "2026",
+    stackLine: "Custom build · Self-serve editing · Service pages · Tax tools",
+    metaTitle: "Accounting Website Design in Nanaimo, BC",
+    metaDescription:
+      "How we rebuilt a Nanaimo accounting firm's WordPress site as a fast custom website with click-to-edit copy, four service pages and a GST calculator, and moved the domain with every old URL redirected.",
+    client:
+      "UniSol Accounting Services is a Nanaimo accounting firm led by Rimpy Mahal, working with businesses and individuals across Vancouver Island on bookkeeping, corporate tax, personal income tax and financial consulting.",
+    needed:
+      "The old site was a WordPress and Elementor build: slower than it needed to be, awkward to change, and reading more like a brochure than like the person clients actually meet. They wanted something faster, clearer and genuinely theirs, without losing the search rankings the old site had earned.",
+    builtIntro:
+      "We rebuilt the whole site, then moved the domain onto it in a single afternoon with nothing lost on the way across.",
+    built: [
+      {
+        title: "Every word editable, by them",
+        body: "Sign in and click any text on the live page to change it. No dashboard to learn, no page builder, no ticket to us. Sign-in is a code emailed to them, so there is no shared password to keep track of.",
+      },
+      {
+        title: "Four service pages that carry their own weight",
+        body: "Bookkeeping, corporate tax, personal income tax and financial consulting each got a real page, restructured from the old text-heavy versions into checklists, steps and outcomes. We kept the original URLs so a decade of links and rankings pointed at the new pages on day one.",
+      },
+      {
+        title: "A GST calculator that gets the cents right",
+        body: "We ported the calculator from their old site and found its maths quietly wrong: it rounded to whole numbers and dropped the cents on every result. Same tool, ten countries of real rates, correct answers now.",
+      },
+      {
+        title: "A move with no broken links",
+        body: "Cutting a live domain over is where sites usually lose their search rankings. We inventoried every old URL first and redirected the ones that no longer existed, so the old blog posts and pages all still land somewhere real.",
+      },
+    ],
+    design:
+      "Accounting sells calm. Deep teal and paper, a serif that behaves like a person rather than a bank, and drone footage of Nanaimo instead of the stock handshake every accounting site reaches for. The hero is their actual town.",
+    stats: [
+      { value: "17 MB → 1.7 MB", label: "hero video, recompressed so phones are not punished for it" },
+      { value: "116/116", label: "responsive checks passing across browsers and screen sizes" },
+      { value: "100%", label: "of page copy editable by the firm, in place" },
+    ],
+    result:
+      "A firm that owns its website, edits it without calling anyone, and kept every bit of search equity it had built up. The old site was something they paid for. This one works for them.",
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {

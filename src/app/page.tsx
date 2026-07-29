@@ -817,6 +817,29 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="/work/unisol-accounting"
+                data-name="UniSol Accounting"
+                data-tags="Accounting · Tax Tools"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/unisol.webp"
+                      alt="UniSol Accounting landing page"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="/work/sherri-kozubal"
                 data-name="Sherri Kozubal"
                 data-tags="Hypnotherapy · Bookings"
