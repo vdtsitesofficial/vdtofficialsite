@@ -9,11 +9,14 @@ import type { Metadata } from "next";
  *
  * Content is written to reflect what vdtsites.com actually does: a contact
  * form (name/email/message stored + emailed via Cloudflare), Cloudflare
- * hosting, Google Fonts, and — added 2026-07-26 — Google Analytics that is
- * CONSENT-GATED: the tag is not loaded at all unless the visitor accepts in
- * the cookie banner, so declining sends nothing to Google. Keep this page,
- * /cookie-policy, and components/Analytics.tsx describing the same reality.
- * Still no advertising pixels or cross-site trackers.
+ * hosting, and Google Fonts.
+ *
+ * Google Analytics and the cookie banner were REMOVED on 2026-07-29.
+ * Measurement is now Cloudflare Web Analytics, which is cookieless, so
+ * there is no consent to collect and no banner. Nothing on a public page
+ * sets a cookie. No advertising pixels or cross-site trackers, and none
+ * before this either. Keep this page and /cookie-policy describing the
+ * same reality, in the same commit.
  */
 
 export const metadata: Metadata = {
@@ -43,7 +46,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
             VDT Sites Privacy Policy
           </h1>
-          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 26, 2026</p>
+          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 29, 2026</p>
         </header>
 
         <div className="space-y-6 text-[16px] leading-[1.75] text-[#3a3a3c]">
@@ -80,10 +83,10 @@ export default function PrivacyPolicyPage() {
             <strong>Information collected automatically.</strong> Like most websites, our hosting provider records basic technical data needed to serve and secure the Site — such as IP address, browser type, device type, and the pages requested. This is used for security, performance, and troubleshooting, not for advertising or profiling.
           </p>
           <p>
-            <strong>Analytics — only if you agree.</strong> We use Google Analytics to understand how people find and use the Site. It is <strong>not loaded unless you accept</strong> in the cookie banner. If you accept, Google Analytics collects pages viewed, approximate location derived from your IP address, device and browser type, and how you arrived at the Site. We ask Google to anonymise IP addresses, and we do not enable Google&rsquo;s advertising or personalisation features.
+            <strong>Analytics — cookieless, and no consent needed.</strong> We use Cloudflare Web Analytics to see how many people read a page and roughly how they arrived. It sets <strong>no cookies</strong>, does not fingerprint your browser, and cannot follow you to any other website. It gives us counts and trends, and nothing that identifies you.
           </p>
           <p>
-            If you decline, or simply ignore the banner, Google Analytics is never loaded and <strong>no information about your visit is sent to Google</strong>. You can change your choice at any time from our{" "}
+            We previously used Google Analytics behind a consent banner. We removed both in July 2026, so there is no longer any analytics request to Google, no analytics cookie, and no banner to click. Details are in our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
@@ -126,8 +129,7 @@ export default function PrivacyPolicyPage() {
               <strong>Google Fonts</strong> — the Site loads fonts from Google&rsquo;s servers to render its typography. This means your browser makes a request to Google, which can expose your IP address to Google. Google Fonts does not set cookies for this purpose.
             </li>
             <li>
-              <strong>Google Analytics</strong> — <em>only if you accept analytics cookies.</em> Google processes usage data on our behalf so we can measure how the Site is found and used. Nothing is loaded or sent unless you accept. See the{" "}
-              <a href="https://policies.google.com/privacy" className="text-[#1d1d1f] underline underline-offset-2 hover:text-black" target="_blank" rel="noreferrer">Google Privacy Policy</a>.
+              <strong>Cloudflare Web Analytics</strong> — cookieless traffic measurement, so we can see how many people read a page. It stores nothing on your device and collects no information that identifies you.
             </li>
           </ul>
           <p>
@@ -137,7 +139,7 @@ export default function PrivacyPolicyPage() {
 
         <Section title="5. Cookies">
           <p>
-            This Site sets essential cookies from our hosting and security provider (Cloudflare), and Google Analytics cookies <strong>only if you accept them</strong>. We use no advertising or cross-site tracking cookies. You can change your choice at any time. For the full list and the button to change it, see our{" "}
+            Browsing this Site sets <strong>no cookies</strong>. Our analytics is cookieless, and there are no advertising or cross-site tracking cookies, so there is no banner and nothing to opt out of. Our hosting and security provider (Cloudflare) may set an essential security cookie when its protection features are triggered, and signing in to the private admin area sets one session cookie. For the full list, see our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"

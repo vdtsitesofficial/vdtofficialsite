@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import ConsentResetButton from "@/components/ConsentResetButton";
 
 /**
  * Public Cookie Policy page.
  *
  * Server component, styled to match /terms-of-service and /privacy-policy.
  *
- * MUST describe what the Site actually does. As of 2026-07-26 that is:
- * Cloudflare's essential security cookies always, plus Google Analytics
- * ONLY after the visitor accepts in the consent banner. The GA tag is not
- * loaded at all until consent (see components/CookieConsent.tsx and
- * lib/consent.ts), so declining means nothing reaches Google. If that
- * gating ever changes, this page and the Privacy Policy change with it.
+ * MUST describe what the Site actually does. As of 2026-07-29 that is:
+ * NOTHING on a public page sets a cookie. Google Analytics and the consent
+ * banner were removed; traffic is measured by Cloudflare Web Analytics,
+ * which is cookieless. Cloudflare may still set essential security cookies
+ * when its protection features are triggered, and signing in to /admin sets
+ * one essential session cookie. Verified against production on 2026-07-29:
+ * a fresh visit returns no Set-Cookie header and leaves document.cookie,
+ * localStorage and sessionStorage all empty.
+ *
+ * If analytics or advertising is ever added back, this page and the Privacy
+ * Policy change with it, in the same commit.
  */
 
 export const metadata: Metadata = {
@@ -41,7 +45,7 @@ export default function CookiePolicyPage() {
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
             VDT Sites Cookie Policy
           </h1>
-          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 26, 2026</p>
+          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 29, 2026</p>
         </header>
 
         <div className="space-y-6 text-[16px] leading-[1.75] text-[#3a3a3c]">
@@ -72,19 +76,16 @@ export default function CookiePolicyPage() {
 
         <Section title="2. How We Use Cookies">
           <p>
-            We keep our use of cookies to a minimum. This Site uses two kinds:
+            Browsing this Site sets <strong>no cookies at all</strong>. We removed Google Analytics and the cookie banner that went with it, because we would rather not ask you for something we do not need.
           </p>
           <p>
-            <strong>Essential cookies</strong> — required for the Site to load, perform, and stay protected against abuse. These are set by our hosting and security provider, Cloudflare, and cannot be switched off.
+            <strong>Essential cookies</strong> — our hosting and security provider, Cloudflare, may set a cookie when its protection features are triggered, for example if it needs to tell a person apart from an automated bot. These exist for security, cannot be switched off, and are not set on every visit.
           </p>
           <p>
-            <strong>Analytics cookies</strong> — set by Google Analytics so we can see how many people visit, which pages they read, and how they found us. These are used only if you <strong>accept</strong> them.
+            <strong>Measurement</strong> — we do count visits, using Cloudflare Web Analytics. It is <strong>cookieless</strong>: it sets nothing on your device, does not fingerprint your browser, and cannot follow you to any other site. It tells us how many people read a page and roughly where they came from, and nothing that identifies you.
           </p>
           <p>
-            If you decline, or simply ignore the banner, <strong>Google Analytics is never loaded at all</strong> — no analytics cookies are set and no data about your visit is sent to Google. The Site works exactly the same either way.
-          </p>
-          <p>
-            We do <strong>not</strong> use advertising cookies, social-media trackers, or any cookies that follow you across other websites.
+            We use <strong>no</strong> analytics cookies, advertising cookies, social-media trackers, or anything that follows you across other websites.
           </p>
         </Section>
 
@@ -113,51 +114,37 @@ export default function CookiePolicyPage() {
                   <td className="py-3">Stores the result of a security challenge so you are not repeatedly re-checked.</td>
                 </tr>
                 <tr className="border-b border-black/[0.06]">
-                  <td className="py-3 pr-4 font-mono text-[13px]">_ga</td>
-                  <td className="py-3 pr-4">Analytics <span className="text-[#6e6e73]">(only if accepted)</span></td>
-                  <td className="py-3 pr-4">Google Analytics</td>
-                  <td className="py-3">Distinguishes one visitor from another so visits can be counted. Expires after 2 years.</td>
-                </tr>
-                <tr className="border-b border-black/[0.06]">
-                  <td className="py-3 pr-4 font-mono text-[13px]">_ga_&lt;ID&gt;</td>
-                  <td className="py-3 pr-4">Analytics <span className="text-[#6e6e73]">(only if accepted)</span></td>
-                  <td className="py-3 pr-4">Google Analytics</td>
-                  <td className="py-3">Keeps track of a single browsing session on this Site. Expires after 2 years.</td>
-                </tr>
-                <tr className="border-b border-black/[0.06]">
-                  <td className="py-3 pr-4 font-mono text-[13px]">vdt-cookie-consent</td>
+                  <td className="py-3 pr-4 font-mono text-[13px]">vdt_admin</td>
                   <td className="py-3 pr-4">Essential</td>
                   <td className="py-3 pr-4">VDT Sites</td>
-                  <td className="py-3">Not a cookie — a value stored in your browser remembering whether you accepted or declined analytics, so we stop asking. Never leaves your device.</td>
+                  <td className="py-3">Signed sign-in session for the private admin area, set only if a VDT Sites administrator logs in. Never set by browsing the public Site.</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p>
-            Cloudflare may set its cookies only when its security features are triggered, so you may not receive all of them on every visit. They contain no advertising or personal-profiling data.
+            Cloudflare sets its cookies only when its security features are triggered, so you may receive none of them on a normal visit. They contain no advertising or personal-profiling data.
           </p>
           <p>
-            The Google Analytics cookies appear <strong>only</strong> after you accept. We also ask Google to anonymise IP addresses, and we do not enable Google&rsquo;s advertising or personalisation features.
+            That is the complete list. There is no analytics cookie, because our analytics does not use one.
           </p>
         </Section>
 
-        <Section title="4. Your Choice, and Changing It">
+        <Section title="4. Your Choice">
           <p>
-            The first time you visit, a banner asks whether we can count your visit. Accepting and declining are offered equally — declining costs you nothing and hides no functionality.
+            There is no cookie banner on this Site, and nothing to opt out of. Because browsing sets no cookies and our analytics is cookieless, there is no consent for us to ask for and no preference for us to store.
           </p>
           <p>
-            You can change your mind at any time using the button below. This clears your saved choice and shows the banner again. If you switch from accept to decline, also clear the <span className="font-mono text-[13px]">_ga</span> cookies through your browser settings (see the section below) to remove ones already set.
+            If we ever add analytics or advertising that does use cookies, we will ask first, and this page will say so before it happens.
           </p>
-          <ConsentResetButton />
         </Section>
 
         <Section title="5. Third-Party Content">
           <p>
-            The Site loads fonts from Google Fonts to render its typography. This causes your browser to request files from Google&rsquo;s servers, but Google Fonts does not set cookies for this.
+            The Site loads fonts from Google Fonts, and a small number of code libraries from public content-delivery networks, to render its typography and animation. This causes your browser to request files from those servers, which can expose your IP address to them. None of them set cookies for this purpose.
           </p>
           <p>
-            If you accept analytics, the Site loads Google Analytics from Google&rsquo;s servers and shares usage data &mdash; pages viewed, approximate location, device and browser type, and how you arrived &mdash; with Google, who process it on our behalf. Google&rsquo;s handling of that data is governed by the{" "}
-            <a href="https://policies.google.com/privacy" className="text-[#1d1d1f] underline underline-offset-2 hover:text-black" target="_blank" rel="noreferrer">Google Privacy Policy</a>.
+            Traffic measurement is provided by <strong>Cloudflare Web Analytics</strong>, which is cookieless and collects no information that identifies you personally.
           </p>
           <p>
             We do not embed advertising networks, social-media widgets, or third-party trackers that would set their own cookies.
@@ -183,7 +170,7 @@ export default function CookiePolicyPage() {
             </li>
           </ul>
           <p>
-            Blocking the essential Cloudflare cookies may affect how the Site loads or behaves, since they exist for security and performance. Blocking or clearing the Google Analytics cookies has no effect on the Site at all.
+            Blocking the essential Cloudflare cookies may affect how the Site loads or behaves, since they exist for security and performance. Nothing else on the public Site depends on cookies, so blocking them changes nothing about how it works for you.
           </p>
         </Section>
 

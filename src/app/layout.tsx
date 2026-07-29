@@ -1,7 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import Analytics from "@/components/Analytics";
-import CookieConsent from "@/components/CookieConsent";
+
+// Google Analytics and the cookie-consent banner were removed 2026-07-29.
+// GA4 was consent-gated, which meant it only ever counted visitors who
+// accepted, so the numbers were structurally low and usable for trends
+// only. Its one real advantage was feeding conversions to Google Ads, and
+// VDT does not run Ads. Traffic is now measured by Cloudflare Web
+// Analytics, which is cookieless, needs no consent and therefore no
+// banner, and counts everyone. Nothing on a public page sets a cookie.
+// If Google Ads ever starts, GA4 and the banner both come back together;
+// see git history for the removed components.
 
 const SITE_URL = "https://vdtsites.com";
 
@@ -89,11 +97,7 @@ export default function RootLayout({
             unused preload). They now live in app/page.tsx alongside the
             <picture> elements they actually serve. Keep them there. */}
       </head>
-      <body>
-        {children}
-        <Analytics />
-        <CookieConsent />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
