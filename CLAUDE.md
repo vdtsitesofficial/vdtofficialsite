@@ -2,7 +2,7 @@
 
 Started as a sandbox, now the live production codebase for vdtsites.com (Cloudflare worker `vdtsites`). `npm run deploy` ships to production — the homepage mounts the laptop-zoom-v2 lab (mirrored into `public/lab/`; lab source lives in `C:\Websites\VDT\laptop-zoom-v2`, keep both in sync).
 
-**Vault notes:** `C:\Websites\.claude\Obsidian\Sem's\Projects\VDTTest\Overview.md`
+**Vault notes:** `C:\Websites\.claude\Obsidian\Sem's\Projects\VDT Sites\Overview.md` (vault folder renamed from VDTTest 2026-07-31; this disk folder keeps its historic name)
 
 ## Stack
 
