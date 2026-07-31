@@ -84,17 +84,15 @@ export default function ContactPage() {
           </span>
         </a>
         <nav className="flex items-center gap-5 text-[13px] font-medium md:gap-9">
-          {/* Hidden below sm for the same reason as Portfolio: the brand mark
-              to the left already goes home, and at 360px this row sat flush
-              against the wordmark with the duplicate in place. */}
-          <a href="/" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">Home</a>
-          <a href="/services" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
+          {/* No "Home" link: the brand mark to the left already goes home.
+              Services earns the freed width and shows at every size. */}
+          <a href="/services" className="opacity-75 transition-opacity hover:opacity-100">
             Services
           </a>
           <a href="/about" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
             About
           </a>
-          <a href="/blog" className="opacity-75 transition-opacity hover:opacity-100">Blog</a>
+          <a href="/blog" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">Blog</a>
           <a href="/#portfolio" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
             Portfolio
           </a>

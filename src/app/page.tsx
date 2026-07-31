@@ -357,20 +357,19 @@ export default function Home() {
           <img className="zh-mark" src="/vdt-glass-logo.png" alt="VDT Sites" />
           <span>VDT&nbsp;SITES</span>
         </a>
-        {/* data-nav="home" is hidden at ≤720px (style.css). The brand mark
-            to the left is already the home link, and dropping the duplicate
-            is what buys the wordmark enough room to stop overlapping. */}
+        {/* No "Home" link at any width: the brand mark to the left is already
+            the home link, and dropping the duplicate is what buys room for
+            Services. Which items drop at which width is in style.css. */}
         {/* "Work" points at /work (the eight written case studies), not at
             the #portfolio carousel below. The carousel is a glance; /work is
             the proof, and it used to be reachable only from the footer.
             It also happens to be narrower than "Portfolio", which is what
             keeps this row fitting on a phone. */}
         <nav className="zh-nav">
-          <a href="/" data-nav="home">Home</a>
           <a href="/work">Work</a>
-          <a href="/services" data-nav="services">Services</a>
+          <a href="/services">Services</a>
           <a href="/about" data-nav="about">About</a>
-          <a href="/blog">Blog</a>
+          <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact">Contact&nbsp;Us</a>
         </nav>
       </header>
@@ -514,11 +513,10 @@ export default function Home() {
           <span>VDT&nbsp;SITES</span>
         </a>
         <nav className="dest-nav">
-          <a href="/" data-nav="home">Home</a>
           <a href="/work">Work</a>
-          <a href="/services" data-nav="services">Services</a>
+          <a href="/services">Services</a>
           <a href="/about" data-nav="about">About</a>
-          <a href="/blog">Blog</a>
+          <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
         </nav>
       </header>

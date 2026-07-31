@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Reveal from "@/components/Reveal";
 
 /**
  * /services — the full menu of what VDT actually sells.
@@ -14,12 +15,16 @@ import type { Metadata } from "next";
  * that lists the same thing three times reads as padding.
  *
  * SEO intent: this page targets "web design services" / "website services
- * Vancouver Island", NOT "web design Nanaimo" — that belongs to the
+ * Vancouver Island", NOT "web design Nanaimo" — that query belongs to the
  * homepage, and /web-design-nanaimo is already noindexed for competing on
  * it. Keep the H1 and title off the homepage's exact query.
  *
- * Fully static, mirrors the /work and /about chrome so the site reads as
- * one thing.
+ * Layout follows Shared/Design Preferences, which rules out three things
+ * the first cut of this page did wrong: eyebrow kickers above headings
+ * ("very AI"), a hero description paragraph (heroes are headline + CTA
+ * only), and perfectly uniform card grids. Services are therefore listed
+ * as hairline-divided editorial rows under a sticky group column, not as
+ * fourteen identical boxes.
  */
 
 const SYNE = "'Syne', 'Inter', sans-serif";
@@ -29,10 +34,17 @@ const SITE = "https://vdtsites.com";
 const FROM_PRICE = "$899";
 const MONTHLY = "$40";
 
+/**
+ * Grain for the dark slabs. A flat #0d0d0d panel reads cheap at this size;
+ * fractal noise at very low opacity is the difference between "a black box"
+ * and a printed surface. Inline SVG so it costs no request.
+ */
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
 type Service = { name: string; body: string };
 type ServiceGroup = {
   id: string;
-  kicker: string;
   title: string;
   intro: string;
   services: Service[];
@@ -41,7 +53,6 @@ type ServiceGroup = {
 const GROUPS: ServiceGroup[] = [
   {
     id: "websites",
-    kicker: "The main thing",
     title: "Websites",
     intro:
       "Every site is built for your business rather than assembled from a template. Fixed price quoted up front, so you know the number before anyone starts.",
@@ -70,7 +81,6 @@ const GROUPS: ServiceGroup[] = [
   },
   {
     id: "hosting",
-    kicker: "After launch",
     title: "Hosting and care",
     intro:
       "The monthly fee covers everything it takes to keep the site online, current and safe. One bill, one person to call.",
@@ -91,7 +101,6 @@ const GROUPS: ServiceGroup[] = [
   },
   {
     id: "seo",
-    kicker: "Getting found",
     title: "Local SEO and search",
     intro:
       "A site nobody can find is a poster. The search groundwork is built into every project, and we go further when you need to compete locally.",
@@ -112,7 +121,6 @@ const GROUPS: ServiceGroup[] = [
   },
   {
     id: "brand",
-    kicker: "How you look",
     title: "Logo and brand",
     intro:
       "A logo is free with any website build, because a site and a brand that were designed apart always look it.",
@@ -129,7 +137,6 @@ const GROUPS: ServiceGroup[] = [
   },
   {
     id: "apps",
-    kicker: "Beyond the website",
     title: "App development",
     intro:
       "VDT is two people. Sem runs the websites side, Phillip runs the app side, so a project that outgrows a website does not have to change companies.",
@@ -157,13 +164,13 @@ export const metadata: Metadata = {
   description: `Websites, hosting, local SEO, logos and app development for small businesses on Vancouver Island. Custom sites from ${FROM_PRICE} plus ${MONTHLY} a month, quoted up front.`,
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "Web Design Services & Pricing",
+    title: "Web Design Services & Pricing | VDT Sites",
     description: `Websites, hosting, local SEO, logos and app development for small businesses on Vancouver Island. Custom sites from ${FROM_PRICE} plus ${MONTHLY} a month.`,
   },
   // Without this the layout's static twitter card wins the metadata merge.
   twitter: {
     card: "summary_large_image",
-    title: "Web Design Services & Pricing",
+    title: "Web Design Services & Pricing | VDT Sites",
     description: `Websites, hosting, local SEO, logos and app development for small businesses on Vancouver Island.`,
   },
 };
@@ -172,7 +179,7 @@ export default function ServicesPage() {
   const allServices = GROUPS.flatMap((g) => g.services);
 
   return (
-    <div className="flex min-h-svh flex-col bg-[#f4efe6] text-[#0d0d0d]">
+    <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
@@ -263,168 +270,231 @@ export default function ServicesPage() {
           <span className="text-[#0d0d0d]/80">Services</span>
         </nav>
 
-        {/* hero */}
-        <section className="px-6 pt-8 text-center md:pt-14">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
-            What we do
-          </p>
-          <h1
-            className="mx-auto mt-4 max-w-3xl text-[34px] font-bold leading-[1.05] md:text-[54px]"
+        {/* hero — headline + one CTA. No eyebrow, no description paragraph:
+            both are called out in Shared/Design Preferences. The oversized
+            faded wordmark is the "ghost text" treatment for the empty space
+            rather than leaving a bare band. */}
+        <section className="relative px-6 pb-4 pt-10 md:px-14 md:pt-16">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
             style={{ fontFamily: SYNE }}
           >
-            Everything a small
-            <br />
-            business needs online.
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/70 md:text-[17px]">
-            Most people come to us for a website. What they usually need is the
-            website, somewhere reliable to host it, a logo that matches, and to
-            actually show up when someone nearby searches. We do all of it, so
-            you are not stitching together four suppliers who each blame the
-            other three.
-          </p>
-        </section>
-
-        {/* price anchor */}
-        <section className="px-6 pt-12 md:px-14 md:pt-16">
-          <div className="mx-auto max-w-4xl rounded-2xl bg-[#0d0d0d] px-7 py-9 text-white md:px-10 md:py-11">
-            <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center md:gap-12">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#ff6b5e]">
-                  Starting at
-                </p>
-                <p
-                  className="mt-3 text-[42px] font-bold leading-none md:text-[52px]"
-                  style={{ fontFamily: SYNE }}
-                >
-                  {FROM_PRICE}
-                </p>
-                <p className="mt-2 text-[14px] text-white/65">
-                  plus {MONTHLY} a month
-                </p>
-              </div>
-              <div>
-                <p className="text-[15px] leading-[1.75] text-white/80">
-                  That is the starting point for a custom small business site,
-                  not a stripped back version of one. Bigger builds cost more
-                  and we tell you the number before any work begins, so nothing
-                  arrives as a surprise on an invoice.
-                </p>
-                <p className="mt-4 text-[15px] leading-[1.75] text-white/80">
-                  The monthly fee is what keeps it running. There is no separate
-                  hosting bill and no renewal spike in year two.
-                </p>
-              </div>
+            VDT
+          </span>
+          <div className="relative mx-auto max-w-6xl">
+            <h1
+              className="max-w-[15ch] text-[40px] font-bold leading-[1.02] md:text-[76px]"
+              style={{ fontFamily: SYNE }}
+            >
+              Everything a small business needs online.
+            </h1>
+            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3">
+              <a
+                href="/contact"
+                className="group rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
+              >
+                Get a free quote
+              </a>
+              <a
+                href="tel:+12506162087"
+                className="text-[15px] font-semibold underline decoration-[#dc2626] decoration-2 underline-offset-[6px] transition-colors hover:text-[#dc2626]"
+              >
+                or call 250-616-2087
+              </a>
             </div>
           </div>
         </section>
 
-        {/* service groups */}
-        {GROUPS.map((group) => (
+        {/* price slab. Near full bleed with an asymmetric radius and a red
+            hairline along the top edge, so the cream-to-dark change happens
+            on a shaped seam instead of a flat colour meeting another. */}
+        <section className="px-3 pt-14 md:px-6 md:pt-20">
+          <Reveal>
+            <div
+              className="relative mx-auto max-w-[1560px] overflow-hidden rounded-[18px] bg-[#0d0d0d] px-7 py-11 text-white md:rounded-[24px] md:rounded-br-[96px] md:px-16 md:py-16"
+              style={{ backgroundImage: GRAIN, backgroundBlendMode: "overlay" }}
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#dc2626] to-transparent opacity-70"
+              />
+              <div className="grid gap-10 md:grid-cols-[minmax(0,auto)_1fr] md:items-end md:gap-20">
+                <div>
+                  <p
+                    className="text-[64px] font-bold leading-[0.95] md:text-[104px]"
+                    style={{ fontFamily: SYNE }}
+                  >
+                    {FROM_PRICE}
+                  </p>
+                  <p className="mt-3 text-[15px] text-white/60">
+                    to build, then {MONTHLY} a month
+                  </p>
+                </div>
+                <div className="max-w-2xl">
+                  <p className="text-[16px] leading-[1.8] text-white/80 md:text-[17px]">
+                    That is the starting point for a custom small business
+                    site, not a stripped back version of one. Bigger builds
+                    cost more and we tell you the number before any work
+                    begins, so nothing arrives as a surprise on an invoice.
+                  </p>
+                  <p className="mt-5 text-[16px] leading-[1.8] text-white/80 md:text-[17px]">
+                    The monthly fee is what keeps it running. There is no
+                    separate hosting bill and no renewal spike in year two.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* positioning copy. Lives here rather than under the H1 so the hero
+            stays headline + CTA. */}
+        <section className="px-6 pt-20 md:px-14 md:pt-28">
+          <Reveal>
+            <p
+              className="mx-auto max-w-4xl text-[21px] leading-[1.55] md:text-[30px]"
+              style={{ fontFamily: SYNE }}
+            >
+              Most people come to us for a website. What they usually need is
+              the website, somewhere reliable to host it, a logo that matches,
+              and to actually show up when someone nearby searches.{" "}
+              <span className="text-[#0d0d0d]/45">
+                We do all of it, so you are not stitching together four
+                suppliers who each blame the other three.
+              </span>
+            </p>
+          </Reveal>
+        </section>
+
+        {/* service groups. Sticky group column on the left, hairline-divided
+            rows on the right. Deliberately not a card grid. */}
+        {GROUPS.map((group, gi) => (
           <section
             key={group.id}
             id={group.id}
-            className="px-6 pt-16 md:px-14 md:pt-24"
+            className="px-6 pt-20 md:px-14 md:pt-28"
           >
-            <div className="mx-auto max-w-4xl">
-              <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
-                {group.kicker}
-              </p>
-              <h2
-                className="mt-2 text-[26px] font-bold md:text-[32px]"
-                style={{ fontFamily: SYNE }}
-              >
-                {group.title}
-              </h2>
-              <p className="mt-3 max-w-2xl text-[15.5px] leading-[1.75] text-[#0d0d0d]/70">
-                {group.intro}
-              </p>
-
-              <div className="mt-8 grid gap-6 md:grid-cols-2">
-                {group.services.map((s) => (
-                  <article
-                    key={s.name}
-                    className="rounded-xl border border-black/10 bg-white/55 p-6"
+            <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[minmax(0,300px)_1fr] md:gap-16">
+              <Reveal className="md:sticky md:top-12 md:self-start">
+                <div className="flex items-baseline gap-4 md:block">
+                  <span
+                    aria-hidden="true"
+                    className="text-[42px] font-extrabold leading-none text-[#dc2626]/20 md:text-[64px]"
+                    style={{ fontFamily: SYNE }}
                   >
-                    <h3
-                      className="text-[16.5px] font-bold"
-                      style={{ fontFamily: SYNE }}
-                    >
-                      {s.name}
-                    </h3>
-                    <p className="mt-2.5 text-[14.5px] leading-[1.7] text-[#0d0d0d]/70">
-                      {s.body}
-                    </p>
-                  </article>
+                    {String(gi + 1).padStart(2, "0")}
+                  </span>
+                  <h2
+                    className="text-[27px] font-bold leading-[1.1] md:mt-4 md:text-[36px]"
+                    style={{ fontFamily: SYNE }}
+                  >
+                    {group.title}
+                  </h2>
+                </div>
+                <p className="mt-4 max-w-sm text-[15px] leading-[1.75] text-[#0d0d0d]/60">
+                  {group.intro}
+                </p>
+              </Reveal>
+
+              <div className="border-t border-black/10">
+                {group.services.map((s, si) => (
+                  <Reveal key={s.name} delay={si * 60}>
+                    <article className="group border-b border-black/10 py-7 transition-colors duration-300 hover:bg-black/[0.025] md:py-8">
+                      <div className="flex items-start gap-4 md:gap-6">
+                        <span
+                          aria-hidden="true"
+                          className="mt-[10px] h-[7px] w-[7px] shrink-0 rounded-full bg-[#dc2626] transition-transform duration-300 group-hover:scale-[1.7]"
+                        />
+                        <div>
+                          <h3
+                            className="text-[18px] font-bold md:text-[20px]"
+                            style={{ fontFamily: SYNE }}
+                          >
+                            {s.name}
+                          </h3>
+                          <p className="mt-2.5 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/65">
+                            {s.body}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  </Reveal>
                 ))}
               </div>
             </div>
           </section>
         ))}
 
-        {/* what the monthly covers */}
-        <section className="px-6 pt-16 md:px-14 md:pt-24">
-          <div className="mx-auto max-w-4xl rounded-2xl border border-black/10 bg-white/55 px-7 py-9 md:px-10">
-            <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-            <h2
-              className="mt-4 text-[22px] font-bold md:text-[26px]"
-              style={{ fontFamily: SYNE }}
-            >
-              What the {MONTHLY} a month covers
-            </h2>
-            <ul className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2">
-              {INCLUDED.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-[15px] leading-[1.6] text-[#0d0d0d]/75"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-[7px] h-[6px] w-[6px] shrink-0 rounded-full bg-[#dc2626]"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-7 text-[14.5px] leading-[1.7] text-[#0d0d0d]/60">
-              You own the site. Once a project is paid in full it is yours, and
-              we hand over a full export of the code on request. We would rather
-              keep you because the work is good than because you are locked in.
-            </p>
-          </div>
+        {/* what the monthly covers — floating inset slab */}
+        <section className="px-6 pt-24 md:px-14 md:pt-32">
+          <Reveal>
+            <div className="mx-auto max-w-6xl rounded-[18px] rounded-br-[64px] border border-black/10 bg-white/60 px-7 py-10 md:px-14 md:py-14">
+              <h2
+                className="text-[24px] font-bold md:text-[30px]"
+                style={{ fontFamily: SYNE }}
+              >
+                What the {MONTHLY} a month covers
+              </h2>
+              <ul className="mt-8 grid gap-x-14 gap-y-4 sm:grid-cols-2">
+                {INCLUDED.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 border-b border-black/[0.07] pb-4 text-[15.5px] leading-[1.6] text-[#0d0d0d]/75"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-[8px] h-[6px] w-[6px] shrink-0 rounded-full bg-[#dc2626]"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/55">
+                You own the site. Once a project is paid in full it is yours,
+                and we hand over a full export of the code on request. We would
+                rather keep you because the work is good than because you are
+                locked in.
+              </p>
+            </div>
+          </Reveal>
         </section>
 
-        {/* CTA */}
-        <section className="px-6 py-20 text-center md:py-28">
-          <h2
-            className="mx-auto max-w-2xl text-[26px] font-bold leading-[1.15] md:text-[36px]"
-            style={{ fontFamily: SYNE }}
-          >
-            Not sure which of these you need?
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg text-[15.5px] leading-relaxed text-[#0d0d0d]/70">
-            Tell us about the business and we will come back with a straight
-            answer on what it needs and what it costs. The quote is free and
-            there is no pressure attached to it.
-          </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="/contact"
-              className="rounded-full bg-[#dc2626] px-7 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#b91c1c]"
-            >
-              Get a free quote
-            </a>
-            <a
-              href="/work"
-              className="rounded-full border border-black/15 px-7 py-3 text-[14px] font-semibold text-[#0d0d0d] transition-colors hover:bg-black/5"
-            >
-              See our work
-            </a>
-          </div>
-          <p className="mt-6 text-[13px] text-[#0d0d0d]/50">
-            {allServices.length} services · Nanaimo and across Vancouver Island
-          </p>
+        {/* CTA — single confident button plus a text link, not two buttons */}
+        <section className="px-6 py-24 md:py-32">
+          <Reveal>
+            <div className="mx-auto max-w-6xl">
+              <h2
+                className="max-w-[18ch] text-[30px] font-bold leading-[1.1] md:text-[52px]"
+                style={{ fontFamily: SYNE }}
+              >
+                Not sure which of these you need?
+              </h2>
+              <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/65">
+                Tell us about the business and we will come back with a
+                straight answer on what it needs and what it costs. The quote
+                is free and there is no pressure attached to it.
+              </p>
+              <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3">
+                <a
+                  href="/contact"
+                  className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
+                >
+                  Get a free quote
+                </a>
+                <a
+                  href="/work"
+                  className="text-[15px] font-semibold underline decoration-black/25 decoration-2 underline-offset-[6px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  or see our work
+                </a>
+              </div>
+              <p className="mt-10 text-[13px] text-[#0d0d0d]/40">
+                {allServices.length} services · Nanaimo and across Vancouver
+                Island
+              </p>
+            </div>
+          </Reveal>
         </section>
       </main>
 

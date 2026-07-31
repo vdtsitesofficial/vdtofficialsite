@@ -571,15 +571,12 @@ export default function BlogLayout({
             <span>VDT&nbsp;SITES</span>
           </a>
           <nav className="dest-nav">
-            {/* data-nav="home" hides this at ≤720px, same as the homepage
-                chrome. The brand mark to the left is already the home link,
-                and without this the row sat flush against the wordmark on a
-                360px phone. */}
-            <a href="/" data-nav="home">Home</a>
-            <Link href="/services" data-nav="services">Services</Link>
+            {/* No "Home" link: the brand mark to the left already goes home,
+                and the row needs that width for Services. */}
+            <Link href="/services">Services</Link>
             <Link href="/about" data-nav="about">About</Link>
-            <Link href="/blog">Blog</Link>
-            <a href="/#portfolio">Portfolio</a>
+            <Link href="/blog" data-nav="blog">Blog</Link>
+            <a href="/#portfolio" data-nav="portfolio">Portfolio</a>
             <a href="/contact" className="dest-cta">
               Contact&nbsp;Us
             </a>

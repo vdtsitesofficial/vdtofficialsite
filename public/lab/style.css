@@ -548,18 +548,25 @@ html.vdt-mobile-intro body {
 }
 .zh-nav a:hover::after { transform: scaleX(1); }
 
-/* Services and About are the two lowest-priority header links, so they are
-   the first to go when the row runs out of room. They need a MUCH wider
-   breakpoint than the phone rules below: measured at 721px, a six-item nav
-   sits flush against the wordmark (0px clearance) even though every item
-   still fits on screen. 860px leaves the row a comfortable margin.
-   Both footers carry /services and /about at every width, so nothing below
-   860px becomes unreachable. */
+/* Header priority order, highest to lowest: Contact, Work, Services, About,
+   Blog, Portfolio. "Home" is gone entirely at every width because the brand
+   mark to the left is already the home link, and that duplicate was the
+   cheapest width to reclaim.
+   Items drop in reverse priority as the row narrows. Measured at 721px a
+   six-item nav sits flush against the wordmark (0px clearance) even though
+   every item still fits on screen, so "it fits" is not the bar. */
 @media (max-width: 860px) {
   .zh-nav a[data-nav="about"],
-  .zh-nav a[data-nav="services"],
   .dest-nav a[data-nav="about"],
-  .dest-nav a[data-nav="services"] { display: none; }
+  .dest-nav a[data-nav="portfolio"] { display: none; }
+}
+
+/* Phones: Blog goes too, so Services can stay. A phone visitor is far more
+   likely to want what we sell than to want the blog, and both footers carry
+   /blog at every width. */
+@media (max-width: 720px) {
+  .zh-nav a[data-nav="blog"],
+  .dest-nav a[data-nav="blog"] { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -568,12 +575,9 @@ html.vdt-mobile-intro body {
   .zh-brand span { font-size: 12px; letter-spacing: 0.04em; }
   .zh-nav { gap: 12px; }
   .zh-nav a { font-size: 11px; letter-spacing: 0.04em; }
-  /* The prism mark IS the home link, so drop the duplicate label and
-     let the wordmark and the nav both fit on a phone. */
-  .zh-nav a[data-nav="home"] { display: none; }
-  /* Services and About are hidden here too, but their real breakpoint is
-     860px (see the block after this media query) because they run out of
-     room long before the phone sizes do. */
+  /* "Home" no longer exists in the markup at any width (the prism mark is
+     the home link), so there is nothing to hide here. Which items drop at
+     which width is set in the priority blocks above. */
 }
 @media (max-width: 380px) {
   .zh-nav { gap: 9px; }
@@ -913,9 +917,8 @@ html.vdt-mobile-intro body {
     font-size: 11px;
     letter-spacing: 0.04em;
   }
-  .dest-nav a[data-nav="home"] { display: none; }
-  /* Services and About: see the 860px block, they are hidden well above
-     this width. */
+  /* "Home" is gone from the markup entirely; see the priority blocks above
+     for which items drop at which width. */
   .dest-cta {
     padding: 8px 12px;
     font-size: 10px !important;
@@ -927,7 +930,10 @@ html.vdt-mobile-intro body {
 
 /* Very narrow phones (≤380px) — collapse non-CTA labels further. */
 @media (max-width: 380px) {
-  .dest-nav { gap: 8px; }
+  /* Tighter than it used to be: "Services" is ~22px wider than the "Blog"
+     it replaced on phones, which cut the clearance from the wordmark to
+     9px. Pulling the gap in buys that back without shrinking the type. */
+  .dest-nav { gap: 5px; }
   .dest-nav a { font-size: 10px; }
 }
 /* See the .zh-brand note above. The wordmark now survives down to 340px. */
