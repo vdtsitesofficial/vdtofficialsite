@@ -141,16 +141,24 @@ export default function WorkIndexPage() {
         <section className="px-6 pb-20 md:px-14">
           <div className="mx-auto max-w-2xl rounded-2xl border border-black/10 bg-white/55 px-6 py-9 text-center">
             <div className="flex items-center justify-center -space-x-3">
+              {/* Dedicated 168px square crops, NOT the 800x1000 portraits.
+                  Letting the browser squeeze a 4:5 portrait into a 56px
+                  circle downscaled ~14x (aliased and soft) and, with
+                  object-top, framed head-through-chest so the face was
+                  tiny. These are cropped tight on the face at 3x the
+                  display size instead. */}
               {[
-                { src: "/team/sem.webp", alt: "Sem Van Duist" },
-                { src: "/team/phillip.webp", alt: "Phillip Treitel" },
+                { src: "/team/sem-avatar.webp", alt: "Sem Van Duist" },
+                { src: "/team/phillip-avatar.webp", alt: "Phillip Treitel" },
               ].map((p) => (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   key={p.src}
                   src={p.src}
                   alt={p.alt}
-                  className="size-14 rounded-full border-2 border-[#f4efe6] object-cover object-top"
+                  width={168}
+                  height={168}
+                  className="size-14 rounded-full border-2 border-[#f4efe6] object-cover"
                   loading="lazy"
                   decoding="async"
                 />
