@@ -557,6 +557,11 @@ html.vdt-mobile-intro body {
   /* The prism mark IS the home link, so drop the duplicate label and
      let the wordmark and the nav both fit on a phone. */
   .zh-nav a[data-nav="home"] { display: none; }
+  /* About is desktop-only for the same reason. Measured at 360px the row
+     has ~31px of clearance from the wordmark and an About item eats all
+     of it, so the nav ends up touching the brand. Both footers link
+     /about site-wide, so phones lose nothing. */
+  .zh-nav a[data-nav="about"] { display: none; }
 }
 @media (max-width: 380px) {
   .zh-nav { gap: 9px; }
@@ -897,6 +902,9 @@ html.vdt-mobile-intro body {
     letter-spacing: 0.04em;
   }
   .dest-nav a[data-nav="home"] { display: none; }
+  /* See the .zh-nav note: About is desktop-only, the 360px row has no
+     room for it and both footers carry the link. */
+  .dest-nav a[data-nav="about"] { display: none; }
   .dest-cta {
     padding: 8px 12px;
     font-size: 10px !important;
