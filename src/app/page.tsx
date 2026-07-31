@@ -368,6 +368,7 @@ export default function Home() {
         <nav className="zh-nav">
           <a href="/" data-nav="home">Home</a>
           <a href="/work">Work</a>
+          <a href="/services" data-nav="services">Services</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog">Blog</a>
           <a href="/contact">Contact&nbsp;Us</a>
@@ -515,6 +516,7 @@ export default function Home() {
         <nav className="dest-nav">
           <a href="/" data-nav="home">Home</a>
           <a href="/work">Work</a>
+          <a href="/services" data-nav="services">Services</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog">Blog</a>
           <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
@@ -1788,9 +1790,13 @@ export default function Home() {
             <li>
               <a href="/work">Work</a>
             </li>
-            {/* /about lives in the footer, not the header nav: the header
-                row only had 31px of clearance left at 360px wide, and an
-                "About" item ate all of it (measured 2026-07-31). */}
+            {/* /services and /about are footer links on phones: the header
+                row only had 31px of clearance left at 360px wide, and one
+                extra item ate all of it (measured 2026-07-31). Both show in
+                the header from 721px up. */}
+            <li>
+              <a href="/services">Services</a>
+            </li>
             <li>
               <a href="/about">About</a>
             </li>

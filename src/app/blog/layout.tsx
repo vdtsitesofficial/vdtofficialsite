@@ -576,6 +576,7 @@ export default function BlogLayout({
                 and without this the row sat flush against the wordmark on a
                 360px phone. */}
             <a href="/" data-nav="home">Home</a>
+            <Link href="/services" data-nav="services">Services</Link>
             <Link href="/about" data-nav="about">About</Link>
             <Link href="/blog">Blog</Link>
             <a href="/#portfolio">Portfolio</a>
@@ -605,6 +606,9 @@ export default function BlogLayout({
               <span>&copy; {new Date().getFullYear()} VDT Sites</span>
               <a href="/" className="hover:underline">
                 Home
+              </a>
+              <a href="/services" className="hover:underline">
+                Services
               </a>
               <a href="/about" className="hover:underline">
                 About

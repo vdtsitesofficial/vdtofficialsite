@@ -548,6 +548,20 @@ html.vdt-mobile-intro body {
 }
 .zh-nav a:hover::after { transform: scaleX(1); }
 
+/* Services and About are the two lowest-priority header links, so they are
+   the first to go when the row runs out of room. They need a MUCH wider
+   breakpoint than the phone rules below: measured at 721px, a six-item nav
+   sits flush against the wordmark (0px clearance) even though every item
+   still fits on screen. 860px leaves the row a comfortable margin.
+   Both footers carry /services and /about at every width, so nothing below
+   860px becomes unreachable. */
+@media (max-width: 860px) {
+  .zh-nav a[data-nav="about"],
+  .zh-nav a[data-nav="services"],
+  .dest-nav a[data-nav="about"],
+  .dest-nav a[data-nav="services"] { display: none; }
+}
+
 @media (max-width: 720px) {
   .zoom-header { padding: 14px 16px; }
   .zh-mark { width: 28px; height: 28px; }
@@ -557,11 +571,9 @@ html.vdt-mobile-intro body {
   /* The prism mark IS the home link, so drop the duplicate label and
      let the wordmark and the nav both fit on a phone. */
   .zh-nav a[data-nav="home"] { display: none; }
-  /* About is desktop-only for the same reason. Measured at 360px the row
-     has ~31px of clearance from the wordmark and an About item eats all
-     of it, so the nav ends up touching the brand. Both footers link
-     /about site-wide, so phones lose nothing. */
-  .zh-nav a[data-nav="about"] { display: none; }
+  /* Services and About are hidden here too, but their real breakpoint is
+     860px (see the block after this media query) because they run out of
+     room long before the phone sizes do. */
 }
 @media (max-width: 380px) {
   .zh-nav { gap: 9px; }
@@ -902,9 +914,8 @@ html.vdt-mobile-intro body {
     letter-spacing: 0.04em;
   }
   .dest-nav a[data-nav="home"] { display: none; }
-  /* See the .zh-nav note: About is desktop-only, the 360px row has no
-     room for it and both footers carry the link. */
-  .dest-nav a[data-nav="about"] { display: none; }
+  /* Services and About: see the 860px block, they are hidden well above
+     this width. */
   .dest-cta {
     padding: 8px 12px;
     font-size: 10px !important;

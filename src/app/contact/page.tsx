@@ -88,6 +88,9 @@ export default function ContactPage() {
               to the left already goes home, and at 360px this row sat flush
               against the wordmark with the duplicate in place. */}
           <a href="/" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">Home</a>
+          <a href="/services" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
+            Services
+          </a>
           <a href="/about" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
             About
           </a>
