@@ -33,11 +33,11 @@ const FOUNDERS: Founder[] = [
   },
   {
     name: "Phillip Treitel",
-    role: "Client & strategy",
+    role: "App development",
     photo: "/team/phillip.webp",
     alt: "Phillip Treitel, co-founder of VDT Sites",
-    bio: "Phillip studies international business and marketing at VIU. He is the one asking who a site is actually talking to and what would make that person pick up the phone, which is usually the part that gets skipped entirely.",
-    facts: ["VIU student", "International business", "Marketing"],
+    bio: "Phillip runs the app side of VDT. When a project needs more than a website, something with logins, bookings or an actual app behind it, that half is his. He studies international business and marketing at VIU, which is also why he is the one asking who a product is really for before anybody starts building it.",
+    facts: ["VIU student", "App development", "International business"],
   },
 ];
 
