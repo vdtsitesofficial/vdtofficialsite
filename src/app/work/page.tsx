@@ -134,6 +134,46 @@ export default function WorkIndexPage() {
             ))}
           </div>
         </section>
+
+        {/* Mirrors the /about page's "See our work" CTA in the opposite
+            direction, so the two proof pages point at each other instead of
+            both dead-ending at /contact. Reuses the /about headshots. */}
+        <section className="px-6 pb-20 md:px-14">
+          <div className="mx-auto max-w-2xl rounded-2xl border border-black/10 bg-white/55 px-6 py-9 text-center">
+            <div className="flex items-center justify-center -space-x-3">
+              {[
+                { src: "/team/sem.webp", alt: "Sem Van Duist" },
+                { src: "/team/phillip.webp", alt: "Phillip Treitel" },
+              ].map((p) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  key={p.src}
+                  src={p.src}
+                  alt={p.alt}
+                  className="size-14 rounded-full border-2 border-[#f4efe6] object-cover object-top"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ))}
+            </div>
+            <h2
+              className="mt-4 text-[22px] font-bold md:text-[26px]"
+              style={{ fontFamily: SYNE }}
+            >
+              Who you&rsquo;d actually be working with
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-[#0d0d0d]/70">
+              Every project above was designed and built by the two of us, no
+              subcontractors and no account managers in between.
+            </p>
+            <a
+              href="/about"
+              className="mt-5 inline-block text-[14px] font-semibold text-[#dc2626] hover:underline"
+            >
+              Meet Sem and Phillip &rarr;
+            </a>
+          </div>
+        </section>
       </main>
 
       <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
