@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CASE_STUDIES } from "@/lib/caseStudies";
+import Reveal from "@/components/Reveal";
 
 /**
  * /about — who VDT Sites actually is. Two founders, named and pictured,
@@ -125,7 +126,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex min-h-svh flex-col bg-[#f4efe6] text-[#0d0d0d]">
+    <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
@@ -181,26 +182,58 @@ export default function AboutPage() {
       </header>
 
       <main className="flex-1">
-        {/* hero */}
-        <section className="px-6 pt-8 text-center md:pt-14">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
-            Nanaimo · Vancouver Island
-          </p>
-          <h1
-            className="mx-auto mt-4 max-w-3xl text-[34px] font-bold leading-[1.05] md:text-[54px]"
+        {/* hero — headline + CTA only, left aligned, ghost wordmark filling
+            the space. Matches /services; see Shared/Design Preferences on
+            eyebrow kickers, hero paragraphs and centred hero patterns. */}
+        <section className="relative px-6 pb-4 pt-10 md:px-14 md:pt-16">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
             style={{ fontFamily: SYNE }}
           >
-            Two students who
-            <br />
-            build websites that work.
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/70 md:text-[17px]">
-            We met on the VIU Mariners volleyball team and started VDT Sites
-            because small businesses on the Island kept getting quoted agency
-            prices for websites that never brought in a single call. Being
-            students means low overhead and a lot of motivation to get it right.
-            Staying small means you always deal with us directly, not a queue.
-          </p>
+            VDT
+          </span>
+          <div className="relative mx-auto max-w-6xl">
+            <h1
+              className="max-w-[15ch] text-[40px] font-bold leading-[1.02] md:text-[76px]"
+              style={{ fontFamily: SYNE }}
+            >
+              Two students who build websites that work.
+            </h1>
+            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3">
+              <a
+                href="/contact"
+                className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
+              >
+                Get a free quote
+              </a>
+              <a
+                href="/work"
+                className="text-[15px] font-semibold underline decoration-black/25 decoration-2 underline-offset-[6px] transition-colors hover:decoration-[#dc2626]"
+              >
+                or see our work
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* the story, moved out of the hero so the hero stays headline + CTA */}
+        <section className="px-6 pt-20 md:px-14 md:pt-28">
+          <Reveal>
+            <p
+              className="mx-auto max-w-4xl text-[21px] leading-[1.55] md:text-[30px]"
+              style={{ fontFamily: SYNE }}
+            >
+              We met on the VIU Mariners volleyball team and started VDT Sites
+              because small businesses on the Island kept getting quoted agency
+              prices for websites that never brought in a single call.{" "}
+              <span className="text-[#0d0d0d]/45">
+                Being students means low overhead and a lot of motivation to get
+                it right. Staying small means you always deal with us directly,
+                not a queue.
+              </span>
+            </p>
+          </Reveal>
         </section>
 
         {/* founders */}
@@ -377,18 +410,19 @@ export default function AboutPage() {
             Tell us about the business and we&rsquo;ll come back with a straight
             answer on what it needs and what it costs.
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          {/* One button plus a call link, not two buttons side by side. */}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
             <a
               href="/contact"
-              className="rounded-full bg-[#dc2626] px-7 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#b91c1c]"
+              className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
             >
-              Get a quote
+              Get a free quote
             </a>
             <a
-              href="/work"
-              className="rounded-full border border-black/15 px-7 py-3 text-[14px] font-semibold text-[#0d0d0d] transition-colors hover:bg-black/5"
+              href="tel:+12506162087"
+              className="text-[15px] font-semibold underline decoration-[#dc2626] decoration-2 underline-offset-[6px] transition-colors hover:text-[#dc2626]"
             >
-              See our work
+              or call 250-616-2087
             </a>
           </div>
         </section>

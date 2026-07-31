@@ -19,6 +19,10 @@ import { CASE_STUDIES, getCaseStudy } from "@/lib/caseStudies";
 const SYNE = "'Syne', 'Inter', sans-serif";
 const SITE = "https://vdtsites.com";
 
+/** Grain for the dark result slab. Matches /services. */
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
 export function generateStaticParams() {
   return CASE_STUDIES.map((c) => ({ slug: c.slug }));
 }
@@ -140,11 +144,12 @@ export default async function CaseStudyPage({
         {/* hero */}
         <section className="px-6 pt-8 md:px-14 md:pt-12">
           <div className="mx-auto max-w-4xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
-              Case study · {cs.kicker}
-            </p>
+            {/* The kicker used to sit above the H1 as an uppercase eyebrow,
+                which Shared/Design Preferences rules out. It carries real
+                information though, so it moves below the headline and joins
+                the stack line as a meta row rather than being deleted. */}
             <h1
-              className="mt-4 max-w-3xl text-[32px] font-bold leading-[1.08] md:text-[50px]"
+              className="max-w-3xl text-[34px] font-bold leading-[1.05] md:text-[56px]"
               style={{ fontFamily: SYNE }}
             >
               {cs.headline}
@@ -152,16 +157,18 @@ export default async function CaseStudyPage({
             <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[#0d0d0d]/70 md:text-[17px]">
               {cs.intro}
             </p>
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
                 href={cs.liveUrl}
                 target="_blank"
                 rel="noopener"
-                className="rounded-full bg-[#dc2626] px-7 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#b91c1c]"
+                className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
               >
                 Visit the live site
               </a>
-              <span className="text-[13px] text-[#0d0d0d]/50">{cs.stackLine}</span>
+              <span className="text-[13.5px] text-[#0d0d0d]/50">
+                {cs.kicker} · {cs.stackLine}
+              </span>
             </div>
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -257,7 +264,14 @@ export default async function CaseStudyPage({
 
         {/* results */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
-          <div className="mx-auto max-w-4xl rounded-2xl bg-[#0d0d0d] px-7 py-9 text-white md:px-10">
+          <div
+            className="relative mx-auto max-w-4xl overflow-hidden rounded-[18px] bg-[#0d0d0d] px-7 py-10 text-white md:rounded-[24px] md:rounded-br-[72px] md:px-10 md:py-12"
+            style={{ backgroundImage: GRAIN, backgroundBlendMode: "overlay" }}
+          >
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#dc2626] to-transparent opacity-70"
+            />
             <h2 className="text-[20px] font-bold" style={{ fontFamily: SYNE }}>
               The result
             </h2>
@@ -284,18 +298,19 @@ export default async function CaseStudyPage({
             Every project is quoted up front, based on what your business actually needs.
             It starts with a conversation, and the quote is free.
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          {/* One button plus a call link, not two buttons side by side. */}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
             <a
               href="/contact"
-              className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#b91c1c]"
+              className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
             >
               Get a free quote
             </a>
             <a
               href="tel:+12506162087"
-              className="rounded-full border border-black/20 px-8 py-3.5 text-[15px] font-semibold transition-colors hover:border-black/50"
+              className="text-[15px] font-semibold underline decoration-[#dc2626] decoration-2 underline-offset-[6px] transition-colors hover:text-[#dc2626]"
             >
-              Call 250-616-2087
+              or call 250-616-2087
             </a>
           </div>
         </section>
