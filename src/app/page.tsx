@@ -1786,6 +1786,12 @@ export default function Home() {
             <li>
               <a href="/work">Work</a>
             </li>
+            {/* /about lives in the footer, not the header nav: the header
+                row only had 31px of clearance left at 360px wide, and an
+                "About" item ate all of it (measured 2026-07-31). */}
+            <li>
+              <a href="/about">About</a>
+            </li>
             <li>
               <a href="/blog">Blog</a>
             </li>

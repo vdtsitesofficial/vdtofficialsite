@@ -601,6 +601,9 @@ export default function BlogLayout({
               <a href="/" className="hover:underline">
                 Home
               </a>
+              <a href="/about" className="hover:underline">
+                About
+              </a>
               <Link href="/blog" className="hover:underline">
                 Blog
               </Link>
