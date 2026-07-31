@@ -135,19 +135,19 @@ export const CASE_STUDIES: CaseStudy[] = [
     kicker: "Food truck · Vancouver Island, BC",
     headline: "A food truck website the owner runs from his phone",
     intro:
-      "Air-fried chicken deserves better than a link in bio. We hand-built Isle Air Chicken a site that shows the food huge, and gave the owner the keys.",
+      "Air-fried chicken deserves better than a link in bio. We built Isle Air Chicken a site that shows the food huge, and gave the owner the keys.",
     liveUrl: "https://isleairchicken.ca",
     year: "2026",
-    stackLine: "Hand-coded · Menu management · Self-serve editing · Light and dark",
+    stackLine: "Custom build · Menu management · Self-serve editing · Light and dark",
     metaTitle: "Food Truck Website Design on Vancouver Island",
     metaDescription:
-      "How we built isleairchicken.ca: a hand-coded single-page food truck website with a full-screen menu slider and an on-page editor the owner uses to update his own menu.",
+      "How we built isleairchicken.ca: a custom single-page food truck website with a full-screen menu slider and an on-page editor the owner uses to update his own menu.",
     client:
       "Isle Air Chicken is a Vancouver Island food truck doing something genuinely different: crispy chicken that is air-fried and seed-oil free. Like most food trucks, the business lived entirely on social media.",
     needed:
       "A food truck site has two jobs: make people hungry and tell them where the truck is. It also has to survive a menu that changes with the seasons without the owner needing a developer every time a sandwich gets renamed.",
     builtIntro:
-      "We skipped the frameworks entirely and hand-wrote this one, which keeps it tiny and quick.",
+      "We skipped the frameworks entirely and built this one from scratch, which keeps it tiny and quick.",
     built: [
       {
         title: "A full-screen hero built around the food",
@@ -167,9 +167,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     design:
-      "No template could do this. The dish photography is the entire design, and everything else stays out of its way. Because the site is hand-coded with no framework, there is nothing heavy to download and nothing to slow it down.",
+      "No template could do this. The dish photography is the entire design, and everything else stays out of its way. Because the site is built from scratch with no framework, there is nothing heavy to download and nothing to slow it down.",
     stats: [
-      { value: "0", label: "frameworks. Hand-written code, nothing wasted" },
+      { value: "0", label: "frameworks. Custom code, nothing wasted" },
       { value: "1 page", label: "that does the work of five" },
       { value: "100%", label: "of the menu editable by the owner, on the page" },
     ],
