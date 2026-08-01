@@ -334,6 +334,25 @@ html.vdt-mobile-intro body {
   will-change: transform, width, height;
 }
 
+/* ── Pre-init visibility gate ──
+   main.js adds .is-init to .zoom-stage the moment its layout loop takes
+   over (revealHero → first tick). Until then these three sit at
+   meaningless CSS defaults — the overlay card parked at 0,0 (the rule
+   above), the poster text un-transformed at left:50%, the scroll cue
+   floating over a dead stage. Normally that's invisible behind
+   .zoom-loading, but when the lab JS never runs (blocked script, or the
+   2026-08-01 incident: stale cached HTML whose /_next chunks were gone,
+   so hydration — and every afterInteractive script — never happened)
+   the failsafe clears the loading overlay and users SEE the parked
+   state. Hiding it degrades a JS failure to a clean static scene
+   instead of a broken-looking one. page.tsx carries a <noscript>
+   override that re-reveals everything for true no-JS browsers. */
+.zoom-stage:not(.is-init) .screen-overlay,
+.zoom-stage:not(.is-init) .hero-text,
+.zoom-stage:not(.is-init) .scroll-cue {
+  visibility: hidden;
+}
+
 .screen-inner {
   width: 100vw;
   height: 100vh;

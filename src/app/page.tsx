@@ -581,6 +581,15 @@ export default function Home() {
           }}
         />
 
+        {/* style.css hides .screen-overlay/.hero-text/.scroll-cue until
+            main.js adds .is-init ("pre-init visibility gate"), so a JS
+            failure shows a clean static scene instead of the parked
+            mid-animation state. True no-JS browsers would never get
+            .is-init at all — reveal everything statically for them. */}
+        <noscript>
+          <style>{`.zoom-stage .screen-overlay,.zoom-stage .hero-text,.zoom-stage .scroll-cue{visibility:visible !important}`}</style>
+        </noscript>
+
         <div className="zoom-stage">
           {/* Background plate. Browser picks the right asset by media query;
               the fallback <img.bg-image> stays in the DOM either way so

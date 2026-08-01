@@ -1,0 +1,50 @@
+# Header rules for Workers static assets (wrangler `assets` binding).
+# These paths are served straight from the edge BEFORE the worker runs,
+# so this file is the only place their response headers can be set.
+#
+# Everything listed here is referenced ONLY with a ?v=<LAB_V> cache-buster
+# (src/lib/labVersion.ts) and the lab files never reference each other
+# without it — so the content behind a given URL never changes and
+# `immutable` is safe. A LAB_V bump ships changes under a brand-new URL.
+#
+# Do NOT add paths that are referenced without ?v= — e.g. /lab/shots/*,
+# /vdt-glass-logo.png — those must stay revalidatable or an image swap
+# would be invisible for a year.
+
+/lab/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/lab/contact-card.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/contact-card.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/faq.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/footer.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/footer.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/hero.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/hero.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/main.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/mobile-intro.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/mobile-intro.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/portfolio.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/portfolio.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/process-scroll.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/process-scroll.js
+  Cache-Control: public, max-age=31536000, immutable
+/lab/style.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/testimonials.css
+  Cache-Control: public, max-age=31536000, immutable
+/lab/testimonials.js
+  Cache-Control: public, max-age=31536000, immutable

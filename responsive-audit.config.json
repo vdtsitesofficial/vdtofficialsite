@@ -5,6 +5,7 @@
   "scrollTargets": ["#portfolio", "#process", "#contact"],
   "notes": [
     "Site-specific invariants (2026-07-16 audit): hero poster must clear BOTH the zoom-header bottom AND the laptop lid top (band-fit in public/lab/main.js, lid = 39.26% of laptop.png); process-section desktop text is vw-scaled with 1920 as the pixel-identical reference; process mobile column layout gates at 840px in BOTH process-scroll.css and process-scroll.js; main.js reloads once when the window crosses the 720/840 mode boundaries.",
-    "Testimonials marquee is JS-animated every frame - hit-testing races against it produce phantom overlaps, hence the ignore."
+    "Testimonials marquee is JS-animated every frame - hit-testing races against it produce phantom overlaps, hence the ignore.",
+    "2026-08-01 incident (Philip's M1 Safari): stale cached homepage HTML (OpenNext SSG header = s-maxage year + SWR month, no validators) referenced deleted /_next/static chunks -> hydration never ran -> no afterInteractive lab script injected -> hero froze at CSS defaults (overlay card at 0,0, poster text overflowing right). Fixes: scripts/patch-open-next.mjs PATCH 2 rewrites prerendered HTML/RSC to max-age=0 must-revalidate; public/_headers makes ?v=-keyed /lab files immutable; style.css pre-init gate (.zoom-stage:not(.is-init)) hides overlay/poster/scroll-cue unless main.js boots. POST-DEPLOY CHECK: curl -sI / must show cache-control: public, max-age=0, must-revalidate (if the year s-maxage is back, PATCH 2 silently stopped applying), and main.js ?v= in the served HTML must equal LAB_V. Repro harness: scratchpad repro_stale_html.py (abort /_next/static/chunks/** in WebKit, expect the three elements visibility:hidden)."
   ]
 }

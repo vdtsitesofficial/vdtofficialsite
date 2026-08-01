@@ -972,6 +972,12 @@ function loadImage(img) {
 function revealHero() {
   const loadingEl = document.querySelector(".zoom-loading");
   if (loadingEl) loadingEl.classList.add("is-ready");
+  // The layout engine owns the stage from here. Lift the pre-init
+  // visibility gate (style.css) in the same frame the first tick()
+  // below positions everything — the elements were parked at
+  // meaningless CSS defaults until now, and stay hidden forever if
+  // this script never runs (that's the point of the gate).
+  stage.classList.add("is-init");
   // Re-cache geometry now that the bg-image's intrinsic size is known
   // (its natural dimensions can affect object-fit cover layout).
   heroHeight = hero.getBoundingClientRect().height;
