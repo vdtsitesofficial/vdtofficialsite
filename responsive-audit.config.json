@@ -1,11 +1,22 @@
 {
   "readyFlag": "window.__vdtLabReady === true",
-  "settleMs": 500,
-  "ignore": [".vdt-testimonials__columns", ".vdt-hero__ghost"],
-  "scrollTargets": ["#portfolio", "#process", "#contact"],
+  "settleMs": 2500,
+  "ignore": [
+    ".vdt-testimonials__columns",
+    ".vdt-hero__ghost",
+    ".m-invite",
+    ".vdt-hero__title"
+  ],
+  "scrollTargets": [
+    "#portfolio",
+    "#process",
+    "#contact"
+  ],
   "notes": [
     "Site-specific invariants (2026-07-16 audit): hero poster must clear BOTH the zoom-header bottom AND the laptop lid top (band-fit in public/lab/main.js, lid = 39.26% of laptop.png); process-section desktop text is vw-scaled with 1920 as the pixel-identical reference; process mobile column layout gates at 840px in BOTH process-scroll.css and process-scroll.js; main.js reloads once when the window crosses the 720/840 mode boundaries.",
     "Testimonials marquee is JS-animated every frame - hit-testing races against it produce phantom overlaps, hence the ignore.",
-    "2026-08-01 incident (Philip's M1 Safari): stale cached homepage HTML (OpenNext SSG header = s-maxage year + SWR month, no validators) referenced deleted /_next/static chunks -> hydration never ran -> no afterInteractive lab script injected -> hero froze at CSS defaults (overlay card at 0,0, poster text overflowing right). Fixes: scripts/patch-open-next.mjs PATCH 2 rewrites prerendered HTML/RSC to max-age=0 must-revalidate; public/_headers makes ?v=-keyed /lab files immutable; style.css pre-init gate (.zoom-stage:not(.is-init)) hides overlay/poster/scroll-cue unless main.js boots. POST-DEPLOY CHECK: curl -sI / must show cache-control: public, max-age=0, must-revalidate (if the year s-maxage is back, PATCH 2 silently stopped applying), and main.js ?v= in the served HTML must equal LAB_V. Repro harness: scratchpad repro_stale_html.py (abort /_next/static/chunks/** in WebKit, expect the three elements visibility:hidden)."
+    ".m-invite ignore (2026-08-01): the mobile intro's full-screen transparent .m-taplayer button sits over its own 'Tap anywhere to enter' label by design (whole screen is the tap target); elementsFromPoint reports the button as an occluder of that text. Verified with a probe - no other #m-intro text is under the button (the decorative overlays are pointer-events:none and invisible to hit-testing).",
+    "2026-08-01 incident (Philip's M1 Safari): stale cached homepage HTML (OpenNext SSG header = s-maxage year + SWR month, no validators) referenced deleted /_next/static chunks -> hydration never ran -> no afterInteractive lab script injected -> hero froze at CSS defaults (overlay card at 0,0, poster text overflowing right). Fixes: scripts/patch-open-next.mjs PATCH 2 rewrites prerendered HTML/RSC to max-age=0 must-revalidate; public/_headers makes ?v=-keyed /lab files immutable; style.css pre-init gate (.zoom-stage:not(.is-init)) hides overlay/poster/scroll-cue unless main.js boots. POST-DEPLOY CHECK: curl -sI / must show cache-control: public, max-age=0, must-revalidate (if the year s-maxage is back, PATCH 2 silently stopped applying), and main.js ?v= in the served HTML must equal LAB_V. Repro harness: scratchpad repro_stale_html.py (abort /_next/static/chunks/** in WebKit, expect the three elements visibility:hidden).",
+    ".vdt-hero__title ignore + settleMs 1200 (2026-08-01 sweep triage): (1) the \"Website Design\" H1 lockup is DESIGNED so the italic outline word overlaps the bold word's glyph box - trips the occlusion checker at 375x667 scale rounding; (2) details-open state scrollIntoView drives the scroll-linked zoom, and 500ms settle raced the ease-back, capturing the poster mid-flight under the fixed header at 1680x1050 (rest state at the same size is clean) - settleMs raised 1200 -> 2500 after 1200 still raced the ease-back at one size per run (the zoom eases exponentially; convergence can take >2s). At 2500 the targeted re-run was clean."
   ]
 }

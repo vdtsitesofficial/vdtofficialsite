@@ -31,4 +31,4 @@ tsconfig.tsbuildinfo
 /public/lab/assets/*.full.png
 
 # responsive-audit sweep artifacts (screenshots + report JSON, regenerated per run)
-responsive-audit-out/
+responsive-audit-out*/
