@@ -1525,7 +1525,7 @@ export default function Home() {
               className="underline decoration-transparent underline-offset-4 transition hover:decoration-current"
               style={{ color: "inherit" }}
             >
-              5.0 ★★★★★ on Google · 8 reviews
+              5.0 ★★★★★ on Google · 18 reviews
             </a>
           </p>
           <h2 className="vdt-testimonials__title">

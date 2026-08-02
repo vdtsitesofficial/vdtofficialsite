@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { CASE_STUDIES } from "@/lib/caseStudies";
-import { TESTIMONIALS, GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
+import {
+  TESTIMONIALS,
+  REVIEW_COUNT,
+  GOOGLE_REVIEWS_URL,
+} from "@/lib/testimonials";
 import Stars from "@/components/Stars";
 import Reveal from "@/components/Reveal";
 
@@ -287,7 +291,7 @@ export default function AboutPage() {
               What clients say
             </h2>
             <p className="mx-auto mt-3 max-w-md text-center text-[15px] leading-relaxed text-[#0d0d0d]/60">
-              Every review below is a real 5 star review left on our Google
+              Two of the {REVIEW_COUNT} real 5 star reviews left on our Google
               Business Profile.
             </p>
 

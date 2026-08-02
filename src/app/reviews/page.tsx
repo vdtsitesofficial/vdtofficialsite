@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { TESTIMONIALS, GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
+import {
+  TESTIMONIALS,
+  RATING_ONLY,
+  REVIEW_COUNT,
+  LONG_QUOTE_CHARS,
+  GOOGLE_REVIEWS_URL,
+} from "@/lib/testimonials";
 import Stars from "@/components/Stars";
 import Reveal from "@/components/Reveal";
 
@@ -20,12 +26,20 @@ import Reveal from "@/components/Reveal";
  * Shared/Design Preferences, boxes around every item is the tell and rules
  * between them is not, and a repeating grid wants one differently-shaped
  * item to break it.
+ *
+ * The reviews vary from four words to a full paragraph, so they are split
+ * by length rather than all forced through one component: paragraphs get a
+ * row each, one-liners get a compact grid where they do not read as
+ * stranded. Splitting on a character count (not a hand-maintained flag)
+ * means a new review sorts itself.
  */
 
 const SYNE = "'Syne', 'Inter', sans-serif";
 const SITE = "https://vdtsites.com";
 
 const [LEAD, ...REST] = TESTIMONIALS;
+const LONG = REST.filter((t) => t.quote.length >= LONG_QUOTE_CHARS);
+const SHORT = REST.filter((t) => t.quote.length < LONG_QUOTE_CHARS);
 
 export const metadata: Metadata = {
   title: "Reviews: What Our Clients Say",
@@ -154,9 +168,9 @@ export default function ReviewsPage() {
         <section className="px-6 pt-12 md:px-14 md:pt-16">
           <div className="mx-auto max-w-6xl">
             <p className="max-w-2xl text-[17px] leading-relaxed text-[#0d0d0d]/70 md:text-[19px]">
-              Every review on this page is a real 5&nbsp;star review left on our
-              Google Business Profile, reproduced word for word. We have not
-              edited them, shortened them or written any of them ourselves.
+              All {REVIEW_COUNT} of them, every one a 5&nbsp;star review left on
+              our Google Business Profile and reproduced word for word. We have
+              not edited them, shortened them or written any of them ourselves.
             </p>
           </div>
         </section>
@@ -191,12 +205,14 @@ export default function ReviewsPage() {
           </div>
         </section>
 
-        {/* the rest - hairline-divided rows, author in its own column on
-            desktop. No boxes: rules between items, not boxes around them. */}
+        {/* the paragraphs - hairline-divided rows, author in its own column
+            on desktop. No boxes: rules between items, not boxes around them.
+            A reviewer who is also a case study links into their /work page,
+            which is the proof behind what they are saying. */}
         <section className="px-6 pt-16 md:px-14 md:pt-24">
           <div className="mx-auto max-w-6xl">
             <ul>
-              {REST.map((t, i) => (
+              {LONG.map((t, i) => (
                 <li key={t.author}>
                   <Reveal delay={i * 90}>
                     <figure className="grid gap-4 border-t border-black/10 py-9 md:grid-cols-[220px_1fr] md:gap-10 md:py-11">
@@ -205,6 +221,14 @@ export default function ReviewsPage() {
                         <figcaption className="mt-3 text-[14px] font-semibold text-[#0d0d0d]">
                           {t.author}
                         </figcaption>
+                        {t.slug && (
+                          <a
+                            href={`/work/${t.slug}`}
+                            className="mt-1 inline-block text-[13px] font-semibold text-[#dc2626] hover:underline"
+                          >
+                            See their site &rarr;
+                          </a>
+                        )}
                       </div>
                       <blockquote className="text-[17px] leading-[1.6] text-[#0d0d0d]/75 md:text-[19px]">
                         {t.quote}
@@ -215,6 +239,48 @@ export default function ReviewsPage() {
               ))}
             </ul>
             <div className="border-t border-black/10" />
+          </div>
+        </section>
+
+        {/* the one-liners - compact grid. These are four to ten words each
+            and would read as stranded in the wide rows above, so they get a
+            denser band instead. Per Shared/Design Preferences, one
+            deliberately tight band is what stops generous spacing elsewhere
+            reading as emptiness. */}
+        <section className="px-6 pt-16 md:px-14 md:pt-20">
+          <div className="mx-auto max-w-6xl">
+            <h2
+              className="text-[22px] font-bold md:text-[28px]"
+              style={{ fontFamily: SYNE }}
+            >
+              Short and to the point
+            </h2>
+            <ul className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+              {SHORT.map((t, i) => (
+                <li key={t.author}>
+                  <Reveal delay={i * 70}>
+                    <figure className="border-t border-black/10 pt-5">
+                      <Stars />
+                      <blockquote className="mt-3 text-[16px] leading-[1.55] text-[#0d0d0d]/75">
+                        {t.quote}
+                      </blockquote>
+                      <figcaption className="mt-3 text-[13px] font-semibold text-[#0d0d0d]/60">
+                        {t.author}
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+
+            {/* Accounts for the rest of the 18 without putting words in
+                their mouths - these three rated 5 stars and wrote nothing. */}
+            <p className="mt-12 border-t border-black/10 pt-6 text-[15px] leading-relaxed text-[#0d0d0d]/55">
+              {RATING_ONLY.slice(0, -1).join(", ")} and{" "}
+              {RATING_ONLY[RATING_ONLY.length - 1]} each left us 5 stars without
+              writing a review, which is why they are named here rather than
+              quoted above.
+            </p>
           </div>
         </section>
 
