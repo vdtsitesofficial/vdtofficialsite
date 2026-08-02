@@ -124,7 +124,7 @@ export async function POST(req: Request) {
     .replace(/[\r\n]+/g, " ")
     .trim()
     .slice(0, 40);
-  const subject = `New inquiry from ${safeName} — VDT Sites contact form`;
+  const subject = `New inquiry from ${safeName} via the VDT Sites contact form`;
   const text = [
     `From: ${name} <${email}>`,
     ...(phone ? [`Phone: ${phone}`] : []),

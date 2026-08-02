@@ -66,7 +66,7 @@ export default function SiteNav({
             href="/"
             className="flex items-center gap-2.5 text-[11px] tracking-[0.32em] uppercase"
             style={{ color: ink }}
-            aria-label="VDT Sites — home"
+            aria-label="VDT Sites, home"
           >
             <svg
               viewBox="0 0 100 100"

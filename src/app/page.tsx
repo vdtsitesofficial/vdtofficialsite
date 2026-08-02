@@ -319,23 +319,23 @@ export default function Home() {
             mainEntity: [
               [
                 "How much does a small business website cost?",
-                "Every project is quoted individually based on how many pages and features you need — you get a fixed price up front, so there are no hourly surprises. Most small business sites include design, build, hosting setup and launch. Get in touch and we'll put a quote together for free.",
+                "Every project is quoted individually based on how many pages and features you need. You get a fixed price up front, so there are no hourly surprises. Most small business sites include design, build, hosting setup and launch. Get in touch and we'll put a quote together for free.",
               ],
               [
                 "Do you work with businesses outside Nanaimo?",
-                "Yes. We work with businesses right across Vancouver Island — Parksville, Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria — as well as the Vancouver area. Everything can be handled remotely by phone, email and video call, so distance is never an issue.",
+                "Yes. We work with businesses right across Vancouver Island (Parksville, Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria), as well as the Vancouver area. Everything can be handled remotely by phone, email and video call, so distance is never an issue.",
               ],
               [
                 "Can I edit my own website after it's built?",
-                "Yes. We build in an editor that lets you change text and images directly on your live page — click the text, type the new version, save. No technical knowledge and no separate dashboard to learn. Bigger changes we handle for you.",
+                "Yes. We build in an editor that lets you change text and images directly on your live page: click the text, type the new version, save. No technical knowledge and no separate dashboard to learn. Bigger changes we handle for you.",
               ],
               [
                 "How long does it take to build a website?",
-                "Most small business websites are ready in one to three weeks. The main variable is how quickly we get your content, photos and feedback — the design and build work itself moves fast once we have what we need.",
+                "Most small business websites are ready in one to three weeks. The main variable is how quickly we get your content, photos and feedback. The design and build work itself moves fast once we have what we need.",
               ],
               [
                 "What does the monthly fee cover?",
-                "Hosting, your domain name, SSL security, backups, monitoring and ongoing support — all in one flat monthly fee. No separate hosting bill, no renewal surprises, and no chasing three different companies when something breaks.",
+                "Hosting, your domain name, SSL security, backups, monitoring and ongoing support, all in one flat monthly fee. No separate hosting bill, no renewal surprises, and no chasing three different companies when something breaks.",
               ],
               [
                 "Do I own my website?",
@@ -603,7 +603,7 @@ export default function Home() {
             <img
               className="bg-image"
               src={`/lab/assets/background.webp?v=${LAB_V}`}
-              alt="VDT Sites — custom website design for small businesses, set in a warm modern workspace"
+              alt="VDT Sites: custom website design for small businesses, set in a warm modern workspace"
             />
           </picture>
           {/* "BUILT FOR YOU" is a visual poster, not the page's semantic
@@ -635,7 +635,7 @@ export default function Home() {
               <img
                 className="laptop-image"
                 src={`/lab/assets/laptop.webp?v=${LAB_V}`}
-                alt="Laptop displaying a website built by VDT Sites — modern, fast website design"
+                alt="Laptop displaying a website built by VDT Sites, modern and fast website design"
               />
             </picture>
           </div>
@@ -1571,7 +1571,7 @@ export default function Home() {
               <div className="faq-a">
                 <p>
                   Every project is quoted individually based on how many pages and features you
-                  need &mdash; you get a <strong>fixed price up front</strong>, so there are no
+                  need. You get a <strong>fixed price up front</strong>, so there are no
                   hourly surprises. Most small business sites include design, build, hosting setup
                   and launch. Get in touch and we&rsquo;ll put a quote together for free.
                 </p>
@@ -1585,8 +1585,8 @@ export default function Home() {
               </summary>
               <div className="faq-a">
                 <p>
-                  Yes. We work with businesses right across Vancouver Island &mdash; Parksville,
-                  Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria &mdash;
+                  Yes. We work with businesses right across Vancouver Island (Parksville,
+                  Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria),
                   as well as the Vancouver area. Everything can be handled remotely by phone, email
                   and video call, so distance is never an issue.
                 </p>
@@ -1601,7 +1601,7 @@ export default function Home() {
               <div className="faq-a">
                 <p>
                   Yes. We build in an editor that lets you change text and images directly on your
-                  live page &mdash; click the text, type the new version, save. No technical
+                  live page: click the text, type the new version, save. No technical
                   knowledge and no separate dashboard to learn. Bigger changes we handle for you.
                 </p>
               </div>
@@ -1615,7 +1615,7 @@ export default function Home() {
               <div className="faq-a">
                 <p>
                   Most small business websites are ready in <strong>one to three weeks</strong>. The
-                  main variable is how quickly we get your content, photos and feedback &mdash; the
+                  main variable is how quickly we get your content, photos and feedback. The
                   design and build work itself moves fast once we have what we need.
                 </p>
               </div>
@@ -1628,8 +1628,8 @@ export default function Home() {
               </summary>
               <div className="faq-a">
                 <p>
-                  Hosting, your domain name, SSL security, backups, monitoring and ongoing support
-                  &mdash; all in one flat monthly fee. No separate hosting bill, no renewal
+                  Hosting, your domain name, SSL security, backups, monitoring and ongoing
+                  support, all in one flat monthly fee. No separate hosting bill, no renewal
                   surprises, and no chasing three different companies when something breaks.
                 </p>
               </div>
@@ -1651,7 +1651,7 @@ export default function Home() {
           </div>
 
           <p className="faq-foot">
-            Still wondering about something? <a href="#contact">Ask us directly</a> &mdash; no
+            Still wondering about something? <a href="#contact">Ask us directly</a>. No
             pressure, no sales pitch.
           </p>
         </div>
@@ -1786,7 +1786,7 @@ export default function Home() {
             <span className="vdt-fl__brand-name">VDT&nbsp;Sites</span>
             <span className="vdt-fl__brand-blurb">
               Website design studio in Nanaimo, BC. We build fast, modern websites for
-              small businesses across Vancouver Island — Parksville, Ladysmith,
+              small businesses across Vancouver Island: Parksville, Ladysmith,
               Victoria, and beyond.
             </span>
           </div>

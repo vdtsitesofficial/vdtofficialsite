@@ -64,7 +64,7 @@ export default function PrivacyPolicyPage() {
             We handle personal information in accordance with British Columbia&rsquo;s <em>Personal Information Protection Act</em> (PIPA) and Canada&rsquo;s <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA).
           </p>
           <p>
-            This policy covers our own marketing website. It does not govern the individual client websites and apps we build and host — those are covered by our{" "}
+            This policy covers our own marketing website. It does not govern the individual client websites and apps we build and host. Those are covered by our{" "}
             <a
               href="/terms-of-service"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
@@ -80,10 +80,10 @@ export default function PrivacyPolicyPage() {
             <strong>Information you give us directly.</strong> When you fill out the contact form on the Site, we collect your name, email address, and the contents of your message. If you email us directly, we receive whatever information you choose to include.
           </p>
           <p>
-            <strong>Information collected automatically.</strong> Like most websites, our hosting provider records basic technical data needed to serve and secure the Site — such as IP address, browser type, device type, and the pages requested. This is used for security, performance, and troubleshooting, not for advertising or profiling.
+            <strong>Information collected automatically.</strong> Like most websites, our hosting provider records basic technical data needed to serve and secure the Site, such as IP address, browser type, device type, and the pages requested. This is used for security, performance, and troubleshooting, not for advertising or profiling.
           </p>
           <p>
-            <strong>Analytics — cookieless, and no consent needed.</strong> We use Cloudflare Web Analytics to see how many people read a page and roughly how they arrived. It sets <strong>no cookies</strong>, does not fingerprint your browser, and cannot follow you to any other website. It gives us counts and trends, and nothing that identifies you.
+            <strong>Analytics: cookieless, and no consent needed.</strong> We use Cloudflare Web Analytics to see how many people read a page and roughly how they arrived. It sets <strong>no cookies</strong>, does not fingerprint your browser, and cannot follow you to any other website. It gives us counts and trends, and nothing that identifies you.
           </p>
           <p>
             We previously used Google Analytics behind a consent banner. We removed both in July 2026, so there is no longer any analytics request to Google, no analytics cookie, and no banner to click. Details are in our{" "}
@@ -123,13 +123,13 @@ export default function PrivacyPolicyPage() {
           <p>The Site relies on a small number of third-party services:</p>
           <ul className="list-disc pl-6 space-y-2 marker:text-[#999]">
             <li>
-              <strong>Cloudflare</strong> — hosting, security, and content delivery. Cloudflare processes technical data such as IP addresses and request metadata, and may set essential security cookies, in accordance with its own privacy policy.
+              <strong>Cloudflare:</strong> hosting, security, and content delivery. Cloudflare processes technical data such as IP addresses and request metadata, and may set essential security cookies, in accordance with its own privacy policy.
             </li>
             <li>
-              <strong>Google Fonts</strong> — the Site loads fonts from Google&rsquo;s servers to render its typography. This means your browser makes a request to Google, which can expose your IP address to Google. Google Fonts does not set cookies for this purpose.
+              <strong>Google Fonts:</strong> the Site loads fonts from Google&rsquo;s servers to render its typography. This means your browser makes a request to Google, which can expose your IP address to Google. Google Fonts does not set cookies for this purpose.
             </li>
             <li>
-              <strong>Cloudflare Web Analytics</strong> — cookieless traffic measurement, so we can see how many people read a page. It stores nothing on your device and collects no information that identifies you.
+              <strong>Cloudflare Web Analytics:</strong> cookieless traffic measurement, so we can see how many people read a page. It stores nothing on your device and collects no information that identifies you.
             </li>
           </ul>
           <p>

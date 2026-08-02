@@ -116,7 +116,7 @@ export default function ContactPage() {
           <a href="tel:+12506162087" className="font-semibold text-[#dc2626] underline underline-offset-2">
             250-616-2087
           </a>{" "}
-          or send a message below — we reply within one business day.
+          or send a message below. We reply within one business day.
         </p>
       </div>
 

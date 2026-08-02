@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { CASE_STUDIES } from "@/lib/caseStudies";
+import { TESTIMONIALS, GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
+import Stars from "@/components/Stars";
 import Reveal from "@/components/Reveal";
 
 /**
@@ -57,52 +59,11 @@ const PRINCIPLES = [
 ];
 
 /**
- * Real 5-star Google reviews, transcribed verbatim from the saved review
- * cards in .images/..ADVERT/Reviews plus the Root 86 Coffee review left
- * 2026-07-29. Do NOT paraphrase or invent entries here: these are
- * attributed to real people and have to match what they actually wrote.
- *
- * Deliberately no aggregateRating JSON-LD. Google disallows self-serving
- * review markup for Organization/LocalBusiness (reviews about you, hosted
- * by you). The stars come from the Google Business Profile instead, which
- * page.tsx already ties to this site via sameAs + the CID URL.
+ * The reviews themselves (and the note on why there is no rating markup)
+ * live in lib/testimonials.ts, shared with /reviews. /about shows the first
+ * few as proof for the claims above them and links through for the rest.
  */
-const GOOGLE_REVIEWS_URL = "https://maps.google.com/?cid=10419426377693999665";
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "Great service, top level skills and quick personal responses to requests. Highly recommended for your business website and online advertisement.",
-    author: "Root 86 Coffee",
-  },
-  {
-    quote:
-      "Super happy with my experience! Super friendly, knowledgeable, and paid attention to all wants and needs! The whole process felt smooth and stress-free. Highly recommend to anyone looking for quality work and great service :)",
-    author: "Yoko Ho",
-  },
-  {
-    quote:
-      "Definitely recommend these two amazing guys. Great delivery time and performance!!",
-    author: "Enrico Del Mundo",
-  },
-  {
-    quote:
-      "Really happy with the overall experience. Everything was smooth, communication was great, and the final result looked very professional.",
-    author: "Peter S.",
-  },
-];
-
-function Stars() {
-  return (
-    <div className="flex gap-0.5" aria-label="5 out of 5 stars">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#f5a623" aria-hidden>
-          <path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
+const ABOUT_TESTIMONIALS = TESTIMONIALS.slice(0, 2);
 
 export const metadata: Metadata = {
   title: "About Us: The Team Behind VDT Sites",
@@ -331,7 +292,7 @@ export default function AboutPage() {
             </p>
 
             <div className="mt-9 grid gap-6 sm:grid-cols-2">
-              {TESTIMONIALS.map((t) => (
+              {ABOUT_TESTIMONIALS.map((t) => (
                 <figure
                   key={t.author}
                   className="flex flex-col rounded-2xl border border-black/10 bg-white/55 p-6"
@@ -347,14 +308,20 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <div className="mt-8 text-center">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-center">
+              <a
+                href="/reviews"
+                className="text-[14px] font-semibold text-[#dc2626] hover:underline"
+              >
+                Read every review →
+              </a>
               <a
                 href={GOOGLE_REVIEWS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[14px] font-semibold text-[#dc2626] hover:underline"
+                className="text-[14px] font-semibold text-[#0d0d0d]/60 transition-colors hover:text-[#dc2626]"
               >
-                Read all our reviews on Google →
+                See them on Google →
               </a>
             </div>
           </div>

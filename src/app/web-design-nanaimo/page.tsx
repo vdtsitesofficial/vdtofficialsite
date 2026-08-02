@@ -63,7 +63,7 @@ const REASONS = [
   },
   {
     title: "You edit it yourself",
-    body: "Change text and images directly on your live page — click, type, save. No dashboard to learn, and no emailing us to update a phone number.",
+    body: "Change text and images directly on your live page: click, type, save. No dashboard to learn, and no emailing us to update a phone number.",
   },
   {
     title: "You own it",
@@ -119,7 +119,7 @@ export default function LandingPage() {
             Website design in Nanaimo, built from scratch.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/70 md:text-[17px]">
-            Custom sites for small businesses across Vancouver Island — designed around
+            Custom sites for small businesses across Vancouver Island, designed around
             what your business actually does, not a template with your logo dropped in.
             Fixed pricing, hosting included.
           </p>

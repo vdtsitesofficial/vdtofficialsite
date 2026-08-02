@@ -79,10 +79,10 @@ export default function CookiePolicyPage() {
             Browsing this Site sets <strong>no cookies at all</strong>. We removed Google Analytics and the cookie banner that went with it, because we would rather not ask you for something we do not need.
           </p>
           <p>
-            <strong>Essential cookies</strong> — our hosting and security provider, Cloudflare, may set a cookie when its protection features are triggered, for example if it needs to tell a person apart from an automated bot. These exist for security, cannot be switched off, and are not set on every visit.
+            <strong>Essential cookies:</strong> our hosting and security provider, Cloudflare, may set a cookie when its protection features are triggered, for example if it needs to tell a person apart from an automated bot. These exist for security, cannot be switched off, and are not set on every visit.
           </p>
           <p>
-            <strong>Measurement</strong> — we do count visits, using Cloudflare Web Analytics. It is <strong>cookieless</strong>: it sets nothing on your device, does not fingerprint your browser, and cannot follow you to any other site. It tells us how many people read a page and roughly where they came from, and nothing that identifies you.
+            <strong>Measurement:</strong> we do count visits, using Cloudflare Web Analytics. It is <strong>cookieless</strong>: it sets nothing on your device, does not fingerprint your browser, and cannot follow you to any other site. It tells us how many people read a page and roughly where they came from, and nothing that identifies you.
           </p>
           <p>
             We use <strong>no</strong> analytics cookies, advertising cookies, social-media trackers, or anything that follows you across other websites.
@@ -105,7 +105,7 @@ export default function CookiePolicyPage() {
                   <td className="py-3 pr-4 font-mono text-[13px]">__cf_bm</td>
                   <td className="py-3 pr-4">Essential</td>
                   <td className="py-3 pr-4">Cloudflare</td>
-                  <td className="py-3">Bot management — distinguishes humans from automated traffic to protect the Site.</td>
+                  <td className="py-3">Bot management: distinguishes humans from automated traffic to protect the Site.</td>
                 </tr>
                 <tr className="border-b border-black/[0.06]">
                   <td className="py-3 pr-4 font-mono text-[13px]">cf_clearance</td>
