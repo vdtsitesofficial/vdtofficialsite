@@ -108,8 +108,16 @@ export default async function CaseStudyPage({
         }}
       />
 
-      {/* header */}
+      {/* header
+
+          data-nosnippet: Google was building the /work/* sitelink snippets out
+          of this chrome instead of the meta description, so the SERP read
+          "VDT SITES All workGet a quote Home/Work/...". The wrapper is
+          display:contents so the flex layout is untouched; it exists purely so
+          the attribute sits on a <div>, which is one of the three elements
+          (div/span/section) Google actually honours it on. */}
       <header className="flex items-center justify-between px-4 py-4 md:px-14 md:py-6">
+        <div data-nosnippet className="contents">
         <a href="/" className="inline-flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/vdt-glass-logo.png" alt="VDT Sites" className="h-8 w-8 md:h-[34px] md:w-[34px]" />
@@ -129,16 +137,19 @@ export default async function CaseStudyPage({
             Get a quote
           </a>
         </nav>
+        </div>
       </header>
 
       <main className="flex-1">
-        {/* breadcrumb (visible) */}
+        {/* breadcrumb (visible) — also nosnippet, see the header note above */}
         <nav aria-label="Breadcrumb" className="px-6 pt-2 text-[13px] text-[#0d0d0d]/50 md:px-14">
-          <a href="/" className="hover:text-[#0d0d0d]">Home</a>
-          <span className="mx-2">/</span>
-          <a href="/work" className="hover:text-[#0d0d0d]">Work</a>
-          <span className="mx-2">/</span>
-          <span className="text-[#0d0d0d]/80">{cs.name}</span>
+          <span data-nosnippet>
+            <a href="/" className="hover:text-[#0d0d0d]">Home</a>
+            <span className="mx-2">/</span>
+            <a href="/work" className="hover:text-[#0d0d0d]">Work</a>
+            <span className="mx-2">/</span>
+            <span className="text-[#0d0d0d]/80">{cs.name}</span>
+          </span>
         </nav>
 
         {/* hero */}

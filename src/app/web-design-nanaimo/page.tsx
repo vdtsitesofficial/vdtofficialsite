@@ -33,7 +33,7 @@ import WorkCarousel from "@/components/WorkCarousel";
 export const metadata: Metadata = {
   title: "Website Design in Nanaimo, BC",
   description:
-    "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fixed pricing, hosting included, and you own the site. Free quote — call 250-616-2087.",
+    "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fixed pricing, hosting included, and you own the site. Free quote: call 250-616-2087.",
   robots: { index: false, follow: true },
   alternates: { canonical: "/web-design-nanaimo" },
 };
