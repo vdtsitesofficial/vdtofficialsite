@@ -23,7 +23,16 @@
 //   reserved for future use).
 // ============================================================
 
-// ── Real Google reviews for VDT Sites (default content) ──
+// ── Real Google reviews for VDT Sites (FALLBACK content only) ──
+//
+// ⚠️ On vdtsites.com this array is NOT what renders. src/app/page.tsx
+// passes the full set in via `initVdtTestimonials({ testimonials })`,
+// sourced from src/lib/testimonials.ts, which is the single source of
+// truth for review text across the site (/reviews, /about, this marquee).
+// Edit that file, not this one. This copy exists so the module still
+// renders something when used standalone, and it had already drifted to
+// 6 of 18 reviews before the injection was wired up.
+//
 // `avatar` is an optional path to a self-hosted JPG. When omitted, the
 // component renders a red letter-initial fallback.
 export const DEFAULT_TESTIMONIALS = [
@@ -64,7 +73,7 @@ export const DEFAULT_TESTIMONIALS = [
     name: "Enrico Del Mundo",
     rating: 5,
     quote:
-      "Definitely recommend these two amazing guys. Great delivery time and performance!",
+      "Definitely recommend these two amazing guys. Great delivery time and performance!!",
     avatar: "/avatars/enrico.svg",
   },
 ];

@@ -268,6 +268,17 @@
   font-size: .82rem;
   line-height: 1.55;
   color: var(--vdt-ts-ink-2);
+
+  /* The real reviews run from four words to a full paragraph. Unclamped,
+     the two longest (Sherri K, Paul Van Ryssel at ~650 chars) render cards
+     three times the height of the rest, which wrecks the marquee's rhythm
+     and makes one column visibly taller than its neighbours. The marquee
+     is a glanceable proof band, not a reading surface - /reviews carries
+     the full text of every one of them. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  overflow: hidden;
 }
 .vdt-testimonials__card-source {
   display: flex;

@@ -14,10 +14,12 @@
  * smileys, curly apostrophes and stray star emoji included. When a new
  * review lands, re-read the owner console rather than a screenshot.
  *
- * ⚠️ `public/lab/testimonials.js` (the home page carousel) still renders
- * Enrico's review with a single trailing "!" where the profile shows "!!",
- * and only carries 6 of the 18. Fix it when that file is next touched -
- * it needs a LAB_V bump, so it is deliberately not part of this change.
+ * This is the ONLY place review text lives. The home page carousel gets it
+ * injected via `initVdtTestimonials({ testimonials })` from page.tsx rather
+ * than keeping its own copy - the array still in public/lab/testimonials.js
+ * is a fallback for when the module is used standalone, and having it
+ * diverge (6 of 18 reviews, and Enrico misquoted with one "!") is exactly
+ * what this file exists to prevent.
  *
  * Deliberately no `aggregateRating` or `Review` JSON-LD wherever these
  * render. Google disallows self-serving review markup for Organization /
@@ -39,6 +41,12 @@ export type Testimonial = {
   author: string;
   /** Case-study slug, when the reviewer is a client with a /work page. */
   slug?: string;
+  /**
+   * Self-hosted avatar crop for the home page carousel. Optional: the
+   * carousel falls back to a red letter-initial tile, so a new review does
+   * not need artwork before it can ship.
+   */
+  avatar?: string;
 };
 
 /**
@@ -52,6 +60,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Super happy with my experience! Super friendly, knowledgeable, and paid attention to all wants and needs! The whole process felt smooth and stress-free. Highly recommend to anyone looking for quality work and great service :)",
     author: "Yoko Ho",
+    avatar: "/avatars/yoko.svg",
   },
   {
     quote:
@@ -74,11 +83,13 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Really happy with the overall experience. Everything was smooth, communication was great, and the final result looked very professional.",
     author: "Peter S.",
+    avatar: "/avatars/peter.svg",
   },
   {
     quote:
       "We're really happy with the service & product they made us. The team was easy to work with, responsive, and delivered exactly what we wanted. Highly recommend!",
     author: "Jay Cool",
+    avatar: "/avatars/jay.svg",
   },
   {
     quote:
@@ -88,11 +99,13 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     quote: "Super professional support, and very customer friendly website.",
     author: "Brady Kozubal",
+    avatar: "/avatars/brady.svg",
   },
   {
     quote:
       "Definitely recommend these two amazing guys. Great delivery time and performance!!",
     author: "Enrico Del Mundo",
+    avatar: "/avatars/enrico.svg",
   },
   {
     quote: "Exceeded my expectations! These guys are creative and geniuses!",
@@ -105,6 +118,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     quote: "Excellent service and highly recommended ⭐️⭐️⭐️⭐️⭐️",
     author: "Heinz R",
+    avatar: "/avatars/heinz.svg",
   },
   {
     quote: "Quality service! Would recommend.",

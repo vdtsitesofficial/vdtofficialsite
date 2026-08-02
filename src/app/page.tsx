@@ -18,6 +18,7 @@
 import Script from "next/script";
 import MobileActionBar from "@/components/MobileActionBar";
 import { LAB_V } from "@/lib/labVersion";
+import { TESTIMONIALS } from "@/lib/testimonials";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
 const IMPORTMAP = JSON.stringify({
@@ -27,6 +28,23 @@ const IMPORTMAP = JSON.stringify({
     "polygon-clipping": "https://esm.sh/polygon-clipping@0.15.3",
   },
 });
+
+// Reviews for the marquee, injected rather than left to the copy baked
+// into public/lab/testimonials.js. That copy had drifted to 6 of the 18
+// reviews with one of them misquoted; lib/testimonials.ts is the single
+// source now and the lab array is only a standalone fallback.
+//
+// `<` is escaped because this string is interpolated into an inline
+// <script type="module">, where a literal `</script` inside a JS string
+// would still close the tag.
+const CAROUSEL_REVIEWS = JSON.stringify(
+  TESTIMONIALS.map((t) => ({
+    name: t.author,
+    rating: 5,
+    quote: t.quote,
+    avatar: t.avatar,
+  })),
+).replace(/</g, "\\u003c");
 
 // Module-script body for the post-DOM lab init. Keeping this as a
 // template string (rather than scattered <script> tags) ensures the
@@ -38,7 +56,7 @@ const LAB_MODULES = `
   import { initFluidFooter }     from '/lab/footer.js?v=${LAB_V}';
 
   const tRoot = document.querySelector('[data-vdt-testimonials]');
-  if (tRoot) initVdtTestimonials({ root: tRoot });
+  if (tRoot) initVdtTestimonials({ root: tRoot, testimonials: ${CAROUSEL_REVIEWS} });
 
   document.querySelectorAll('.vdt-hero').forEach((el) => {
     initVdtHero({ root: el, enableCursor: !el.closest('#screen-overlay') });
