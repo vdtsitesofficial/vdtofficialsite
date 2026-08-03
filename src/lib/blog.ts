@@ -1356,7 +1356,268 @@ const facebookPageVsWebsitePost: BlogPost = {
   ],
 };
 
+/* DRAFT. Sem's decisions from the interview:
+   - The thesis is his: the timeline is a function of how fast the client
+     replies. 1-2 weeks when they're prompt, longer when they're not.
+   - He does NOT want a number on the slow end, so nothing here quantifies
+     it. It's framed as being set by response time, full stop.
+   - His fastest-ever build stays out entirely, at his request.
+   - Delays are content/photos, approvals, and third-party accounts. He did
+     NOT pick scope growth, so this doesn't lead on it.
+   - The honest moment is him owning his side: if a project drags, part of
+     that is VDT not pinning down what was needed at the start. That's the
+     counterweight to a post that otherwise lists client-side causes.
+   publishedAt is the planned slot, 2026-08-24. Update it if it goes out on
+   a different day, since the index sorts on it. */
+const howLongDoesItTakePost: BlogPost = {
+  slug: "how-long-does-it-take-to-build-a-website",
+  title: "How Long Does It Take to Build a Small Business Website?",
+  metaTitle: "How Long Does It Take to Build a Website?",
+  description:
+    "Usually one to two weeks, but the honest answer is it depends on you more than on your developer. Here is where the time goes, and what stretches it.",
+  excerpt:
+    "One to two weeks is realistic for a small business website. The part nobody tells you is that the timeline depends more on how fast you reply than on how fast anyone builds.",
+  category: "Getting Started",
+  publishedAt: "2026-08-24",
+  updatedAt: "2026-08-24",
+  readingMinutes: 7,
+  keywords: [
+    "how long does it take to build a website",
+    "small business website timeline",
+    "web design process",
+    "website build time",
+    "web design Nanaimo",
+  ],
+  author: "VDT Sites",
+  draft: true,
+  faqs: [
+    {
+      q: "How long does it take to build a small business website?",
+      a: "Around one to two weeks from the go-ahead to going live, provided you send content and feedback promptly. The build itself is rarely the slow part. Projects that run longer are almost always waiting on something from the business rather than something from the developer.",
+    },
+    {
+      q: "What do I need to have ready before the build starts?",
+      a: "Your text or a rough version of it, a logo if you have one, photos of your actual work, your services and pricing if you publish it, and login access to your domain. Having those four things ready is the single biggest thing you can do to keep a project on schedule.",
+    },
+    {
+      q: "Why do some agencies quote three to six months for a website?",
+      a: "Sometimes the site genuinely warrants it, with custom functionality, integrations or a large amount of content. Often it reflects how many other projects are in the queue ahead of yours rather than how long your site takes to build. It is a fair question to ask directly.",
+    },
+    {
+      q: "Can I launch sooner with fewer pages and add more later?",
+      a: "Yes, and it is usually the right call. A well-built four page site that is live is worth more than a twelve page site still being written. Pages can be added at any point, and a site that is already live starts being found by search engines while the rest is finished.",
+    },
+  ],
+  content: [
+    {
+      kind: "p",
+      text: "For a standard small business website, about one to two weeks from the go-ahead to being live.",
+    },
+    {
+      kind: "p",
+      text: "The honest version of that answer is that it depends on you more than it depends on us. If you reply quickly and get us what we ask for, one to two weeks is realistic. If replies take a week each time, the project stretches, and there isn't much a developer can do about that.",
+    },
+    {
+      kind: "p",
+      text: "That's not a complaint. It's the single most useful thing to understand before you start, because it means the timeline is largely in your hands.",
+    },
+    {
+      kind: "p",
+      text: "Here's where the time actually goes.",
+    },
+
+    { kind: "h2", text: "Why Nobody Can Give You an Exact Number" },
+    {
+      kind: "p",
+      text: "Building the site is the predictable part. We've done it enough times to know roughly how long a page takes.",
+    },
+    {
+      kind: "p",
+      text: "What isn't predictable is everything that has to come from your side, and that's where the variation lives.",
+    },
+    {
+      kind: "p",
+      text: "Two businesses can order an almost identical website on the same day. One goes live inside a fortnight. The other is still not finished long afterwards. The difference usually isn't the website at all. It's how quickly each of them answered their email.",
+    },
+    {
+      kind: "p",
+      text: "So when someone quotes you a guaranteed date without asking a single question about your content or your availability, treat it carefully. They're either padding the estimate heavily, or they're planning to build something generic that doesn't need anything from you.",
+    },
+
+    { kind: "h2", text: "What the Two Weeks Actually Consists Of" },
+    {
+      kind: "p",
+      text: "It's worth knowing what you're waiting on, because most of it isn't what people expect.",
+    },
+    { kind: "h3", text: "A conversation first" },
+    {
+      kind: "p",
+      text: "Before anything gets designed, we need to understand what your business is, who you serve, and what you want the site to actually do.",
+    },
+    {
+      kind: "p",
+      text: "This is short, and it's the part that saves the most time later. A site built without it tends to need rebuilding halfway through.",
+    },
+    { kind: "h3", text: "Design and build" },
+    {
+      kind: "p",
+      text: "This is the bulk of the work and the most predictable part of the schedule. You see progress as it goes rather than waiting for a reveal at the end, so anything heading in the wrong direction gets caught early instead of after everything is finished.",
+    },
+    { kind: "h3", text: "Launch and handover" },
+    {
+      kind: "p",
+      text: "Pointing the domain at the new site, checking it on real phones, getting it set up so search engines can find it, and showing you how to run it.",
+    },
+    {
+      kind: "p",
+      text: "Usually a day, occasionally more if the domain is somewhere awkward.",
+    },
+
+    { kind: "h2", text: "What Actually Makes It Take Longer" },
+    {
+      kind: "p",
+      text: "In our experience it is nearly always one of three things, and none of them are the building.",
+    },
+
+    { kind: "h3", text: "1. Waiting for content and photos" },
+    {
+      kind: "p",
+      text: "This is the big one, by a distance.",
+    },
+    {
+      kind: "p",
+      text: "The design is done, the pages are built, and the whole thing sits waiting on the text about your services or photos of your actual work.",
+    },
+    {
+      kind: "p",
+      text: "It's completely understandable. Writing about your own business is genuinely hard, and it's the kind of job that gets pushed to the weekend and then to the weekend after that.",
+    },
+    {
+      kind: "p",
+      text: "But a finished website with nothing to put in it cannot launch, and this is where most of the lost weeks go.",
+    },
+
+    { kind: "h3", text: "2. Slow approvals" },
+    {
+      kind: "p",
+      text: "We send something over to check, and then the project pauses until we hear back.",
+    },
+    {
+      kind: "p",
+      text: "A day is normal and expected. A week each time, three or four times over, quietly turns a short project into a long one without anybody ever deciding that should happen.",
+    },
+    {
+      kind: "p",
+      text: "It gets slower again when several people at the business need to agree before anyone replies.",
+    },
+
+    { kind: "h3", text: "3. Third-party accounts" },
+    {
+      kind: "p",
+      text: "The one nobody expects, and the one most likely to hold up a launch on the actual day.",
+    },
+    { kind: "p", text: "Usually it's one of these:" },
+    {
+      kind: "ul",
+      items: [
+        "nobody can remember who registered the domain or where,",
+        "the login for it belongs to someone who left the business,",
+        "a payment provider is verifying the business and takes days to do it,",
+        "or access to an existing Google listing has to be recovered first.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "None of these are anybody's fault and all of them are outside a developer's control. They're also the easiest to solve early, which is why we ask about them at the start rather than the week you want to go live.",
+    },
+
+    { kind: "h2", text: "When the Delay Is Our Fault" },
+    {
+      kind: "p",
+      text: "Everything above puts the timeline on your side of the table, so it's only fair to say the other half.",
+    },
+    {
+      kind: "p",
+      text: "When a project drags, some of that is usually on us.",
+    },
+    {
+      kind: "p",
+      text: "If we didn't ask clearly enough what we needed at the start, or asked for it in five separate messages over three weeks instead of once at the beginning, that's not the client being slow. That's us running the project badly.",
+    },
+    {
+      kind: "p",
+      text: "A business owner should not have to work out what a web developer needs from them. Being told up front, in one list, is most of the difference between a project that runs to schedule and one that doesn't.",
+    },
+    {
+      kind: "p",
+      text: "It's the part of this job we think about most, and it's why the first conversation matters more than it looks like it should.",
+    },
+
+    { kind: "h2", text: "How to Make It Fast" },
+    {
+      kind: "p",
+      text: "If you want this done quickly, almost all of the leverage is in the first few days.",
+    },
+    { kind: "p", text: "Before the build starts, have ready:" },
+    {
+      kind: "ul",
+      items: [
+        "a rough version of what you want each page to say, even if it's messy,",
+        "photos of your real work rather than stock images,",
+        "your logo, in the best quality you have,",
+        "your services and, if you publish them, your prices,",
+        "and the login for wherever your domain is registered.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "Rough is fine. Rough can be edited. Missing cannot.",
+    },
+    {
+      kind: "p",
+      text: "The other thing that helps is deciding in advance who gives feedback. One person with the final say moves several times faster than four people who all need to weigh in.",
+    },
+
+    { kind: "h2", text: "Should You Be in a Rush at All?" },
+    {
+      kind: "p",
+      text: "Worth asking, because plenty of people set themselves a deadline that nothing is actually driving.",
+    },
+    {
+      kind: "p",
+      text: "If you have a real date, a season starting, a location opening, an event coming up, then say so at the beginning. It changes how the work is sequenced.",
+    },
+    {
+      kind: "p",
+      text: "If you don't, there's usually no prize for launching four days sooner.",
+    },
+    {
+      kind: "p",
+      text: "And if you do need something live quickly, the honest lever is building less rather than building faster. A good four page site now, with more added later, beats waiting on twelve pages of text that haven't been written. The site starts working for you while the rest gets finished.",
+    },
+
+    { kind: "h2", text: "Final Thoughts" },
+    {
+      kind: "p",
+      text: "One to two weeks is a fair expectation for a small business website, and it's an expectation you have more control over than your developer does.",
+    },
+    {
+      kind: "p",
+      text: "The projects that run long are almost never the ones with complicated websites. They're the ones where the content never quite got finished, or where a reply took a fortnight, or where nobody could find the domain login until the day of launch.",
+    },
+    {
+      kind: "p",
+      text: "All three of those are solvable in an afternoon at the start, and nearly impossible to fix once the project is already late.",
+    },
+    {
+      kind: "p",
+      text: "If you're getting quotes, ask what the developer needs from you and when they need it. Anyone who can answer that clearly has thought about your timeline. Anyone who can't probably hasn't.",
+    },
+  ],
+};
+
 export const BLOG_POSTS: BlogPost[] = [
+  howLongDoesItTakePost,
   facebookPageVsWebsitePost,
   notShowingOnGooglePost,
   websiteCostPost,
