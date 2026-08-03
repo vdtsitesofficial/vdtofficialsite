@@ -16,8 +16,8 @@
  * --------------------------------------------------------------------- */
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Monitor, PenTool, TrendingUp, Plus, X } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Monitor, PenTool, TrendingUp, Plus } from "lucide-react";
 
 const C = {
   bg: "#F4EFE6",
@@ -32,7 +32,6 @@ const C = {
 };
 
 const F = {
-  display: "'Archivo Black', 'Arial Black', sans-serif",
   headline: "'Anton', 'Arial Narrow', sans-serif",
   mono: "'Space Mono', 'Courier New', monospace",
   body: "'Inter', system-ui, sans-serif",
@@ -63,15 +62,6 @@ const SERVICES = [
     desc: "Smart strategies that turn goals into measurable growth.",
     className: "ml-[72px] mr-6 -mt-3",
   },
-];
-
-const MENU = [
-  { label: "HOME", href: "/" },
-  { label: "WORK", href: "/work" },
-  { label: "SERVICES", href: "/services" },
-  { label: "ABOUT", href: "/about" },
-  { label: "BLOG", href: "/blog" },
-  { label: "CONTACT", href: "#contact" },
 ];
 
 /* Axis-aligned polyline -> path string with rounded corners. */
@@ -105,7 +95,6 @@ type Route = {
 
 export default function MobileHomeHero() {
   const reduced = useReducedMotion();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [route, setRoute] = useState<Route | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -195,13 +184,6 @@ export default function MobileHomeHero() {
     };
   }, [measure]);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
-
   const fadeUp = (delay: number) =>
     reduced
       ? {}
@@ -258,28 +240,11 @@ export default function MobileHomeHero() {
           </svg>
         )}
 
-        {/* ── Header ────────────────────────────────────────────── */}
-        <header className="relative z-10 flex items-center justify-between px-6 pb-2 pt-4">
-          <span
-            className="text-[21px] leading-none"
-            style={{ fontFamily: F.display, letterSpacing: "0.01em" }}
-          >
-            VDT SITES
-          </span>
-          <button
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(true)}
-            className="-mr-1 p-1"
-          >
-            <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-              <path d="M2 5.5h32" stroke={C.ink} strokeWidth="2.4" strokeLinecap="round" />
-              <path d="M10 12.5h24" stroke={C.ink} strokeWidth="2.4" strokeLinecap="round" />
-            </svg>
-          </button>
-        </header>
-
-        {/* ── Hero ──────────────────────────────────────────────── */}
-        <div className="relative z-10 px-6 pt-3">
+        {/* ── Hero ──────────────────────────────────────────────────
+            No header of its own: the site's real #site-chrome header
+            (brand + nav + Contact CTA) is fixed above this and forced
+            visible on mobile in page.tsx. pt clears its ~56px height. */}
+        <div className="relative z-10 px-6 pt-[68px]">
           {/* Route origin: red dot with halo */}
           <span ref={startDotRef} className="relative block h-7 w-7">
             <motion.span
@@ -321,16 +286,14 @@ export default function MobileHomeHero() {
             className="mt-3 uppercase"
             style={{
               fontFamily: F.headline,
-              fontSize: "clamp(3.4rem, 17.5vw, 5rem)",
-              lineHeight: 0.98,
+              fontSize: "clamp(2.7rem, 13.2vw, 3.9rem)",
+              lineHeight: 1.02,
               letterSpacing: "0.005em",
             }}
           >
-            Design
+            Design That
             <br />
-            That Drives
-            <br />
-            Growth
+            Drives Growth
             <span
               aria-hidden="true"
               className="inline-block rounded-full"
@@ -353,7 +316,9 @@ export default function MobileHomeHero() {
           </motion.p>
 
           <motion.div {...fadeUp(0.54)} ref={ctaRef} className="mt-5">
-            <a href="#contact" className="group inline-flex items-center gap-4">
+            {/* Full page navigation to /contact, not a scroll to the
+                in-page card (Sem, 2026-08-03). */}
+            <a href="/contact" className="group inline-flex items-center gap-4">
               <svg
                 width="46"
                 height="16"
@@ -385,7 +350,7 @@ export default function MobileHomeHero() {
         </div>
 
         {/* ── Service cards ─────────────────────────────────────── */}
-        <div className="relative z-10 mt-11">
+        <div className="relative z-10 mt-9">
           {SERVICES.map((svc, i) => {
             const Icon = svc.icon;
             return (
@@ -440,7 +405,7 @@ export default function MobileHomeHero() {
         </div>
 
         {/* ── Stat card ─────────────────────────────────────────── */}
-        <div className="relative z-10 mt-12 px-6">
+        <div className="relative z-10 mt-8 px-6">
           <motion.div
             ref={statRef}
             className="flex items-center gap-6 rounded-[28px] p-6"
@@ -474,7 +439,7 @@ export default function MobileHomeHero() {
         </div>
 
         {/* ── Scroll cue → portfolio ────────────────────────────── */}
-        <div className="relative z-10 mt-10 px-6 pb-14">
+        <div className="relative z-10 mt-8 px-6 pb-12">
           <a
             href="#portfolio"
             className="flex items-end gap-7"
@@ -533,70 +498,6 @@ export default function MobileHomeHero() {
         </div>
       </div>
 
-      {/* ── Menu overlay ────────────────────────────────────────── */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            className="fixed inset-0 z-[80] flex flex-col px-6 pb-10 pt-6"
-            style={{ background: C.ink, color: C.bg }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex items-center justify-between">
-              <span
-                className="text-[21px] leading-none"
-                style={{ fontFamily: F.display }}
-              >
-                VDT SITES
-              </span>
-              <button
-                aria-label="Close menu"
-                onClick={() => setMenuOpen(false)}
-                className="-mr-1 p-1"
-              >
-                <X size={26} />
-              </button>
-            </div>
-            <nav className="mt-14 flex flex-col gap-6">
-              {MENU.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: 0.08 + i * 0.05, ease }}
-                >
-                  <a
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-baseline gap-4"
-                  >
-                    <span
-                      className="text-[11px] font-bold"
-                      style={{ fontFamily: F.mono, color: C.red }}
-                    >
-                      0{i + 1}
-                    </span>
-                    <span
-                      className="text-[34px] uppercase leading-none"
-                      style={{ fontFamily: F.display }}
-                    >
-                      {item.label}
-                    </span>
-                  </a>
-                </motion.div>
-              ))}
-            </nav>
-            <p
-              className="mt-auto text-[11px]"
-              style={{ fontFamily: F.mono, color: "rgba(244,239,230,0.5)", letterSpacing: "0.3em" }}
-            >
-              VDTSITES.COM
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

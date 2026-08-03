@@ -219,6 +219,14 @@ export default function Home() {
       <style>{`
         @media (max-width: 720px) {
           #zoom-header, .zoom-hero { display: none; }
+          /* The real site header. main.js used to fade it in by writing
+             an inline opacity as the zoom progressed, but it no longer
+             runs on phones — so pin it visible here. !important beats
+             that inline style if a stale main.js ever does run. */
+          #site-chrome {
+            opacity: 1 !important;
+            pointer-events: auto;
+          }
         }
       `}</style>
 
