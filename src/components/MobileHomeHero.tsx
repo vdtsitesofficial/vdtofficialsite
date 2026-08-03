@@ -7,8 +7,13 @@
  * Cream editorial hero: Anton headline, Space Mono labels, one red
  * accent. A single red connector line draws itself on load, threading
  * from the dot above the eyebrow, around the headline, down behind the
- * service cards, past the 100% ring to the scroll cue — which anchors
- * to #portfolio, so the story hands off into "Some of our projects."
+ * service cards and on to the scroll cue — which anchors to #portfolio,
+ * so the story hands off into "Some of our projects."
+ *
+ * Sized to land the whole story in one phone screen, so it carries no
+ * header of its own (the site's #site-chrome sits above it) and no stat
+ * card — a 100% client-satisfaction ring lived after the cards until
+ * 2026-08-03, removed to buy back the vertical space.
  *
  * The line's waypoints are measured from the live DOM (after fonts
  * load, re-measured on resize) so it always hugs the content. Desktop
@@ -28,7 +33,6 @@ const C = {
   muted: "#7a756c",
   red: "#E0301F",
   redSoft: "rgba(224, 48, 31, 0.22)",
-  hair: "rgba(20, 19, 16, 0.18)",
 };
 
 const F = {
@@ -102,7 +106,6 @@ export default function MobileHomeHero() {
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const card1Ref = useRef<HTMLDivElement | null>(null);
   const card3Ref = useRef<HTMLDivElement | null>(null);
-  const statRef = useRef<HTMLDivElement | null>(null);
   const scrollDotRef = useRef<HTMLSpanElement | null>(null);
 
   const measure = useCallback(() => {
@@ -112,7 +115,6 @@ export default function MobileHomeHero() {
       ctaRef.current,
       card1Ref.current,
       card3Ref.current,
-      statRef.current,
       scrollDotRef.current,
     ];
     if (!c || els.some((el) => !el)) return;
@@ -136,14 +138,13 @@ export default function MobileHomeHero() {
     const cta = box(ctaRef.current!);
     const card1 = box(card1Ref.current!);
     const card3 = box(card3Ref.current!);
-    const stat = box(statRef.current!);
     const cue = box(scrollDotRef.current!);
 
     const xRail = cue.cx; // left rail lines up with the scroll-cue circle
     const xEdge = W - 14;
     // Crossings self-center in whatever gap the layout leaves.
     const yCross = (cta.bottom + card1.top) / 2;
-    const yShelf = (card3.bottom + stat.top) / 2;
+    const yShelf = (card3.bottom + cue.top) / 2;
     const midDot = { x: Math.min(W - 12, card3.right + 9), y: card3.cy };
 
     // Straight out to the right edge, then one long drop — the headline
@@ -350,7 +351,7 @@ export default function MobileHomeHero() {
         </div>
 
         {/* ── Service cards ─────────────────────────────────────── */}
-        <div className="relative z-10 mt-9">
+        <div className="relative z-10 mt-8">
           {SERVICES.map((svc, i) => {
             const Icon = svc.icon;
             return (
@@ -404,42 +405,8 @@ export default function MobileHomeHero() {
           })}
         </div>
 
-        {/* ── Stat card ─────────────────────────────────────────── */}
-        <div className="relative z-10 mt-8 px-6">
-          <motion.div
-            ref={statRef}
-            className="flex items-center gap-6 rounded-[28px] p-6"
-            style={{ border: `1.5px solid ${C.hair}` }}
-            {...(reduced
-              ? {}
-              : {
-                  initial: { opacity: 0, y: 26 },
-                  whileInView: { opacity: 1, y: 0 },
-                  viewport: { once: true, margin: "-40px" },
-                  transition: { duration: 0.7, ease },
-                })}
-          >
-            <StatRing reduced={!!reduced} />
-            <div className="min-w-0">
-              <p
-                className="text-[11px] font-bold"
-                style={{ fontFamily: F.mono, color: C.red, letterSpacing: "0.3em" }}
-              >
-                CLIENT SATISFACTION
-              </p>
-              <p
-                className="mt-2.5 text-[14.5px] leading-relaxed"
-                style={{ color: C.body }}
-              >
-                Trusted by ambitious brands to design, build, and grow with
-                confidence.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
         {/* ── Scroll cue → portfolio ────────────────────────────── */}
-        <div className="relative z-10 mt-8 px-6 pb-12">
+        <div className="relative z-10 mt-6 px-6 pb-4">
           <a
             href="#portfolio"
             className="flex items-end gap-7"
@@ -456,8 +423,8 @@ export default function MobileHomeHero() {
               />
               <motion.svg
                 width="16"
-                height="42"
-                viewBox="0 0 16 42"
+                height="30"
+                viewBox="0 0 16 30"
                 fill="none"
                 className="mt-2"
                 initial={{ opacity: reduced ? 1 : 0 }}
@@ -477,7 +444,7 @@ export default function MobileHomeHero() {
                 }
               >
                 <path
-                  d="M8 1v33M2 29l6 7 6-7"
+                  d="M8 1v21M2 17l6 7 6-7"
                   stroke={C.red}
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -499,55 +466,5 @@ export default function MobileHomeHero() {
       </div>
 
     </section>
-  );
-}
-
-/* ── 100% satisfaction ring ──────────────────────────────────────── */
-function StatRing({ reduced }: { reduced: boolean }) {
-  const R = 52;
-  const CIRC = 2 * Math.PI * R;
-  const FRACTION = 1;
-  // Arc starts at 12 o'clock (rotated -90) and sweeps clockwise; the end
-  // dot sits at the arc's terminus.
-  const endAngle = ((-90 + FRACTION * 360) * Math.PI) / 180;
-  const endX = 60 + R * Math.cos(endAngle);
-  const endY = 60 + R * Math.sin(endAngle);
-
-  return (
-    <div className="relative h-[120px] w-[120px] shrink-0">
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={R} fill="none" stroke="#E5DCCA" strokeWidth="2" />
-        <motion.circle
-          cx="60"
-          cy="60"
-          r={R}
-          fill="none"
-          stroke={C.red}
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeDasharray={CIRC}
-          transform="rotate(-90 60 60)"
-          initial={{ strokeDashoffset: reduced ? CIRC * (1 - FRACTION) : CIRC }}
-          whileInView={{ strokeDashoffset: CIRC * (1 - FRACTION) }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={reduced ? { duration: 0 } : { duration: 1.7, delay: 0.25, ease }}
-        />
-        <motion.circle
-          cx={endX}
-          cy={endY}
-          r="4.5"
-          fill={C.red}
-          initial={{ opacity: reduced ? 1 : 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.35, delay: reduced ? 0 : 1.85 }}
-        />
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span style={{ fontFamily: F.headline, fontSize: "33px" }}>
-          100<span style={{ fontSize: "21px" }}>%</span>
-        </span>
-      </div>
-    </div>
   );
 }
