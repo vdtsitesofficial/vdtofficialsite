@@ -594,7 +594,9 @@ export default function BlogLayout({
         >
           <div className="max-w-3xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
             <div
-              className="flex items-center gap-5"
+              /* Wraps: the row gained a Work link and ran past the
+                 viewport on ≤340px phones. */
+              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
               style={{
                 color: "var(--muted)",
                 fontFamily: "var(--font-body)",

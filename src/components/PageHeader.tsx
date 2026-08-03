@@ -1,106 +1,155 @@
-import type { ReactNode } from "react";
-
-const SYNE = "'Syne', 'Inter', sans-serif";
-
 const LINKS = [
-  { label: "Work", href: "/work" },
-  { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Work", href: "/work", drop: "" },
+  { label: "Services", href: "/services", drop: "" },
+  // Drop order matches the homepage chrome exactly: About goes at 860px,
+  // Blog at 720px. See the priority note in public/lab/style.css.
+  { label: "About", href: "/about", drop: "vdt-ph__drop-860" },
+  { label: "Blog", href: "/blog", drop: "vdt-ph__drop-720" },
 ];
 
 /**
- * Shared header for the cream Tailwind pages (/about, /work, /services,
- * /reviews, /web-design-nanaimo and the case studies).
+ * The one site header, for the cream Tailwind pages (/about, /work,
+ * /services, /reviews, /web-design-nanaimo and the case studies).
  *
- * Those pages used to render brand mark + "Get a quote" and nothing else,
- * so landing on one from the homepage was a dead end — every other page
- * became unreachable without the back button. This keeps the chrome they
- * already had and adds the homepage's nav row to it.
+ * Those pages used to render brand mark + a red "Get a quote" pill and no
+ * links at all, so arriving on one from the homepage was a dead end. This
+ * is a faithful copy of the homepage/blog `#site-chrome` header — same
+ * geometry, type, colours and responsive drop order — so the chrome is
+ * identical on every route at every width.
  *
- * Layout: brand | links | CTA on tablet and up. On phones the links wrap
- * onto their own second row (order-3 + w-full) instead of competing with
- * the CTA for the first row — squeezing all three into 375px wrapped the
- * "Get a quote" pill onto two lines. The second row also means phones keep
- * all four links rather than dropping Services and About.
+ * It's a scoped stylesheet rather than the real .site-chrome classes
+ * because those live in /lab/style.css, and loading the whole lab
+ * stylesheet on these pages would restyle the pages themselves. The
+ * values below are copied from it; if that header changes, change both.
  *
- * Plain <a> rather than next/link: the homepage boots the laptop-zoom lab
- * modules, and next/script dedupes by src, so a soft navigation back to /
- * would leave them un-executed.
+ * Sticky rather than the lab's `fixed` so it stays in flow — these pages
+ * have no hero to sit over, and fixed would need a spacer on each one.
+ *
+ * Plain <a>: the homepage boots the laptop-zoom lab modules, and
+ * next/script dedupes by src, so a soft navigation back to / would leave
+ * them un-executed.
  */
 export default function PageHeader({
   activeHref,
-  cta,
   noSnippet = false,
 }: {
   /** Href of the page being rendered — marks its own link in the row. */
   activeHref?: string;
-  /** Right-hand call to action. Defaults to the red "Get a quote" pill. */
-  cta?: ReactNode;
   /** Wrap in data-nosnippet (pages where chrome text pollutes snippets). */
   noSnippet?: boolean;
 }) {
   const inner = (
     <>
-      <a href="/" className="order-1 inline-flex items-center gap-3">
+      <a className="vdt-ph__brand" href="/" aria-label="VDT Sites, home">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/vdt-glass-logo.png"
-          alt="VDT Sites"
-          className="h-8 w-8 md:h-[34px] md:w-[34px]"
-        />
-        <span
-          className="text-[12px] font-extrabold tracking-[0.10em] md:text-[13px]"
-          style={{ fontFamily: SYNE }}
-        >
-          VDT&nbsp;SITES
-        </span>
+        <img className="vdt-ph__mark" src="/vdt-glass-logo.png" alt="" />
+        <span>VDT&nbsp;SITES</span>
       </a>
-
-      {/* No "Home" link: the brand mark to the left already goes home. */}
-      <nav
-        aria-label="Main"
-        className="order-3 flex w-full items-center gap-6 text-[13px] font-medium md:order-2 md:w-auto md:gap-8 md:text-[14px]"
-      >
-        {LINKS.map((link) => {
-          const isActive = activeHref === link.href;
-          return (
-            <a
-              key={link.href}
-              href={link.href}
-              aria-current={isActive ? "page" : undefined}
-              className={`whitespace-nowrap transition-opacity hover:opacity-100 ${
-                isActive ? "font-semibold text-[#dc2626]" : "opacity-75"
-              }`}
-            >
-              {link.label}
-            </a>
-          );
-        })}
-      </nav>
-
-      <div className="order-2 shrink-0 md:order-3">
-        {cta ?? (
+      <nav className="vdt-ph__nav" aria-label="Main">
+        {LINKS.map((link) => (
           <a
-            href="/contact"
-            className="whitespace-nowrap rounded-full bg-[#dc2626] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#b91c1c] md:px-6 md:py-2.5 md:text-[14px]"
+            key={link.href}
+            href={link.href}
+            className={link.drop}
+            aria-current={activeHref === link.href ? "page" : undefined}
           >
-            Get a quote
+            {link.label}
           </a>
-        )}
-      </div>
+        ))}
+        <a href="/contact" className="vdt-ph__cta">
+          Contact&nbsp;Us
+        </a>
+      </nav>
     </>
   );
 
   return (
-    <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-4 md:px-14 md:py-6">
-      {noSnippet ? (
-        <div data-nosnippet className="contents">
-          {inner}
-        </div>
-      ) : (
-        inner
-      )}
-    </header>
+    <>
+      <style>{`
+        /* Values copied from .site-chrome / .dest-* in /lab/style.css. */
+        .vdt-ph {
+          position: sticky;
+          top: 0;
+          z-index: 60;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 28px 56px;
+          background: #f4efe6;
+          border-bottom: 1px solid transparent;
+        }
+        .vdt-ph__brand {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          color: #1a1a1a;
+          text-decoration: none;
+          /* Stops the wordmark colliding with the nav when room runs out. */
+          flex: 0 0 auto;
+          white-space: nowrap;
+        }
+        .vdt-ph__mark { width: 34px; height: 34px; }
+        .vdt-ph__brand span {
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          font-size: 13px;
+        }
+        .vdt-ph__nav { display: flex; align-items: center; gap: 32px; }
+        .vdt-ph__nav a {
+          color: #1a1a1a;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          opacity: 0.78;
+          white-space: nowrap;
+          transition: opacity 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .vdt-ph__nav a:hover { opacity: 1; }
+        .vdt-ph__nav a[aria-current="page"] { opacity: 1; font-weight: 600; }
+        .vdt-ph__cta {
+          padding: 10px 18px;
+          border-radius: 999px;
+          background: #1a1a1a;
+          color: #f4efe6 !important;
+          opacity: 1 !important;
+          font-weight: 600 !important;
+        }
+
+        @media (max-width: 860px) {
+          .vdt-ph__drop-860 { display: none; }
+        }
+        @media (max-width: 720px) {
+          .vdt-ph__drop-720 { display: none; }
+          .vdt-ph { padding: 14px 16px; }
+          .vdt-ph__mark { width: 28px; height: 28px; }
+          .vdt-ph__brand span { font-size: 12px; letter-spacing: 0.04em; }
+          .vdt-ph__nav { gap: 10px; }
+          .vdt-ph__nav a { font-size: 11px; letter-spacing: 0.04em; }
+          .vdt-ph__cta {
+            padding: 8px 12px;
+            font-size: 10px !important;
+            letter-spacing: 0.08em !important;
+          }
+        }
+        @media (max-width: 380px) {
+          .vdt-ph__nav { gap: 5px; }
+          .vdt-ph__nav a { font-size: 10px; }
+        }
+        @media (max-width: 339px) {
+          .vdt-ph__brand span { display: none; }
+        }
+      `}</style>
+      <header className="vdt-ph">
+        {noSnippet ? (
+          <div data-nosnippet style={{ display: "contents" }}>
+            {inner}
+          </div>
+        ) : (
+          inner
+        )}
+      </header>
+    </>
   );
 }

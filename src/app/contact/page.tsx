@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { LAB_V } from "@/lib/labVersion";
 import ContactCard from "@/components/ContactCard";
+import PageHeader from "@/components/PageHeader";
 
 /**
  * Standalone /contact page — the direct route to a conversation for people
@@ -69,39 +70,7 @@ export default function ContactPage() {
         }}
       />
 
-      {/* Ink-on-cream header — same layout/typography as the lab's
-          zoom-header, recolored for the cream page (the lab header is
-          white text for the photo hero and would vanish here). */}
-      <header className="flex items-center justify-between px-4 py-4 md:px-14 md:py-6">
-        <a href="/" className="inline-flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/vdt-glass-logo.png" alt="VDT Sites" className="h-8 w-8 md:h-[34px] md:w-[34px]" />
-          <span
-            className="text-[12px] font-extrabold tracking-[0.10em] md:text-[13px]"
-            style={{ fontFamily: SYNE }}
-          >
-            VDT&nbsp;SITES
-          </span>
-        </a>
-        <nav className="flex items-center gap-5 text-[13px] font-medium md:gap-9">
-          {/* No "Home" link: the brand mark to the left already goes home.
-              Services earns the freed width and shows at every size. */}
-          <a href="/work" className="opacity-75 transition-opacity hover:opacity-100">
-            Work
-          </a>
-          <a href="/services" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
-            Services
-          </a>
-          <a href="/about" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
-            About
-          </a>
-          <a href="/blog" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">Blog</a>
-          <a href="/#portfolio" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
-            Portfolio
-          </a>
-          <a href="/contact" className="font-semibold text-[#dc2626]">Contact&nbsp;Us</a>
-        </nav>
-      </header>
+      <PageHeader activeHref="/contact" />
 
       {/* Compact intro — h1 for the page, phone front and centre. */}
       <div className="px-6 pt-6 text-center md:pt-10">

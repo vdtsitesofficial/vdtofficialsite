@@ -87,17 +87,10 @@ export default function LandingPage() {
       />
       <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
 
-      {/* header — local landing page keeps its phone CTA, not "Get a quote". */}
-      <PageHeader
-        cta={
-          <a
-            href="tel:+12506162087"
-            className="whitespace-nowrap rounded-full bg-[#dc2626] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#b91c1c] md:px-6 md:py-2.5 md:text-[14px]"
-          >
-            250-616-2087
-          </a>
-        }
-      />
+      {/* header — same chrome as every other page. This page used to carry a
+          tel: pill here instead; the number is still above the fold in the
+          hero and repeated through the body, so the CTA isn't lost. */}
+      <PageHeader />
 
       <main className="flex-1">
         {/* hero — message match with the search query, phone above the fold */}
