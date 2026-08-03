@@ -95,13 +95,13 @@ function monogram(name: string): string {
  *   • Hairline reading-progress bar (fixed, top of viewport)
  *   • Breadcrumb strip
  *   • Article header
- *       - mono kicker (CATEGORY ─────)
- *       - asymmetric serif title
- *       - italic lede (description)
+ *       - tracked kicker (CATEGORY ─────)
+ *       - asymmetric display title
+ *       - lede (description)
  *       - byline with monogram avatar + meta
  *   • Two-column body (lg+): marginalia TOC | prose
  *   • Coda
- *       - signature strip (italic — VDT Sites, Nanaimo BC | DATE · WORD COUNT)
+ *       - signature strip (VDT Sites, Nanaimo BC | DATE · WORD COUNT)
  *       - CTA card
  *       - back-to-index link
  * ──────────────────────────────────────────────────────────────────── */

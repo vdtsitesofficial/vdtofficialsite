@@ -26,7 +26,7 @@ export default function BlogLayout({
         crossOrigin="anonymous"
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
       {/* Same ?v= cache-bust the homepage uses. Without it the blog kept
@@ -39,11 +39,21 @@ export default function BlogLayout({
           :hover, ::first-letter, :first-of-type, or @media, so anything
           requiring those lives here.
 
-          Aesthetic: refined editorial magazine. Cormorant Garamond does
-          most of the heavy lifting; Inter handles body. Generous leading,
-          warm cream, sparing accent. Drop cap on the first paragraph,
-          roman-numeral kickers on section headings, em-dash bullets,
-          section-break fleurons. */}
+          Type is the site's own pairing — Syne for display, Inter for body
+          and the small tracked labels. It used to run a separate editorial
+          system (Cormorant Garamond headings, JetBrains Mono labels, italic
+          throughout), which read as a different website; Cormorant is no
+          longer fetched and the mono was never loaded here at all, so those
+          labels were falling back to system mono.
+
+          Syne ships 600/700/800 only and has no italic, so nothing here asks
+          for weight 400/500 or italic — the browser would synthesise both.
+          It also sets much heavier than Cormorant at the same size, which is
+          why the display sizes are smaller than the serif ones were.
+
+          Structure is unchanged: generous leading, warm cream, sparing
+          accent, drop cap on the first paragraph, roman-numeral kickers on
+          section headings, em-dash bullets, section-break fleurons. */}
       <style>{`
         /* ============================================================
          *  Index cards (already in use on /blog)
@@ -141,8 +151,9 @@ export default function BlogLayout({
 
         /* Breadcrumb across top of header. */
         .vdt-article__crumbs {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10.5px;
+          font-weight: 600;
           letter-spacing: 0.22em;
           text-transform: uppercase;
           color: #6f6a60;
@@ -162,8 +173,9 @@ export default function BlogLayout({
 
         /* The eyebrow category above the title. */
         .vdt-article__kicker {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 11px;
+          font-weight: 600;
           letter-spacing: 0.32em;
           text-transform: uppercase;
           color: #b85a3e;
@@ -180,11 +192,11 @@ export default function BlogLayout({
           background: #b85a3e;
         }
 
-        /* The title — big, serif, slightly italic emphasis. */
+        /* The title — the site's display face, same as every other h1. */
         .vdt-article__title {
-          font-family: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
-          font-weight: 500;
-          font-size: clamp(2.4rem, 6vw, 4.4rem);
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.9rem, 4.4vw, 3rem);
           line-height: 1.02;
           letter-spacing: -0.015em;
           color: #1a1a1a;
@@ -192,15 +204,16 @@ export default function BlogLayout({
           max-width: 18ch;
         }
 
-        /* The italic kicker subtitle (uses post.description). */
+        /* Deck under the title (uses post.description). Body face, not the
+           display one — it's a sentence to read, and the site sets its hero
+           paragraphs in Inter too. */
         .vdt-article__lede {
-          font-family: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
-          font-style: italic;
-          font-weight: 500;
-          font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-          line-height: 1.5;
+          font-family: 'Inter', system-ui, sans-serif;
+          font-weight: 400;
+          font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+          line-height: 1.55;
           color: #4d4a44;
-          max-width: 38ch;
+          max-width: 46ch;
           margin: 0 0 40px;
         }
 
@@ -221,10 +234,9 @@ export default function BlogLayout({
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-weight: 500;
-          font-size: 1.4rem;
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 1rem;
           letter-spacing: -0.02em;
           flex-shrink: 0;
         }
@@ -238,8 +250,9 @@ export default function BlogLayout({
           font-weight: 600;
         }
         .vdt-article__byline-meta {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10.5px;
+          font-weight: 600;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #6f6a60;
@@ -249,8 +262,9 @@ export default function BlogLayout({
 
         /* ── TOC marginalia ────────────────────────────────────── */
         .vdt-toc__label {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10px;
+          font-weight: 600;
           letter-spacing: 0.28em;
           text-transform: uppercase;
           color: #6f6a60;
@@ -267,8 +281,9 @@ export default function BlogLayout({
           gap: 14px;
         }
         .vdt-toc__item a {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 16px;
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-size: 13.5px;
+          font-weight: 600;
           line-height: 1.3;
           color: #6f6a60;
           text-decoration: none;
@@ -281,10 +296,12 @@ export default function BlogLayout({
           color: #1a1a1a;
           padding-left: 18px;
         }
+        /* Italic used to mark the active entry; Syne has no italic, so it
+           steps up a weight instead. */
         .vdt-toc__item.is-active a {
           color: #1a1a1a;
           border-left-color: #b85a3e;
-          font-style: italic;
+          font-weight: 800;
         }
 
         /* On narrow screens collapse TOC into a tasteful card. */
@@ -321,10 +338,9 @@ export default function BlogLayout({
 
         /* Drop cap on the very first paragraph. */
         .vdt-prose > p:first-of-type::first-letter {
-          font-family: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
-          font-style: italic;
-          font-weight: 500;
-          font-size: 5.8em;
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 3.1em;
           float: left;
           line-height: 0.82;
           padding: 0.04em 0.1em 0 0;
@@ -332,14 +348,14 @@ export default function BlogLayout({
           color: #b85a3e;
         }
 
-        /* Section heading (h2) — large serif, with a small mono roman
+        /* Section heading (h2) — display face, with a small tracked roman
            numeral kicker and a sectional ornament above. */
         .vdt-prose h2 {
           margin-top: 3em;
           margin-bottom: 0.5em;
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 500;
-          font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.35rem, 2.5vw, 1.7rem);
           line-height: 1.12;
           letter-spacing: -0.01em;
           color: #1a1a1a;
@@ -349,13 +365,12 @@ export default function BlogLayout({
         .vdt-prose h2::before {
           content: attr(data-num);
           display: block;
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10.5px;
+          font-weight: 700;
           letter-spacing: 0.32em;
           color: #b85a3e;
           margin-bottom: 14px;
-          font-style: normal;
-          font-weight: 700;
         }
 
         /* Section break fleuron — sits before every h2 except the first. */
@@ -380,9 +395,9 @@ export default function BlogLayout({
           background: currentColor;
         }
         .vdt-ornament__mark {
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-size: 1.4rem;
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 1.05rem;
           line-height: 1;
           letter-spacing: 0.1em;
         }
@@ -391,16 +406,15 @@ export default function BlogLayout({
         .vdt-prose h3 {
           margin-top: 2em;
           margin-bottom: 0.4em;
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-weight: 500;
-          font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.05rem, 1.4vw, 1.2rem);
           line-height: 1.3;
           color: #1a1a1a;
           scroll-margin-top: 120px;
         }
 
-        /* Bulleted list — em-dash bullets, hanging indent, serif italics. */
+        /* Bulleted list — em-dash bullets, hanging indent. */
         .vdt-prose ul {
           list-style: none;
           margin: 1.6em 0;
@@ -419,9 +433,8 @@ export default function BlogLayout({
           position: absolute;
           left: 0;
           top: -0.05em;
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-size: 1.35em;
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 1.2em;
           color: #b85a3e;
           line-height: 1;
         }
@@ -449,9 +462,9 @@ export default function BlogLayout({
          *  Coda — signature, CTA, back link.
          * ============================================================ */
         .vdt-coda__sig {
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-size: 1rem;
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 600;
           color: #6f6a60;
           letter-spacing: 0.02em;
           margin-top: 64px;
@@ -464,9 +477,9 @@ export default function BlogLayout({
           flex-wrap: wrap;
         }
         .vdt-coda__sig .stamp {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
-          font-style: normal;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10.5px;
+          font-weight: 600;
           letter-spacing: 0.22em;
           text-transform: uppercase;
           color: #6f6a60;
@@ -492,17 +505,18 @@ export default function BlogLayout({
           }
         }
         .vdt-coda__cta-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-size: clamp(1.2rem, 1.9vw, 1.5rem);
           line-height: 1.15;
           color: #1a1a1a;
-          font-weight: 500;
+          font-weight: 700;
           margin: 0;
           max-width: 28ch;
         }
         .vdt-coda__cta-btn {
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10.5px;
+          font-weight: 600;
           letter-spacing: 0.24em;
           text-transform: uppercase;
           color: #f4efe6;
@@ -530,8 +544,9 @@ export default function BlogLayout({
 
         .vdt-coda__back {
           margin-top: 56px;
-          font-family: 'JetBrains Mono', ui-monospace, monospace;
+          font-family: 'Inter', system-ui, sans-serif;
           font-size: 10.5px;
+          font-weight: 600;
           letter-spacing: 0.24em;
           text-transform: uppercase;
           color: #6f6a60;

@@ -8,9 +8,14 @@ const MUTED = "#6f6a60";
 const ACCENT = "#b85a3e";
 const RULE = "rgba(26,26,26,0.10)";
 const CARD_BG = "#fbf7ee"; // a tick warmer than the page canvas for separation
-const SERIF = "'Cormorant Garamond', 'Iowan Old Style', Georgia, serif";
+// The site's pairing — Syne display, Inter body — not the separate editorial
+// serif this page used to run. Syne is loaded at 600/700/800 with no italic;
+// don't ask for other weights here or the browser synthesises them.
+const DISPLAY = "'Syne', 'Inter', sans-serif";
 const BODY = "'Inter', system-ui, sans-serif";
-const MONO = "'JetBrains Mono', ui-monospace, monospace";
+// Small tracked uppercase labels. Were JetBrains Mono, which this route never
+// actually loaded, so they rendered in whatever mono the OS had.
+const LABEL = "'Inter', system-ui, sans-serif";
 
 export const metadata: Metadata = {
   // Descriptive on purpose — with the "| VDT Sites" template this lands at
@@ -40,7 +45,7 @@ function formatDate(iso: string): string {
  * Blog index page.
  *
  * Layout (top → bottom):
- *   1. Centered hero with eyebrow, big serif title, kicker subtitle
+ *   1. Centered hero with eyebrow, big display title, kicker subtitle
  *   2. Hairline divider
  *   3. Featured-post card (first/newest post): full container width,
  *      generous padding, large title
@@ -75,8 +80,9 @@ export default function BlogIndexPage() {
       >
         <p
           style={{
-            fontFamily: MONO,
+            fontFamily: LABEL,
             fontSize: "11px",
+            fontWeight: 600,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
             color: ACCENT,
@@ -87,11 +93,11 @@ export default function BlogIndexPage() {
         </p>
         <h1
           style={{
-            fontFamily: SERIF,
-            fontWeight: 500,
-            fontSize: "clamp(2.6rem, 5vw, 4.2rem)",
+            fontFamily: DISPLAY,
+            fontWeight: 700,
+            fontSize: "clamp(2rem, 3.8vw, 3rem)",
             lineHeight: 1.05,
-            letterSpacing: "-0.01em",
+            letterSpacing: "-0.02em",
             color: INK,
             marginBottom: "20px",
           }}
@@ -121,8 +127,9 @@ export default function BlogIndexPage() {
         <>
           <h2
             style={{
-              fontFamily: MONO,
+              fontFamily: LABEL,
               fontSize: "11px",
+              fontWeight: 600,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
               color: MUTED,
@@ -173,11 +180,11 @@ function FeaturedCard({ post }: { post: PostLike }) {
       <MetaRow post={post} />
       <h2
         style={{
-          fontFamily: SERIF,
-          fontWeight: 500,
-          fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",
-          lineHeight: 1.1,
-          letterSpacing: "-0.015em",
+          fontFamily: DISPLAY,
+          fontWeight: 700,
+          fontSize: "clamp(1.4rem, 2.4vw, 1.9rem)",
+          lineHeight: 1.12,
+          letterSpacing: "-0.02em",
           color: INK,
           marginBottom: "18px",
           marginTop: "18px",
@@ -239,11 +246,11 @@ function CompactCard({ post }: { post: PostLike }) {
       <MetaRow post={post} compact />
       <h3
         style={{
-          fontFamily: SERIF,
-          fontWeight: 500,
-          fontSize: "1.4rem",
-          lineHeight: 1.2,
-          letterSpacing: "-0.01em",
+          fontFamily: DISPLAY,
+          fontWeight: 700,
+          fontSize: "1.15rem",
+          lineHeight: 1.25,
+          letterSpacing: "-0.02em",
           color: INK,
           marginTop: "14px",
           marginBottom: "12px",
@@ -275,8 +282,9 @@ function MetaRow({ post, compact }: { post: PostLike; compact?: boolean }) {
         display: "flex",
         alignItems: "center",
         gap: "10px",
-        fontFamily: MONO,
+        fontFamily: LABEL,
         fontSize: compact ? "10px" : "11px",
+        fontWeight: 600,
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         color: MUTED,
