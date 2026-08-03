@@ -73,7 +73,10 @@ const websiteCostPost: BlogPost = {
     "One company quotes $500, another quotes $15,000. Here is what a small business website should realistically cost in 2026, and what actually matters when you pay for one.",
   category: "Pricing",
   publishedAt: "2026-05-15",
-  updatedAt: "2026-05-15",
+  // Bumped when the published price anchor went in. The post predates the
+  // 2026-07-29 raise and its one-page tier still argued against paying
+  // "significantly over $500", which was the old build price.
+  updatedAt: "2026-08-03",
   readingMinutes: 8,
   keywords: [
     "small business website cost",
@@ -84,7 +87,37 @@ const websiteCostPost: BlogPost = {
     "local SEO for small business",
   ],
   author: "VDT Sites",
+  faqs: [
+    {
+      q: "How much does a small business website cost in 2026?",
+      a: "Most small business websites are worth somewhere between a few hundred dollars and a few thousand, depending on what the site actually has to do. We build them from $899, plus $40 a month for hosting, updates and support. Sites with booking, payments or custom functionality cost more because they take longer to build properly.",
+    },
+    {
+      q: "Why do some web designers charge $10,000 for a website?",
+      a: "Sometimes the work genuinely justifies it: custom functionality, integrations, booking or membership systems all take real time. Other times you are paying agency overhead rather than a better website. The way to tell is to look at their past work and ask what specifically is included, rather than assuming a higher price means a better result.",
+    },
+    {
+      q: "Is a monthly fee for a website worth paying?",
+      a: "It depends what it covers. A fair monthly fee pays for hosting, security updates, backups and someone who answers when something breaks. Ours is $40 a month. What you should not pay monthly for is access to your own website, or small text changes that you were never given the ability to make yourself.",
+    },
+    {
+      q: "Is it cheaper to build the website myself?",
+      a: "Up front, yes. A website builder costs a monthly subscription and your own time. That is genuinely the right choice while you are testing an idea. It stops being cheaper when the site needs to be found in search, load quickly on a phone and convert visitors, because that is the work that takes experience rather than an afternoon.",
+    },
+  ],
   content: [
+    {
+      kind: "p",
+      text: "A small business website should cost somewhere between a few hundred dollars and a few thousand, and the range comes down almost entirely to what the site has to do rather than who builds it.",
+    },
+    {
+      kind: "p",
+      text: "For a straight answer with our own numbers in it: we build small business websites from $899, plus $40 a month for hosting, updates and support, quoted up front before anything starts.",
+    },
+    {
+      kind: "p",
+      text: "The rest of this article is what sits behind a number like that, and when paying more or less than it is justified.",
+    },
     {
       kind: "p",
       text: "If you own a small business, chances are you've looked into getting a website built and immediately ran into confusion.",
@@ -411,9 +444,13 @@ const websiteCostPost: BlogPost = {
     { kind: "h3", text: "Simple One-Page Website" },
     {
       kind: "p",
-      text: "If the website is extremely basic and mostly informational, paying significantly over $500 may not make sense.",
+      text: "If the site is genuinely one page and purely informational, a few hundred dollars is the right budget.",
     },
     { kind: "p", text: "A simple website should stay simple in price." },
+    {
+      kind: "p",
+      text: "If someone quotes several thousand for a single page, you're paying for the invoice rather than the work.",
+    },
 
     { kind: "h3", text: "Standard 3 to 5 Page Business Website" },
     { kind: "p", text: "This depends heavily on:" },
@@ -436,6 +473,14 @@ const websiteCostPost: BlogPost = {
         "include SEO foundations,",
         "and help convert visitors.",
       ],
+    },
+    {
+      kind: "p",
+      text: "This is the tier most small businesses actually need, and it's where our own $899 sits.",
+    },
+    {
+      kind: "p",
+      text: "The number matters less than whether the work in that list is genuinely being done. A cheap site that skips all four is expensive, and an expensive site that delivers all four can be a bargain.",
     },
 
     { kind: "h3", text: "Advanced Websites With Integrations" },
