@@ -33,6 +33,13 @@ export type BlogPost = {
   keywords: string[];
   /** Author shown on the post + used in Article structured data. */
   author: string;
+  /**
+   * Written but not published yet. Drafts are kept out of the blog index
+   * and the sitemap, and carry a noindex tag, but they still render at
+   * their real URL so a finished post can be read and approved before it
+   * goes live. Publishing is deleting this line.
+   */
+  draft?: boolean;
   content: Block[];
 };
 
@@ -926,12 +933,333 @@ const notShowingOnGooglePost: BlogPost = {
   ],
 };
 
-export const BLOG_POSTS: BlogPost[] = [notShowingOnGooglePost, websiteCostPost];
+/* DRAFT. Sem's decisions on this one, from the interview:
+   - His own Facebook account restrictions are OUT. He wants nothing to do
+     with that story, so the post argues on its merits and does NOT lean on
+     a personal anecdote. No invented client story stands in for it either.
+   - The concession is pre-revenue / hobby / market-stall, made early.
+   - The four reasons are his, in his framing: findability, friction,
+     control of presentation, perceived size. Note he did NOT pick the
+     usual "they can delete you overnight" line, so this argues loss of
+     control over presentation rather than risk of eviction.
+   - Framing is both/and, not either/or. Social finds people, the site gets
+     found and converts. */
+const facebookPageVsWebsitePost: BlogPost = {
+  slug: "do-i-need-a-website-if-i-have-facebook",
+  title: "Do I Need a Website If I Have a Facebook Page?",
+  metaTitle: "Do I Need a Website If I Have a Facebook Page?",
+  description:
+    "A Facebook page and a website do different jobs. Here is what a page genuinely covers, where it quietly costs you customers, and when you actually need both.",
+  excerpt:
+    "Plenty of local businesses run entirely on a Facebook page, and for some of them that's genuinely fine. Here is where it stops being fine, and why.",
+  category: "Getting Started",
+  publishedAt: "2026-08-03",
+  updatedAt: "2026-08-03",
+  readingMinutes: 8,
+  keywords: [
+    "do I need a website if I have facebook",
+    "facebook page vs website",
+    "small business website vs social media",
+    "facebook business page",
+    "small business online presence",
+  ],
+  author: "VDT Sites",
+  draft: true,
+  content: [
+    {
+      kind: "p",
+      text: "It's a fair question, and it gets asked more than you'd think.",
+    },
+    {
+      kind: "p",
+      text: "Plenty of local businesses run entirely on a Facebook page. They post updates, customers message them, work comes in. From the outside it looks like it's working, because in a lot of ways it is.",
+    },
+    {
+      kind: "p",
+      text: "So the honest answer isn't that a Facebook page is worthless. It's that a page and a website are two different tools, and most people are asking one of them to do a job it was never built for.",
+    },
+    {
+      kind: "p",
+      text: "This article covers where a Facebook page genuinely is enough, where it quietly costs you customers, and what the two actually do when you have both.",
+    },
 
+    { kind: "h2", text: "When a Facebook Page Genuinely Is Enough" },
+    {
+      kind: "p",
+      text: "We'd rather say this up front than pretend everyone needs to pay us.",
+    },
+    {
+      kind: "p",
+      text: "If you're still testing an idea, a Facebook page is the right call. You should not be paying for a website to find out whether people want the thing you're making.",
+    },
+    { kind: "p", text: "That applies to a lot of situations:" },
+    {
+      kind: "ul",
+      items: [
+        "a side project you're seeing if anyone wants,",
+        "a market stall or a weekend thing,",
+        "a hobby that has started making a bit of money,",
+        "or a business that genuinely hasn't started yet.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "In all of those, a page is free, it takes an afternoon, and it's enough to look real.",
+    },
+    {
+      kind: "p",
+      text: "Build the website when the thing becomes a business. Not before.",
+    },
+    {
+      kind: "p",
+      text: "The rest of this article is about what happens after that point, when you are running a real business and the page is still doing all the work.",
+    },
+
+    { kind: "h2", text: "The Two Are Not the Same Tool" },
+    {
+      kind: "p",
+      text: "Here's the distinction that makes the rest of this make sense.",
+    },
+    {
+      kind: "p",
+      text: "Social media is very good at reaching people who are not looking for you. Someone scrolls, sees your work, and now they know you exist. That's genuinely valuable and a website cannot do it.",
+    },
+    {
+      kind: "p",
+      text: "A website is for people who are already looking. They have a problem right now and they're trying to find someone who solves it.",
+    },
+    { kind: "p", text: "Those are different people at different moments." },
+    {
+      kind: "p",
+      text: "This isn't us telling you to drop social media. We post for our own business most weeks and it works.",
+    },
+    {
+      kind: "p",
+      text: "It's that when a page is the only thing you have, you're covering the first group and missing the second entirely. And the second group is the one ready to buy.",
+    },
+
+    { kind: "h2", text: "Reason 1: People Looking for What You Do Won't Find You" },
+    {
+      kind: "p",
+      text: "This is the big one, and it's worth being precise about, because the usual version of this claim is wrong.",
+    },
+    {
+      kind: "p",
+      text: "Facebook pages do show up on Google. If someone searches your business by name, your page will very likely come up.",
+    },
+    { kind: "p", text: "That's the problem in one sentence." },
+    {
+      kind: "p",
+      text: "Your page gets found by people who already know your name. It does very little for people searching for what you actually do.",
+    },
+    {
+      kind: "p",
+      text: "Those are two completely different searches. One is somebody who has already heard of you. The other is somebody who has a job that needs doing today and is picking from whoever appears.",
+    },
+    {
+      kind: "p",
+      text: "The second search is where new customers come from, and a Facebook page competes poorly for it. It isn't structured for it. You can't give a service its own page, you can't write the page around what people are searching for, and you can't control much of how it's described.",
+    },
+    {
+      kind: "p",
+      text: "So the people who already know about you can find you. The people who don't, mostly can't.",
+    },
+
+    {
+      kind: "h2",
+      text: "Reason 2: Working Out What You Do Is Harder Than It Should Be",
+    },
+    {
+      kind: "p",
+      text: "Open your own Facebook page and look at it the way a stranger would.",
+    },
+    {
+      kind: "p",
+      text: "The first thing they see is your most recent post. That might be exactly the right thing. It might also be a photo from a fortnight ago, a notice that you were closed last Monday, or a share from another page.",
+    },
+    {
+      kind: "p",
+      text: "What it usually isn't is a clear statement of what you do, who you do it for, and how to get hold of you.",
+    },
+    {
+      kind: "p",
+      text: "That information is normally on the page somewhere. It's just underneath things.",
+    },
+    {
+      kind: "p",
+      text: "Every extra step between someone wanting to contact you and actually managing it costs you a percentage of those people. Not all of them. Just some, quietly, every week.",
+    },
+    { kind: "p", text: "On a page, that usually means a stranger has to:" },
+    {
+      kind: "ul",
+      items: [
+        "scroll past recent posts to find anything factual,",
+        "open a separate tab or section for your hours,",
+        "work out from photos what services you actually offer,",
+        "guess at whether you cover their area,",
+        "and often sign in or dismiss a prompt before doing any of it.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "None of those is a disaster on its own. Together they're friction, and friction is just lost customers you never hear about.",
+    },
+    {
+      kind: "p",
+      text: "A website's whole job is to remove those steps. What you do, where you do it, what it costs, and one obvious way to get in touch.",
+    },
+
+    { kind: "h2", text: "Reason 3: You Don't Control What Gets Shown, or What's Beside It" },
+    {
+      kind: "p",
+      text: "On your own website, you decide what a visitor sees first, second and third. You're arranging a path from arriving to getting in touch.",
+    },
+    { kind: "p", text: "On a Facebook page you're mostly a passenger." },
+    {
+      kind: "p",
+      text: "The order is chronological rather than deliberate. Sections sit where Facebook puts them. The design is the same as every other page on the platform. You can pin a post to the top, and that's roughly where your control ends.",
+    },
+    {
+      kind: "p",
+      text: "There's also the matter of what surrounds it.",
+    },
+    {
+      kind: "p",
+      text: "A Facebook page has advertising on it. It has suggestions for other pages to follow. Some of those will be your competitors, and you're paying for none of it and controlling none of it.",
+    },
+    {
+      kind: "p",
+      text: "On your own site, you're the only business in the room.",
+    },
+    {
+      kind: "p",
+      text: "The same applies to how the platform decides to show your posts. You can post something important and simply not have it reach the people who follow you, and there's no appeal and nobody to ask.",
+    },
+
+    { kind: "h2", text: "Reason 4: It Makes You Look Smaller Than You Are" },
+    {
+      kind: "p",
+      text: "This one is unfair, and it's true anyway.",
+    },
+    {
+      kind: "p",
+      text: "When someone is deciding whether to trust a business with their money, they make that judgement fast and mostly on impression.",
+    },
+    {
+      kind: "p",
+      text: "A business with a proper website reads as established. It suggests the business has been around a while, takes itself seriously, and will still be there in a year.",
+    },
+    {
+      kind: "p",
+      text: "A business with only a Facebook page reads as a side hustle. Sometimes that's accurate and sometimes it's badly wrong, but the customer isn't investigating. They're forming an impression in a few seconds and moving on.",
+    },
+    {
+      kind: "p",
+      text: "This matters most in exactly the situations where the work is worth most.",
+    },
+    {
+      kind: "p",
+      text: "Somebody choosing where to get a coffee isn't thinking about it. Somebody about to let a contractor into their home, hand over their books, or pay a deposit up front is absolutely thinking about it.",
+    },
+    {
+      kind: "p",
+      text: "The bigger the job, the more the impression is worth.",
+    },
+
+    { kind: "h2", text: "What Social Media Is Genuinely Better At" },
+    {
+      kind: "p",
+      text: "It would be dishonest to write all of that and not say the other half.",
+    },
+    {
+      kind: "p",
+      text: "There are things a Facebook or Instagram page does that a website simply cannot:",
+    },
+    {
+      kind: "ul",
+      items: [
+        "reaching people who weren't looking for you,",
+        "showing your work regularly without anyone having to visit anything,",
+        "letting people message you in a place they already are,",
+        "proving there's a real person behind the business,",
+        "and collecting reviews and comments that other people can see.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "That last point is worth dwelling on. Social media is very good at making a business feel human, and a website that tries to do that on its own often ends up sounding like a brochure.",
+    },
+    {
+      kind: "p",
+      text: "So the answer was never to abandon it. Businesses that drop social entirely once they get a website usually lose something real.",
+    },
+
+    { kind: "h2", text: "What It Looks Like When You Have Both" },
+    {
+      kind: "p",
+      text: "The version that works is not complicated.",
+    },
+    {
+      kind: "p",
+      text: "Social media is where you show up regularly and stay in front of people. Posts, photos of recent work, updates, the day-to-day.",
+    },
+    {
+      kind: "p",
+      text: "The website is the place that everything points at. It's what someone lands on when they search for the service, it's the link in your profile, and it's what you send when someone asks what you do.",
+    },
+    {
+      kind: "p",
+      text: "It's also the only part of it you own outright. Your posts live on someone else's platform under someone else's rules. Your website is yours.",
+    },
+    {
+      kind: "p",
+      text: "In practice the two feed each other. Social brings people who weren't looking. Search brings people who were. Both land in the same place, where it's obvious what you do and easy to get in touch.",
+    },
+
+    { kind: "h2", text: "Final Thoughts" },
+    {
+      kind: "p",
+      text: "If you're still working out whether the thing you're doing is a business, keep using the page. That's the right answer and you don't need us.",
+    },
+    {
+      kind: "p",
+      text: "If it is a business, the question isn't really whether a Facebook page is good enough. It's what you're prepared to keep missing.",
+    },
+    {
+      kind: "p",
+      text: "You're missing the people searching for what you do rather than for your name. You're losing a slice of the ones who do find you to the effort of working out what you offer. You're being shown to people in an order you didn't choose, next to businesses you didn't invite. And you're being read as smaller than you are.",
+    },
+    {
+      kind: "p",
+      text: "None of that shows up as a complaint. Nobody messages you to say they couldn't work out what you did, so it's easy to conclude the page is working fine.",
+    },
+    {
+      kind: "p",
+      text: "It probably is working. The question is what it's costing you at the same time.",
+    },
+  ],
+};
+
+export const BLOG_POSTS: BlogPost[] = [
+  facebookPageVsWebsitePost,
+  notShowingOnGooglePost,
+  websiteCostPost,
+];
+
+/** Published posts, newest first. Drives the blog index and the sitemap. */
 export function getAllPosts(): BlogPost[] {
-  return [...BLOG_POSTS].sort(
-    (a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt),
-  );
+  return [...BLOG_POSTS]
+    .filter((p) => !p.draft)
+    .sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
+}
+
+/**
+ * Every post including drafts. Only for generateStaticParams, so a draft
+ * is readable at its real URL for review. Don't use it for anything a
+ * search engine or a visitor sees.
+ */
+export function getAllPostSlugs(): string[] {
+  return BLOG_POSTS.map((p) => p.slug);
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

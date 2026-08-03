@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import BlogArticle from "@/components/BlogArticle";
 import BlogReadingChrome from "@/components/BlogReadingChrome";
 import {
-  getAllPosts,
+  getAllPostSlugs,
   getPostBySlug,
   headingId,
   SITE_URL,
@@ -13,9 +13,11 @@ import {
 
 type RouteParams = { slug: string };
 
-/* Pre-render every post at build time (static, fast, crawlable). */
+/* Pre-render every post at build time (static, fast, crawlable).
+   Drafts are included so a finished post can be reviewed at its real URL;
+   they're held out of the index and sitemap and carry noindex below. */
 export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  return getAllPostSlugs().map((slug) => ({ slug }));
 }
 
 /* Per-post SEO metadata. */
@@ -33,6 +35,9 @@ export async function generateMetadata({
     title: post.metaTitle,
     description: post.description,
     keywords: post.keywords,
+    // An unpublished draft is reachable at its real URL for review, so it
+    // has to say so to crawlers. Nothing else keeps it out of results.
+    ...(post.draft ? { robots: { index: false, follow: false } } : {}),
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
