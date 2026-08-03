@@ -1616,7 +1616,293 @@ const howLongDoesItTakePost: BlogPost = {
   ],
 };
 
+/* DRAFT. Sem's decisions from the interview:
+   - TWO concessions, both his, and they open the post: a builder is right
+     if you genuinely enjoy it, have the time and feel you have the skills,
+     OR if the budget honestly isn't there. Not one grudging exception.
+   - All four failure modes are his: phone speed, search basics, template
+     sameness, half-finished-and-abandoned.
+   - "Leave their pricing out." No Wix or Squarespace prices anywhere, and
+     the argument does NOT rest on cost. Competitor prices change and would
+     date the post. His own $899 appears once, for concreteness only.
+   - Story anonymised, per the rule in the vault.
+
+   NOTE: the anonymised story here is the page-builder rebuild we already
+   have verified detail on (WordPress + Elementor). It fits, Elementor is a
+   drag-and-drop builder, but it is NOT a Wix/Squarespace DIY story. If Sem
+   has a real one with details, swap it in. It also deliberately avoids
+   re-telling the noindex beat used in the "not showing up on Google" post,
+   so the two don't read as the same anecdote twice.
+
+   publishedAt is the planned slot, 2026-09-07. */
+const wixVsDesignerPost: BlogPost = {
+  slug: "should-i-use-wix-or-hire-a-web-designer",
+  title: "Should I Use Wix or Hire a Web Designer?",
+  metaTitle: "Should I Use Wix or Hire a Web Designer?",
+  description:
+    "There are two honest reasons to build it yourself, and everything else points the other way. A straight comparison of website builders against hiring someone.",
+  excerpt:
+    "There are two genuinely good reasons to build your own site on Wix or Squarespace. If neither applies to you, here is what you are actually trading away.",
+  category: "Getting Started",
+  publishedAt: "2026-09-07",
+  updatedAt: "2026-09-07",
+  readingMinutes: 8,
+  keywords: [
+    "should I use wix or hire a web designer",
+    "wix vs web designer",
+    "squarespace vs custom website",
+    "website builder vs web developer",
+    "small business website Nanaimo",
+  ],
+  author: "VDT Sites",
+  draft: true,
+  faqs: [
+    {
+      q: "Is Wix good enough for a small business website?",
+      a: "It can be, and for some businesses it genuinely is. Website builders have improved a lot and a carefully built one can look professional. The problems tend to show up in the things that are easy to skip: page speed on phones, the search settings nobody filled in, and a site that never quite got finished because the owner ran out of time.",
+    },
+    {
+      q: "Is it cheaper to build my own website?",
+      a: "Up front, yes. There is no build fee, and if you enjoy the work and have the hours it is a sensible way to save money. It stops being cheaper when you count the time it takes you, or when the finished site does not get found in search, because a site nobody visits is expensive at any price.",
+    },
+    {
+      q: "Can I move my website off a builder later?",
+      a: "Not really. You can usually export your text and images, but not the site itself. Moving to another platform means rebuilding it, which is worth knowing before you invest a year of updates into one. It is not a reason to avoid builders, just something to go in with your eyes open about.",
+    },
+    {
+      q: "I already built a site on a builder and it isn't working. What now?",
+      a: "Start by working out whether the problem is the site or the fact that nobody can find it. Those need completely different fixes, and the second one is often free to solve. Check whether your pages are actually indexed by search engines before you spend anything on a rebuild.",
+    },
+  ],
+  content: [
+    {
+      kind: "p",
+      text: "There are two honest reasons to build it yourself: you genuinely enjoy that kind of work and have the time for it, or your budget truly cannot stretch to paying someone right now.",
+    },
+    {
+      kind: "p",
+      text: "Both are completely legitimate, and if either applies to you, use a builder. If neither does, hiring someone is usually the better decision, and not for the reason most web designers give you.",
+    },
+    {
+      kind: "p",
+      text: "Here's the honest comparison, including the parts that don't favour us.",
+    },
+
+    { kind: "h2", text: "When a Website Builder Is the Right Call" },
+    {
+      kind: "p",
+      text: "We'd rather be straight about this than pretend everyone should hire a developer.",
+    },
+    { kind: "h3", text: "You enjoy it and you have the time" },
+    {
+      kind: "p",
+      text: "Some business owners like this kind of work. They want to sit down on a Sunday, move things around, and have it exactly how they pictured it.",
+    },
+    {
+      kind: "p",
+      text: "If that's you, and you've got the hours and the patience for it, a builder is genuinely the right tool. You'll end up with something you understand completely, and you'll be able to change it whenever you like without asking anyone.",
+    },
+    {
+      kind: "p",
+      text: "That's worth something real, and no developer can sell it to you.",
+    },
+    { kind: "h3", text: "The budget honestly isn't there" },
+    {
+      kind: "p",
+      text: "If paying for a website would genuinely hurt right now, build it yourself. A basic site you made is worth far more than a professional site you can't afford.",
+    },
+    {
+      kind: "p",
+      text: "Get something up, start getting found, and revisit it when the business can carry the cost. Anyone who tells you a small business must have a professionally built website on day one is selling, not advising.",
+    },
+
+    { kind: "h2", text: "What Builders Are Genuinely Good At" },
+    {
+      kind: "p",
+      text: "It would be dishonest to skip this part.",
+    },
+    { kind: "p", text: "Website builders are legitimately good at:" },
+    {
+      kind: "ul",
+      items: [
+        "getting something live quickly,",
+        "letting you change things yourself without asking anyone,",
+        "handling hosting and security so you never think about it,",
+        "and giving you a reasonable-looking starting point with no design experience.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "They have improved a lot. A carefully built builder site can look perfectly professional, and plenty of them do.",
+    },
+    {
+      kind: "p",
+      text: "The problems are rarely about whether it's possible to make a good site on one. They're about what tends to happen in practice.",
+    },
+
+    { kind: "h2", text: "Where They Tend to Fall Down" },
+    {
+      kind: "p",
+      text: "These are the four things we see most often, in roughly the order they cost you customers.",
+    },
+
+    { kind: "h3", text: "1. They're slow, especially on phones" },
+    {
+      kind: "p",
+      text: "To give you drag-and-drop editing, a builder has to load a lot of machinery into the visitor's browser. Your customer downloads all of it just to read your opening hours.",
+    },
+    {
+      kind: "p",
+      text: "On a laptop with good internet you won't notice. On a phone with two bars, which is where a lot of local searching actually happens, it's the difference between a page appearing and a page that's still blank when someone gives up.",
+    },
+    {
+      kind: "p",
+      text: "This is the failure nobody reports to you. People don't email to say your site was slow. They just leave.",
+    },
+
+    { kind: "h3", text: "2. The search basics never get set up" },
+    {
+      kind: "p",
+      text: "Most builders can do the fundamentals. Page titles, descriptions, headings, a sitemap. The settings are usually in there somewhere.",
+    },
+    {
+      kind: "p",
+      text: "The issue is that nothing forces you to fill them in, and nothing tells you when they're empty. The site looks completely finished either way.",
+    },
+    {
+      kind: "p",
+      text: "So a business ends up with a site that looks great and is close to invisible in search, with no warning that anything is wrong. We've written separately about how to check whether that's happening to you, and the checks are free.",
+    },
+
+    { kind: "h3", text: "3. It looks like everyone else's" },
+    {
+      kind: "p",
+      text: "Builders work from templates, and there are only so many popular ones.",
+    },
+    {
+      kind: "p",
+      text: "The result is that a lot of local businesses in the same trade end up with visibly similar websites, sometimes the same template with different photos.",
+    },
+    {
+      kind: "p",
+      text: "That matters more than it sounds. If a customer is comparing three companies and all three sites feel the same, you've lost the one chance the website had to make you the obvious choice.",
+    },
+
+    { kind: "h3", text: "4. It never quite gets finished" },
+    {
+      kind: "p",
+      text: "This is the most common of the four, and the most avoidable.",
+    },
+    {
+      kind: "p",
+      text: "Someone starts building it with real enthusiasm. Then a busy month arrives, and the site goes live at about eighty percent done, or doesn't go live at all.",
+    },
+    { kind: "p", text: "You've seen the result before:" },
+    {
+      kind: "ul",
+      items: [
+        "a services page that still has placeholder text on it,",
+        "hours that stopped being right two years ago,",
+        "a gallery with three photos in it,",
+        "or a contact form nobody has ever tested.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "A half-finished website is worse than no website, because it actively tells people the business isn't paying attention.",
+    },
+    {
+      kind: "p",
+      text: "This has nothing to do with the platform. It's that building a website is a project, and projects that aren't anybody's actual job tend not to finish.",
+    },
+
+    { kind: "h2", text: "What Usually Brings People to Us" },
+    {
+      kind: "p",
+      text: "Most of our rebuilds aren't for businesses with no website. They're for businesses whose website stopped being worth the trouble.",
+    },
+    {
+      kind: "p",
+      text: "One that stuck with us was a Nanaimo firm whose site had been put together on a drag-and-drop builder years earlier. It worked, in the sense that it loaded and had the right information on it.",
+    },
+    {
+      kind: "p",
+      text: "But it was slow, it was awkward enough to edit that nobody did, and the owner had quietly stopped trying to keep it current. Small changes meant asking someone, and asking someone meant waiting, so the changes just didn't get made.",
+    },
+    {
+      kind: "p",
+      text: "The site wasn't the real cost. The real cost was two years of a business not being represented properly because updating it was a chore.",
+    },
+    {
+      kind: "p",
+      text: "That's the pattern, and it's why the honest question isn't which platform is better. It's whether the site will still be accurate and working in a year.",
+    },
+
+    { kind: "h2", text: "What You're Actually Paying For" },
+    {
+      kind: "p",
+      text: "When you hire someone, you're mostly not paying for the pages. You're paying for the decisions.",
+    },
+    { kind: "p", text: "Which things go on the front page. What the site says first. How someone gets from arriving to contacting you. What gets left out." },
+    {
+      kind: "p",
+      text: "That's the part that's hard, and it's the part a template can't do for you, because a template doesn't know anything about your business.",
+    },
+    { kind: "p", text: "The other half is that it actually gets finished, and finished properly:" },
+    {
+      kind: "ul",
+      items: [
+        "it loads quickly on a phone, because someone measured it,",
+        "the search fundamentals are filled in rather than left blank,",
+        "it's built around your business instead of a template's idea of one,",
+        "and it's live, complete, with nothing on it saying Lorem Ipsum.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "For reference, we build small business websites from $899 plus $40 a month. We're not going to pretend that's nothing, and if it's out of reach this year then the first section of this article is the honest advice.",
+    },
+
+    { kind: "h2", text: "How to Decide" },
+    {
+      kind: "p",
+      text: "Two questions, and they're not about money.",
+    },
+    {
+      kind: "p",
+      text: "First: are you actually going to finish it? Not whether you could, but whether you will, in the next month, alongside everything else you do. Be honest, because most people overestimate this and a half-built site is the worst outcome available.",
+    },
+    {
+      kind: "p",
+      text: "Second: how much does this website need to bring you? If it's a place to point existing customers, build it yourself. If it needs to bring in work from people who've never heard of you, that's a harder job than it looks, and it's the one that gets skipped.",
+    },
+    {
+      kind: "p",
+      text: "If you enjoy the work, or the money isn't there, build it yourself and don't feel bad about it. If neither is true, you're likely to spend a lot of evenings arriving somewhere a professional would have got you in a fortnight.",
+    },
+
+    { kind: "h2", text: "Final Thoughts" },
+    {
+      kind: "p",
+      text: "There isn't a right answer to this that applies to everyone, and anyone who tells you there is has something to sell.",
+    },
+    {
+      kind: "p",
+      text: "Website builders are good tools. Plenty of businesses run perfectly well on them, and some of those businesses would be wasting money hiring us.",
+    },
+    {
+      kind: "p",
+      text: "What we'd push back on is the assumption that building it yourself is automatically the cheaper option. It's cheaper up front, and it's genuinely cheaper if you enjoy it and finish it.",
+    },
+    {
+      kind: "p",
+      text: "It stops being cheaper the moment the site sits half-built, or loads too slowly to keep anyone, or never shows up when someone searches for exactly what you sell. At that point you've paid anyway, in work you never found out you didn't get.",
+    },
+  ],
+};
+
 export const BLOG_POSTS: BlogPost[] = [
+  wixVsDesignerPost,
   howLongDoesItTakePost,
   facebookPageVsWebsitePost,
   notShowingOnGooglePost,
