@@ -19,6 +19,7 @@ import Script from "next/script";
 import MobileActionBar from "@/components/MobileActionBar";
 import { LAB_V } from "@/lib/labVersion";
 import { TESTIMONIALS } from "@/lib/testimonials";
+import { HOME_FAQS } from "@/lib/faqs";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
 const IMPORTMAP = JSON.stringify({
@@ -334,32 +335,7 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             "@id": "https://vdtsites.com/#faq",
-            mainEntity: [
-              [
-                "How much does a small business website cost?",
-                "Every project is quoted individually based on how many pages and features you need. You get a fixed price up front, so there are no hourly surprises. Most small business sites include design, build, hosting setup and launch. Get in touch and we'll put a quote together for free.",
-              ],
-              [
-                "Do you work with businesses outside Nanaimo?",
-                "Yes. We work with businesses right across Vancouver Island (Parksville, Qualicum Beach, Ladysmith, Duncan, Courtenay, Campbell River and Victoria), as well as the Vancouver area. Everything can be handled remotely by phone, email and video call, so distance is never an issue.",
-              ],
-              [
-                "Can I edit my own website after it's built?",
-                "Yes. We build in an editor that lets you change text and images directly on your live page: click the text, type the new version, save. No technical knowledge and no separate dashboard to learn. Bigger changes we handle for you.",
-              ],
-              [
-                "How long does it take to build a website?",
-                "Most small business websites are ready in one to three weeks. The main variable is how quickly we get your content, photos and feedback. The design and build work itself moves fast once we have what we need.",
-              ],
-              [
-                "What does the monthly fee cover?",
-                "Hosting, your domain name, SSL security, backups, monitoring and ongoing support, all in one flat monthly fee. No separate hosting bill, no renewal surprises, and no chasing three different companies when something breaks.",
-              ],
-              [
-                "Do I own my website?",
-                "Yes. Once your project is paid in full the site is yours, and we'll hand over a full export of the code on request. We'd rather keep you because the work is good than because you're locked in.",
-              ],
-            ].map(([q, a]) => ({
+            mainEntity: HOME_FAQS.map(({ q, a }) => ({
               "@type": "Question",
               name: q,
               acceptedAnswer: { "@type": "Answer", text: a },

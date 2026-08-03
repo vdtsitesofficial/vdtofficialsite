@@ -6,6 +6,12 @@ import { CASE_STUDIES } from "@/lib/caseStudies";
  * Generates /sitemap.xml — lists every indexable URL so search engines
  * discover the home page, the blog index, every post, and the /work
  * case studies.
+ *
+ * Deliberately NOT listed: /web-design-nanaimo. It is the Google Ads
+ * landing page and carries robots noindex on purpose, so that the homepage
+ * (not the ad page) owns "web design Nanaimo" organically. Listing a
+ * noindex URL here is a contradictory signal. See the note at the top of
+ * app/web-design-nanaimo/page.tsx before changing this.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts().map((p) => ({
@@ -64,6 +70,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.7,
+    },
+    // Legal pages: indexable and linked from every footer, so they belong
+    // here. Low priority, they are not pages anyone should land on first.
+    {
+      url: `${SITE_URL}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${SITE_URL}/cookie-policy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${SITE_URL}/terms-of-service`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     ...work,
     ...posts,
