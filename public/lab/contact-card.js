@@ -105,8 +105,79 @@
     });
   });
 
-  /* FORM SUBMIT — posts to /api/contact (Next route handler). */
+  /* MODE TOGGLE — "Send a message" vs "Schedule a call". Only the
+     /contact and landing-page cards render .cc-mode; the homepage's
+     inlined card doesn't, so everything in this block is skipped there.
+     Progressive enhancement: without JS the call fields stay hidden and
+     the form is the plain message form. */
   const form = q1(".cc-form");
+  const modeWrap = q1(".cc-mode");
+  if (form && modeWrap) {
+    const callFields = q1(".cc-call-fields");
+    const phoneInput = form.elements.phone;
+    const msgInput   = form.elements.message;
+    const dateInput  = form.elements.callDate;
+    const timeInput  = form.elements.callTime;
+    const phoneLabel = q1('label[for="cc-phone-input"]');
+    const msgLabel   = q1('label[for="cc-msg-input"]');
+    const roleEl     = q1(".cc-form-card .cc-role");
+    const sendLabel  = form.querySelector(".cc-send-label");
+
+    // Bookable range: today through 60 days out, local time.
+    if (dateInput) {
+      const iso = (d) =>
+        d.getFullYear() + "-" +
+        String(d.getMonth() + 1).padStart(2, "0") + "-" +
+        String(d.getDate()).padStart(2, "0");
+      const today = new Date();
+      const max = new Date();
+      max.setDate(max.getDate() + 60);
+      dateInput.min = iso(today);
+      dateInput.max = iso(max);
+    }
+
+    function setMode(mode) {
+      const isCall = mode === "call";
+      modeWrap.querySelectorAll(".cc-mode-btn").forEach((b) => {
+        const active = b.dataset.mode === mode;
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      if (callFields) callFields.hidden = !isCall;
+      // required attrs must track visibility: a hidden required field makes
+      // checkValidity() fail with nothing focusable to show the user.
+      if (dateInput) dateInput.required = isCall;
+      if (timeInput) timeInput.required = isCall;
+      if (phoneInput) phoneInput.required = isCall;
+      if (msgInput)  msgInput.required = !isCall;
+      if (!isCall) {
+        // Leaving call mode: clear the picks so a later "send message"
+        // submit isn't misread by the server as a call request.
+        if (dateInput) dateInput.value = "";
+        if (timeInput) timeInput.value = "";
+      }
+      if (phoneLabel) phoneLabel.textContent = isCall ? "Phone — we call this number" : "Phone (optional)";
+      if (msgLabel)   msgLabel.textContent   = isCall ? "Anything we should know? (optional)" : "Message";
+      if (roleEl)     roleEl.textContent     = isCall ? "Pick a time — we'll call you" : "Start a conversation";
+      if (sendLabel)  sendLabel.textContent  = isCall ? "Schedule my call" : "Send message";
+    }
+
+    modeWrap.addEventListener("click", (e) => {
+      const btn = e.target.closest(".cc-mode-btn");
+      if (btn && btn.dataset.mode) setMode(btn.dataset.mode);
+    });
+
+    // ?book=1 (the Google Business Profile booking link) or #book lands
+    // straight in call mode.
+    try {
+      if (new URLSearchParams(window.location.search).get("book") === "1" ||
+          window.location.hash === "#book") {
+        setMode("call");
+      }
+    } catch {}
+  }
+
+  /* FORM SUBMIT — posts to /api/contact (Next route handler). */
   if (form) {
     const sendBtn = form.querySelector(".cc-send-btn");
     const label   = sendBtn.querySelector(".cc-send-label");
@@ -122,12 +193,16 @@
       label.textContent = "Sending…";
 
       const payload = {
-        name:    (form.elements.name?.value    || "").trim(),
-        email:   (form.elements.email?.value   || "").trim(),
-        phone:   (form.elements.phone?.value   || "").trim(),
-        message: (form.elements.message?.value || "").trim(),
-        website: form.elements.website?.value  || "",
+        name:    (form.elements.name?.value     || "").trim(),
+        email:   (form.elements.email?.value    || "").trim(),
+        phone:   (form.elements.phone?.value    || "").trim(),
+        message: (form.elements.message?.value  || "").trim(),
+        // Present only in call mode (cleared on switch back to message).
+        callDate: (form.elements.callDate?.value || "").trim(),
+        callTime: (form.elements.callTime?.value || "").trim(),
+        website: form.elements.website?.value   || "",
       };
+      const isCall = Boolean(payload.callDate && payload.callTime);
 
       let ok = false;
       try {
@@ -144,11 +219,16 @@
 
       if (ok) {
         sendBtn.classList.add("cc-sent");
-        label.textContent = "Message sent ✓";
+        label.textContent = isCall ? "Call booked ✓" : "Message sent ✓";
         form.reset();
         // GA4 conversion — only on confirmed delivery, not on attempt.
+        // generate_lead fires for both intents (it's the lead conversion);
+        // book_call on top distinguishes scheduled callbacks.
         if (typeof window.gtag === "function") {
           window.gtag("event", "generate_lead", { form_id: "contact_card" });
+          if (isCall) {
+            window.gtag("event", "book_call", { form_id: "contact_card" });
+          }
         }
       } else {
         sendBtn.classList.add("cc-error");

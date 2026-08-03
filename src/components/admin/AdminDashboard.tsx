@@ -5,6 +5,14 @@ import type { ContactMessage } from "@/lib/admin";
 
 type Tab = "messages" | "posts" | "copy";
 
+// Labels for the contact form's "Schedule a call" time-window keys.
+const SLOT_LABELS: Record<string, string> = {
+  morning: "Morning (9 AM – 12 PM)",
+  afternoon: "Afternoon (12 – 4 PM)",
+  evening: "Evening (4 – 7 PM)",
+  anytime: "Anytime",
+};
+
 const C = {
   bg: "#0E1116",
   panel: "#161A21",
@@ -167,6 +175,26 @@ export default function AdminDashboard({
                         </button>
                       </div>
                     </div>
+                    {m.callDate && (
+                      <p
+                        className="mt-3 text-[13px] font-semibold"
+                        style={{ color: "#FFB454" }}
+                      >
+                        📞 Call requested:{" "}
+                        {new Date(`${m.callDate}T12:00:00Z`).toLocaleDateString(
+                          "en-CA",
+                          {
+                            weekday: "short",
+                            month: "short",
+                            day: "numeric",
+                            timeZone: "UTC",
+                          },
+                        )}
+                        {m.callTime
+                          ? ` · ${Object.hasOwn(SLOT_LABELS, m.callTime) ? SLOT_LABELS[m.callTime] : m.callTime}`
+                          : ""}
+                      </p>
+                    )}
                     <p
                       className="mt-3 text-[14px] leading-relaxed whitespace-pre-wrap"
                       style={{ color: "#C7CCD4" }}

@@ -92,6 +92,20 @@ export default function ContactCard({
           <div className="cc-role">Start a conversation</div>
           <div className="cc-divider"></div>
 
+          {/* Message / call switch. Progressive enhancement: with no JS the
+              call fields stay hidden and this is the plain message form.
+              Behaviour (mode switching, required toggling, ?book=1 preselect)
+              lives in contact-card.js — the homepage's inlined card has no
+              .cc-mode, so it skips all of it. */}
+          <div className="cc-mode" role="tablist" aria-label="How would you like to get in touch?">
+            <button type="button" className="cc-mode-btn is-active" role="tab" aria-selected="true" data-mode="message">
+              Send a message
+            </button>
+            <button type="button" className="cc-mode-btn" role="tab" aria-selected="false" data-mode="call">
+              Schedule a call
+            </button>
+          </div>
+
           <form className="cc-form" noValidate>
             <div className="cc-field">
               <label htmlFor="cc-name-input">Name</label>
@@ -105,6 +119,28 @@ export default function ContactCard({
               <label htmlFor="cc-phone-input">Phone (optional)</label>
               <input id="cc-phone-input" name="phone" type="tel" autoComplete="tel" />
             </div>
+
+            {/* Call-scheduling fields — hidden until "Schedule a call" is
+                picked. Pacific time, matching the phone slots Sem works. */}
+            <div className="cc-call-fields" hidden>
+              <div className="cc-field">
+                <label htmlFor="cc-date-input">Day to call</label>
+                <input id="cc-date-input" name="callDate" type="date" />
+              </div>
+              <div className="cc-field">
+                <label htmlFor="cc-time-input">Time window</label>
+                <select id="cc-time-input" name="callTime" defaultValue="">
+                  <option value="" disabled>
+                    Pick a window
+                  </option>
+                  <option value="morning">Morning · 9 AM – 12 PM</option>
+                  <option value="afternoon">Afternoon · 12 – 4 PM</option>
+                  <option value="evening">Evening · 4 – 7 PM</option>
+                  <option value="anytime">Anytime</option>
+                </select>
+              </div>
+            </div>
+
             <div className="cc-field">
               <label htmlFor="cc-msg-input">Message</label>
               <textarea id="cc-msg-input" name="message" rows={3} required></textarea>

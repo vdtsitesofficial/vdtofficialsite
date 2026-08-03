@@ -59,6 +59,8 @@ export type ContactMessage = {
   email: string;
   message: string;
   phone?: string; // optional callback number (added 2026-07-26)
+  callDate?: string; // "Schedule a call" day, YYYY-MM-DD (added 2026-08-03)
+  callTime?: string; // "Schedule a call" slot key (morning/afternoon/evening/anytime)
   at: string; // ISO timestamp
 };
 
@@ -70,7 +72,10 @@ const messageKey = (id: string) => MSG_PREFIX + id;
  * (e.g. local dev without the binding) so the caller can decide what to do.
  */
 export async function saveMessage(
-  m: Pick<ContactMessage, "name" | "email" | "message" | "phone">,
+  m: Pick<
+    ContactMessage,
+    "name" | "email" | "message" | "phone" | "callDate" | "callTime"
+  >,
 ): Promise<boolean> {
   const kv = await getAdminKV();
   if (!kv) return false;

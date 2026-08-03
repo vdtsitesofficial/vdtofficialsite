@@ -22,7 +22,7 @@ import PageHeader from "@/components/PageHeader";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Contact VDT Sites for website design in Nanaimo, BC. Call 250-616-2087 or send a message and we'll reply within one business day.",
+    "Contact VDT Sites for website design in Nanaimo, BC. Call 250-616-2087, send a message, or schedule a call and we'll phone you at the time you pick.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact Us | VDT Sites",
@@ -87,8 +87,9 @@ export default function ContactPage() {
           Call{" "}
           <a href="tel:+12506162087" className="font-semibold text-[#dc2626] underline underline-offset-2">
             250-616-2087
-          </a>{" "}
-          or send a message below. We reply within one business day.
+          </a>
+          , send a message, or schedule a call below and we&rsquo;ll phone you
+          at the time you pick. We reply within one business day.
         </p>
       </div>
 
