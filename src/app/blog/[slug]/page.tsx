@@ -147,6 +147,21 @@ export default async function BlogPostPage({
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
   };
 
+  /* FAQPage structured data. Only emitted when the post actually renders
+     the questions further down, because Google requires FAQ markup to
+     match content the reader can see. */
+  const faqSchema = post.faqs?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -167,6 +182,12 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       {/* Hairline reading progress at the very top of the viewport.
           Width is driven by BlogReadingChrome (client). */}
@@ -240,8 +261,29 @@ export default async function BlogPostPage({
 
         {/* ── CODA ───────────────────────────────────────────────── */}
         <div className="vdt-article__coda">
+          {/* Visible FAQ. Must stay rendered: the FAQPage schema above
+              describes exactly these questions, and markup without matching
+              on-page content is against Google's guidelines. It's also the
+              chunk an AI assistant is most likely to quote back to someone
+              who asked the question directly. */}
+          {post.faqs && post.faqs.length > 0 && (
+            <section className="vdt-faq" aria-labelledby="faq-heading">
+              <h2 className="vdt-faq__heading" id="faq-heading">
+                Common questions
+              </h2>
+              <dl className="vdt-faq__list">
+                {post.faqs.map((f) => (
+                  <div key={f.q} className="vdt-faq__item">
+                    <dt className="vdt-faq__q">{f.q}</dt>
+                    <dd className="vdt-faq__a">{f.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
+
           <div className="vdt-coda__sig">
-            <span>— VDT Sites, Nanaimo BC</span>
+            <span>VDT Sites, Nanaimo BC</span>
             <span className="stamp">
               {shortDate(post.publishedAt)} · {words.toLocaleString()} words
             </span>

@@ -40,6 +40,17 @@ export type BlogPost = {
    * goes live. Publishing is deleting this line.
    */
   draft?: boolean;
+  /**
+   * 2-4 real follow-up questions, rendered visibly at the end of the post
+   * and emitted as FAQPage structured data. Both halves are required:
+   * Google's guidelines say FAQ markup must match content the reader can
+   * actually see, so never add one without the other.
+   *
+   * These are also the part an AI assistant is most likely to lift when
+   * answering someone directly, so answer in the first sentence and keep
+   * each one self-contained.
+   */
+  faqs?: { q: string; a: string }[];
   content: Block[];
 };
 
@@ -604,10 +615,40 @@ const notShowingOnGooglePost: BlogPost = {
     "local SEO Nanaimo",
   ],
   author: "VDT Sites",
+  faqs: [
+    {
+      q: "How long does it take for a new website to show up on Google?",
+      a: "Usually a few days to a few weeks, provided nothing is blocking it. You can speed that up a lot by setting up Google Search Console, submitting your sitemap, and using Request Indexing on your most important pages. If a site has been live for months and still isn't appearing, that is not slowness, it is a fault worth investigating.",
+    },
+    {
+      q: "How do I check whether Google has indexed my website?",
+      a: "Search Google for site:yourbusiness.com, with no space after the colon and using your own domain. If it lists your pages, Google has your site and you have a ranking problem rather than an indexing one. If it returns nothing at all, Google does not have your website, which usually points to a noindex tag or a site it has never been told about.",
+    },
+    {
+      q: "Why does my Facebook page show up on Google but my website doesn't?",
+      a: "Social profiles are on very large, heavily crawled domains, so they get picked up easily for your business name. Your own site has to be indexed on its own merits. If the page appears and the website doesn't, that is a strong sign the website is either not indexed or not being found for the terms you care about.",
+    },
+    {
+      q: "Do I need to pay someone to fix this?",
+      a: "Often not. Checking for a noindex tag, setting up Search Console, submitting a sitemap and claiming your Google Business Profile are all free and none of them need a developer. It is worth doing those first so that if you do hire someone, you are paying them to solve a real problem rather than to find one.",
+    },
+  ],
   content: [
     {
       kind: "p",
-      text: "You search your own business name, and your website isn't there.",
+      text: "If your business isn't showing up on Google, it's almost always one of two things: either Google hasn't indexed your website at all, or it has indexed it and simply ranks you below your competitors.",
+    },
+    {
+      kind: "p",
+      text: "Those two problems need opposite responses, and you can find out which one you have in about thirty seconds, for free, using the search we've set out below.",
+    },
+    {
+      kind: "p",
+      text: "The rest of this article is what to do once you know.",
+    },
+    {
+      kind: "p",
+      text: "It usually starts the same way. You search your own business name, and your website isn't there.",
     },
     {
       kind: "p",
@@ -717,7 +758,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "We rebuilt a local accounting firm's website earlier this year, and this is exactly what we found on their old site. It had been live for years. It was excluded from Google the entire time, and nobody involved had any idea.",
+      text: "We rebuilt a Nanaimo accounting firm's website earlier this year, and this is exactly what we found on their old site. It had been live for years. It was excluded from Google the entire time, and nobody involved had any idea.",
     },
     {
       kind: "p",
@@ -760,7 +801,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "We work with a local coffee roaster whose site had a perfectly good sitemap listing 36 pages. It had never been submitted.",
+      text: "We work with a Vancouver Island coffee roaster whose site had a perfectly good sitemap listing 36 pages. It had never been submitted.",
     },
     {
       kind: "p",
@@ -946,33 +987,63 @@ const notShowingOnGooglePost: BlogPost = {
      found and converts. */
 const facebookPageVsWebsitePost: BlogPost = {
   slug: "do-i-need-a-website-if-i-have-facebook",
-  title: "Do I Need a Website If I Have a Facebook Page?",
-  metaTitle: "Do I Need a Website If I Have a Facebook Page?",
+  title: "Do I Need a Website If I Already Have Instagram or Facebook?",
+  metaTitle: "Do I Need a Website If I Have Instagram or Facebook?",
   description:
-    "A Facebook page and a website do different jobs. Here is what a page genuinely covers, where it quietly costs you customers, and when you actually need both.",
+    "A social page and a website do different jobs. Here is what a page genuinely covers, where it quietly costs you customers, and when you actually need both.",
   excerpt:
-    "Plenty of local businesses run entirely on a Facebook page, and for some of them that's genuinely fine. Here is where it stops being fine, and why.",
+    "Plenty of local businesses run entirely on a Facebook or Instagram page, and for some of them that's genuinely fine. Here is where it stops being fine, and why.",
   category: "Getting Started",
   publishedAt: "2026-08-03",
   updatedAt: "2026-08-03",
   readingMinutes: 8,
   keywords: [
     "do I need a website if I have facebook",
+    "do I need a website if I have instagram",
     "facebook page vs website",
     "small business website vs social media",
-    "facebook business page",
     "small business online presence",
   ],
   author: "VDT Sites",
   draft: true,
+  faqs: [
+    {
+      q: "Is a Facebook or Instagram page enough for a small business?",
+      a: "It is enough while you are testing an idea, running a market stall, or doing something that has not become a business yet. Once you are a real business competing for work, a page leaves you invisible to everyone searching for the service rather than for your name, which is where most new customers come from.",
+    },
+    {
+      q: "Will my Facebook page show up on Google?",
+      a: "Usually yes, but mainly for searches of your business name. Pages rarely compete for searches like plumber in Nanaimo, because they cannot be structured around a service the way a website can. So people who already know you can find you, and people who do not, largely cannot.",
+    },
+    {
+      q: "Should I stop posting on social media once I have a website?",
+      a: "No. They do different jobs. Social media reaches people who were not looking for you, and a website gets found by people who are actively searching and ready to buy. Businesses that drop social entirely after launching a site usually lose something real.",
+    },
+    {
+      q: "What should my website have that my social page doesn't?",
+      a: "A clear statement of what you do and who you do it for, the areas you serve, a page for each service so it can be found in search, and one obvious way to get in touch that does not require a social account. On a page all of that exists somewhere, but the visitor has to dig for it.",
+    },
+  ],
   content: [
+    {
+      kind: "p",
+      text: "If you're running a real business, yes, you need a website as well. Not because a Facebook or Instagram page is worthless, but because the two do completely different jobs: social reaches people who weren't looking for you, and a website gets found by the people who are actively searching for what you do.",
+    },
+    {
+      kind: "p",
+      text: "The second group is the one ready to buy, and a page on its own barely reaches them.",
+    },
+    {
+      kind: "p",
+      text: "That said, there is a real exception, and we'd rather lead with it than pretend otherwise. It's the next section.",
+    },
     {
       kind: "p",
       text: "It's a fair question, and it gets asked more than you'd think.",
     },
     {
       kind: "p",
-      text: "Plenty of local businesses run entirely on a Facebook page. They post updates, customers message them, work comes in. From the outside it looks like it's working, because in a lot of ways it is.",
+      text: "Plenty of local businesses around Nanaimo run entirely on a Facebook or Instagram page. They post updates, customers message them, work comes in. From the outside it looks like it's working, because in a lot of ways it is.",
     },
     {
       kind: "p",

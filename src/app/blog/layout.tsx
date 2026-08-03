@@ -459,6 +459,43 @@ export default function BlogLayout({
         }
 
         /* ============================================================
+         *  FAQ block — sits at the end of the post, above the coda.
+         *  Mirrors the FAQPage schema exactly; both halves ship together.
+         * ============================================================ */
+        .vdt-faq {
+          margin-top: 72px;
+          padding-top: 40px;
+          border-top: 1px solid rgba(26, 26, 26, 0.12);
+        }
+        .vdt-faq__heading {
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+          line-height: 1.12;
+          letter-spacing: -0.01em;
+          color: #1a1a1a;
+          margin: 0 0 28px;
+        }
+        .vdt-faq__list { margin: 0; padding: 0; }
+        .vdt-faq__item { margin-bottom: 28px; }
+        .vdt-faq__item:last-child { margin-bottom: 0; }
+        .vdt-faq__q {
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 1.05rem;
+          line-height: 1.35;
+          color: #1a1a1a;
+          margin-bottom: 10px;
+        }
+        .vdt-faq__a {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 17px;
+          line-height: 1.7;
+          color: #2a2823;
+          margin: 0;
+        }
+
+        /* ============================================================
          *  Coda — signature, CTA, back link.
          * ============================================================ */
         .vdt-coda__sig {
