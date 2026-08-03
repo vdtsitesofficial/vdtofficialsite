@@ -100,7 +100,6 @@ export default function V2ConceptPage() {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const startDotRef = useRef<HTMLSpanElement | null>(null);
-  const headlineRef = useRef<HTMLHeadingElement | null>(null);
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const card1Ref = useRef<HTMLDivElement | null>(null);
   const card3Ref = useRef<HTMLDivElement | null>(null);
@@ -111,7 +110,6 @@ export default function V2ConceptPage() {
     const c = containerRef.current;
     const els = [
       startDotRef.current,
-      headlineRef.current,
       ctaRef.current,
       card1Ref.current,
       card3Ref.current,
@@ -134,7 +132,6 @@ export default function V2ConceptPage() {
     const W = cr.width;
     const H = cr.height;
     const dot = box(startDotRef.current!);
-    const head = box(headlineRef.current!);
     const cta = box(ctaRef.current!);
     const card1 = box(card1Ref.current!);
     const card3 = box(card3Ref.current!);
@@ -143,18 +140,16 @@ export default function V2ConceptPage() {
 
     const xRail = cue.cx; // left rail lines up with the scroll-cue circle
     const xEdge = W - 14;
-    const xDrop = Math.min(W * 0.7, W - 56);
-    const yHead = head.top + (head.bottom - head.top) * 0.55;
     // Crossings self-center in whatever gap the layout leaves.
     const yCross = (cta.bottom + card1.top) / 2;
     const yShelf = (card3.bottom + stat.top) / 2;
     const midDot = { x: Math.min(W - 12, card3.right + 9), y: card3.cy };
 
+    // Straight out to the right edge, then one long drop — the headline
+    // gets the full column width.
     const seg1: [number, number][] = [
       [dot.cx, dot.cy],
-      [xDrop, dot.cy],
-      [xDrop, yHead],
-      [xEdge, yHead],
+      [xEdge, dot.cy],
       [xEdge, yCross],
       [xRail, yCross],
       [xRail, card3.cy],
@@ -315,20 +310,17 @@ export default function V2ConceptPage() {
 
           <motion.h1
             {...fadeUp(0.3)}
-            ref={headlineRef}
             className="mt-3 uppercase"
             style={{
               fontFamily: F.headline,
-              fontSize: "clamp(3.1rem, 15vw, 4.4rem)",
+              fontSize: "clamp(3.4rem, 17.5vw, 5rem)",
               lineHeight: 0.98,
               letterSpacing: "0.005em",
             }}
           >
             Design
             <br />
-            That
-            <br />
-            Drives
+            That Drives
             <br />
             Growth
             <span
@@ -607,7 +599,7 @@ export default function V2ConceptPage() {
 function StatRing({ reduced }: { reduced: boolean }) {
   const R = 52;
   const CIRC = 2 * Math.PI * R;
-  const FRACTION = 0.98;
+  const FRACTION = 1;
   // Arc starts at 12 o'clock (rotated -90) and sweeps clockwise; the end
   // dot sits at the arc's terminus, just shy of a full lap.
   const endAngle = ((-90 + FRACTION * 360) * Math.PI) / 180;
@@ -645,8 +637,8 @@ function StatRing({ reduced }: { reduced: boolean }) {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span style={{ fontFamily: F.headline, fontSize: "36px" }}>
-          98<span style={{ fontSize: "22px" }}>%</span>
+        <span style={{ fontFamily: F.headline, fontSize: "33px" }}>
+          100<span style={{ fontSize: "21px" }}>%</span>
         </span>
       </div>
     </div>
