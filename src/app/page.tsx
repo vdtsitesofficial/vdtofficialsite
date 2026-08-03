@@ -871,14 +871,28 @@ export default function Home() {
           </div>
 
           <div className="m-invite">
-            <span className="m-invite__pulse" aria-hidden="true"></span>
-            <span className="m-invite__text">Tap anywhere to enter</span>
+            {/* Swipe cue (2026-08-03, was a tap prompt): swiping is what
+                visitors actually do here, so the invite now says so. A tap
+                still enters via .m-taplayer as a silent fallback. */}
+            <span className="m-invite__chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path
+                  d="M6 14l6-6 6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <span className="m-invite__text">Swipe up to enter</span>
           </div>
 
           <div className="m-vignette" aria-hidden="true"></div>
           <div className="m-grain" aria-hidden="true"></div>
 
-          <button className="m-taplayer" type="button" aria-label="Tap anywhere to enter the VDT site"></button>
+          <button className="m-taplayer" type="button" aria-label="Swipe up or tap to enter the VDT site"></button>
         </div>
       </section>
 

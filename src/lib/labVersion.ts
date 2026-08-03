@@ -10,4 +10,4 @@
 // hints). The preload <link> URLs MUST carry the same ?v= as the
 // <picture> element they preload, or the preload is wasted and the image
 // downloads twice.
-export const LAB_V = "20260803b";
+export const LAB_V = "20260803c";
