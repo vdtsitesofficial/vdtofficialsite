@@ -761,9 +761,9 @@ export default function Home() {
 
       </section>
 
-      {/* Mobile hero (≤720px) — the red-line editorial hero, promoted
-          from the /v2 concept (2026-08-03). Replaces the swipe-up intro +
-          laptop zoom on phones; hands off into #portfolio below. */}
+      {/* Mobile hero (≤720px) — the red-line editorial hero (2026-08-03).
+          Replaces the swipe-up intro + laptop zoom on phones; hands off
+          into #portfolio below. */}
       <MobileHomeHero />
 
       {/* Section 2: REAL LANDING (portfolio) */}

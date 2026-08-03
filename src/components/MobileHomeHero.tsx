@@ -2,7 +2,8 @@
 
 /* -----------------------------------------------------------------------
  * Mobile homepage hero (≤720px) — replaces the laptop-zoom intro on
- * phones (2026-08-03). Promoted from the /v2 concept route.
+ * phones (2026-08-03). Started life as a standalone /v2 concept route,
+ * which was deleted once this shipped; see git history for it.
  *
  * Cream editorial hero: Anton headline, Space Mono labels, one red
  * accent. A single red connector line draws itself on load, threading
