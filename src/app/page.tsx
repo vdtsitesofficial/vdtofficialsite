@@ -17,6 +17,7 @@
 
 import Script from "next/script";
 import MobileActionBar from "@/components/MobileActionBar";
+import MobileHomeHero from "@/components/MobileHomeHero";
 import { LAB_V } from "@/lib/labVersion";
 import { TESTIMONIALS } from "@/lib/testimonials";
 import { HOME_FAQS } from "@/lib/faqs";
@@ -59,9 +60,14 @@ const LAB_MODULES = `
   const tRoot = document.querySelector('[data-vdt-testimonials]');
   if (tRoot) initVdtTestimonials({ root: tRoot, testimonials: ${CAROUSEL_REVIEWS} });
 
-  document.querySelectorAll('.vdt-hero').forEach((el) => {
-    initVdtHero({ root: el, enableCursor: !el.closest('#screen-overlay') });
-  });
+  // The laptop-screen hero only exists on desktop now (the .zoom-hero is
+  // display:none ≤720px) — skip its Three.js init on phones so a hidden
+  // canvas doesn't spin the GPU.
+  if (window.innerWidth > 720) {
+    document.querySelectorAll('.vdt-hero').forEach((el) => {
+      initVdtHero({ root: el, enableCursor: !el.closest('#screen-overlay') });
+    });
+  }
 
   document.querySelectorAll('[data-vdt-portfolio]').forEach((el) => {
     initVdtPortfolio({ root: el, enableKeyboard: true, enableDrag: true });
@@ -166,7 +172,7 @@ export default function Home() {
           app/layout.tsx's <head>); the browser dedupes them but it bloats
           the HTML otherwise. */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet"
       />
       <link
@@ -182,23 +188,15 @@ export default function Home() {
           ⚠️ The href here MUST match the <picture>/<img> below exactly —
           same file AND same ?v= — or the preload is wasted and the image
           downloads twice. */}
-      <link
-        rel="preload"
-        as="image"
-        href={`/lab/assets/background-mobile.png?v=${LAB_V}`}
-        media="(max-width: 720px)"
-      />
+      {/* Mobile no longer preloads the zoom-hero assets: phones get the
+          editorial red-line hero (MobileHomeHero) instead of the laptop
+          zoom (2026-08-03), so background-mobile.png / laptop-mobile.png
+          preloads were dropped along with the #m-intro overlay. */}
       <link
         rel="preload"
         as="image"
         href={`/lab/assets/background.webp?v=${LAB_V}`}
         media="(min-width: 721px)"
-      />
-      <link
-        rel="preload"
-        as="image"
-        href={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
-        media="(max-width: 720px)"
       />
       <link
         rel="preload"
@@ -215,8 +213,14 @@ export default function Home() {
       <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/faq.css?v=${LAB_V}`} />
       <link rel="stylesheet" href={`/lab/process-scroll.css?v=${LAB_V}`} />
-      {/* Premium mobile tap-to-enter overlay (scoped #m-intro, ≤720px only) */}
-      <link rel="stylesheet" href={`/lab/mobile-intro.css?v=${LAB_V}`} />
+      {/* The laptop zoom is desktop-only now — phones get MobileHomeHero.
+          mobile-intro.css/.js and the #m-intro overlay were removed with
+          the swap (2026-08-03; see git history to restore). */}
+      <style>{`
+        @media (max-width: 720px) {
+          #zoom-header, .zoom-hero { display: none; }
+        }
+      `}</style>
 
       {/* GSAP CDN. App Router only allows beforeInteractive in the
           root layout, so we use afterInteractive here. contact-card.js
@@ -594,10 +598,17 @@ export default function Home() {
               media="(max-width: 720px)"
               srcSet={`/lab/assets/background-mobile.png?v=${LAB_V}`}
             />
+            {/* loading="lazy" is what stops PHONES from downloading this:
+                the whole .zoom-hero is display:none ≤720px, and lazy
+                images inside a display:none subtree are never fetched.
+                Desktop is unaffected — the media-gated preload above has
+                the bytes in cache before this img resolves. */}
             <img
               className="bg-image"
               src={`/lab/assets/background.webp?v=${LAB_V}`}
               alt="VDT Sites: custom website design for small businesses, set in a warm modern workspace"
+              loading="lazy"
+              decoding="async"
             />
           </picture>
           {/* "BUILT FOR YOU" is a visual poster, not the page's semantic
@@ -630,6 +641,8 @@ export default function Home() {
                 className="laptop-image"
                 src={`/lab/assets/laptop.webp?v=${LAB_V}`}
                 alt="Laptop displaying a website built by VDT Sites, modern and fast website design"
+                loading="lazy"
+                decoding="async"
               />
             </picture>
           </div>
@@ -738,147 +751,22 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Phone-only call to action. Hidden on desktop via CSS (scroll
-            drives the zoom there). On mobile main.js locks scrolling on
-            load and this button triggers the cheap scale+fade "enter"
-            animation. The inline onClick is a belt-and-suspenders fallback
-            in case the main.js click listener hasn't attached yet. */}
-        <button
-          id="mobile-enter"
-          className="mobile-enter is-gone"
-          type="button"
-          onClick={() => {
-            const w = window as unknown as { __vdtEnterMobile?: () => void };
-            if (typeof window !== "undefined" && w.__vdtEnterMobile) {
-              w.__vdtEnterMobile();
-            }
-          }}
-        >
-          <span>Click&nbsp;to&nbsp;Enter</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-
-        {/* ═══════════════════════════════════════════════════════
-            PREMIUM MOBILE TAP-TO-ENTER OVERLAY (#m-intro)
-            Shown only ≤720px (mobile-intro.css). Upgrades the basic
-            CLICK-TO-ENTER to a cream-screen takeover. Its tap calls
-            window.__vdtEnterMobile() (mobile-intro.js) to reveal the
-            real hero underneath, then fades out.
-            ═══════════════════════════════════════════════════════ */}
-        <div id="m-intro" data-state="idle">
-          {/* Versioned URL matches the head preload exactly. See the
-              .m-room note in mobile-intro.css. */}
-          <div
-            className="m-room"
-            aria-hidden="true"
-            style={{ backgroundImage: `url(/lab/assets/background-mobile.png?v=${LAB_V})` }}
-          ></div>
-
-          <div className="m-scene">
-            <div className="m-laptop">
-              {/* loading="lazy" is load-bearing, not a nicety: React only
-                  auto-emits a <link rel="preload"> for EAGER images, and the
-                  one it emitted for this <img> carried no media attribute —
-                  so every desktop visitor downloaded this 117KB mobile-only
-                  asset despite #m-intro being display:none above 720px.
-                  Mobile is unaffected: the media-gated preload up in the head
-                  still fetches it eagerly at ≤720px, so it's cached before the
-                  intro renders. Don't make this eager again. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/lab/assets/laptop-mobile.png?v=${LAB_V}`}
-                alt=""
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-
-          <div className="m-topbar">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/vdt-glass-logo.png" alt="VDT Sites" style={{ width: 22, height: 22, display: "block" }} />
-            <span>VDT&nbsp;SITES</span>
-          </div>
-
-          <div className="m-glow" aria-hidden="true"></div>
-          <div className="m-surface" aria-hidden="true"></div>
-
-          {/* The laptop screen. This was a blank cream rectangle with a faint
-              VDT wordmark, so there was nothing to look at while deciding
-              whether to tap.
-
-              It briefly showed a real client screenshot instead, which was a
-              mistake: on a fast load it flashes another company's brand for
-              half a second and then becomes VDT's hero, so it reads as a
-              rendering glitch rather than as proof.
-
-              This is a CSS-only mock of VDT's OWN page instead. It costs no
-              image bytes, it is unmistakably VDT, and the zoom stays
-              coherent: you are looking at the site, then you go into it. */}
-          <div className="m-screen-work" aria-hidden="true">
-            <div className="m-sw-bar">
-              <span className="m-sw-dot"></span>
-              <span className="m-sw-dot"></span>
-              <span className="m-sw-dot"></span>
-              <span className="m-sw-url">vdtsites.com</span>
-            </div>
-            <div className="m-sw-body">
-              <p className="m-sw-head">
-                Websites<br />Worth Owning
-              </p>
-              <span className="m-sw-cta">Get started</span>
-              <span className="m-sw-line"></span>
-              <span className="m-sw-line m-sw-line--short"></span>
-            </div>
-          </div>
-
-          <div className="m-sweep" aria-hidden="true"></div>
-          <span className="m-bloom" aria-hidden="true"></span>
-
-          <div className="m-headline">
-            {/* Splash copy, not the document heading — the single page <h1>
-                is "Website Design" in the hero. Kept as a styled <p> so we
-                don't have two <h1>s on mobile. */}
-            <p className="m-htitle">BUILT<br />FOR&nbsp;YOU</p>
-            <p>Student pricing, <em>agency quality.</em></p>
-          </div>
-
-          <div className="m-invite">
-            {/* Swipe cue (2026-08-03, was a tap prompt): swiping is what
-                visitors actually do here, so the invite now says so. A tap
-                still enters via .m-taplayer as a silent fallback. */}
-            <span className="m-invite__chevron" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22">
-                <path
-                  d="M6 14l6-6 6 6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <span className="m-invite__text">Swipe up to enter</span>
-          </div>
-
-          <div className="m-vignette" aria-hidden="true"></div>
-          <div className="m-grain" aria-hidden="true"></div>
-
-          <button className="m-taplayer" type="button" aria-label="Swipe up or tap to enter the VDT site"></button>
-        </div>
       </section>
+
+      {/* Mobile hero (≤720px) — the red-line editorial hero, promoted
+          from the /v2 concept (2026-08-03). Replaces the swipe-up intro +
+          laptop zoom on phones; hands off into #portfolio below. */}
+      <MobileHomeHero />
 
       {/* Section 2: REAL LANDING (portfolio) */}
       <section className="real-landing">
         <section id="portfolio" className="vdt-portfolio" data-vdt-portfolio>
           <div className="vdt-portfolio__intro">
+            {/* Deliberately vague ("some of") — reads as a sample of a larger
+                body of work, not the entire portfolio (Sem, 2026-08-03). */}
             <p className="vdt-portfolio__eyebrow">Selected Portfolio</p>
             <h2 className="vdt-portfolio__title">
-              Sites we&rsquo;ve <em>shipped.</em>
+              Some of our <em>projects.</em>
             </h2>
           </div>
 
@@ -1854,14 +1742,30 @@ export default function Home() {
           hides while the contact card is on screen. */}
       <MobileActionBar />
 
-      {/* Lab JS — order matters: main.js + IIFEs first, modules last.
-          afterInteractive guarantees execution post-hydration so the
-          DOM nodes above are all in place when the lab JS queries
-          for them. */}
-      <Script src={`/lab/main.js?v=${LAB_V}`} strategy="afterInteractive" />
-      {/* Premium mobile tap-to-enter overlay driver. Loads after main.js
-          so window.__vdtEnterMobile() exists; no-ops on desktop. */}
-      <Script src={`/lab/mobile-intro.js?v=${LAB_V}`} strategy="afterInteractive" />
+      {/* Zoom engine — DESKTOP ONLY. main.js locks scroll on phones while
+          it waits for the (now removed) tap-to-enter flow, so at ≤720px it
+          must not load at all: MobileHomeHero owns the phone hero and the
+          page scrolls freely. mobile-intro.js was removed with #m-intro.
+          Crossing the 720px boundary swaps which hero exists, so reload —
+          the same trick main.js's own mode-bucket resize handler uses. */}
+      <Script id="lab-desktop-loader" strategy="afterInteractive">
+        {`
+        (function () {
+          var mq = window.matchMedia('(max-width: 720px)');
+          if (!mq.matches) {
+            var s = document.createElement('script');
+            s.src = '/lab/main.js?v=${LAB_V}';
+            document.body.appendChild(s);
+          }
+          var wasMobile = mq.matches;
+          var onChange = function (e) {
+            if (e.matches !== wasMobile) window.location.reload();
+          };
+          if (mq.addEventListener) mq.addEventListener('change', onChange);
+          else mq.addListener(onChange);
+        })();
+        `}
+      </Script>
       <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
       <Script src={`/lab/process-scroll.js?v=${LAB_V}`} strategy="afterInteractive" />
       <Script id="lab-modules" type="module" strategy="afterInteractive">
