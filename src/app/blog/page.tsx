@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts, SITE_URL } from "@/lib/blog";
 
-// Aligned with the homepage's lab tokens (see public/lab/style.css :root).
+// Ink/muted/rule track the lab tokens (see public/lab/style.css :root).
 const INK = "#1a1a1a";
 const MUTED = "#6f6a60";
-const ACCENT = "#b85a3e";
+// Deliberately NOT the lab's --accent (#b85a3e, a terracotta). The blog was
+// the only place that used it; this is the brand red every other page runs.
+const ACCENT = "#dc2626";
 const RULE = "rgba(26,26,26,0.10)";
 const CARD_BG = "#fbf7ee"; // a tick warmer than the page canvas for separation
 // The site's pairing — Syne display, Inter body — not the separate editorial

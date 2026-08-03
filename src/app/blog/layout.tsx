@@ -85,7 +85,7 @@ export default function BlogLayout({
           top: 0;
           left: 0;
           height: 2px;
-          background: #b85a3e;
+          background: #dc2626;
           width: 0%;
           z-index: 200;
           transition: width 0.08s linear;
@@ -164,7 +164,7 @@ export default function BlogLayout({
           margin-bottom: 40px;
         }
         .vdt-article__crumbs a { color: #6f6a60; text-decoration: none; }
-        .vdt-article__crumbs a:hover { color: #b85a3e; }
+        .vdt-article__crumbs a:hover { color: #dc2626; }
         .vdt-article__crumbs .sep { opacity: 0.35; }
         .vdt-article__crumbs .here {
           color: #1a1a1a;
@@ -178,7 +178,7 @@ export default function BlogLayout({
           font-weight: 600;
           letter-spacing: 0.32em;
           text-transform: uppercase;
-          color: #b85a3e;
+          color: #dc2626;
           margin-bottom: 28px;
           display: inline-flex;
           align-items: center;
@@ -189,7 +189,7 @@ export default function BlogLayout({
           display: inline-block;
           width: 36px;
           height: 1px;
-          background: #b85a3e;
+          background: #dc2626;
         }
 
         /* The title — the site's display face, same as every other h1. */
@@ -300,7 +300,7 @@ export default function BlogLayout({
            steps up a weight instead. */
         .vdt-toc__item.is-active a {
           color: #1a1a1a;
-          border-left-color: #b85a3e;
+          border-left-color: #dc2626;
           font-weight: 800;
         }
 
@@ -345,7 +345,7 @@ export default function BlogLayout({
           line-height: 0.82;
           padding: 0.04em 0.1em 0 0;
           margin: 0.05em 0.04em 0 -0.04em;
-          color: #b85a3e;
+          color: #dc2626;
         }
 
         /* Section heading (h2) — display face, with a small tracked roman
@@ -369,7 +369,7 @@ export default function BlogLayout({
           font-size: 10.5px;
           font-weight: 700;
           letter-spacing: 0.32em;
-          color: #b85a3e;
+          color: #dc2626;
           margin-bottom: 14px;
         }
 
@@ -384,7 +384,7 @@ export default function BlogLayout({
           justify-content: center;
           gap: 14px;
           margin: 4em auto 3em;
-          color: #b85a3e;
+          color: #dc2626;
           opacity: 0.7;
         }
         .vdt-ornament::before,
@@ -435,7 +435,7 @@ export default function BlogLayout({
           top: -0.05em;
           font-family: 'Inter', system-ui, sans-serif;
           font-size: 1.2em;
-          color: #b85a3e;
+          color: #dc2626;
           line-height: 1;
         }
 
@@ -443,14 +443,14 @@ export default function BlogLayout({
         .vdt-prose a {
           color: #1a1a1a;
           text-decoration: none;
-          background-image: linear-gradient(#b85a3e, #b85a3e);
+          background-image: linear-gradient(#dc2626, #dc2626);
           background-size: 100% 1px;
           background-position: 0 100%;
           background-repeat: no-repeat;
           padding-bottom: 1px;
           transition: color 0.25s ease;
         }
-        .vdt-prose a:hover { color: #b85a3e; }
+        .vdt-prose a:hover { color: #dc2626; }
 
         /* Inline strong — slightly heavier, ink color. */
         .vdt-prose strong {
@@ -532,7 +532,7 @@ export default function BlogLayout({
                       background 0.3s ease;
         }
         .vdt-coda__cta-btn:hover {
-          background: #b85a3e;
+          background: #dc2626;
           transform: translateY(-2px);
         }
         .vdt-coda__cta-btn .arrow {
@@ -556,7 +556,7 @@ export default function BlogLayout({
           gap: 10px;
           transition: color 0.2s ease, gap 0.2s ease;
         }
-        .vdt-coda__back:hover { color: #b85a3e; gap: 14px; }
+        .vdt-coda__back:hover { color: #dc2626; gap: 14px; }
       `}</style>
 
       <div
