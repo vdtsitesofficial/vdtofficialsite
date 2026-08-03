@@ -571,7 +571,362 @@ const websiteCostPost: BlogPost = {
   ],
 };
 
-export const BLOG_POSTS: BlogPost[] = [websiteCostPost];
+/* Both stories in this post are real jobs of ours, told without naming the
+   client. Naming them would publish, on our own site, that a named local
+   business was invisible on Google, which is their call to make and not
+   ours. It would also contradict the UniSol case study over on /work, which
+   describes the move as keeping the search equity the old site had earned. */
+const notShowingOnGooglePost: BlogPost = {
+  slug: "why-isnt-my-business-showing-up-on-google",
+  title: "Why Isn't My Business Showing Up on Google?",
+  metaTitle: "Why Isn't My Business Showing Up on Google?",
+  description:
+    "Your website exists but Google never shows it. Here are the real reasons that happens, the free checks that tell you which one you have, and how to fix each.",
+  excerpt:
+    "You search your own business name and your website isn't there. Before you spend a dollar on ads or SEO, here is how to find out whether Google can even see your site.",
+  category: "SEO",
+  publishedAt: "2026-08-03",
+  updatedAt: "2026-08-03",
+  readingMinutes: 9,
+  keywords: [
+    "why isn't my business showing up on google",
+    "website not showing up on google",
+    "website not indexed",
+    "google search console sitemap",
+    "business not on google maps",
+    "local SEO Nanaimo",
+  ],
+  author: "VDT Sites",
+  content: [
+    {
+      kind: "p",
+      text: "You search your own business name, and your website isn't there.",
+    },
+    {
+      kind: "p",
+      text: "Maybe a directory listing shows up. Maybe a competitor does. Maybe your Facebook page. But not the website you paid for.",
+    },
+    {
+      kind: "p",
+      text: "It's one of the most common things small business owners come to us about, and it's usually followed by the same two guesses: that they need to start paying for ads, or that they need to write a lot more content.",
+    },
+    {
+      kind: "p",
+      text: "Most of the time, neither is the problem.",
+    },
+    {
+      kind: "p",
+      text: "In our experience the cause is almost always something smaller and far more fixable, and in the worst cases it's a single line of code quietly telling Google to stay away.",
+    },
+    {
+      kind: "p",
+      text: "This article walks through the real reasons a business website doesn't show up on Google, the free checks that tell you which one applies to you, and what to do about each.",
+    },
+
+    { kind: "h2", text: "First, There Are Two Different Problems Here" },
+    {
+      kind: "p",
+      text: "Before checking anything, it's worth separating two situations that feel identical but are completely different.",
+    },
+    {
+      kind: "p",
+      text: "The first is that Google doesn't have your website at all. It has never stored your pages, so there is nothing for it to show anyone, no matter what they search.",
+    },
+    {
+      kind: "p",
+      text: "The second is that Google does have your website, but ranks it below your competitors.",
+    },
+    {
+      kind: "p",
+      text: "These need opposite responses.",
+    },
+    {
+      kind: "p",
+      text: "The second one is a long game. It's content, reviews, local signals and time.",
+    },
+    {
+      kind: "p",
+      text: "The first one is usually a technical fault, and it can often be fixed the same day.",
+    },
+    {
+      kind: "p",
+      text: "Spending months on SEO while the first problem is the real one is wasted effort, which is exactly why this is the thing to check before anything else.",
+    },
+
+    { kind: "h2", text: "The 30 Second Check That Tells You Which One You Have" },
+    {
+      kind: "p",
+      text: "Go to Google and search this, using your own domain:",
+    },
+    {
+      kind: "p",
+      text: "site:yourbusiness.com",
+    },
+    {
+      kind: "p",
+      text: "No space after the colon, and no www needed.",
+    },
+    {
+      kind: "p",
+      text: "That search asks Google one question: which pages of this website do you actually have?",
+    },
+    { kind: "p", text: "There are three possible answers." },
+    {
+      kind: "ul",
+      items: [
+        "You see a healthy list of your pages, which means Google has your site and you have a ranking problem, not an indexing one,",
+        "you see only one or two results when your site has many pages, which means most of your website is missing from Google,",
+        "or you see nothing at all, which means Google does not have your website in any form.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "That last one sounds alarming, and it should. It also means the fix is usually quick.",
+    },
+    {
+      kind: "p",
+      text: "If you got the second or third answer, keep reading. The next two sections cover the causes we run into most.",
+    },
+
+    {
+      kind: "h2",
+      text: "Reason 1: Your Website Is Telling Google Not to List It",
+    },
+    {
+      kind: "p",
+      text: "Every website can carry an instruction that tells search engines to leave it out of results entirely. It's called a noindex tag.",
+    },
+    {
+      kind: "p",
+      text: "It exists for good reasons. While a site is being built, you don't want a half-finished version showing up in search results, so developers switch that instruction on deliberately.",
+    },
+    {
+      kind: "p",
+      text: "The problem is what happens at launch. It's one checkbox, on a settings page nobody opens twice, and if it doesn't get switched back off, the finished website goes live permanently invisible.",
+    },
+    {
+      kind: "p",
+      text: "Nothing about the site looks wrong. It loads perfectly. You can send someone the link and it works. Your business simply never appears in a search result again.",
+    },
+    {
+      kind: "p",
+      text: "We rebuilt a local accounting firm's website earlier this year, and this is exactly what we found on their old site. It had been live for years. It was excluded from Google the entire time, and nobody involved had any idea.",
+    },
+    {
+      kind: "p",
+      text: "The owner had assumed her firm was simply losing to bigger competitors. She wasn't losing to anyone. She wasn't in the race.",
+    },
+    { kind: "h3", text: "How to check for it" },
+    {
+      kind: "p",
+      text: "The site: search above will already have hinted at this, because a noindexed site usually returns nothing at all.",
+    },
+    {
+      kind: "p",
+      text: "To confirm it, open your website, right click anywhere on the page and choose View Page Source. Then search that page for the word robots.",
+    },
+    {
+      kind: "p",
+      text: "If you find a line containing noindex, that's your answer, and it's the whole problem.",
+    },
+    {
+      kind: "p",
+      text: "Removing it is a small change for whoever maintains your site. Google usually starts picking the site up within days.",
+    },
+
+    { kind: "h2", text: "Reason 2: Google Doesn't Know Your Pages Exist" },
+    {
+      kind: "p",
+      text: "This is the quieter version, and in some ways the more frustrating one, because everything genuinely is set up correctly.",
+    },
+    {
+      kind: "p",
+      text: "Google finds pages by following links. That works well for your homepage, which everyone links to, and much less well for the pages buried deeper in your site.",
+    },
+    {
+      kind: "p",
+      text: "A sitemap solves that. It's a single file listing every page on your website, so Google doesn't have to stumble across them.",
+    },
+    {
+      kind: "p",
+      text: "Most modern websites generate one automatically. The step that gets missed is telling Google it's there, which happens in a free tool called Google Search Console.",
+    },
+    {
+      kind: "p",
+      text: "We work with a local coffee roaster whose site had a perfectly good sitemap listing 36 pages. It had never been submitted.",
+    },
+    {
+      kind: "p",
+      text: "Three months after launch, Google had indexed 3 of those 36 pages.",
+    },
+    {
+      kind: "p",
+      text: "The city pages, the articles and the shop were all invisible, while paid advertising was running to the same website the whole time.",
+    },
+    {
+      kind: "p",
+      text: "Submitting the sitemap took about thirty seconds. All 36 pages were discovered immediately.",
+    },
+    {
+      kind: "p",
+      text: "That's the part worth sitting with. Months of a website being mostly invisible, undone by pressing a button nobody knew needed pressing.",
+    },
+    { kind: "h3", text: "How to check for it" },
+    {
+      kind: "p",
+      text: "Sign in to Google Search Console, add your website if it isn't there already, and open the Sitemaps section.",
+    },
+    {
+      kind: "p",
+      text: "You want to see a sitemap listed, with a status of Success, and a page count that roughly matches how many pages your site actually has.",
+    },
+    {
+      kind: "p",
+      text: "If that section is empty, that's very likely your problem.",
+    },
+
+    { kind: "h2", text: "Reason 3: Your Website Is Genuinely New" },
+    {
+      kind: "p",
+      text: "If your site launched in the last few weeks, some of this is simply patience.",
+    },
+    {
+      kind: "p",
+      text: "Google has to discover a new website, crawl it, and decide where it belongs. That takes time, and it takes longer for a brand new domain with nothing linking to it yet.",
+    },
+    {
+      kind: "p",
+      text: "That said, new is not a reason to sit and wait quietly.",
+    },
+    {
+      kind: "p",
+      text: "Set up Search Console, submit your sitemap, and use the Request Indexing option on your most important pages. That turns a wait of weeks into a wait of days.",
+    },
+
+    {
+      kind: "h2",
+      text: "Reason 4: You're Thinking of Google Maps, Not Google Search",
+    },
+    {
+      kind: "p",
+      text: "Plenty of the time, the real complaint isn't about the website at all.",
+    },
+    {
+      kind: "p",
+      text: "When someone searches for a service near them, the map with three businesses pinned on it usually sits above everything else. For a local business, that block is often more valuable than the normal results underneath it.",
+    },
+    {
+      kind: "p",
+      text: "That block does not come from your website. It comes from your Google Business Profile, which is a separate free listing you control.",
+    },
+    {
+      kind: "p",
+      text: "A business can have an excellent website and be completely absent from the map, because the two are managed in different places.",
+    },
+    {
+      kind: "p",
+      text: "If that's the gap, the work is on the profile itself:",
+    },
+    {
+      kind: "ul",
+      items: [
+        "claim and verify the listing,",
+        "choose the right primary category, which matters more than almost anything else,",
+        "set the areas you actually serve,",
+        "add real photos rather than stock,",
+        "keep your hours accurate,",
+        "and ask happy customers for reviews, steadily rather than all at once.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website.",
+    },
+
+    {
+      kind: "h2",
+      text: "Reason 5: Google Has Your Site, It Just Doesn't Rank It",
+    },
+    {
+      kind: "p",
+      text: "If the site: search returned a healthy list of your pages, none of the above is your problem.",
+    },
+    { kind: "p", text: "You're indexed. You're just not winning." },
+    {
+      kind: "p",
+      text: "That's a genuinely different piece of work, and it's slower, but the usual causes are consistent:",
+    },
+    {
+      kind: "ul",
+      items: [
+        "your pages don't mention the towns you actually serve,",
+        "every page is written around your business rather than around what customers search for,",
+        "your site is slow, especially on a phone,",
+        "you have far fewer reviews than the businesses above you,",
+        "or nobody else on the internet links to you.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "The one that catches most small businesses is the second one.",
+    },
+    {
+      kind: "p",
+      text: "A page headed Welcome To Our Website is competing for nothing. A page about the specific service you offer, in the specific town you offer it in, is competing for something real.",
+    },
+
+    { kind: "h2", text: "The Order to Check These In" },
+    {
+      kind: "p",
+      text: "If you do nothing else from this article, do these four things in this order:",
+    },
+    {
+      kind: "ul",
+      items: [
+        "run the site: search on your own domain to find out whether Google has your website at all,",
+        "if it returns nothing, check your page source for a noindex tag,",
+        "set up Google Search Console and confirm your sitemap is submitted and succeeding,",
+        "and claim your Google Business Profile if you haven't, because for a local business that listing often matters more than the website's own ranking.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "All four are free, and none of them require a developer to investigate.",
+    },
+    {
+      kind: "p",
+      text: "They will tell you whether you have a technical fault worth fixing this week, or a longer piece of work worth planning properly.",
+    },
+
+    { kind: "h2", text: "Final Thoughts" },
+    {
+      kind: "p",
+      text: "The thing that stands out to us about both of the real examples in this article is that neither business had done anything wrong.",
+    },
+    {
+      kind: "p",
+      text: "They paid for websites. The websites were built. The sites loaded and looked fine.",
+    },
+    {
+      kind: "p",
+      text: "One had a single line of code excluding it from Google, and the other had a file that was never handed over. In both cases the businesses were quietly paying the cost for months or years without knowing there was anything to find.",
+    },
+    {
+      kind: "p",
+      text: "That's the honest reason we're writing this one down.",
+    },
+    {
+      kind: "p",
+      text: "Being invisible on Google usually isn't a sign that you need to spend more money. It's usually a sign that something small is broken, and nobody has looked.",
+    },
+    {
+      kind: "p",
+      text: "The checks above take a few minutes and cost nothing. It's worth knowing which situation you're in before anyone sells you a solution to the other one.",
+    },
+  ],
+};
+
+export const BLOG_POSTS: BlogPost[] = [notShowingOnGooglePost, websiteCostPost];
 
 export function getAllPosts(): BlogPost[] {
   return [...BLOG_POSTS].sort(
