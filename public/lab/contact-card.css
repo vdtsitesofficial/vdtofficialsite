@@ -131,8 +131,8 @@
     0 6px 20px  rgba(0, 0, 0, 0.04),
     inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   overflow: hidden;
-  transform-style: preserve-3d;
-  cursor: pointer;
+  /* preserve-3d + cursor:pointer dropped with the magnetic hover (2026-08-03):
+     the cards no longer tilt and aren't clickable as a whole. */
 }
 
 /* film grain — multiply so it reads on a light surface */

@@ -80,30 +80,8 @@
     }
   }
 
-  /* CARD MAGNETIC INTERACTION (per-card). Mouse only — skip on touch /
-     coarse-pointer devices, where synthesized mousemove events would make the
-     card jump/tilt oddly under a finger tap. */
-  const finePointer = !(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
-  if (finePointer) q(".cc-card").forEach((card) => {
-    card.addEventListener("mousemove", (e) => {
-      const r = card.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width / 2;
-      const y = e.clientY - r.top  - r.height / 2;
-      gsap.to(card, {
-        x: x * 0.06,
-        y: y * 0.06,
-        rotateX: -y * 0.025,
-        rotateY:  x * 0.025,
-        duration: 0.6,
-        ease: "power3.out",
-      });
-    });
-    card.addEventListener("mouseleave", () => {
-      gsap.to(card, {
-        x: 0, y: 0, rotateX: 0, rotateY: 0, duration: 0.8, ease: "power4.out",
-      });
-    });
-  });
+  /* Card magnetic hover (mousemove tilt/translate) removed 2026-08-03 —
+     Sem found the cards moving under the cursor annoying. */
 
   /* MODE TOGGLE — "Send a message" vs "Schedule a call". Only the
      /contact and landing-page cards render .cc-mode; the homepage's
