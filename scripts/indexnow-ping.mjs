@@ -8,7 +8,11 @@
 
 const HOST = "vdtsites.com";
 const KEY = "2e278b21242e470a8e58fdd7fe351789";
-const SITEMAP = `https://${HOST}/sitemap.xml`;
+
+// Cloudflare bot protection 403s plain fetches of vdtsites.com from CI, so
+// read the sitemap via the worker's workers.dev alias (same deploy, no bot
+// rules). The <loc> URLs inside are the production domain either way.
+const SITEMAP = "https://vdtsites.vdtsites.workers.dev/sitemap.xml";
 
 const res = await fetch(SITEMAP);
 if (!res.ok) {
