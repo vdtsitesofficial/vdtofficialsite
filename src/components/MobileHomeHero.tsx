@@ -46,6 +46,25 @@ const ease = [0.22, 1, 0.36, 1] as const;
 /* Total draw time of the red route; dot/cue reveals key off it. */
 const DRAW_DELAY = 0.4;
 const DRAW_DURATION = 4.2;
+const DRAW_EASE: [number, number, number, number] = [0.45, 0, 0.25, 1];
+
+/* Time fraction at which an eased draw has covered `p` of the path.
+ * The route is drawn on an eased curve, so distance covered and time
+ * elapsed are not the same number — without inverting the easing, the
+ * node circle beside card 3 pops before the line actually arrives. */
+function easeTimeForProgress(p: number): number {
+  const [x1, y1, x2, y2] = DRAW_EASE;
+  const at = (a: number, b: number, t: number) =>
+    3 * (1 - t) * (1 - t) * t * a + 3 * (1 - t) * t * t * b + t * t * t;
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (at(y1, y2, mid) < p) lo = mid;
+    else hi = mid;
+  }
+  return at(x1, x2, (lo + hi) / 2);
+}
 
 const SERVICES = [
   {
@@ -68,9 +87,16 @@ const SERVICES = [
   },
 ];
 
-/* Axis-aligned polyline -> path string with rounded corners. */
-function roundedPath(pts: [number, number][], radius: number): string {
+/* Axis-aligned polyline -> ONE subpath with rounded corners.
+ *
+ * Must stay a single subpath: the draw-on animation is a pathLength
+ * tween, and browsers restart the stroke-dash pattern at every `M`, so
+ * a second subpath would draw at the same time as the first instead of
+ * after it. `radii` may be a single value or one entry per corner. */
+function roundedPath(pts: [number, number][], radii: number | number[]): string {
   if (pts.length < 2) return "";
+  const radiusAt = (i: number) =>
+    typeof radii === "number" ? radii : (radii[i] ?? 0);
   let d = `M ${pts[0][0]} ${pts[0][1]}`;
   for (let i = 1; i < pts.length - 1; i++) {
     const [px, py] = pts[i - 1];
@@ -78,7 +104,7 @@ function roundedPath(pts: [number, number][], radius: number): string {
     const [nx, ny] = pts[i + 1];
     const inLen = Math.hypot(cx - px, cy - py);
     const outLen = Math.hypot(nx - cx, ny - cy);
-    const r = Math.min(radius, inLen / 2, outLen / 2);
+    const r = Math.min(radiusAt(i), inLen / 2, outLen / 2);
     if (inLen === 0 || outLen === 0) continue;
     const inX = cx - ((cx - px) / inLen) * r;
     const inY = cy - ((cy - py) / inLen) * r;
@@ -95,6 +121,9 @@ type Route = {
   w: number;
   h: number;
   midDot: { x: number; y: number };
+  /* Where the node sits along the route, 0-1, so its reveal fires as the
+   * line actually reaches it rather than at a guessed timestamp. */
+  midDotAt: number;
 };
 
 export default function MobileHomeHero() {
@@ -118,22 +147,37 @@ export default function MobileHomeHero() {
       scrollDotRef.current,
     ];
     if (!c || els.some((el) => !el)) return;
-    const cr = c.getBoundingClientRect();
-    // Hidden at >720px (display:none) — rects are 0, nothing to draw.
-    if (cr.width < 50) return;
+    const W = c.offsetWidth;
+    const H = c.offsetHeight;
+    // Hidden at >720px (display:none) — sizes are 0, nothing to draw.
+    if (W < 50) return;
+    /* Layout-box measurement, deliberately NOT getBoundingClientRect().
+     * The cards and CTA animate in from translateY(30px)/(22px), and a
+     * client rect includes that transform — measuring mid-animation put
+     * card 3's bottom ~30px below where it settles, which dragged the
+     * shelf below the scroll cue and made the line double back upward.
+     * offsetTop/offsetHeight are transform-independent, so the route is
+     * the same whether or not the reveal has played. */
     const box = (el: HTMLElement) => {
-      const r = el.getBoundingClientRect();
+      let top = 0;
+      let left = 0;
+      let node: HTMLElement | null = el;
+      while (node && node !== c) {
+        top += node.offsetTop;
+        left += node.offsetLeft;
+        node = node.offsetParent as HTMLElement | null;
+      }
+      const w = el.offsetWidth;
+      const h = el.offsetHeight;
       return {
-        top: r.top - cr.top,
-        bottom: r.bottom - cr.top,
-        left: r.left - cr.left,
-        right: r.right - cr.left,
-        cx: r.left - cr.left + r.width / 2,
-        cy: r.top - cr.top + r.height / 2,
+        top,
+        bottom: top + h,
+        left,
+        right: left + w,
+        cx: left + w / 2,
+        cy: top + h / 2,
       };
     };
-    const W = cr.width;
-    const H = cr.height;
     const dot = box(startDotRef.current!);
     const cta = box(ctaRef.current!);
     const card1 = box(card1Ref.current!);
@@ -142,33 +186,50 @@ export default function MobileHomeHero() {
 
     const xRail = cue.cx; // left rail lines up with the scroll-cue circle
     const xEdge = W - 14;
-    // Crossings self-center in whatever gap the layout leaves.
+    // Crossings self-center in whatever gap the layout leaves. Clamped so
+    // a tight layout can never put the shelf below the cue it feeds into,
+    // which would double the line back on itself.
     const yCross = (cta.bottom + card1.top) / 2;
-    const yShelf = (card3.bottom + cue.top) / 2;
+    const yShelf = Math.min((card3.bottom + cue.top) / 2, cue.top - 16);
     const midDot = { x: Math.min(W - 12, card3.right + 9), y: card3.cy };
 
-    // Straight out to the right edge, then one long drop — the headline
-    // gets the full column width.
-    const seg1: [number, number][] = [
+    /* ONE continuous top-to-bottom route: out to the right edge (the
+     * headline gets the full column width), down, back across under the
+     * CTA, down the left rail, out to the node beside card 3, then down
+     * and back to the rail, finishing exactly on top of the scroll-cue
+     * circle. The corner at the node uses a tight radius so the node
+     * circle — painted after the path, filled with the page colour —
+     * covers it and reads as the line passing through a station. */
+    const pts: [number, number][] = [
       [dot.cx, dot.cy],
       [xEdge, dot.cy],
       [xEdge, yCross],
       [xRail, yCross],
       [xRail, card3.cy],
-      [midDot.x - 8, card3.cy],
-    ];
-    const seg2: [number, number][] = [
-      [midDot.x, midDot.y + 8],
+      [midDot.x, card3.cy],
       [midDot.x, yShelf],
       [xRail, yShelf],
-      [xRail, cue.top - 4],
+      [xRail, cue.top],
     ];
+    const radii = [0, 24, 24, 24, 24, 8, 24, 24, 0];
+
+    // Polyline length up to the node / total. Corner rounding shaves a few
+    // px off each turn, far too little to be visible in the timing.
+    const NODE_INDEX = 5;
+    let toNode = 0;
+    let total = 0;
+    for (let i = 1; i < pts.length; i++) {
+      const seg = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      total += seg;
+      if (i <= NODE_INDEX) toNode += seg;
+    }
 
     setRoute({
-      d: `${roundedPath(seg1, 24)} ${roundedPath(seg2, 24)}`,
+      d: roundedPath(pts, radii),
       w: W,
       h: H,
       midDot,
+      midDotAt: total > 0 ? toNode / total : 0.62,
     });
   }, []);
 
@@ -222,7 +283,7 @@ export default function MobileHomeHero() {
               transition={
                 reduced
                   ? { duration: 0 }
-                  : { duration: DRAW_DURATION, delay: DRAW_DELAY, ease: [0.45, 0, 0.25, 1] }
+                  : { duration: DRAW_DURATION, delay: DRAW_DELAY, ease: DRAW_EASE }
               }
             />
             {/* Open dot beside the Digital Strategy card */}
@@ -235,7 +296,12 @@ export default function MobileHomeHero() {
               strokeWidth={2}
               initial={{ opacity: reduced ? 1 : 0, scale: reduced ? 1 : 0.4 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: reduced ? 0 : DRAW_DELAY + DRAW_DURATION * 0.62 }}
+              transition={{
+                duration: 0.4,
+                delay: reduced
+                  ? 0
+                  : DRAW_DELAY + DRAW_DURATION * easeTimeForProgress(route.midDotAt),
+              }}
               style={{ transformOrigin: `${route.midDot.x}px ${route.midDot.y}px` }}
             />
           </svg>
