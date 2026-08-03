@@ -102,6 +102,7 @@ export default function V2ConceptPage() {
   const startDotRef = useRef<HTMLSpanElement | null>(null);
   const headlineRef = useRef<HTMLHeadingElement | null>(null);
   const ctaRef = useRef<HTMLDivElement | null>(null);
+  const card1Ref = useRef<HTMLDivElement | null>(null);
   const card3Ref = useRef<HTMLDivElement | null>(null);
   const statRef = useRef<HTMLDivElement | null>(null);
   const scrollDotRef = useRef<HTMLSpanElement | null>(null);
@@ -112,6 +113,7 @@ export default function V2ConceptPage() {
       startDotRef.current,
       headlineRef.current,
       ctaRef.current,
+      card1Ref.current,
       card3Ref.current,
       statRef.current,
       scrollDotRef.current,
@@ -134,6 +136,7 @@ export default function V2ConceptPage() {
     const dot = box(startDotRef.current!);
     const head = box(headlineRef.current!);
     const cta = box(ctaRef.current!);
+    const card1 = box(card1Ref.current!);
     const card3 = box(card3Ref.current!);
     const stat = box(statRef.current!);
     const cue = box(scrollDotRef.current!);
@@ -142,8 +145,9 @@ export default function V2ConceptPage() {
     const xEdge = W - 14;
     const xDrop = Math.min(W * 0.7, W - 56);
     const yHead = head.top + (head.bottom - head.top) * 0.55;
-    const yCross = cta.bottom + 34;
-    const yShelf = stat.top - 36;
+    // Crossings self-center in whatever gap the layout leaves.
+    const yCross = (cta.bottom + card1.top) / 2;
+    const yShelf = (card3.bottom + stat.top) / 2;
     const midDot = { x: Math.min(W - 12, card3.right + 9), y: card3.cy };
 
     const seg1: [number, number][] = [
@@ -164,7 +168,7 @@ export default function V2ConceptPage() {
     ];
 
     setRoute({
-      d: `${roundedPath(seg1, 30)} ${roundedPath(seg2, 30)}`,
+      d: `${roundedPath(seg1, 24)} ${roundedPath(seg2, 24)}`,
       w: W,
       h: H,
       midDot,
@@ -254,7 +258,7 @@ export default function V2ConceptPage() {
         )}
 
         {/* ── Header ────────────────────────────────────────────── */}
-        <header className="relative z-10 flex items-center justify-between px-6 pb-4 pt-6">
+        <header className="relative z-10 flex items-center justify-between px-6 pb-2 pt-4">
           <span
             className="text-[21px] leading-none"
             style={{ fontFamily: F.display, letterSpacing: "0.01em" }}
@@ -274,7 +278,7 @@ export default function V2ConceptPage() {
         </header>
 
         {/* ── Hero ──────────────────────────────────────────────── */}
-        <section className="relative z-10 px-6 pt-8">
+        <section className="relative z-10 px-6 pt-3">
           {/* Route origin: red dot with halo */}
           <span ref={startDotRef} className="relative block h-7 w-7">
             <motion.span
@@ -303,7 +307,7 @@ export default function V2ConceptPage() {
 
           <motion.p
             {...fadeUp(0.2)}
-            className="mt-14 text-[12px] font-bold"
+            className="mt-7 text-[12px] font-bold"
             style={{ fontFamily: F.mono, color: C.red, letterSpacing: "0.42em" }}
           >
             DIGITAL STUDIO
@@ -312,11 +316,11 @@ export default function V2ConceptPage() {
           <motion.h1
             {...fadeUp(0.3)}
             ref={headlineRef}
-            className="mt-5 uppercase"
+            className="mt-3 uppercase"
             style={{
               fontFamily: F.headline,
-              fontSize: "clamp(3.5rem, 17vw, 5rem)",
-              lineHeight: 1,
+              fontSize: "clamp(3.1rem, 15vw, 4.4rem)",
+              lineHeight: 0.98,
               letterSpacing: "0.005em",
             }}
           >
@@ -341,14 +345,14 @@ export default function V2ConceptPage() {
 
           <motion.p
             {...fadeUp(0.42)}
-            className="mt-7 max-w-[30ch] text-[17px] leading-[1.6]"
+            className="mt-4 max-w-[30ch] text-[16px] leading-[1.55]"
             style={{ color: C.body }}
           >
             Websites, branding, and digital experiences crafted to elevate your
             brand and deliver real results.
           </motion.p>
 
-          <motion.div {...fadeUp(0.54)} ref={ctaRef} className="mt-9">
+          <motion.div {...fadeUp(0.54)} ref={ctaRef} className="mt-5">
             <Link
               href="/contact"
               className="group inline-flex items-center gap-4"
@@ -384,13 +388,13 @@ export default function V2ConceptPage() {
         </section>
 
         {/* ── Service cards ─────────────────────────────────────── */}
-        <section className="relative z-10 mt-24">
+        <section className="relative z-10 mt-11">
           {SERVICES.map((svc, i) => {
             const Icon = svc.icon;
             return (
               <motion.div
                 key={svc.title}
-                ref={i === 2 ? card3Ref : undefined}
+                ref={i === 0 ? card1Ref : i === 2 ? card3Ref : undefined}
                 className={`relative flex items-center gap-3.5 rounded-2xl p-4 pb-5 pr-5 ${svc.className}`}
                 style={{
                   background: C.card,
@@ -439,7 +443,7 @@ export default function V2ConceptPage() {
         </section>
 
         {/* ── Stat card ─────────────────────────────────────────── */}
-        <section className="relative z-10 mt-24 px-6">
+        <section className="relative z-10 mt-12 px-6">
           <motion.div
             ref={statRef}
             className="flex items-center gap-6 rounded-[28px] p-6"
@@ -473,7 +477,7 @@ export default function V2ConceptPage() {
         </section>
 
         {/* ── Scroll cue ────────────────────────────────────────── */}
-        <section className="relative z-10 mt-16 flex items-end gap-7 px-6 pb-20">
+        <section className="relative z-10 mt-10 flex items-end gap-7 px-6 pb-14">
           <div className="flex flex-col items-center">
             <motion.span
               ref={scrollDotRef}
