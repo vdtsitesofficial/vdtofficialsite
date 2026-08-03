@@ -33,3 +33,9 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # Push the fresh sitemap to Bing/IndexNow so new pages index in days,
+      # not weeks. A Bing outage must never fail the deploy.
+      - name: Ping IndexNow
+        run: node scripts/indexnow-ping.mjs
+        continue-on-error: true
