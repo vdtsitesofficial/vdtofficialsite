@@ -13,14 +13,16 @@ const BODY = "'Inter', system-ui, sans-serif";
 const MONO = "'JetBrains Mono', ui-monospace, monospace";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  // Descriptive on purpose — with the "| VDT Sites" template this lands at
+  // ~54 chars. A bare "Blog" was flagged as too short by Bing's SEO audit.
+  title: "Web Design & SEO Tips for Small Businesses",
   description:
     "Practical, no-nonsense advice on web design, website pricing, and SEO for small businesses, from the VDT Sites studio in Nanaimo, BC.",
   alternates: { canonical: "/blog" },
   openGraph: {
     type: "website",
     url: `${SITE_URL}/blog`,
-    title: "Blog | VDT Sites",
+    title: "Web Design & SEO Tips for Small Businesses | VDT Sites",
     description:
       "Practical, no-nonsense advice on web design, pricing, and SEO for small businesses.",
   },

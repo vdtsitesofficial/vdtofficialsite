@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CASE_STUDIES, getCaseStudy } from "@/lib/caseStudies";
+import PageHeader from "@/components/PageHeader";
 
 /**
  * /work/[slug] — one case study per portfolio project.
@@ -116,29 +117,8 @@ export default async function CaseStudyPage({
           display:contents so the flex layout is untouched; it exists purely so
           the attribute sits on a <div>, which is one of the three elements
           (div/span/section) Google actually honours it on. */}
-      <header className="flex items-center justify-between px-4 py-4 md:px-14 md:py-6">
-        <div data-nosnippet className="contents">
-        <a href="/" className="inline-flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/vdt-glass-logo.png" alt="VDT Sites" className="h-8 w-8 md:h-[34px] md:w-[34px]" />
-          <span
-            className="text-[12px] font-extrabold tracking-[0.10em] md:text-[13px]"
-            style={{ fontFamily: SYNE }}
-          >
-            VDT&nbsp;SITES
-          </span>
-        </a>
-        <nav className="flex items-center gap-5 text-[13px] font-semibold md:text-[14px]">
-          <a href="/work" className="hover:text-[#dc2626]">All work</a>
-          <a
-            href="/contact"
-            className="rounded-full bg-[#dc2626] px-4 py-2 text-white transition-colors hover:bg-[#b91c1c] md:px-6 md:py-2.5"
-          >
-            Get a quote
-          </a>
-        </nav>
-        </div>
-      </header>
+      {/* "Work" in the shared row is the old "All work" link. */}
+      <PageHeader activeHref="/work" noSnippet />
 
       <main className="flex-1">
         {/* breadcrumb (visible) — also nosnippet, see the header note above */}

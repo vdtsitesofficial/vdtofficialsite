@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CASE_STUDIES } from "@/lib/caseStudies";
 import Reveal from "@/components/Reveal";
+import PageHeader from "@/components/PageHeader";
 
 /**
  * /work — case study index. Links every project page and carries
@@ -64,24 +65,7 @@ export default function WorkIndexPage() {
       />
 
       {/* header */}
-      <header className="flex items-center justify-between px-4 py-4 md:px-14 md:py-6">
-        <a href="/" className="inline-flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/vdt-glass-logo.png" alt="VDT Sites" className="h-8 w-8 md:h-[34px] md:w-[34px]" />
-          <span
-            className="text-[12px] font-extrabold tracking-[0.10em] md:text-[13px]"
-            style={{ fontFamily: SYNE }}
-          >
-            VDT&nbsp;SITES
-          </span>
-        </a>
-        <a
-          href="/contact"
-          className="rounded-full bg-[#dc2626] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#b91c1c] md:px-6 md:py-2.5 md:text-[14px]"
-        >
-          Get a quote
-        </a>
-      </header>
+      <PageHeader activeHref="/work" />
 
       <main className="flex-1">
         {/* hero — headline + CTA only, left aligned, ghost wordmark filling

@@ -86,7 +86,10 @@ export default function ContactPage() {
         <nav className="flex items-center gap-5 text-[13px] font-medium md:gap-9">
           {/* No "Home" link: the brand mark to the left already goes home.
               Services earns the freed width and shows at every size. */}
-          <a href="/services" className="opacity-75 transition-opacity hover:opacity-100">
+          <a href="/work" className="opacity-75 transition-opacity hover:opacity-100">
+            Work
+          </a>
+          <a href="/services" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">
             Services
           </a>
           <a href="/about" className="hidden opacity-75 transition-opacity hover:opacity-100 sm:inline">

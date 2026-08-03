@@ -573,10 +573,10 @@ export default function BlogLayout({
           <nav className="dest-nav">
             {/* No "Home" link: the brand mark to the left already goes home,
                 and the row needs that width for Services. */}
+            <Link href="/work">Work</Link>
             <Link href="/services">Services</Link>
             <Link href="/about" data-nav="about">About</Link>
             <Link href="/blog" data-nav="blog">Blog</Link>
-            <a href="/#portfolio" data-nav="portfolio">Portfolio</a>
             <a href="/contact" className="dest-cta">
               Contact&nbsp;Us
             </a>
@@ -603,6 +603,9 @@ export default function BlogLayout({
               <span>&copy; {new Date().getFullYear()} VDT Sites</span>
               <a href="/" className="hover:underline">
                 Home
+              </a>
+              <a href="/work" className="hover:underline">
+                Work
               </a>
               <a href="/services" className="hover:underline">
                 Services
