@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Cloud, Monitor, ShieldCheck } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
+import { getTestimonialByAuthor } from "@/lib/testimonials";
 
 /**
  * /services — the full menu of what VDT actually sells.
@@ -29,6 +31,15 @@ import PageHeader from "@/components/PageHeader";
  */
 
 const SYNE = "'Syne', 'Inter', sans-serif";
+
+/**
+ * The big price numeral only. Syne is the page's display face, but its figures
+ * are eccentric (wide, squarish, odd terminals) and at 84px the "$899" read as
+ * a different typeface from the neutral grotesque in Sem's mockup. Inter 800 is
+ * the match — note the font link above has to request 800 explicitly, or the
+ * browser synthesises it from 700 and the strokes smear at this size.
+ */
+const NUMERAL = "'Inter', system-ui, sans-serif";
 const SITE = "https://vdtsites.com";
 
 /** Starting price. Kept in one place so it cannot drift between sections. */
@@ -36,12 +47,13 @@ const FROM_PRICE = "$899";
 const MONTHLY = "$40";
 
 /**
- * Grain for the dark slabs. A flat #0d0d0d panel reads cheap at this size;
- * fractal noise at very low opacity is the difference between "a black box"
- * and a printed surface. Inline SVG so it costs no request.
+ * Shared surface for the price block's cards. Sem's mockup 2026-08-03 replaced
+ * the old dark grain slab with white cards on the cream page, so the noise
+ * texture that made a flat #0d0d0d panel read as a printed surface is gone
+ * along with it. Soft shadow rather than a hard border: at this size a 1px
+ * outline reads as a wireframe.
  */
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+const CARD = "rounded-[14px] bg-white shadow-card";
 
 type Service = { name: string; body: string };
 type ServiceGroup = {
@@ -124,7 +136,7 @@ const GROUPS: ServiceGroup[] = [
     id: "brand",
     title: "Logo and brand",
     intro:
-      "A logo is free with any website build, because a site and a brand that were designed apart always look it.",
+      "A site and a brand that were designed apart always look it. We do both, so yours match.",
     services: [
       {
         name: "Logo design",
@@ -160,6 +172,77 @@ const INCLUDED = [
   "Minor text and image edits free for the first month",
 ];
 
+/**
+ * What the build fee buys. This list did not exist before: the page showed a
+ * price and, five sections later, what the *monthly* covered, so a visitor
+ * could see the $899 but never what it bought. The two lists now sit side by
+ * side in the price slab so both halves of the offer read in one glance.
+ */
+const BUILD_INCLUDED = [
+  "A custom built 6 page website",
+  "Built to be responsive on every device, desktop and mobile",
+  "An admin editor so you can change text and images yourself",
+  "A contact form that lands straight in your inbox",
+  "Everything set up, tested and taken live for you",
+];
+
+/**
+ * The costs that normally arrive as separate bills. Framed as a contrast
+ * because "all inclusive" is the actual competitive edge and stating it as a
+ * feature list buries it.
+ *
+ * Ranges are deliberately generic and conservative. Do NOT name a competitor
+ * or quote a specific rival's price here: a comparison you cannot evidence is
+ * misleading advertising, and the point lands without one.
+ */
+const USUALLY_EXTRA = [
+  { item: "Domain name", typical: "$15 to $25 a year" },
+  { item: "Website hosting", typical: "$15 to $40 a month" },
+  { item: "SSL security certificate", typical: "often an upsell" },
+  { item: "Backups and monitoring", typical: "usually an add-on plan" },
+  { item: "Someone to actually call", typical: "a ticket queue" },
+];
+
+/**
+ * The four phases, with timings. Sourced from the real process in
+ * Shared/Client Process & Pricing. The internal "estimate plus 5 days of
+ * leniency" padding rule stays internal; the published range (one to three
+ * weeks) matches the homepage FAQ answer, so keep the two in step.
+ */
+const PHASES = [
+  {
+    n: "01",
+    when: "Day one",
+    title: "Free quote and consult",
+    body: "A call or an email about the business, what it needs and which pages it takes. You get a fixed written price back. No charge, and no pressure attached to it.",
+  },
+  {
+    n: "02",
+    when: "Week one",
+    title: "Your homepage design",
+    body: "The homepage gets designed first and we go through it together. That is where the look of the whole site gets settled, so nothing else gets built until you are happy with it.",
+  },
+  {
+    n: "03",
+    when: "Weeks one to two",
+    title: "Build and review",
+    body: "The rest of the site gets built out, checking in as it goes so you watch it take shape instead of waiting weeks for a reveal you either love or quietly do not.",
+  },
+  {
+    n: "04",
+    when: "Weeks two to three",
+    title: "Launch",
+    body: "The site goes live, the domain points at it and your Google listing is set up. One more meeting for final edits, then we show you how to run it yourself.",
+  },
+];
+
+/**
+ * ⚠️ Availability claim shown near the CTA. Sem: keep this honest and current.
+ * It is a real commitment to a prospect, so change it here when the backlog
+ * changes rather than letting it go stale.
+ */
+const START_LEAD = "one to two weeks";
+
 export const metadata: Metadata = {
   title: "Web Design Services & Pricing",
   description: `Websites, hosting, local SEO, logos and app development for small businesses on Vancouver Island. Custom sites from ${FROM_PRICE} plus ${MONTHLY} a month, quoted up front.`,
@@ -179,10 +262,17 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   const allServices = GROUPS.flatMap((g) => g.services);
 
+  // Interleaved reviews, looked up by author so the wording stays canonical
+  // in lib/testimonials (that file forbids paraphrasing or shortening these).
+  // Sherri sits under the price because hers is about cost; Enrico sits under
+  // the timeline because his is about delivery time.
+  const sherri = getTestimonialByAuthor("Sherri K");
+  const enrico = getTestimonialByAuthor("Enrico Del Mundo");
+
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
 
@@ -286,46 +376,205 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* price slab. Near full bleed with an asymmetric radius and a red
-            hairline along the top edge, so the cream-to-dark change happens
-            on a shaped seam instead of a flat colour meeting another. */}
-        <section className="px-3 pt-14 md:px-6 md:pt-20">
-          <Reveal>
-            <div
-              className="relative mx-auto max-w-[1560px] overflow-hidden rounded-[18px] bg-[#0d0d0d] px-7 py-11 text-white md:rounded-[24px] md:rounded-br-[96px] md:px-16 md:py-16"
-              style={{ backgroundImage: GRAIN, backgroundBlendMode: "overlay" }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#dc2626] to-transparent opacity-70"
-              />
-              <div className="grid gap-10 md:grid-cols-[minmax(0,auto)_1fr] md:items-end md:gap-20">
-                <div>
+        {/* Price block. Light card treatment, from Sem's mockup 2026-08-03
+            (replaced the dark grain slab): a white price card with a red spine
+            beside plain body copy, then the two inclusion cards with red icon
+            badges, then the ownership strip. */}
+        <section className="px-5 pt-14 md:px-14 md:pt-20">
+          <div className="mx-auto max-w-6xl">
+            <Reveal>
+              <div className="grid gap-9 md:grid-cols-[minmax(0,420px)_1fr] md:items-start md:gap-14">
+                {/* price card + red spine */}
+                <div className={`relative ${CARD} px-8 py-9 md:px-9 md:py-10`}>
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 left-0 w-[5px] rounded-l-[14px] bg-[#dc2626]"
+                  />
+                  <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#dc2626]">
+                    Investment
+                  </p>
                   <p
-                    className="text-[64px] font-bold leading-[0.95] md:text-[104px]"
-                    style={{ fontFamily: SYNE }}
+                    className="mt-4 text-[68px] font-extrabold leading-[0.9] tracking-[-0.035em] md:text-[84px]"
+                    style={{ fontFamily: NUMERAL }}
                   >
                     {FROM_PRICE}
                   </p>
-                  <p className="mt-3 text-[15px] text-white/60">
-                    to build, then {MONTHLY} a month
+                  <p className="mt-4 text-[15px] text-[#0d0d0d]/55">
+                    one time, then {MONTHLY} a month
+                  </p>
+                  <span
+                    aria-hidden="true"
+                    className="mt-6 block h-[3px] w-[76px] rounded-full bg-[#dc2626]"
+                  />
+                  <p className="mt-6 max-w-[24ch] text-[15px] leading-[1.6] text-[#0d0d0d]/55">
+                    For most trades and service businesses, that is less than a
+                    single job.
                   </p>
                 </div>
-                <div className="max-w-2xl">
-                  <p className="text-[16px] leading-[1.8] text-white/80 md:text-[17px]">
+
+                {/* body copy, no card — the mockup leaves this on the page */}
+                <div className="max-w-2xl md:pt-3">
+                  <p className="text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
                     That is the starting point for a custom small business
                     site, not a stripped back version of one. Bigger builds
                     cost more and we tell you the number before any work
                     begins, so nothing arrives as a surprise on an invoice.
                   </p>
-                  <p className="mt-5 text-[16px] leading-[1.8] text-white/80 md:text-[17px]">
+                  <p className="mt-6 text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
                     The monthly fee is what keeps it running. There is no
                     separate hosting bill and no renewal spike in year two.
                   </p>
+                  <p className="mt-6 text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
+                    50% to start, the balance when the site goes live.
+                  </p>
                 </div>
               </div>
+            </Reveal>
+
+            {/* Both halves of the offer. The build list did not exist before
+                and the monthly's list lived five sections further down. */}
+            <div className="mt-8 grid gap-7 md:mt-10 md:grid-cols-2 md:gap-8">
+              {[
+                {
+                  Icon: Monitor,
+                  title: `What the ${FROM_PRICE} build includes`,
+                  items: BUILD_INCLUDED,
+                },
+                {
+                  Icon: Cloud,
+                  title: `What the ${MONTHLY} a month covers`,
+                  items: INCLUDED,
+                },
+              ].map(({ Icon, title, items }, i) => (
+                <Reveal key={title} delay={i * 80}>
+                  <div className={`h-full ${CARD} px-7 py-8 md:px-9 md:py-9`}>
+                    <div className="flex items-center gap-4">
+                      <span
+                        aria-hidden="true"
+                        className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#dc2626]"
+                      >
+                        <Icon size={24} strokeWidth={2} className="text-white" />
+                      </span>
+                      <h2
+                        className="text-[21px] font-bold leading-[1.15] md:text-[25px]"
+                        style={{ fontFamily: SYNE }}
+                      >
+                        {title}
+                      </h2>
+                    </div>
+                    <hr className="mt-6 border-black/10" />
+                    <ul className="mt-6 space-y-3.5">
+                      {items.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 text-[15.5px] leading-[1.6] text-[#0d0d0d]/80"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-[8px] h-[6px] w-[6px] shrink-0 rounded-full bg-[#dc2626]"
+                          />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+
+            {/* ownership strip */}
+            <Reveal>
+              <div
+                className={`mt-7 flex flex-col items-center gap-4 ${CARD} px-7 py-7 text-center sm:flex-row sm:gap-6 sm:text-left md:px-9`}
+              >
+                <ShieldCheck
+                  size={34}
+                  strokeWidth={1.9}
+                  aria-hidden="true"
+                  className="shrink-0 text-[#dc2626]"
+                />
+                <p className="text-[15.5px] leading-[1.7] text-[#0d0d0d]/75">
+                  You own the site. Once a project is paid in full it is yours,
+                  and we hand over a full export of the code on request. We
+                  would rather keep you because the work is good than because
+                  you are locked in.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Social proof immediately after the price. Sherri's review is the
+            one that talks about cost against her previous website builders,
+            which is exactly the objection the slab above just raised. Pulled
+            by author so the text stays single-sourced in lib/testimonials. */}
+        {sherri && (
+          <section className="px-6 pt-16 md:px-14 md:pt-24">
+            <Reveal>
+              <figure className="mx-auto max-w-4xl">
+                <blockquote
+                  className="border-l-2 border-[#dc2626] pl-6 text-[19px] leading-[1.65] md:pl-9 md:text-[24px]"
+                  style={{ fontFamily: SYNE }}
+                >
+                  {sherri.quote}
+                </blockquote>
+                <figcaption className="mt-5 pl-6 text-[14px] text-[#0d0d0d]/50 md:pl-9">
+                  {sherri.author}
+                </figcaption>
+              </figure>
+            </Reveal>
+          </section>
+        )}
+
+        {/* How it works. Hairline rows with a big ghosted number, matching the
+            service-group pattern below rather than four identical cards
+            (uniform card grids are ruled out in Shared/Design Preferences). */}
+        <section className="px-6 pt-20 md:px-14 md:pt-28">
+          <div className="mx-auto max-w-6xl">
+            <Reveal>
+              <h2
+                className="max-w-[16ch] text-[30px] font-bold leading-[1.1] md:text-[52px]"
+                style={{ fontFamily: SYNE }}
+              >
+                How it works, start to live.
+              </h2>
+              <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/65">
+                Most small business sites are live in one to three weeks. The
+                main variable is how fast we get your content and feedback, not
+                the build.
+              </p>
+            </Reveal>
+
+            <div className="mt-12 border-t border-black/10 md:mt-16">
+              {PHASES.map((p, i) => (
+                <Reveal key={p.n} delay={i * 60}>
+                  <article className="grid gap-3 border-b border-black/10 py-7 md:grid-cols-[minmax(0,80px)_minmax(0,200px)_1fr] md:items-baseline md:gap-10 md:py-9">
+                    <span
+                      aria-hidden="true"
+                      className="text-[34px] font-extrabold leading-none text-[#dc2626]/20 md:text-[46px]"
+                      style={{ fontFamily: SYNE }}
+                    >
+                      {p.n}
+                    </span>
+                    <div>
+                      <h3
+                        className="text-[19px] font-bold md:text-[22px]"
+                        style={{ fontFamily: SYNE }}
+                      >
+                        {p.title}
+                      </h3>
+                      <p className="mt-1.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-[#dc2626]">
+                        {p.when}
+                      </p>
+                    </div>
+                    <p className="max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/65">
+                      {p.body}
+                    </p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* positioning copy. Lives here rather than under the H1 so the hero
@@ -406,39 +655,68 @@ export default function ServicesPage() {
           </section>
         ))}
 
-        {/* what the monthly covers — floating inset slab */}
+        {/* All-inclusive contrast. The monthly's inclusions moved up into the
+            price slab; what lives here now is the point they were making but
+            never said out loud, which is that these normally arrive as
+            separate bills from separate companies. */}
         <section className="px-6 pt-24 md:px-14 md:pt-32">
           <Reveal>
             <div className="mx-auto max-w-6xl rounded-[18px] rounded-br-[64px] border border-black/10 bg-white/60 px-7 py-10 md:px-14 md:py-14">
               <h2
-                className="text-[24px] font-bold md:text-[30px]"
+                className="max-w-[20ch] text-[24px] font-bold leading-[1.15] md:text-[34px]"
                 style={{ fontFamily: SYNE }}
               >
-                What the {MONTHLY} a month covers
+                The bills you do not get.
               </h2>
-              <ul className="mt-8 grid gap-x-14 gap-y-4 sm:grid-cols-2">
-                {INCLUDED.map((item) => (
+              <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[#0d0d0d]/65">
+                These normally turn up as separate charges from separate
+                companies, each renewing on its own date. All of them are inside
+                the {MONTHLY}.
+              </p>
+              <ul className="mt-9">
+                {/* Two columns on a phone (name + Included on one line, the
+                    struck-through cost beneath via order-3), three across on
+                    desktop. A plain flex-wrap row stranded "Included" alone on
+                    a third line at 375px. */}
+                {USUALLY_EXTRA.map(({ item, typical }) => (
                   <li
                     key={item}
-                    className="flex items-start gap-3 border-b border-black/[0.07] pb-4 text-[15.5px] leading-[1.6] text-[#0d0d0d]/75"
+                    className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 gap-y-1 border-b border-black/[0.07] py-4 md:grid-cols-[minmax(0,320px)_1fr_auto]"
                   >
-                    <span
-                      aria-hidden="true"
-                      className="mt-[8px] h-[6px] w-[6px] shrink-0 rounded-full bg-[#dc2626]"
-                    />
-                    {item}
+                    <span className="text-[16px] font-semibold text-[#0d0d0d]/85">
+                      {item}
+                    </span>
+                    <span className="order-3 text-[14px] text-[#0d0d0d]/45 line-through decoration-[#0d0d0d]/25 md:order-none">
+                      {typical}
+                    </span>
+                    <span className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#dc2626] md:justify-self-end">
+                      Included
+                    </span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/55">
-                You own the site. Once a project is paid in full it is yours,
-                and we hand over a full export of the code on request. We would
-                rather keep you because the work is good than because you are
-                locked in.
-              </p>
             </div>
           </Reveal>
         </section>
+
+        {/* Second review, placed against the delivery-time claim above. */}
+        {enrico && (
+          <section className="px-6 pt-20 md:px-14 md:pt-28">
+            <Reveal>
+              <figure className="mx-auto max-w-4xl">
+                <blockquote
+                  className="border-l-2 border-[#dc2626] pl-6 text-[19px] leading-[1.65] md:pl-9 md:text-[24px]"
+                  style={{ fontFamily: SYNE }}
+                >
+                  {enrico.quote}
+                </blockquote>
+                <figcaption className="mt-5 pl-6 text-[14px] text-[#0d0d0d]/50 md:pl-9">
+                  {enrico.author}
+                </figcaption>
+              </figure>
+            </Reveal>
+          </section>
+        )}
 
         {/* CTA — single confident button plus a text link, not two buttons */}
         <section className="px-6 py-24 md:py-32">
@@ -469,6 +747,11 @@ export default function ServicesPage() {
                   or see our work
                 </a>
               </div>
+              <p className="mt-9 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
+                We only take a few builds at a time so each one gets proper
+                attention. New projects are currently starting about{" "}
+                {START_LEAD} out.
+              </p>
               <p className="mt-10 text-[13px] text-[#0d0d0d]/40">
                 {allServices.length} services · Nanaimo and across Vancouver
                 Island
