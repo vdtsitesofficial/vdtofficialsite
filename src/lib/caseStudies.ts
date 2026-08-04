@@ -7,6 +7,8 @@
  * detail that is ours to tell. No client pricing, no private context.
  */
 
+import { getTestimonialByAuthor, type Testimonial } from "./testimonials";
+
 export type CaseStat = { value: string; label: string };
 export type CaseFeature = { title: string; body: string };
 
@@ -32,6 +34,24 @@ export type CaseStudy = {
   design: string;
   stats: CaseStat[];
   result: string;
+  /**
+   * The Business Profile reviewer who is this project's client, matched on
+   * `author` in lib/testimonials.
+   *
+   * The mapping lives here rather than on the review because most reviewers
+   * are not case-study clients: friends and family have left us reviews
+   * without ever getting a website built, so a review pointing at a project
+   * would be the wrong default. A project knows who its client is; a review
+   * does not know whether it belongs to one. Absent means the case study
+   * renders no review block rather than borrowing someone else's words.
+   */
+  reviewAuthor?: string;
+  /**
+   * Name to show the review under, when the client signed it with another
+   * business they own. Root 86 Coffee and Morky Auto Imports are one owner,
+   * and on the Morky page the review reads as Morky's.
+   */
+  reviewAuthorAs?: string;
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -81,6 +101,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     result:
       "A site that finally matches the experience of working with her, loads quickly on a phone in a parking lot, and runs on infrastructure she owns. Her old template subscription is gone for good.",
+    reviewAuthor: "Sherri K",
   },
   {
     slug: "mo-coffee",
@@ -222,6 +243,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     result:
       "A site that sells a considered service the way it deserves, with an inventory the owner updates in minutes. The whole thing serves from cache in milliseconds.",
+    reviewAuthor: "Root 86 Coffee",
+    reviewAuthorAs: "Morky Auto Imports",
   },
   {
     slug: "therapeutic-value",
@@ -363,6 +386,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     result:
       "A campaign that runs its own website: edits its message, grows its list and takes donations cleanly, with the compliance details handled. All we do is watch it deploy itself.",
+    reviewAuthor: "Paul Van Ryssel",
   },
   {
     slug: "unisol-accounting",
@@ -415,4 +439,28 @@ export const CASE_STUDIES: CaseStudy[] = [
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
   return CASE_STUDIES.find((c) => c.slug === slug);
+}
+
+/** A review as a case study should show it: verbatim words, project's label. */
+export type CaseReview = Testimonial & { displayAuthor: string };
+
+/**
+ * This project's client review, if the client left one. `displayAuthor` is
+ * what the page prints; `author` stays the name the review is signed with on
+ * Google, so the two never silently drift apart.
+ */
+export function getCaseReview(cs: CaseStudy): CaseReview | undefined {
+  if (!cs.reviewAuthor) return undefined;
+  const t = getTestimonialByAuthor(cs.reviewAuthor);
+  if (!t) return undefined;
+  return { ...t, displayAuthor: cs.reviewAuthorAs ?? t.author };
+}
+
+/**
+ * The case study a reviewer is the client of, for the "See their site" link on
+ * /reviews. Returns undefined for the friends and family who reviewed us
+ * without ever having a site built, which is most of the list.
+ */
+export function getCaseForAuthor(author: string): CaseStudy | undefined {
+  return CASE_STUDIES.find((c) => c.reviewAuthor === author);
 }

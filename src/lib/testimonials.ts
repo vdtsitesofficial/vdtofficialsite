@@ -39,8 +39,6 @@ export const REVIEW_COUNT = 18;
 export type Testimonial = {
   quote: string;
   author: string;
-  /** Case-study slug, when the reviewer is a client with a /work page. */
-  slug?: string;
   /**
    * Self-hosted avatar crop for the home page carousel. Optional: the
    * carousel falls back to a red letter-initial tile, so a new review does
@@ -66,13 +64,11 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "I had the pleasure of working with Sem on my website recently. I had mentioned how much I was paying on two previous website builder companies. Not only did he help me reduce my yearly costs, but he completely upgraded my website. It's not just a website anymore. It's an experience for my potential clients. Finally I have a place where people can get a feel for what I do. That's not an easy thing to portray as a Medical Intuitive and Hypnotherapist but Sem nailed it. Finally knowing I have a company I can talk to about any issues and additions to the site in the future is invaluable. I like talking to real people again!",
     author: "Sherri K",
-    slug: "sherri-kozubal",
   },
   {
     quote:
       "I had an excellent experience working with VDTSites on the development of my campaign website. They were responsive, patient, professional, and easy to work with throughout the entire process. What I appreciated most was their ability to listen carefully, understand the tone and purpose I was trying to create, and translate that into a website that feels clear, polished, and true to who I am. They were also quick to make revisions, offered helpful guidance, and made the process feel straightforward from beginning to end. I am very pleased with the final result and would not hesitate to recommend VDTSites to anyone looking for thoughtful, reliable, and high-quality website development.",
     author: "Paul Van Ryssel",
-    slug: "paul-van-ryssel",
   },
   {
     quote:
@@ -133,6 +129,11 @@ export const TESTIMONIALS: Testimonial[] = [
     author: "Diem",
   },
 ];
+
+/** Look a review up by the name it is signed with. */
+export function getTestimonialByAuthor(author: string): Testimonial | undefined {
+  return TESTIMONIALS.find((t) => t.author === author);
+}
 
 /**
  * Left 5 stars without writing anything. Named on /reviews so the page

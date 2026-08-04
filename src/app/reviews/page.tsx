@@ -6,6 +6,7 @@ import {
   LONG_QUOTE_CHARS,
   GOOGLE_REVIEWS_URL,
 } from "@/lib/testimonials";
+import { getCaseForAuthor } from "@/lib/caseStudies";
 import Stars from "@/components/Stars";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
@@ -190,31 +191,34 @@ export default function ReviewsPage() {
         <section className="px-6 pt-16 md:px-14 md:pt-24">
           <div className="mx-auto max-w-6xl">
             <ul>
-              {LONG.map((t, i) => (
-                <li key={t.author}>
-                  <Reveal delay={i * 90}>
-                    <figure className="grid gap-4 border-t border-black/10 py-9 md:grid-cols-[220px_1fr] md:gap-10 md:py-11">
-                      <div className="md:pt-1">
-                        <Stars />
-                        <figcaption className="mt-3 text-[14px] font-semibold text-[#0d0d0d]">
-                          {t.author}
-                        </figcaption>
-                        {t.slug && (
-                          <a
-                            href={`/work/${t.slug}`}
-                            className="mt-1 inline-block text-[13px] font-semibold text-[#dc2626] hover:underline"
-                          >
-                            See their site &rarr;
-                          </a>
-                        )}
-                      </div>
-                      <blockquote className="text-[17px] leading-[1.6] text-[#0d0d0d]/75 md:text-[19px]">
-                        {t.quote}
-                      </blockquote>
-                    </figure>
-                  </Reveal>
-                </li>
-              ))}
+              {LONG.map((t, i) => {
+                const project = getCaseForAuthor(t.author);
+                return (
+                  <li key={t.author}>
+                    <Reveal delay={i * 90}>
+                      <figure className="grid gap-4 border-t border-black/10 py-9 md:grid-cols-[220px_1fr] md:gap-10 md:py-11">
+                        <div className="md:pt-1">
+                          <Stars />
+                          <figcaption className="mt-3 text-[14px] font-semibold text-[#0d0d0d]">
+                            {t.author}
+                          </figcaption>
+                          {project && (
+                            <a
+                              href={`/work/${project.slug}`}
+                              className="mt-1 inline-block text-[13px] font-semibold text-[#dc2626] hover:underline"
+                            >
+                              See their site &rarr;
+                            </a>
+                          )}
+                        </div>
+                        <blockquote className="text-[17px] leading-[1.6] text-[#0d0d0d]/75 md:text-[19px]">
+                          {t.quote}
+                        </blockquote>
+                      </figure>
+                    </Reveal>
+                  </li>
+                );
+              })}
             </ul>
             <div className="border-t border-black/10" />
           </div>

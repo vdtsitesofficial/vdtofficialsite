@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CASE_STUDIES, getCaseStudy } from "@/lib/caseStudies";
+import { CASE_STUDIES, getCaseStudy, getCaseReview } from "@/lib/caseStudies";
+import { GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
 import PageHeader from "@/components/PageHeader";
+import Stars from "@/components/Stars";
 
 /**
  * /work/[slug] — one case study per portfolio project.
@@ -63,6 +65,7 @@ export default async function CaseStudyPage({
   const cs = getCaseStudy((await params).slug);
   if (!cs) notFound();
 
+  const review = getCaseReview(cs);
   const i = CASE_STUDIES.findIndex((c) => c.slug === cs.slug);
   const prev = CASE_STUDIES[(i + CASE_STUDIES.length - 1) % CASE_STUDIES.length];
   const next = CASE_STUDIES[(i + 1) % CASE_STUDIES.length];
@@ -279,6 +282,46 @@ export default async function CaseStudyPage({
             <p className="mt-7 max-w-2xl text-[15px] leading-[1.75] text-white/80">{cs.result}</p>
           </div>
         </section>
+
+        {/* What the client said
+
+            Only renders when this client actually reviewed us on the Business
+            Profile (`reviewAuthor` on the case study). Sits after "The result"
+            on purpose: our account of the outcome, then theirs, then the CTA.
+
+            Deliberately no Review / aggregateRating JSON-LD here, same as
+            everywhere else these render - see the note in lib/testimonials.ts.
+            The link goes to the Business Profile so the stars are earned there. */}
+        {review && (
+          <section className="px-6 pt-14 md:px-14 md:pt-20">
+            <figure className="mx-auto max-w-4xl">
+              <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
+              <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
+                What the client said
+              </h2>
+              <blockquote
+                className="mt-5 max-w-3xl text-[19px] leading-[1.6] text-[#0d0d0d]/85 md:text-[22px] md:leading-[1.55]"
+                style={{ fontFamily: SYNE }}
+              >
+                <span aria-hidden="true" className="text-[#dc2626]">&ldquo;</span>
+                {review.quote}
+                <span aria-hidden="true" className="text-[#dc2626]">&rdquo;</span>
+              </blockquote>
+              <figcaption className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px]">
+                <Stars />
+                <span className="font-semibold">{review.displayAuthor}</span>
+                <a
+                  href={GOOGLE_REVIEWS_URL}
+                  target="_blank"
+                  rel="noopener"
+                  className="text-[#0d0d0d]/55 underline decoration-[#dc2626] decoration-2 underline-offset-[5px] transition-colors hover:text-[#dc2626]"
+                >
+                  Read it on Google
+                </a>
+              </figcaption>
+            </figure>
+          </section>
+        )}
 
         {/* CTA */}
         <section className="px-6 pb-6 pt-14 text-center md:pt-20">
