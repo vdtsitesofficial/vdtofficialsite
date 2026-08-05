@@ -3,6 +3,11 @@ import { Cloud, Monitor, Palette, PhoneCall } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
 import { getTestimonialByAuthor } from "@/lib/testimonials";
+import {
+  PRICE_BUILD_FROM,
+  PRICE_BRAND_FROM,
+  PRICE_MONTHLY,
+} from "@/lib/pricing";
 
 /**
  * /services — the full menu of what VDT actually sells.
@@ -42,10 +47,15 @@ const SYNE = "'Syne', 'Inter', sans-serif";
 const NUMERAL = "'Inter', system-ui, sans-serif";
 const SITE = "https://vdtsites.com";
 
-/** Starting price. Kept in one place so it cannot drift between sections. */
-const FROM_PRICE = "$899";
-const BRAND_PRICE = "$1299";
-const MONTHLY = "$40";
+/**
+ * Prices now live in lib/pricing.ts, because this page was never the only
+ * consumer: the cost blog post quotes the same figures in prose and had
+ * drifted out of sync risk. Aliased to the old local names so the rest of
+ * this file reads unchanged.
+ */
+const FROM_PRICE = PRICE_BUILD_FROM;
+const BRAND_PRICE = PRICE_BRAND_FROM;
+const MONTHLY = PRICE_MONTHLY;
 
 /**
  * Shared surface for the price block's cards. Sem's mockup 2026-08-03 replaced
