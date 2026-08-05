@@ -206,8 +206,16 @@ const USUALLY_EXTRA = [
 /**
  * The four phases, with timings. Sourced from the real process in
  * Shared/Client Process & Pricing. The internal "estimate plus 5 days of
- * leniency" padding rule stays internal; the published range (one to three
- * weeks) matches the homepage FAQ answer, so keep the two in step.
+ * leniency" padding rule stays internal.
+ *
+ * ⚠️ The clock starts when the CLIENT'S CONTENT ARRIVES, not at enquiry, and
+ * every published timing has to keep saying so. Three to four days is what Sem
+ * controls; waiting on photos and copy is not, and a bare "live in 3 days"
+ * becomes a broken promise the moment someone sits on their content for a
+ * fortnight. Same wording lives in lib/faqs.ts, the hand-written FAQ JSX in
+ * app/page.tsx, /llms.txt and the how-long-does-it-take blog post — change all
+ * five together or the site contradicts itself (it did, until 2026-08-03: five
+ * places said "one to three weeks" and two said "one to two").
  */
 const PHASES = [
   {
@@ -218,30 +226,23 @@ const PHASES = [
   },
   {
     n: "02",
-    when: "Week one",
+    when: "Day one",
     title: "Your homepage design",
     body: "The homepage gets designed first and we go through it together. That is where the look of the whole site gets settled, so nothing else gets built until you are happy with it.",
   },
   {
     n: "03",
-    when: "Weeks one to two",
+    when: "Days two and three",
     title: "Build and review",
     body: "The rest of the site gets built out, checking in as it goes so you watch it take shape instead of waiting weeks for a reveal you either love or quietly do not.",
   },
   {
     n: "04",
-    when: "Weeks two to three",
+    when: "Day three or four",
     title: "Launch",
-    body: "The site goes live, the domain points at it and your Google listing is set up. One more meeting for final edits, then we show you how to run it yourself.",
+    body: "The site goes live and your domain points at it. One more run through for final edits, then we show you how to keep it up to date yourself.",
   },
 ];
-
-/**
- * ⚠️ Availability claim shown near the CTA. Sem: keep this honest and current.
- * It is a real commitment to a prospect, so change it here when the backlog
- * changes rather than letting it go stale.
- */
-const START_LEAD = "one to two weeks";
 
 export const metadata: Metadata = {
   title: "Web Design Services & Pricing",
@@ -539,9 +540,9 @@ export default function ServicesPage() {
                 How it works, start to live.
               </h2>
               <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/65">
-                Most small business sites are live in one to three weeks. The
-                main variable is how fast we get your content and feedback, not
-                the build.
+                Once we have your content, most sites are live in three to four
+                days. The main variable is how fast we get your photos and
+                feedback, not the build.
               </p>
             </Reveal>
 
@@ -748,9 +749,8 @@ export default function ServicesPage() {
                 </a>
               </div>
               <p className="mt-9 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
-                We only take a few builds at a time so each one gets proper
-                attention. New projects are currently starting about{" "}
-                {START_LEAD} out.
+                Once we have your content, most sites are live in three to four
+                days.
               </p>
               <p className="mt-10 text-[13px] text-[#0d0d0d]/40">
                 {allServices.length} services · Nanaimo and across Vancouver

@@ -1518,9 +1518,11 @@ export default function Home() {
               </summary>
               <div className="faq-a">
                 <p>
-                  Most small business websites are ready in <strong>one to three weeks</strong>. The
-                  main variable is how quickly we get your content, photos and feedback. The
-                  design and build work itself moves fast once we have what we need.
+                  Once we have your content, most sites are live in{" "}
+                  <strong>three to four days</strong>. The main variable is how quickly we get
+                  your text, photos and feedback, not the build. Projects that run longer are
+                  almost always waiting on something from the business rather than something
+                  from us.
                 </p>
               </div>
             </details>

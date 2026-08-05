@@ -1358,10 +1358,17 @@ const facebookPageVsWebsitePost: BlogPost = {
 
 /* DRAFT. Sem's decisions from the interview:
    - The thesis is his: the timeline is a function of how fast the client
-     replies. 1-2 weeks when they're prompt, longer when they're not.
+     replies. Prompt clients get it fast, slow ones stretch it.
+   - ⚠️ THE NUMBER CHANGED 2026-08-03, from "1-2 weeks when they're prompt"
+     to "three to four days once we have your content" — Sem's call, applied
+     across the whole site the same day (services intro + PHASES, lib/faqs,
+     the FAQ JSX in app/page.tsx, /llms.txt and this post). Note this sits
+     against two other things he said in the interview: that his fastest-ever
+     build should stay OUT, and that he wanted no number on the slow end. If
+     3-4 days turns out to be the best case rather than the norm, this post
+     and four other places are now overpromising and all five move together.
    - He does NOT want a number on the slow end, so nothing here quantifies
      it. It's framed as being set by response time, full stop.
-   - His fastest-ever build stays out entirely, at his request.
    - Delays are content/photos, approvals, and third-party accounts. He did
      NOT pick scope growth, so this doesn't lead on it.
    - The honest moment is him owning his side: if a project drags, part of
@@ -1374,9 +1381,9 @@ const howLongDoesItTakePost: BlogPost = {
   title: "How Long Does It Take to Build a Small Business Website?",
   metaTitle: "How Long Does It Take to Build a Website?",
   description:
-    "Usually one to two weeks, but the honest answer is it depends on you more than on your developer. Here is where the time goes, and what stretches it.",
+    "Three to four days once your content is in, but the honest answer is it depends on you more than on your developer. Here is where the time goes, and what stretches it.",
   excerpt:
-    "One to two weeks is realistic for a small business website. The part nobody tells you is that the timeline depends more on how fast you reply than on how fast anyone builds.",
+    "Once we have your content, three to four days is realistic for a small business website. The part nobody tells you is that the timeline depends more on how fast you reply than on how fast anyone builds.",
   category: "Getting Started",
   publishedAt: "2026-08-24",
   updatedAt: "2026-08-24",
@@ -1393,7 +1400,7 @@ const howLongDoesItTakePost: BlogPost = {
   faqs: [
     {
       q: "How long does it take to build a small business website?",
-      a: "Around one to two weeks from the go-ahead to going live, provided you send content and feedback promptly. The build itself is rarely the slow part. Projects that run longer are almost always waiting on something from the business rather than something from the developer.",
+      a: "Three to four days from the point your content is in, provided you send feedback promptly. The build itself is rarely the slow part. Projects that run longer are almost always waiting on something from the business rather than something from the developer.",
     },
     {
       q: "What do I need to have ready before the build starts?",
@@ -1411,11 +1418,11 @@ const howLongDoesItTakePost: BlogPost = {
   content: [
     {
       kind: "p",
-      text: "For a standard small business website, about one to two weeks from the go-ahead to being live.",
+      text: "For a standard small business website, about three to four days from the point we have your content.",
     },
     {
       kind: "p",
-      text: "The honest version of that answer is that it depends on you more than it depends on us. If you reply quickly and get us what we ask for, one to two weeks is realistic. If replies take a week each time, the project stretches, and there isn't much a developer can do about that.",
+      text: "The honest version of that answer is that it depends on you more than it depends on us. If you reply quickly and get us what we ask for, three to four days is realistic. If replies take a week each time, the project stretches, and there isn't much a developer can do about that.",
     },
     {
       kind: "p",

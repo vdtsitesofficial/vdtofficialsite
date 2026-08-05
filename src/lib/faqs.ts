@@ -27,7 +27,7 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: "How long does it take to build a website?",
-    a: "Most small business websites are ready in one to three weeks. The main variable is how quickly we get your content, photos and feedback. The design and build work itself moves fast once we have what we need.",
+    a: "Once we have your content, most sites are live in three to four days. The main variable is how quickly we get your text, photos and feedback, not the build. Projects that run longer are almost always waiting on something from the business rather than something from us.",
   },
   {
     q: "What does the monthly fee cover?",
