@@ -320,9 +320,24 @@ export default function AboutPage() {
             >
               Businesses we build for
             </h2>
-            <p className="mx-auto mt-3 max-w-md text-center text-[15px] leading-relaxed text-[#0d0d0d]/60">
+            {/* The second sentence is a deliberate phrasing: it points at the
+                non-profit service page without listing non-profits among
+                businesses we HAVE built for, because we have not built for a
+                registered charity yet. See the hard rule at the top of
+                app/non-profit-website-design-vancouver/page.tsx. It also gives
+                that page a second inbound link, which the Aug 5 Semrush crawl
+                flagged it as needing. */}
+            <p className="mx-auto mt-3 max-w-lg text-center text-[15px] leading-relaxed text-[#0d0d0d]/60">
               Coffee roasters, food trucks, counsellors, importers, tradespeople
-              and clubs, mostly here on Vancouver Island.
+              and clubs, mostly here on Vancouver Island. Running a non-profit or
+              a charity?{" "}
+              <a
+                href="/non-profit-website-design-vancouver"
+                className="font-semibold text-[#dc2626] underline underline-offset-2"
+              >
+                That build is different enough to have its own page
+              </a>
+              .
             </p>
 
             <ul className="mt-9 flex flex-wrap justify-center gap-3">
