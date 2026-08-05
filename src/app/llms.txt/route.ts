@@ -75,6 +75,7 @@ function build(): string {
     `- [About](${SITE_URL}/about): who runs the studio and how projects are run.`,
     `- [Contact](${SITE_URL}/contact): phone, email and the enquiry form.`,
     `- [Blog](${SITE_URL}/blog): articles on small business websites, cost and local search.`,
+    `- [Non-profit website design in Vancouver](${SITE_URL}/non-profit-website-design-vancouver): websites for Vancouver non-profits and registered charities, including donations, volunteer-friendly editing and the website requirements behind a Google Ad Grants application.`,
     "",
     "## Services",
     "",

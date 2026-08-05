@@ -71,6 +71,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.7,
     },
+    // Service landing pages. Unlike /web-design-nanaimo (noindex, Google Ads
+    // only) these target terms nothing else on the site competes for, so
+    // they are indexable and belong here.
+    {
+      url: `${SITE_URL}/non-profit-website-design-vancouver`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     // Legal pages: indexable and linked from every footer, so they belong
     // here. Low priority, they are not pages anyone should land on first.
     {

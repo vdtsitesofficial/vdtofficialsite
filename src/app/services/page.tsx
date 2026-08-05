@@ -766,6 +766,20 @@ export default function ServicesPage() {
                 Once we have your content, most sites are live in three to four
                 days.
               </p>
+              {/* Entry point for the non-profit landing page. Without a real
+                  link from a page that has authority, that page launches as an
+                  orphan, which is the exact mistake /reviews spent months in. */}
+              <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
+                Running a non-profit or a registered charity? The build changes
+                enough that it has its own page:{" "}
+                <a
+                  href="/non-profit-website-design-vancouver"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  non-profit website design
+                </a>
+                .
+              </p>
               <p className="mt-10 text-[13px] text-[#0d0d0d]/40">
                 {allServices.length} services · Nanaimo and across Vancouver
                 Island
