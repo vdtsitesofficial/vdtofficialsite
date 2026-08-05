@@ -282,11 +282,11 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   const allServices = GROUPS.flatMap((g) => g.services);
 
-  // Interleaved reviews, looked up by author so the wording stays canonical
+  // One interleaved review, looked up by author so the wording stays canonical
   // in lib/testimonials (that file forbids paraphrasing or shortening these).
-  // Sherri sits under the price because hers is about cost; Enrico sits under
-  // the timeline because his is about delivery time.
-  const sherri = getTestimonialByAuthor("Sherri K");
+  // Enrico sits under the timeline because his is about delivery time.
+  // Sherri's longer quote was removed 2026-08-04 — Sem wants this page to stay
+  // straight to the point, and hers was a paragraph in the middle of the offer.
   const enrico = getTestimonialByAuthor("Enrico Del Mundo");
 
   return (
@@ -560,28 +560,6 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Social proof immediately after the price. Sherri's review is the
-            one that talks about cost against her previous website builders,
-            which is exactly the objection the slab above just raised. Pulled
-            by author so the text stays single-sourced in lib/testimonials. */}
-        {sherri && (
-          <section className="px-6 pt-16 md:px-14 md:pt-24">
-            <Reveal>
-              <figure className="mx-auto max-w-4xl">
-                <blockquote
-                  className="border-l-2 border-[#dc2626] pl-6 text-[19px] leading-[1.65] md:pl-9 md:text-[24px]"
-                  style={{ fontFamily: SYNE }}
-                >
-                  {sherri.quote}
-                </blockquote>
-                <figcaption className="mt-5 pl-6 text-[14px] text-[#0d0d0d]/50 md:pl-9">
-                  {sherri.author}
-                </figcaption>
-              </figure>
-            </Reveal>
-          </section>
-        )}
-
         {/* How it works. Hairline rows with a big ghosted number, matching the
             service-group pattern below rather than four identical cards
             (uniform card grids are ruled out in Shared/Design Preferences). */}
@@ -631,25 +609,6 @@ export default function ServicesPage() {
               ))}
             </div>
           </div>
-        </section>
-
-        {/* positioning copy. Lives here rather than under the H1 so the hero
-            stays headline + CTA. */}
-        <section className="px-6 pt-20 md:px-14 md:pt-28">
-          <Reveal>
-            <p
-              className="mx-auto max-w-4xl text-[21px] leading-[1.55] md:text-[30px]"
-              style={{ fontFamily: SYNE }}
-            >
-              Most people come to us for a website. What they usually need is
-              the website, somewhere reliable to host it, a logo that matches,
-              and to actually show up when someone nearby searches.{" "}
-              <span className="text-[#0d0d0d]/45">
-                We do all of it, so you are not stitching together four
-                suppliers who each blame the other three.
-              </span>
-            </p>
-          </Reveal>
         </section>
 
         {/* service groups. Sticky group column on the left, hairline-divided
