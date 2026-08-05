@@ -4,7 +4,19 @@
  * Posts are stored as typed content blocks (not raw HTML) so the
  * renderer can output clean, semantic, SEO-friendly markup — proper
  * heading hierarchy, real <ul>s, one <h1> owned by the page.
+ *
+ * PRICES: never type a dollar figure into post copy. Interpolate the
+ * constants from lib/pricing.ts instead, so a price change cannot leave a
+ * published post quoting a number we no longer charge. See the note at the
+ * top of that file for what still needs a human read after a change.
  * --------------------------------------------------------------------- */
+
+import {
+  PRICE_BUILD_FROM,
+  PRICE_MONTHLY,
+  CURRENCY,
+} from "@/lib/pricing";
+import { DEFAULT_AUTHOR } from "@/lib/authors";
 
 export const SITE_URL = "https://vdtsites.com";
 
@@ -13,6 +25,50 @@ export type Block =
   | { kind: "h2"; text: string }
   | { kind: "h3"; text: string }
   | { kind: "ul"; items: string[] };
+
+/* ── Inline links ────────────────────────────────────────────────────
+ * Body copy and FAQ answers are plain strings, which meant a post could
+ * not link to another post without breaking the typed-block model. Rather
+ * than allow raw HTML into content (which would put an XSS-shaped hole in
+ * the renderer and let markup drift into the JSON-LD), text supports one
+ * markdown-style form:
+ *
+ *     [visible label](/internal/path)
+ *
+ * INTERNAL PATHS ONLY. The pattern requires a leading slash, so an author
+ * cannot accidentally or deliberately emit an off-site link, and there is
+ * no attribute surface to inject into.
+ *
+ * Two consumers, and they must behave differently:
+ *   - the renderer expands them into real anchors (parseInline)
+ *   - JSON-LD gets the label text with the syntax removed (stripInline),
+ *     because schema values are plain text and shipping "[label](/x)" into
+ *     an FAQ answer would put literal brackets in a rich result.
+ */
+const INLINE_LINK = /\[([^\]]+)\]\((\/[^\s)]*)\)/g;
+
+export type InlineNode =
+  | { kind: "text"; text: string }
+  | { kind: "link"; text: string; href: string };
+
+/** Split a string into text and internal-link nodes, in order. */
+export function parseInline(text: string): InlineNode[] {
+  const out: InlineNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(INLINE_LINK)) {
+    const at = m.index ?? 0;
+    if (at > last) out.push({ kind: "text", text: text.slice(last, at) });
+    out.push({ kind: "link", text: m[1], href: m[2] });
+    last = at + m[0].length;
+  }
+  if (last < text.length) out.push({ kind: "text", text: text.slice(last) });
+  return out;
+}
+
+/** Same string with link syntax reduced to its label. For schema and counts. */
+export function stripInline(text: string): string {
+  return text.replace(INLINE_LINK, "$1");
+}
 
 export type BlogPost = {
   slug: string;
@@ -65,32 +121,45 @@ export function headingId(text: string): string {
 
 const websiteCostPost: BlogPost = {
   slug: "small-business-website-cost-2026",
-  title: "How Much Does It Cost to Build a Website for My Small Business?",
-  metaTitle: "How Much Does a Small Business Website Cost? (2026 Guide)",
+  /* Retargeted to Canada 2026-08-05. The post was aimed at "how much does a
+     website cost" (210/mo but KD 43) and "small business website cost"
+     (20/mo). Semrush's ca database shows the same intent is far cheaper to
+     win with the country modifier attached, and we are a Canadian studio
+     quoting Canadian dollars, so it is the honest framing anyway:
+
+       how much does a website cost in canada   90/mo  KD 8
+       website development cost in canada       70/mo  KD 3
+       web design cost canada                   70/mo  KD 12
+       web design prices canada                 50/mo  KD 10
+       cost of website design in canada         50/mo  KD 14
+       web design cost                         210/mo  KD 26
+
+     Slug deliberately unchanged: indexed since 2026-05-15. */
+  title: "How Much Does a Website Cost in Canada?",
+  metaTitle: "How Much Does a Website Cost in Canada? (2026)",
   description:
-    "A clear, no-nonsense breakdown of what a small business website should really cost in 2026: realistic pricing tiers, what to watch for, and what actually matters before you hire a developer.",
+    "What a website actually costs in Canada in 2026, in Canadian dollars. Real price ranges for one-page, standard and advanced builds, what drives the number up, and what to check before you pay anyone.",
   excerpt:
-    "One company quotes $500, another quotes $15,000. Here is what a small business website should realistically cost in 2026, and what actually matters when you pay for one.",
+    "One company quotes $500, another quotes $15,000. Here is what a website actually costs in Canada in 2026, in Canadian dollars, and what actually matters when you pay for one.",
   category: "Pricing",
   publishedAt: "2026-05-15",
-  // Bumped when the published price anchor went in. The post predates the
-  // 2026-07-29 raise and its one-page tier still argued against paying
-  // "significantly over $500", which was the old build price.
-  updatedAt: "2026-08-03",
-  readingMinutes: 8,
+  updatedAt: "2026-08-05",
+  readingMinutes: 9,
   keywords: [
+    "how much does a website cost in canada",
+    "website development cost in canada",
+    "web design cost canada",
+    "web design prices canada",
+    "cost of website design in canada",
+    "web design cost",
+    "website design pricing",
     "small business website cost",
-    "how much does a website cost",
-    "website pricing 2026",
-    "web developer for small business",
-    "custom website vs website builder",
-    "local SEO for small business",
   ],
-  author: "VDT Sites",
+  author: DEFAULT_AUTHOR,
   faqs: [
     {
-      q: "How much does a small business website cost in 2026?",
-      a: "Most small business websites are worth somewhere between a few hundred dollars and a few thousand, depending on what the site actually has to do. We build them from $899, plus $40 a month for hosting, updates and support. Sites with booking, payments or custom functionality cost more because they take longer to build properly.",
+      q: "How much does a website cost in Canada?",
+      a: `Most small business websites in Canada land somewhere between a few hundred dollars and a few thousand, depending on what the site actually has to do. We build them from ${PRICE_BUILD_FROM} ${CURRENCY}, plus ${PRICE_MONTHLY} a month for hosting, updates and support. Sites with booking, payments or custom functionality cost more because they take longer to build properly.`,
     },
     {
       q: "Why do some web designers charge $10,000 for a website?",
@@ -98,21 +167,38 @@ const websiteCostPost: BlogPost = {
     },
     {
       q: "Is a monthly fee for a website worth paying?",
-      a: "It depends what it covers. A fair monthly fee pays for hosting, security updates, backups and someone who answers when something breaks. Ours is $40 a month. What you should not pay monthly for is access to your own website, or small text changes that you were never given the ability to make yourself.",
+      a: `It depends what it covers. A fair monthly fee pays for hosting, security updates, backups and someone who answers when something breaks. Ours is ${PRICE_MONTHLY} a month. What you should not pay monthly for is access to your own website, or small text changes that you were never given the ability to make yourself.`,
+    },
+    {
+      q: "What is a fair price for web design in Canada?",
+      a: `For a standard small business site of three to five pages, somewhere between ${PRICE_BUILD_FROM} and $3,000 ${CURRENCY} is a fair range from a freelancer or small studio, and $8,000 and up is normal from a full agency. Below about $400 you are usually buying a template with your logo dropped in, and above about $5,000 you should be getting something genuinely custom: booking, payments, a database, or real design work rather than a layout you have seen before.`,
+    },
+    {
+      q: "Is web design cheaper in Canada than the United States?",
+      a: "Generally yes, and by more than the exchange rate accounts for. The Canadian small business market is smaller and less agency-dominated, so the middle of the market is thicker with freelancers and small studios. The bigger variable is not the country, it is the city: the same project quoted in Toronto or downtown Vancouver routinely comes in at roughly double a quote from a smaller market, because you are paying for the office and the account manager.",
     },
     {
       q: "Is it cheaper to build the website myself?",
-      a: "Up front, yes. A website builder costs a monthly subscription and your own time. That is genuinely the right choice while you are testing an idea. It stops being cheaper when the site needs to be found in search, load quickly on a phone and convert visitors, because that is the work that takes experience rather than an afternoon.",
+      a: "Up front, yes. A website builder costs a monthly subscription and your own time. That is genuinely the right choice while you are testing an idea. It stops being cheaper when the site needs to be found in search, load quickly on a phone and convert visitors, because that is the work that takes experience rather than an afternoon. We compared the options properly in [Wix alternatives: what small businesses actually move to](/blog/wix-alternatives).",
     },
   ],
   content: [
+    /* Direct answer in the first two blocks, with the numbers in it. This is
+       deliberate: the Aug 2026 read on AI Overviews is that the passage a
+       model lifts is usually the one that answers the question outright and
+       early, and 97% of AI citations come from pages already ranking. A
+       page that makes the reader scroll for the number gets skipped by both. */
     {
       kind: "p",
-      text: "A small business website should cost somewhere between a few hundred dollars and a few thousand, and the range comes down almost entirely to what the site has to do rather than who builds it.",
+      text: `Most small business websites in Canada cost between ${PRICE_BUILD_FROM} and $5,000 ${CURRENCY} to build, plus roughly $20 to $60 a month to keep online. Simple one-page sites sit at the bottom of that range, and anything with booking, payments or custom functionality sits above it.`,
     },
     {
       kind: "p",
-      text: "For a straight answer with our own numbers in it: we build small business websites from $899, plus $40 a month for hosting, updates and support, quoted up front before anything starts.",
+      text: `The range comes down almost entirely to what the site has to do, not who builds it. For a straight answer with our own numbers in it: we build small business websites from ${PRICE_BUILD_FROM} ${CURRENCY}, plus ${PRICE_MONTHLY} a month for hosting, updates and support, quoted up front before anything starts.`,
+    },
+    {
+      kind: "p",
+      text: "Every figure in this article is Canadian dollars. That matters more than it sounds, because most of the pricing advice online is written for the American market, and it is usually quoting bigger numbers than a business in Nanaimo or Kelowna actually needs to pay.",
     },
     {
       kind: "p",
@@ -378,10 +464,18 @@ const websiteCostPost: BlogPost = {
     },
     { kind: "p", text: "Businesses grow. Services change. Features evolve." },
     { kind: "p", text: "Good support matters." },
+    {
+      kind: "p",
+      text: "The other question worth asking at quote stage is how long the build will actually take, because a low price attached to a six month timeline is not the bargain it looks like. We broke down where that time really goes in [how long it takes to build a website](/blog/how-long-does-it-take-to-build-a-website).",
+    },
 
     {
       kind: "h2",
       text: "Are DIY Website Builders Like Wix or Squarespace Worth It?",
+    },
+    {
+      kind: "p",
+      text: "Short answer: sometimes, and we go through each one properly in [Wix alternatives: what small businesses actually move to](/blog/wix-alternatives), including the cases where a builder beats hiring anyone.",
     },
     { kind: "p", text: "Platforms like:" },
     {
@@ -476,7 +570,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "This is the tier most small businesses actually need, and it's where our own $899 sits.",
+      text: `This is the tier most small businesses actually need, and it's where our own ${PRICE_BUILD_FROM} sits.`,
     },
     {
       kind: "p",
@@ -500,6 +594,44 @@ const websiteCostPost: BlogPost = {
     {
       kind: "p",
       text: "There is no universal fixed price because the complexity can vary dramatically.",
+    },
+
+    { kind: "h2", text: "What Web Design Costs in Canada, Specifically" },
+    {
+      kind: "p",
+      text: "Almost every pricing article you will find on this is written for the American market, and the numbers do not transfer cleanly. Some of that is the exchange rate. Most of it is that the Canadian small business market is smaller, more regional, and far less agency-heavy than the US one.",
+    },
+    {
+      kind: "p",
+      text: "A few things are worth knowing before you compare quotes here.",
+    },
+    { kind: "h3", text: "Where you are changes the price more than what you need" },
+    {
+      kind: "p",
+      text: "A Toronto or downtown Vancouver agency is carrying office rent, account managers and a sales team, and that is in your quote whether or not your project needs any of it. The same five-page site quoted in a smaller market is routinely half the price, for the same work.",
+    },
+    {
+      kind: "p",
+      text: "This cuts both ways and it is worth saying plainly: it is also why we can quote what we quote from Nanaimo. We are not cheaper because the work is thinner. We are cheaper because we are two people on Vancouver Island rather than a floor of staff on Georgia Street.",
+    },
+    { kind: "h3", text: "Freelancer, studio or agency" },
+    {
+      kind: "p",
+      text: "In Canada the rough shape is: a freelancer somewhere around $40 to $90 an hour, a small studio quoting fixed project prices in the hundreds to low thousands, and a full agency starting around $8,000 and going up steeply. All three can be the right answer. What you are buying at the top end is capacity and process, not better design.",
+    },
+    { kind: "h3", text: "GST, HST and what you can write off" },
+    {
+      kind: "p",
+      text: "Quotes from Canadian suppliers may or may not have tax added on top, and it is worth asking rather than assuming, because at these numbers 5% to 15% is real money. If you are registered you will generally be claiming the input tax credit back anyway, which makes the sticker difference smaller than it looks.",
+    },
+    {
+      kind: "p",
+      text: "A website is normally treated as a business expense rather than something you buy outright and depreciate, though how it is handled can depend on what was built and how it is paid for. That is genuinely a question for your accountant and not for your web designer, including this one.",
+    },
+    { kind: "h3", text: "A .ca domain is not more expensive, and it is worth having" },
+    {
+      kind: "p",
+      text: "A .ca costs roughly the same as a .com, around $15 to $25 a year, and it signals to a Canadian customer that you are actually here. If your business name is taken on .com, this is usually the easier win rather than paying a domain squatter four figures.",
     },
 
     { kind: "h2", text: "Why Monthly Website Fees Can Be Fair" },
@@ -666,7 +798,7 @@ const notShowingOnGooglePost: BlogPost = {
     "why isn't my business showing up on google",
     "google search console sitemap",
   ],
-  author: "VDT Sites",
+  author: DEFAULT_AUTHOR,
   faqs: [
     {
       q: "How long does it take for a new website to show up on Google?",
@@ -678,11 +810,11 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       q: "Why does my Facebook page show up on Google but my website doesn't?",
-      a: "Social profiles are on very large, heavily crawled domains, so they get picked up easily for your business name. Your own site has to be indexed on its own merits. If the page appears and the website doesn't, that is a strong sign the website is either not indexed or not being found for the terms you care about.",
+      a: "Social profiles are on very large, heavily crawled domains, so they get picked up easily for your business name. Your own site has to be indexed on its own merits. If the page appears and the website doesn't, that is a strong sign the website is either not indexed or not being found for the terms you care about. There is more on how the two jobs differ in [do I need a website if I already have Instagram or Facebook](/blog/do-i-need-a-website-if-i-have-facebook).",
     },
     {
       q: "Do I need to pay someone to fix this?",
-      a: "Often not. Checking for a noindex tag, setting up Search Console, submitting a sitemap and claiming your Google Business Profile are all free and none of them need a developer. It is worth doing those first so that if you do hire someone, you are paying them to solve a real problem rather than to find one.",
+      a: "Often not. Checking for a noindex tag, setting up Search Console, submitting a sitemap and claiming your Google Business Profile are all free and none of them need a developer. It is worth doing those first so that if you do hire someone, you are paying them to solve a real problem rather than to find one. If it does turn out to need a rebuild, [what a website costs in Canada](/blog/small-business-website-cost-2026) covers what you should expect to pay.",
     },
     {
       q: "How long does SEO take to work?",
@@ -1240,7 +1372,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     "small business website vs social media",
     "small business online presence",
   ],
-  author: "VDT Sites",
+  author: DEFAULT_AUTHOR,
   faqs: [
     {
       q: "Is a Facebook or Instagram page enough for a small business?",
@@ -1248,7 +1380,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     },
     {
       q: "Will my Facebook page show up on Google?",
-      a: "Usually yes, but mainly for searches of your business name. Pages rarely compete for searches like plumber in Nanaimo, because they cannot be structured around a service the way a website can. So people who already know you can find you, and people who do not, largely cannot.",
+      a: "Usually yes, but mainly for searches of your business name. Pages rarely compete for searches like plumber in Nanaimo, because they cannot be structured around a service the way a website can. So people who already know you can find you, and people who do not, largely cannot. If your website exists but never appears, that is a separate and very fixable problem: [how to get your site to show up on Google](/blog/why-isnt-my-business-showing-up-on-google).",
     },
     {
       q: "Should I stop posting on social media once I have a website?",
@@ -1354,6 +1486,10 @@ const facebookPageVsWebsitePost: BlogPost = {
       text: "Facebook pages do show up on Google. If someone searches your business by name, your page will very likely come up.",
     },
     { kind: "p", text: "That's the problem in one sentence." },
+    {
+      kind: "p",
+      text: "It is also worth ruling out the simpler explanation first. If you have a website and it is the one not appearing, that is usually a technical fault rather than a content problem, and it is often fixable the same day: [how to get your site to show up on Google](/blog/why-isnt-my-business-showing-up-on-google) walks through the free checks.",
+    },
     {
       kind: "p",
       text: "Your page gets found by people who already know your name. It does very little for people searching for what you actually do.",
@@ -1579,19 +1715,41 @@ const howLongDoesItTakePost: BlogPost = {
   publishedAt: "2026-08-24",
   updatedAt: "2026-08-24",
   readingMinutes: 7,
+  /* Keyword set trimmed 2026-08-05 against Semrush's ca database. Dropped
+     "small business website timeline" and "website build time": both return
+     NO DATA, nobody searches them. Kept the primary (50/mo, KD 31, the best
+     term in this cluster) and added the variants that do have volume:
+
+       how long does it take to build a website   50/mo  KD 31
+       web design process                        110/mo  KD 22
+       how long does it take to make a website     30/mo  KD 0
+       how long to build a website                 20/mo  KD 0
+       web design timeline                         20/mo  KD 0
+
+     The KD 0 ones are low volume individually but free to win and they are
+     the phrasings an assistant is most likely to be asked verbatim. */
   keywords: [
     "how long does it take to build a website",
-    "small business website timeline",
     "web design process",
-    "website build time",
+    "how long does it take to make a website",
+    "how long to build a website",
+    "web design timeline",
     "web design Nanaimo",
   ],
-  author: "VDT Sites",
+  author: DEFAULT_AUTHOR,
   draft: true,
   faqs: [
     {
       q: "How long does it take to build a small business website?",
       a: "Three to four days from the point your content is in, provided you send feedback promptly. The build itself is rarely the slow part. Projects that run longer are almost always waiting on something from the business rather than something from the developer.",
+    },
+    {
+      q: "How long does it take to make a website from scratch?",
+      a: "For a small business site, three to four days of actual build time once the content is in hand. The calendar around that is longer and varies far more: gathering copy, photos and approvals is usually where the weeks go. A site with booking, payments or a database takes longer, because there is genuinely more to build and more to test before it can be trusted with real money.",
+    },
+    {
+      q: "What is the typical web design process?",
+      a: "A short conversation about what the business does and who it is for, then design and build, then launch and handover. The parts that are easy to underestimate are the ones that involve you: approving the direction, supplying photos, and finding logins for the domain. Every studio structures it slightly differently, but the sequence is close to universal and the bottleneck is nearly always content rather than code.",
     },
     {
       q: "What do I need to have ready before the build starts?",
@@ -1621,7 +1779,7 @@ const howLongDoesItTakePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "Here's where the time actually goes.",
+      text: "Here's where the time actually goes. If what you are really trying to work out is the budget rather than the calendar, [how much a website costs in Canada](/blog/small-business-website-cost-2026) is the more useful read.",
     },
 
     { kind: "h2", text: "Why Nobody Can Give You an Exact Number" },
@@ -1635,14 +1793,14 @@ const howLongDoesItTakePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "Two businesses can order an almost identical website on the same day. One goes live inside a fortnight. The other is still not finished long afterwards. The difference usually isn't the website at all. It's how quickly each of them answered their email.",
+      text: "Two businesses can order an almost identical website on the same day. One is live by the end of the week. The other is still not finished months afterwards. The difference usually isn't the website at all. It's how quickly each of them answered their email.",
     },
     {
       kind: "p",
       text: "So when someone quotes you a guaranteed date without asking a single question about your content or your availability, treat it carefully. They're either padding the estimate heavily, or they're planning to build something generic that doesn't need anything from you.",
     },
 
-    { kind: "h2", text: "What the Two Weeks Actually Consists Of" },
+    { kind: "h2", text: "What the Three to Four Days Actually Consists Of" },
     {
       kind: "p",
       text: "It's worth knowing what you're waiting on, because most of it isn't what people expect.",
@@ -1797,7 +1955,7 @@ const howLongDoesItTakePost: BlogPost = {
     { kind: "h2", text: "Final Thoughts" },
     {
       kind: "p",
-      text: "One to two weeks is a fair expectation for a small business website, and it's an expectation you have more control over than your developer does.",
+      text: "Three to four days of build time is a fair expectation for a small business website once your content is in hand, and the calendar around it is something you have more control over than your developer does.",
     },
     {
       kind: "p",
@@ -1834,38 +1992,69 @@ const howLongDoesItTakePost: BlogPost = {
 
    publishedAt is the planned slot, 2026-09-07. */
 const wixVsDesignerPost: BlogPost = {
-  slug: "should-i-use-wix-or-hire-a-web-designer",
-  title: "Should I Use Wix or Hire a Web Designer?",
-  metaTitle: "Should I Use Wix or Hire a Web Designer?",
+  /* Retargeted 2026-08-05. The draft aimed at "should i use wix or hire a
+     web designer" and "wix vs web designer", both of which return NO DATA
+     in Semrush's ca database. Nobody searches them. What people actually
+     search, and what this post now targets:
+
+       squarespace vs wix              480/mo  KD 24
+       wix alternatives                260/mo  KD 19   <- primary
+       is wix good for small business   20/mo  KD 0
+
+     SLUG CHANGED, which is safe precisely because this post has never been
+     published: no index, no inbound links, nothing to 301. Do not do this
+     to a live post.
+
+     Angle is an honest roundup, Sem's call: someone searching "wix
+     alternatives" is already on Wix and unhappy, and a post from a custom
+     shop that only says "hire us" gets closed. Covering Squarespace,
+     WordPress, Webflow and Shopify properly is what makes the custom
+     section believable when it arrives. */
+  slug: "wix-alternatives",
+  title: "Wix Alternatives: What Small Businesses Actually Move To",
+  metaTitle: "Wix Alternatives for a Small Business Website (2026)",
   description:
-    "There are two honest reasons to build it yourself, and everything else points the other way. A straight comparison of website builders against hiring someone.",
+    "An honest look at the real alternatives to Wix in 2026: Squarespace, WordPress, Webflow, Shopify and a custom build. What each is genuinely good at, what it costs, and how to move without losing your rankings.",
   excerpt:
-    "There are two genuinely good reasons to build your own site on Wix or Squarespace. If neither applies to you, here is what you are actually trading away.",
+    "Most people looking for a Wix alternative are not shopping, they are stuck. Here is what each of the real options is actually good at, including the ones we do not sell.",
   category: "Getting Started",
   publishedAt: "2026-09-07",
   updatedAt: "2026-09-07",
-  readingMinutes: 8,
+  readingMinutes: 10,
   keywords: [
-    "should I use wix or hire a web designer",
-    "wix vs web designer",
-    "squarespace vs custom website",
-    "website builder vs web developer",
-    "small business website Nanaimo",
+    "wix alternatives",
+    "squarespace vs wix",
+    "is wix good for small business",
+    "alternatives to wix",
+    "best website builder for small business",
+    "move website off wix",
   ],
-  author: "VDT Sites",
+  author: DEFAULT_AUTHOR,
   draft: true,
   faqs: [
+    {
+      q: "What is the best alternative to Wix?",
+      a: "There is no single best one, and the honest answer depends on what is actually wrong. If the site looks amateur, Squarespace is the easiest fix. If you have hit a functional limit, WordPress gives you the most room. If you or someone on your team designs, Webflow is the strongest tool. If you are selling products, Shopify. And if the site matters commercially and you are tired of it being a recurring problem, a custom build. Match the option to the complaint rather than to whichever platform is advertised hardest.",
+    },
+    {
+      q: "Is Squarespace better than Wix?",
+      a: "For design, generally yes. Squarespace templates are more restrained and it is much harder to end up with something that looks unprofessional. For flexibility they are closer than people expect, and both leave you on rented land paying monthly. Moving from Wix to Squarespace fixes how a site looks. It does not fix being limited by what the editor allows.",
+    },
+    {
+      q: "Will I lose my Google rankings if I move off Wix?",
+      a: "Only if the move is done carelessly. Rankings are attached to URLs, so if your new site changes them without 301 redirects pointing old to new, the pages Google indexed become dead ends and their rankings go with them. Set the redirects up before launch, keep your domain, and resubmit your sitemap in Search Console on launch day. Done that way, a migration barely registers in your traffic.",
+    },
     {
       q: "Is Wix good enough for a small business website?",
       a: "It can be, and for some businesses it genuinely is. Website builders have improved a lot and a carefully built one can look professional. The problems tend to show up in the things that are easy to skip: page speed on phones, the search settings nobody filled in, and a site that never quite got finished because the owner ran out of time.",
     },
     {
       q: "Is it cheaper to build my own website?",
-      a: "Up front, yes. There is no build fee, and if you enjoy the work and have the hours it is a sensible way to save money. It stops being cheaper when you count the time it takes you, or when the finished site does not get found in search, because a site nobody visits is expensive at any price.",
+      a: "Up front, yes. There is no build fee, and if you enjoy the work and have the hours it is a sensible way to save money. It stops being cheaper when you count the time it takes you, or when the finished site does not get found in search, because a site nobody visits is expensive at any price. For what the paid route actually costs here, see [how much a website costs in Canada](/blog/small-business-website-cost-2026).",
     },
     {
       q: "Can I move my website off a builder later?",
-      a: "Not really. You can usually export your text and images, but not the site itself. Moving to another platform means rebuilding it, which is worth knowing before you invest a year of updates into one. It is not a reason to avoid builders, just something to go in with your eyes open about.",
+      a: "Not really. You can usually export your text and images, but not the site itself. Moving to another platform means rebuilding it, which is worth knowing before you invest a year of updates into one. It is not a reason to avoid builders, just something to go in with your eyes open about. The one part that genuinely matters when you do move is keeping your rankings, which is covered in the migration section above and in [how to get your site to show up on Google](/blog/why-isnt-my-business-showing-up-on-google).",
     },
     {
       q: "I already built a site on a builder and it isn't working. What now?",
@@ -1875,18 +2064,18 @@ const wixVsDesignerPost: BlogPost = {
   content: [
     {
       kind: "p",
-      text: "There are two honest reasons to build it yourself: you genuinely enjoy that kind of work and have the time for it, or your budget truly cannot stretch to paying someone right now.",
+      text: "The realistic alternatives to Wix are Squarespace, WordPress, Webflow, Shopify if you are selling, or a custom-built site. Which one is right depends less on the platform and more on who is going to maintain the thing in two years.",
     },
     {
       kind: "p",
-      text: "Both are completely legitimate, and if either applies to you, use a builder. If neither does, hiring someone is usually the better decision, and not for the reason most web designers give you.",
+      text: "Most people searching for a Wix alternative are not shopping around. They are stuck: the site is slow, or it never got finished, or it looks like a template because it is one, or the bill went up again. So this is written for that person rather than as a feature grid.",
     },
     {
       kind: "p",
-      text: "Here's the honest comparison, including the parts that don't favour us.",
+      text: "We build custom sites for a living, which means you should read the last option with appropriate suspicion. The other four are covered properly anyway, including the cases where they beat us.",
     },
 
-    { kind: "h2", text: "When a Website Builder Is the Right Call" },
+    { kind: "h2", text: "First, Should You Leave Wix at All?" },
     {
       kind: "p",
       text: "We'd rather be straight about this than pretend everyone should hire a developer.",
@@ -2014,6 +2203,108 @@ const wixVsDesignerPost: BlogPost = {
       text: "This has nothing to do with the platform. It's that building a website is a project, and projects that aren't anybody's actual job tend not to finish.",
     },
 
+    { kind: "h2", text: "The Real Alternatives, One by One" },
+    {
+      kind: "p",
+      text: "Five options genuinely worth considering, roughly in order of how much work they ask of you.",
+    },
+
+    { kind: "h3", text: "Squarespace" },
+    {
+      kind: "p",
+      text: "The closest like-for-like swap, and the one most Wix leavers end up on. It is the better-designed product: the templates are more restrained, the type is better, and it is much harder to make something ugly. If your complaint about Wix is that the site looks amateur, Squarespace fixes that on its own.",
+    },
+    {
+      kind: "p",
+      text: "What it does not fix is everything structural. You are still on rented land, still limited to what the editor allows, and still paying monthly forever. Expect roughly $20 to $50 a month depending on plan. If your complaint is speed or being unable to do something specific, moving to Squarespace mostly buys you a nicer version of the same ceiling.",
+    },
+    {
+      kind: "p",
+      text: "Worth it if: the design is the problem. Not worth it if: the limits are.",
+    },
+
+    { kind: "h3", text: "WordPress" },
+    {
+      kind: "p",
+      text: "The most capable option you can still run yourself, and it powers a large share of the web for good reason. Anything you want to do, a plugin exists for. You own the files. You can move hosts. Nobody can raise your rent or change the editor out from under you.",
+    },
+    {
+      kind: "p",
+      text: "The cost is maintenance, and it is a real cost rather than a theoretical one. Plugins update, conflict and occasionally break the site. Security patches are your responsibility. A WordPress install nobody has logged into for a year is a genuine liability, not just a stale site. Budget either your own ongoing attention or someone on retainer.",
+    },
+    {
+      kind: "p",
+      text: "Worth it if: you want control and either enjoy the upkeep or will pay for it. Not worth it if: nobody is going to look after it.",
+    },
+
+    { kind: "h3", text: "Webflow" },
+    {
+      kind: "p",
+      text: "A designer's tool. It gives you close to full control over the layout without writing code, and the sites it produces are fast and clean. If you have someone with a design background who wants to build it themselves, this is the strongest option on the list.",
+    },
+    {
+      kind: "p",
+      text: "The learning curve is the honest catch. Webflow expects you to understand how web layout actually works, and business owners who try it on a weekend usually bounce off. It is a professional tool that happens to be visual, not a simplified builder.",
+    },
+    {
+      kind: "p",
+      text: "Worth it if: you or someone on your team designs. Not worth it if: you wanted something easier than Wix.",
+    },
+
+    { kind: "h3", text: "Shopify, if you are actually selling" },
+    {
+      kind: "p",
+      text: "If products and payments are the point of the site, this is a different question and Shopify is usually the answer. Inventory, taxes, shipping rates, abandoned carts and payment compliance are solved problems there, and rebuilding any of that elsewhere is a bad use of money.",
+    },
+    {
+      kind: "p",
+      text: "Worth it if: you sell things. Not worth it if: you have three products and a phone number, in which case a normal site with a checkout is cheaper and simpler.",
+    },
+
+    { kind: "h3", text: "A custom-built site" },
+    {
+      kind: "p",
+      text: "This is what we do, so weigh it accordingly. You get a site with no template underneath it, built to load fast, structured properly for search, and editable by you without a monthly platform fee attached to your ability to use it.",
+    },
+    {
+      kind: "p",
+      text: "The honest trade is that it costs more up front than a builder subscription and you are dependent on whoever built it being reachable. That second point is worth pressing anyone you hire on, including us. Ask what happens if they disappear, and whether you get the code.",
+    },
+    {
+      kind: "p",
+      text: "Worth it if: the site matters commercially and you want it to stop being a recurring problem. Not worth it if: you are testing an idea that might not exist in six months.",
+    },
+    {
+      kind: "p",
+      text: "The two questions people ask next are what it costs and how long it takes, and both have honest answers: [how much a website costs in Canada](/blog/small-business-website-cost-2026) and [how long it takes to build one](/blog/how-long-does-it-take-to-build-a-website).",
+    },
+
+    { kind: "h2", text: "Moving Off Wix Without Losing Your Rankings" },
+    {
+      kind: "p",
+      text: "This is the part people get wrong, and it is the one that actually costs money.",
+    },
+    {
+      kind: "p",
+      text: "Your old pages have URLs that Google has indexed. If the new site uses different URLs and nothing connects the two, every one of those pages becomes a dead end, and whatever ranking they had goes with them. The fix is a 301 redirect from each old URL to its new equivalent, set up before launch rather than after somebody notices traffic fell.",
+    },
+    {
+      kind: "p",
+      text: "Three other things worth doing in the same week:",
+    },
+    {
+      kind: "ul",
+      items: [
+        "Export your content first. Copy, images and any customer or mailing list data, out of the platform and into your own hands before you cancel anything.",
+        "Keep your domain, and make sure it is registered to you rather than to the builder or an agency. If you do not control the domain you do not control the move.",
+        "Resubmit your sitemap in Google Search Console the day you launch, so the new URLs get discovered in days rather than whenever Google gets around to it.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "Done properly, a migration is close to invisible in your traffic. Done carelessly, it is the single most expensive mistake in this whole article. If your site has already stopped showing up and you are not sure whether the move caused it, [how to get your site to show up on Google](/blog/why-isnt-my-business-showing-up-on-google) has the thirty second check that tells you.",
+    },
+
     { kind: "h2", text: "What Usually Brings People to Us" },
     {
       kind: "p",
@@ -2058,7 +2349,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "For reference, we build small business websites from $899 plus $40 a month. We're not going to pretend that's nothing, and if it's out of reach this year then the first section of this article is the honest advice.",
+      text: `For reference, we build small business websites from ${PRICE_BUILD_FROM} plus ${PRICE_MONTHLY} a month. We're not going to pretend that's nothing, and if it's out of reach this year then the first section of this article is the honest advice.`,
     },
 
     { kind: "h2", text: "How to Decide" },
