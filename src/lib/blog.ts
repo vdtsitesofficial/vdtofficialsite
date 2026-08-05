@@ -1712,8 +1712,8 @@ const howLongDoesItTakePost: BlogPost = {
   excerpt:
     "Once we have your content, three to four days is realistic for a small business website. The part nobody tells you is that the timeline depends more on how fast you reply than on how fast anyone builds.",
   category: "Getting Started",
-  publishedAt: "2026-08-24",
-  updatedAt: "2026-08-24",
+  publishedAt: "2026-08-05",
+  updatedAt: "2026-08-05",
   readingMinutes: 7,
   /* Keyword set trimmed 2026-08-05 against Semrush's ca database. Dropped
      "small business website timeline" and "website build time": both return
@@ -1737,7 +1737,6 @@ const howLongDoesItTakePost: BlogPost = {
     "web design Nanaimo",
   ],
   author: DEFAULT_AUTHOR,
-  draft: true,
   faqs: [
     {
       q: "How long does it take to build a small business website?",
@@ -2018,8 +2017,8 @@ const wixVsDesignerPost: BlogPost = {
   excerpt:
     "Most people looking for a Wix alternative are not shopping, they are stuck. Here is what each of the real options is actually good at, including the ones we do not sell.",
   category: "Getting Started",
-  publishedAt: "2026-09-07",
-  updatedAt: "2026-09-07",
+  publishedAt: "2026-08-05",
+  updatedAt: "2026-08-05",
   readingMinutes: 10,
   keywords: [
     "wix alternatives",
@@ -2030,7 +2029,6 @@ const wixVsDesignerPost: BlogPost = {
     "move website off wix",
   ],
   author: DEFAULT_AUTHOR,
-  draft: true,
   faqs: [
     {
       q: "What is the best alternative to Wix?",
