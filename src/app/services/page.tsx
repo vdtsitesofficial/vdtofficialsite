@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cloud, Monitor, ShieldCheck } from "lucide-react";
+import { Cloud, Monitor, Palette, PhoneCall } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
 import { getTestimonialByAuthor } from "@/lib/testimonials";
@@ -44,6 +44,7 @@ const SITE = "https://vdtsites.com";
 
 /** Starting price. Kept in one place so it cannot drift between sections. */
 const FROM_PRICE = "$899";
+const BRAND_PRICE = "$1299";
 const MONTHLY = "$40";
 
 /**
@@ -183,7 +184,25 @@ const BUILD_INCLUDED = [
   "Built to be responsive on every device, desktop and mobile",
   "An admin editor so you can change text and images yourself",
   "A contact form that lands straight in your inbox",
+  // Indexing, NOT ranking. "Submitted so your pages appear" is a thing we
+  // actually do (sitemap + IndexNow ping on deploy) and can promise. Never
+  // let this drift into implying a position in the results.
+  "Your pages submitted to Google and Bing the day you launch",
   "Everything set up, tested and taken live for you",
+];
+
+/**
+ * The $1299 tier. Wording is deliberately careful on three points that are
+ * accuracy or licensing problems rather than style (see Shared/Client Process
+ * & Pricing): the cards are a DESIGN, not printing; the invoice is a Word
+ * template, not software; and typefaces must be open-licensed, because most
+ * commercial font licences are per-user and cannot be passed to a client.
+ */
+const BRAND_INCLUDED = [
+  "A custom logo, in every format you need for web, print and signage",
+  "Print-ready business card design, ready to send to a printer",
+  "An editable invoice template",
+  "Brand typefaces chosen and set up across your site",
 ];
 
 /**
@@ -377,91 +396,79 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Price block. Light card treatment, from Sem's mockup 2026-08-03
-            (replaced the dark grain slab): a white price card with a red spine
-            beside plain body copy, then the two inclusion cards with red icon
-            badges, then the ownership strip. */}
+        {/* Price block. Light cards from Sem's mockup 2026-08-03.
+            Restructured the same day into TWO SELF-CONTAINED OFFERS: each
+            white box holds its own price AND its own inclusions, so a reader
+            can see where one package stops and the next starts. The earlier
+            version split price and inclusions across separate cards, which
+            read as four loose panels rather than two things you can buy.
+            The monthly sits below both because it applies to either. */}
         <section className="px-5 pt-14 md:px-14 md:pt-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
-              <div className="grid gap-9 md:grid-cols-[minmax(0,420px)_1fr] md:items-start md:gap-14">
-                {/* price card + red spine */}
-                <div className={`relative ${CARD} px-8 py-9 md:px-9 md:py-10`}>
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-y-0 left-0 w-[5px] rounded-l-[14px] bg-[#dc2626]"
-                  />
-                  <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#dc2626]">
-                    Investment
-                  </p>
-                  <p
-                    className="mt-4 text-[68px] font-extrabold leading-[0.9] tracking-[-0.035em] md:text-[84px]"
-                    style={{ fontFamily: NUMERAL }}
-                  >
-                    {FROM_PRICE}
-                  </p>
-                  <p className="mt-4 text-[15px] text-[#0d0d0d]/55">
-                    one time, then {MONTHLY} a month
-                  </p>
-                  <span
-                    aria-hidden="true"
-                    className="mt-6 block h-[3px] w-[76px] rounded-full bg-[#dc2626]"
-                  />
-                  <p className="mt-6 max-w-[24ch] text-[15px] leading-[1.6] text-[#0d0d0d]/55">
-                    For most trades and service businesses, that is less than a
-                    single job.
-                  </p>
-                </div>
-
-                {/* body copy, no card — the mockup leaves this on the page */}
-                <div className="max-w-2xl md:pt-3">
-                  <p className="text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
-                    That is the starting point for a custom small business
-                    site, not a stripped back version of one. Bigger builds
-                    cost more and we tell you the number before any work
-                    begins, so nothing arrives as a surprise on an invoice.
-                  </p>
-                  <p className="mt-6 text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
-                    The monthly fee is what keeps it running. There is no
-                    separate hosting bill and no renewal spike in year two.
-                  </p>
-                  <p className="mt-6 text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
-                    50% to start, the balance when the site goes live.
-                  </p>
-                </div>
-              </div>
+              <p className="max-w-3xl text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
+                Two ways to start, both fixed price. Bigger builds cost more
+                and we tell you the number before any work begins, so nothing
+                arrives as a surprise on an invoice.
+              </p>
             </Reveal>
 
-            {/* Both halves of the offer. The build list did not exist before
-                and the monthly's list lived five sections further down. */}
-            <div className="mt-8 grid gap-7 md:mt-10 md:grid-cols-2 md:gap-8">
+            {/* the two offers */}
+            <div className="mt-9 grid gap-7 md:mt-11 md:grid-cols-2 md:gap-8">
               {[
                 {
+                  name: "Website",
+                  price: FROM_PRICE,
                   Icon: Monitor,
-                  title: `What the ${FROM_PRICE} build includes`,
+                  listTitle: "What's included",
                   items: BUILD_INCLUDED,
                 },
                 {
-                  Icon: Cloud,
-                  title: `What the ${MONTHLY} a month covers`,
-                  items: INCLUDED,
+                  name: "Full Brand Kit",
+                  price: BRAND_PRICE,
+                  Icon: Palette,
+                  listTitle: "Everything in the website, plus",
+                  items: BRAND_INCLUDED,
                 },
-              ].map(({ Icon, title, items }, i) => (
-                <Reveal key={title} delay={i * 80}>
-                  <div className={`h-full ${CARD} px-7 py-8 md:px-9 md:py-9`}>
-                    <div className="flex items-center gap-4">
+              ].map(({ name, price, Icon, listTitle, items }, i) => (
+                <Reveal key={name} delay={i * 80}>
+                  <div
+                    className={`relative h-full ${CARD} px-7 py-9 md:px-9 md:py-10`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-y-0 left-0 w-[5px] rounded-l-[14px] bg-[#dc2626]"
+                    />
+                    <h2 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#dc2626]">
+                      {name}
+                    </h2>
+                    <p
+                      className="mt-4 text-[60px] font-extrabold leading-[0.9] tracking-[-0.035em] md:text-[76px]"
+                      style={{ fontFamily: NUMERAL }}
+                    >
+                      {price}
+                    </p>
+                    <p className="mt-4 text-[15px] text-[#0d0d0d]/55">
+                      one time, then {MONTHLY} a month
+                    </p>
+                    <span
+                      aria-hidden="true"
+                      className="mt-6 block h-[3px] w-[76px] rounded-full bg-[#dc2626]"
+                    />
+
+                    <div className="mt-8 flex items-center gap-4">
                       <span
                         aria-hidden="true"
-                        className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#dc2626]"
+                        className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-[#dc2626]"
                       >
-                        <Icon size={24} strokeWidth={2} className="text-white" />
+                        <Icon size={22} strokeWidth={2} className="text-white" />
                       </span>
-                      <h2
-                        className="text-[21px] font-bold leading-[1.15] md:text-[25px]"
+                      <h3
+                        className="text-[18px] font-bold leading-[1.15] md:text-[21px]"
                         style={{ fontFamily: SYNE }}
                       >
-                        {title}
-                      </h2>
+                        {listTitle}
+                      </h3>
                     </div>
                     <hr className="mt-6 border-black/10" />
                     <ul className="mt-6 space-y-3.5">
@@ -483,23 +490,71 @@ export default function ServicesPage() {
               ))}
             </div>
 
-            {/* ownership strip */}
+            {/* the monthly, shared by both offers */}
+            <Reveal>
+              <div className={`mt-7 ${CARD} px-7 py-8 md:px-9 md:py-9`}>
+                <div className="flex items-center gap-4">
+                  <span
+                    aria-hidden="true"
+                    className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#dc2626]"
+                  >
+                    <Cloud size={24} strokeWidth={2} className="text-white" />
+                  </span>
+                  <h2
+                    className="text-[21px] font-bold leading-[1.15] md:text-[25px]"
+                    style={{ fontFamily: SYNE }}
+                  >
+                    What the {MONTHLY} a month covers
+                  </h2>
+                </div>
+                <hr className="mt-6 border-black/10" />
+                <ul className="mt-6 grid gap-x-12 gap-y-3.5 sm:grid-cols-2">
+                  {INCLUDED.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-[15.5px] leading-[1.6] text-[#0d0d0d]/80"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-[8px] h-[6px] w-[6px] shrink-0 rounded-full bg-[#dc2626]"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-7 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/55">
+                  Whichever you pick, the monthly is what keeps it running.
+                  There is no separate hosting bill and no renewal spike in
+                  year two.
+                </p>
+              </div>
+            </Reveal>
+
+            {/* getting started */}
             <Reveal>
               <div
-                className={`mt-7 flex flex-col items-center gap-4 ${CARD} px-7 py-7 text-center sm:flex-row sm:gap-6 sm:text-left md:px-9`}
+                className={`mt-7 flex flex-col items-center gap-5 ${CARD} px-7 py-8 text-center sm:flex-row sm:gap-6 sm:text-left md:px-9`}
               >
-                <ShieldCheck
-                  size={34}
-                  strokeWidth={1.9}
+                <span
                   aria-hidden="true"
-                  className="shrink-0 text-[#dc2626]"
-                />
-                <p className="text-[15.5px] leading-[1.7] text-[#0d0d0d]/75">
-                  You own the site. Once a project is paid in full it is yours,
-                  and we hand over a full export of the code on request. We
-                  would rather keep you because the work is good than because
-                  you are locked in.
-                </p>
+                  className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#dc2626]"
+                >
+                  <PhoneCall size={24} strokeWidth={2} className="text-white" />
+                </span>
+                <div>
+                  <h2
+                    className="text-[19px] font-bold md:text-[22px]"
+                    style={{ fontFamily: SYNE }}
+                  >
+                    Getting started
+                  </h2>
+                  <p className="mt-2.5 text-[15.5px] leading-[1.7] text-[#0d0d0d]/70">
+                    Tell us about the business, by phone or email, and we will
+                    come back with a fixed written price. If it suits you it is
+                    50% to start and the balance when the site goes live. The
+                    quote is free and there is nothing to sign to get one.
+                  </p>
+                </div>
               </div>
             </Reveal>
           </div>
