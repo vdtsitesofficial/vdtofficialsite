@@ -641,23 +641,30 @@ const websiteCostPost: BlogPost = {
    describes the move as keeping the search equity the old site had earned. */
 const notShowingOnGooglePost: BlogPost = {
   slug: "why-isnt-my-business-showing-up-on-google",
-  title: "Why Isn't My Business Showing Up on Google?",
-  metaTitle: "Why Isn't My Business Showing Up on Google?",
+  /* H1 follows the Semrush brief. The SLUG deliberately does not: this post
+     has been indexed since 2026-08-03 and changing the URL would throw that
+     away for a 301 and no gain. metaTitle stays short so the SERP title
+     doesn't truncate once the "| VDT Sites" template is appended. */
+  title:
+    "How to Get Your Site to Show Up on Google: 10 Essential Tips for Beginners",
+  metaTitle: "How to Get Your Site to Show Up on Google",
   description:
-    "Your website exists but Google never shows it. Here are the real reasons that happens, the free checks that tell you which one you have, and how to fix each.",
+    "Your site isn't on Google and you want it there. The free 30 second check that tells you why, then the ten things that actually move it, in the order to do them.",
   excerpt:
-    "You search your own business name and your website isn't there. Before you spend a dollar on ads or SEO, here is how to find out whether Google can even see your site.",
+    "You search your own business name and your website isn't there. Before you spend a dollar on ads or SEO, here is how to find out whether Google can even see your site, and what to do next.",
   category: "SEO",
   publishedAt: "2026-08-03",
-  updatedAt: "2026-08-03",
-  readingMinutes: 9,
+  updatedAt: "2026-08-05",
+  readingMinutes: 14,
   keywords: [
+    "how to get your site to show up on google",
+    "how to have your website show up on google",
+    "how to make my website show on google",
+    "how to make website appear in google search",
+    "website search optimisation",
+    "seo for local business",
     "why isn't my business showing up on google",
-    "website not showing up on google",
-    "website not indexed",
     "google search console sitemap",
-    "business not on google maps",
-    "local SEO Nanaimo",
   ],
   author: "VDT Sites",
   faqs: [
@@ -677,6 +684,14 @@ const notShowingOnGooglePost: BlogPost = {
       q: "Do I need to pay someone to fix this?",
       a: "Often not. Checking for a noindex tag, setting up Search Console, submitting a sitemap and claiming your Google Business Profile are all free and none of them need a developer. It is worth doing those first so that if you do hire someone, you are paying them to solve a real problem rather than to find one.",
     },
+    {
+      q: "How long does SEO take to work?",
+      a: "It depends entirely on which problem you have. If your site was blocked by a noindex tag or had never submitted a sitemap, you can be visible within days of fixing it. If you are already indexed and simply ranking below competitors, expect months rather than weeks, because that is content, reviews and links accumulating over time. Anyone quoting you a fixed timeline before checking which situation you are in is guessing.",
+    },
+    {
+      q: "Does site speed affect whether I show up on Google?",
+      a: "It affects your position, not whether you appear at all. A slow site still gets indexed. But page speed is a confirmed ranking signal, and it matters most on phones, where a lot of local searches happen. The bigger cost is usually the visitors who leave before the page loads, which no amount of ranking fixes.",
+    },
   ],
   content: [
     {
@@ -691,6 +706,9 @@ const notShowingOnGooglePost: BlogPost = {
       kind: "p",
       text: "The rest of this article is what to do once you know.",
     },
+
+    { kind: "h2", text: "Introduction" },
+    { kind: "h3", text: "Importance of Search Engine Visibility" },
     {
       kind: "p",
       text: "It usually starts the same way. You search your own business name, and your website isn't there.",
@@ -716,7 +734,7 @@ const notShowingOnGooglePost: BlogPost = {
       text: "This article walks through the real reasons a business website doesn't show up on Google, the free checks that tell you which one applies to you, and what to do about each.",
     },
 
-    { kind: "h2", text: "First, There Are Two Different Problems Here" },
+    { kind: "h3", text: "Overview of Google Ranking Factors" },
     {
       kind: "p",
       text: "Before checking anything, it's worth separating two situations that feel identical but are completely different.",
@@ -727,7 +745,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "The second is that Google does have your website, but ranks it below your competitors.",
+      text: "The second is that Google does have your website, but ranks it below your competitors. That is where ranking factors come in: relevance to what was searched, the trust your domain has built, your local signals, and how well the page answers the question.",
     },
     {
       kind: "p",
@@ -746,7 +764,10 @@ const notShowingOnGooglePost: BlogPost = {
       text: "Spending months on SEO while the first problem is the real one is wasted effort, which is exactly why this is the thing to check before anything else.",
     },
 
-    { kind: "h2", text: "The 30 Second Check That Tells You Which One You Have" },
+    {
+      kind: "h3",
+      text: "The 30 Second Check That Tells You Which One You Have",
+    },
     {
       kind: "p",
       text: "Go to Google and search this, using your own domain:",
@@ -778,13 +799,53 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "If you got the second or third answer, keep reading. The next two sections cover the causes we run into most.",
+      text: "Keep that answer in mind, because it decides which half of this article matters to you.",
+    },
+
+    { kind: "h2", text: "Understanding SEO" },
+    { kind: "h3", text: "What is SEO?" },
+    {
+      kind: "p",
+      text: "SEO stands for search engine optimisation, and it has been explained badly so many times that the term now does more harm than good. It makes a fairly ordinary idea sound like a dark art you have to buy.",
+    },
+    {
+      kind: "p",
+      text: "Here is the whole of it. Google is trying to answer a question somebody typed. SEO is making it easy for Google to work out that your page is a good answer to that question, and giving it reasons to believe you.",
+    },
+    {
+      kind: "p",
+      text: "That is it. Everything below is a subcategory of those two things.",
+    },
+
+    { kind: "h3", text: "Key Components of SEO" },
+    {
+      kind: "p",
+      text: "Most of what gets sold as SEO falls into one of four buckets, and they are not equally urgent:",
+    },
+    {
+      kind: "ul",
+      items: [
+        "Technical: can Google reach your pages, read them, and is it allowed to list them. This is the one that breaks completely rather than partially, and it is where you start.",
+        "On-page: does the page actually say what it is about, in the words a customer would use.",
+        "Local: for a business serving an area, your Google Business Profile, which is a separate thing from your website entirely.",
+        "Off-page: whether anyone else on the internet points at you, through links and reviews. Slowest to move, and the one most agencies lead with.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "The order there is deliberate. A perfect off-page strategy on a site carrying a noindex tag achieves precisely nothing, which is why the technical checks come first no matter who is doing the work.",
     },
 
     {
       kind: "h2",
-      text: "Reason 1: Your Website Is Telling Google Not to List It",
+      text: "How to Have Your Website Show Up on Google",
     },
+    {
+      kind: "p",
+      text: "If the site: search returned little or nothing, this section is your whole problem. These are the three causes, in the order they are worth checking.",
+    },
+
+    { kind: "h3", text: "First, Check for a Noindex Tag" },
     {
       kind: "p",
       text: "Every website can carry an instruction that tells search engines to leave it out of results entirely. It's called a noindex tag.",
@@ -809,25 +870,16 @@ const notShowingOnGooglePost: BlogPost = {
       kind: "p",
       text: "The owner had assumed her firm was simply losing to bigger competitors. She wasn't losing to anyone. She wasn't in the race.",
     },
-    { kind: "h3", text: "How to check for it" },
     {
       kind: "p",
-      text: "The site: search above will already have hinted at this, because a noindexed site usually returns nothing at all.",
+      text: "How to check for it: the site: search above will already have hinted at this, because a noindexed site usually returns nothing at all. To confirm, open your website, right click anywhere on the page and choose View Page Source, then search that page for the word robots.",
     },
     {
       kind: "p",
-      text: "To confirm it, open your website, right click anywhere on the page and choose View Page Source. Then search that page for the word robots.",
-    },
-    {
-      kind: "p",
-      text: "If you find a line containing noindex, that's your answer, and it's the whole problem.",
-    },
-    {
-      kind: "p",
-      text: "Removing it is a small change for whoever maintains your site. Google usually starts picking the site up within days.",
+      text: "If you find a line containing noindex, that's your answer, and it's the whole problem. Removing it is a small change for whoever maintains your site, and Google usually starts picking the site up within days.",
     },
 
-    { kind: "h2", text: "Reason 2: Google Doesn't Know Your Pages Exist" },
+    { kind: "h3", text: "Submit Your Site to Google Search Console" },
     {
       kind: "p",
       text: "This is the quieter version, and in some ways the more frustrating one, because everything genuinely is set up correctly.",
@@ -838,11 +890,25 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "A sitemap solves that. It's a single file listing every page on your website, so Google doesn't have to stumble across them.",
+      text: "Google Search Console is the free tool where you tell Google your site exists, and it is the single most useful account a small business owner can set up. Verifying ownership takes a few minutes and usually means pasting a snippet or confirming through your domain provider.",
     },
     {
       kind: "p",
-      text: "Most modern websites generate one automatically. The step that gets missed is telling Google it's there, which happens in a free tool called Google Search Console.",
+      text: "Once you are in, the URL Inspection tool lets you paste any page and ask Google directly whether it has it. If it doesn't, Request Indexing puts that page in the queue rather than leaving you waiting to be discovered.",
+    },
+    {
+      kind: "p",
+      text: "That matters most on a genuinely new site. Google has to discover a new website, crawl it, and decide where it belongs, and that takes longer for a brand new domain with nothing linking to it yet. New is not a reason to sit and wait quietly, though. Setting up Search Console, submitting your sitemap and requesting indexing on your most important pages turns a wait of weeks into a wait of days.",
+    },
+
+    { kind: "h3", text: "Sitemap Creation and Submission" },
+    {
+      kind: "p",
+      text: "A sitemap is a single file listing every page on your website, so Google doesn't have to stumble across them one link at a time.",
+    },
+    {
+      kind: "p",
+      text: "Most modern websites generate one automatically, usually at yoursite.com/sitemap.xml. The step that gets missed is telling Google it's there, which happens in the Sitemaps section of Search Console.",
     },
     {
       kind: "p",
@@ -864,82 +930,13 @@ const notShowingOnGooglePost: BlogPost = {
       kind: "p",
       text: "That's the part worth sitting with. Months of a website being mostly invisible, undone by pressing a button nobody knew needed pressing.",
     },
-    { kind: "h3", text: "How to check for it" },
     {
       kind: "p",
-      text: "Sign in to Google Search Console, add your website if it isn't there already, and open the Sitemaps section.",
-    },
-    {
-      kind: "p",
-      text: "You want to see a sitemap listed, with a status of Success, and a page count that roughly matches how many pages your site actually has.",
-    },
-    {
-      kind: "p",
-      text: "If that section is empty, that's very likely your problem.",
+      text: "How to check for it: open the Sitemaps section of Search Console. You want to see a sitemap listed, with a status of Success, and a page count that roughly matches how many pages your site actually has. If that section is empty, that's very likely your problem.",
     },
 
-    { kind: "h2", text: "Reason 3: Your Website Is Genuinely New" },
-    {
-      kind: "p",
-      text: "If your site launched in the last few weeks, some of this is simply patience.",
-    },
-    {
-      kind: "p",
-      text: "Google has to discover a new website, crawl it, and decide where it belongs. That takes time, and it takes longer for a brand new domain with nothing linking to it yet.",
-    },
-    {
-      kind: "p",
-      text: "That said, new is not a reason to sit and wait quietly.",
-    },
-    {
-      kind: "p",
-      text: "Set up Search Console, submit your sitemap, and use the Request Indexing option on your most important pages. That turns a wait of weeks into a wait of days.",
-    },
-
-    {
-      kind: "h2",
-      text: "Reason 4: You're Thinking of Google Maps, Not Google Search",
-    },
-    {
-      kind: "p",
-      text: "Plenty of the time, the real complaint isn't about the website at all.",
-    },
-    {
-      kind: "p",
-      text: "When someone searches for a service near them, the map with three businesses pinned on it usually sits above everything else. For a local business, that block is often more valuable than the normal results underneath it.",
-    },
-    {
-      kind: "p",
-      text: "That block does not come from your website. It comes from your Google Business Profile, which is a separate free listing you control.",
-    },
-    {
-      kind: "p",
-      text: "A business can have an excellent website and be completely absent from the map, because the two are managed in different places.",
-    },
-    {
-      kind: "p",
-      text: "If that's the gap, the work is on the profile itself:",
-    },
-    {
-      kind: "ul",
-      items: [
-        "claim and verify the listing,",
-        "choose the right primary category, which matters more than almost anything else,",
-        "set the areas you actually serve,",
-        "add real photos rather than stock,",
-        "keep your hours accurate,",
-        "and ask happy customers for reviews, steadily rather than all at once.",
-      ],
-    },
-    {
-      kind: "p",
-      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website.",
-    },
-
-    {
-      kind: "h2",
-      text: "Reason 5: Google Has Your Site, It Just Doesn't Rank It",
-    },
+    { kind: "h2", text: "Website Search Optimization Basics" },
+    { kind: "h3", text: "On-Page SEO" },
     {
       kind: "p",
       text: "If the site: search returned a healthy list of your pages, none of the above is your problem.",
@@ -967,28 +964,222 @@ const notShowingOnGooglePost: BlogPost = {
       kind: "p",
       text: "A page headed Welcome To Our Website is competing for nothing. A page about the specific service you offer, in the specific town you offer it in, is competing for something real.",
     },
-
-    { kind: "h2", text: "The Order to Check These In" },
     {
       kind: "p",
-      text: "If you do nothing else from this article, do these four things in this order:",
+      text: "The most valuable piece of text on any page is its title tag, the blue line you see in a search result. If yours says Home, or your business name and nothing else, you are throwing away the clearest signal you get to send. Put the thing you do and the place you do it in. Roof repairs in Nanaimo beats Welcome, every time, and it takes about ten seconds to change.",
+    },
+    {
+      kind: "p",
+      text: "The same goes for the heading at the top of the page and the meta description underneath the title in results. None of this is clever. It is just saying plainly what the page is, which is a surprisingly rare thing for a small business site to do.",
+    },
+    {
+      kind: "p",
+      text: "Then give each service, and each town you genuinely serve, a page of its own. One page listing eight services competes properly for none of them. Eight pages, each about one service, gives Google eight specific things to match against eight different searches.",
+    },
+    {
+      kind: "p",
+      text: "One caution, because this advice gets taken too far. Do not build forty near-identical pages with only the town name swapped. Google treats that as a doorway pattern and demotes it, and it deserves to. If a page has nothing genuinely different to say about that town, it should not be a separate page.",
+    },
+
+    { kind: "h3", text: "Off-Page SEO" },
+    {
+      kind: "p",
+      text: "Everything above has been about what is on your site. Off-page is about what the rest of the internet says about you, and it is the slowest-moving part of all of this.",
+    },
+    {
+      kind: "p",
+      text: "A link from another website is a vote. Not all votes count the same, and the ones that count are the ones you would want anyway: your industry association, the local chamber of commerce, a supplier's dealer page, a news story about something you actually did, the sponsor list of a team you actually sponsor.",
+    },
+    {
+      kind: "p",
+      text: "Consistency matters as much as volume here. Your business name, address and phone number should read identically everywhere they appear, because Google uses that agreement to decide the listings all describe the same business.",
+    },
+    {
+      kind: "p",
+      text: "What we would steer you away from is buying links in bulk. It is against Google's guidelines, it is detectable, and the downside is a penalty on a site you rely on. For a small local business it is also unnecessary, because the local signals below move the needle faster.",
+    },
+
+    { kind: "h2", text: "Local Business SEO" },
+    { kind: "h3", text: "Understanding Local SEO" },
+    {
+      kind: "p",
+      text: "Plenty of the time, the real complaint isn't about the website at all.",
+    },
+    {
+      kind: "p",
+      text: "When someone searches for a service near them, the map with three businesses pinned on it usually sits above everything else. For a local business, that block is often more valuable than the normal results underneath it.",
+    },
+    {
+      kind: "p",
+      text: "That block does not come from your website. It comes from your Google Business Profile, which is a separate free listing you control.",
+    },
+    {
+      kind: "p",
+      text: "A business can have an excellent website and be completely absent from the map, because the two are managed in different places.",
+    },
+    {
+      kind: "p",
+      text: "Local results are decided mostly by three things: how relevant your profile is to what was searched, how close you are to the person searching, and how prominent your business is in terms of reviews and mentions. You cannot change the second one, which is worth knowing before you pay anyone to try.",
+    },
+
+    { kind: "h3", text: "Google My Business Optimization" },
+    {
+      kind: "p",
+      text: "If that's the gap, the work is on the profile itself:",
     },
     {
       kind: "ul",
       items: [
-        "run the site: search on your own domain to find out whether Google has your website at all,",
-        "if it returns nothing, check your page source for a noindex tag,",
-        "set up Google Search Console and confirm your sitemap is submitted and succeeding,",
-        "and claim your Google Business Profile if you haven't, because for a local business that listing often matters more than the website's own ranking.",
+        "claim and verify the listing,",
+        "choose the right primary category, which matters more than almost anything else,",
+        "set the areas you actually serve,",
+        "add real photos rather than stock,",
+        "keep your hours accurate,",
+        "and ask happy customers for reviews, steadily rather than all at once.",
       ],
     },
     {
       kind: "p",
-      text: "All four are free, and none of them require a developer to investigate.",
+      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website.",
     },
     {
       kind: "p",
-      text: "They will tell you whether you have a technical fault worth fixing this week, or a longer piece of work worth planning properly.",
+      text: "Reviews are the part small businesses most consistently underrate. Count matters, but so does recency and whether you reply, and a steady trickle reads as a real business in a way that fourteen reviews in one week does not.",
+    },
+    {
+      kind: "p",
+      text: "The practical version is to ask every satisfied customer, at the moment they say something nice, with a direct link to your profile so it takes them ten seconds. Do not offer anything in exchange, because that is against Google's policies and the reviews can be removed.",
+    },
+
+    { kind: "h2", text: "Technical SEO" },
+    {
+      kind: "p",
+      text: "Technical SEO has an intimidating name and mostly comes down to three questions: is the site fast, does it work on a phone, and is it secure. None of them will get you indexed on their own, but all three affect where you land once you are.",
+    },
+
+    { kind: "h3", text: "Importance of Site Speed" },
+    {
+      kind: "p",
+      text: "Speed is a confirmed ranking signal, and it matters most on phones on mobile data, which is where a lot of local searching happens.",
+    },
+    {
+      kind: "p",
+      text: "Run your homepage through Google's free PageSpeed Insights. The usual culprit on a small business site is enormous images: a photo straight off a phone can be four megabytes when the page needs about two hundred kilobytes. Compressing images is usually most of the fix, and it costs nothing.",
+    },
+    {
+      kind: "p",
+      text: "The bigger cost of a slow site is not the ranking anyway. It is the visitors who leave before the page finishes loading, which no amount of ranking fixes.",
+    },
+
+    { kind: "h3", text: "Mobile Optimization" },
+    {
+      kind: "p",
+      text: "Mobile is not a nice-to-have. Google indexes the mobile version of your site as the primary one, so if your site is awkward on a phone, that is the version being judged.",
+    },
+    {
+      kind: "p",
+      text: "Open your own site on your own phone and try to do the thing a customer would do: book, call, or buy something. Most problems announce themselves within thirty seconds. Text too small to read, buttons too close together to tap, a menu that covers the screen, a phone number that isn't tappable.",
+    },
+
+    { kind: "h3", text: "Secure Website Protocols (HTTPS)" },
+    {
+      kind: "p",
+      text: "HTTPS is the padlock in the address bar, and it means traffic between your visitor and your site is encrypted.",
+    },
+    {
+      kind: "p",
+      text: "Certificates are free and usually a single toggle with your host. Without it, browsers actively warn people away from your site, which costs you far more than the ranking difference does. If your address bar says Not Secure, fix that this week.",
+    },
+
+    { kind: "h2", text: "Content Creation Strategies" },
+    { kind: "h3", text: "Blogging for SEO" },
+    {
+      kind: "p",
+      text: "Blogging gets recommended to every small business, usually by someone selling blogging. It works, but not the way it is normally sold.",
+    },
+    {
+      kind: "p",
+      text: "Publishing regularly is not itself a ranking factor. Nobody at Google is rewarding you for posting weekly. What works is answering questions your customers genuinely ask, in enough depth that the answer is actually useful, on a page built to be found by someone searching that exact question.",
+    },
+    {
+      kind: "p",
+      text: "The practical test we use: if you would not send this article to a customer who asked you the question in person, it is not worth publishing. Ten articles that pass that test will do more than a hundred that do not.",
+    },
+    {
+      kind: "p",
+      text: "Long, specific questions are also where a small site can genuinely win. You are not going to outrank Wikipedia for a one-word term. You can absolutely be the best answer to how much does a website cost for a small business in Nanaimo, because almost nobody has written it properly.",
+    },
+
+    { kind: "h2", text: "Monitoring Your Progress" },
+    {
+      kind: "p",
+      text: "Doing the work without measuring it is how people end up paying for SEO for two years with no idea whether it did anything. Two free tools cover almost everything you need.",
+    },
+
+    { kind: "h3", text: "Tools for SEO Tracking" },
+    {
+      kind: "p",
+      text: "Google Search Console is the honest one, because the data comes from Google itself. It tells you which searches showed your site, how many people clicked, your average position, and which pages are indexed and which are not.",
+    },
+    {
+      kind: "p",
+      text: "If you check one thing a month, check whether your indexed page count is going up. That single number tells you whether the technical half of this article is working.",
+    },
+
+    { kind: "h3", text: "Analyzing Website Traffic" },
+    {
+      kind: "p",
+      text: "Google Analytics tells you what people did once they arrived: which pages they landed on, how long they stayed, and whether they reached your contact page.",
+    },
+    {
+      kind: "p",
+      text: "Rankings that produce no enquiries are a vanity metric, and this is where you find that out. Give it time before drawing conclusions, though. Search data is noisy week to week, and a month is usually the shortest window worth reading anything into.",
+    },
+
+    { kind: "h2", text: "Additional Tips and Best Practices" },
+    { kind: "h3", text: "Regularly Update Content" },
+    {
+      kind: "p",
+      text: "Update what is already there before writing anything new. Refreshing an article that already ranks, or a service page with last year's prices on it, is almost always worth more than another new page.",
+    },
+    {
+      kind: "p",
+      text: "Stale detail is also the thing customers notice fastest. Old hours, a discontinued service or a price that no longer applies costs you more trust than a missing blog post ever will.",
+    },
+
+    { kind: "h3", text: "Stay Updated on SEO Trends" },
+    {
+      kind: "p",
+      text: "Be sceptical about SEO advice, including the recent kind. Google changes its systems constantly, and a good deal of what circulates is either years out of date or simply invented.",
+    },
+    {
+      kind: "p",
+      text: "Google's own Search Central documentation is free, it is the actual source, and it is far less dramatic than most of what is written about it. If a claim you read somewhere isn't in there, treat it as a theory rather than a fact.",
+    },
+
+    { kind: "h2", text: "The 10 Tips, In the Order to Do Them" },
+    {
+      kind: "p",
+      text: "The order matters more than the list does. Everything above the halfway mark can be done this week and can change things within days. Everything below it is months of steady work, and doing it while something at the top is broken is wasted money.",
+    },
+    {
+      kind: "ul",
+      items: [
+        "Run the site: search on your own domain, so you know whether you have an indexing problem or a ranking one before you spend anything.",
+        "If it returns nothing, check your page source for a noindex tag. This is a same-day fix and the most expensive thing on the list to leave alone.",
+        "Set up Google Search Console and submit your sitemap, then confirm it says Success and the page count looks right.",
+        "If the site is new, use Request Indexing on your most important pages rather than waiting.",
+        "Rewrite your page titles so they say the service and the place, not Home or your business name.",
+        "Give each service, and each town you genuinely serve, a page of its own. Do not clone pages and swap the place name.",
+        "Claim and fully complete your Google Business Profile, category first. For a local business this often outweighs the website's own ranking.",
+        "Ask satisfied customers for reviews, steadily and forever, with a direct link and nothing offered in exchange.",
+        "Fix speed, mobile and HTTPS. Start by compressing your images, which is usually most of the problem.",
+        "Answer the questions your customers actually ask, properly, one page at a time.",
+      ],
+    },
+    {
+      kind: "p",
+      text: "The first four are free, take an afternoon between them, and none of them require a developer to investigate. They will also tell you which situation you are in, which is the thing worth knowing before anyone sells you a solution.",
     },
 
     { kind: "h2", text: "Final Thoughts" },
@@ -1050,7 +1241,6 @@ const facebookPageVsWebsitePost: BlogPost = {
     "small business online presence",
   ],
   author: "VDT Sites",
-  draft: true,
   faqs: [
     {
       q: "Is a Facebook or Instagram page enough for a small business?",
@@ -1935,4 +2125,23 @@ export function getAllPostSlugs(): string[] {
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug);
+}
+
+/**
+ * Published posts to link at the end of `slug`, same category first then
+ * newest. Drafts and the current post are excluded.
+ *
+ * This exists because every post used to sit on exactly one inbound
+ * internal link (the blog index), which is both a crawl-depth problem and
+ * a dead end for a reader who just finished one. Returns [] on a
+ * one-post blog, and the caller renders nothing in that case.
+ */
+export function getRelatedPosts(slug: string, limit = 2): BlogPost[] {
+  const current = getPostBySlug(slug);
+  const others = getAllPosts().filter((p) => p.slug !== slug);
+  if (!current) return others.slice(0, limit);
+
+  const sameCategory = others.filter((p) => p.category === current.category);
+  const rest = others.filter((p) => p.category !== current.category);
+  return [...sameCategory, ...rest].slice(0, limit);
 }
