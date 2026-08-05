@@ -1362,11 +1362,12 @@ const facebookPageVsWebsitePost: BlogPost = {
    - ⚠️ THE NUMBER CHANGED 2026-08-03, from "1-2 weeks when they're prompt"
      to "three to four days once we have your content" — Sem's call, applied
      across the whole site the same day (services intro + PHASES, lib/faqs,
-     the FAQ JSX in app/page.tsx, /llms.txt and this post). Note this sits
-     against two other things he said in the interview: that his fastest-ever
-     build should stay OUT, and that he wanted no number on the slow end. If
-     3-4 days turns out to be the best case rather than the norm, this post
-     and four other places are now overpromising and all five move together.
+     the FAQ JSX in app/page.tsx, /llms.txt and this post). Those five have
+     to move together or the site contradicts itself, which it did before
+     this: five places said "one to three weeks" and two said "one to two".
+     The earlier interview answer of 1-2 weeks is SUPERSEDED, not a second
+     opinion to average against. Asked directly whether 3-4 days was his
+     best case or his typical, Sem confirmed 2026-08-03: **typical**.
    - He does NOT want a number on the slow end, so nothing here quantifies
      it. It's framed as being set by response time, full stop.
    - Delays are content/photos, approvals, and third-party accounts. He did
