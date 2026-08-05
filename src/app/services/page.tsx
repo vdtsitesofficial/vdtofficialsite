@@ -200,8 +200,8 @@ const BUILD_INCLUDED = [
  */
 const BRAND_INCLUDED = [
   "A custom logo, in every format you need for web, print and signage",
-  "Print-ready business card design, ready to send to a printer",
-  "An editable invoice template",
+  "Print-ready business card design, ready to be professionally printed",
+  "A branded, editable invoice template",
   "Brand typefaces chosen and set up across your site",
 ];
 
