@@ -568,12 +568,21 @@ html.vdt-mobile-intro body {
 .zh-nav a:hover::after { transform: scaleX(1); }
 
 /* Header priority order, highest to lowest: Contact, Work, Services, About,
-   Blog, Portfolio. "Home" is gone entirely at every width because the brand
-   mark to the left is already the home link, and that duplicate was the
-   cheapest width to reclaim.
+   Blog, Reviews, Portfolio. "Home" is gone entirely at every width because
+   the brand mark to the left is already the home link, and that duplicate
+   was the cheapest width to reclaim.
    Items drop in reverse priority as the row narrows. Measured at 721px a
    six-item nav sits flush against the wordmark (0px clearance) even though
    every item still fits on screen, so "it fits" is not the bar. */
+
+/* Reviews drops first, so below 960px the row is the same five items it has
+   always been. It's in the nav at all because /reviews was a near-orphan:
+   one inbound link sitewide while being listed in the sitemap. */
+@media (max-width: 960px) {
+  .zh-nav a[data-nav="reviews"],
+  .dest-nav a[data-nav="reviews"] { display: none; }
+}
+
 @media (max-width: 860px) {
   .zh-nav a[data-nav="about"],
   .dest-nav a[data-nav="about"],

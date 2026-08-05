@@ -3,6 +3,10 @@ const LINKS = [
   { label: "Services", href: "/services", drop: "" },
   // Drop order matches the homepage chrome exactly: About goes at 860px,
   // Blog at 720px. See the priority note in public/lab/style.css.
+  // Reviews drops first, at 960px — it's the lowest-priority link of the
+  // set, and it was added here so /reviews isn't a near-orphan (it sat on
+  // one inbound link from /about while being listed in the sitemap).
+  { label: "Reviews", href: "/reviews", drop: "vdt-ph__drop-960" },
   { label: "About", href: "/about", drop: "vdt-ph__drop-860" },
   { label: "Blog", href: "/blog", drop: "vdt-ph__drop-720" },
 ];
@@ -117,6 +121,9 @@ export default function PageHeader({
           font-weight: 600 !important;
         }
 
+        @media (max-width: 960px) {
+          .vdt-ph__drop-960 { display: none; }
+        }
         @media (max-width: 860px) {
           .vdt-ph__drop-860 { display: none; }
         }

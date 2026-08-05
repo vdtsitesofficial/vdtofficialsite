@@ -6,6 +6,7 @@ import BlogReadingChrome from "@/components/BlogReadingChrome";
 import {
   getAllPostSlugs,
   getPostBySlug,
+  getRelatedPosts,
   headingId,
   SITE_URL,
   type BlogPost,
@@ -124,6 +125,7 @@ export default async function BlogPostPage({
     (b): b is Extract<typeof b, { kind: "h2" }> => b.kind === "h2",
   );
   const words = wordCount(post);
+  const related = getRelatedPosts(post.slug);
 
   /* BlogPosting structured data — earns the rich article treatment in
      search and feeds Google's understanding of authorship + dates. */
@@ -288,6 +290,32 @@ export default async function BlogPostPage({
               {shortDate(post.publishedAt)} · {words.toLocaleString()} words
             </span>
           </div>
+
+          {/* Keep reading. Renders nothing on a one-post blog. Its real job
+              is structural: without it every post's only inbound internal
+              link is the blog index, which leaves each one a dead end for
+              readers and a crawl-depth outlier for search engines. */}
+          {related.length > 0 && (
+            <section className="vdt-related" aria-labelledby="related-heading">
+              <h2 className="vdt-related__heading" id="related-heading">
+                Keep reading
+              </h2>
+              <ul className="vdt-related__list">
+                {related.map((r) => (
+                  <li key={r.slug} className="vdt-related__item">
+                    <Link href={`/blog/${r.slug}`} className="vdt-related__link">
+                      <span className="vdt-related__kicker">{r.category}</span>
+                      <span className="vdt-related__title">{r.title}</span>
+                      <span className="vdt-related__excerpt">{r.excerpt}</span>
+                      <span className="vdt-related__more" aria-hidden>
+                        Read it →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <aside className="vdt-coda__cta">
             <h2 className="vdt-coda__cta-title">

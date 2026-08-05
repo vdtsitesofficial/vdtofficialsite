@@ -374,6 +374,7 @@ export default function Home() {
         <nav className="zh-nav">
           <a href="/work">Work</a>
           <a href="/services">Services</a>
+          <a href="/reviews" data-nav="reviews">Reviews</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact">Contact&nbsp;Us</a>
@@ -521,6 +522,7 @@ export default function Home() {
         <nav className="dest-nav">
           <a href="/work">Work</a>
           <a href="/services">Services</a>
+          <a href="/reviews" data-nav="reviews">Reviews</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>

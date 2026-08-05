@@ -496,6 +496,84 @@ export default function BlogLayout({
         }
 
         /* ============================================================
+         *  Keep reading — related posts.
+         *  Same rule-above-heading rhythm as the FAQ block so the coda
+         *  reads as one stack. Cards are the index page's CARD_BG.
+         * ============================================================ */
+        .vdt-related {
+          margin-top: 64px;
+          padding-top: 40px;
+          border-top: 1px solid rgba(26, 26, 26, 0.12);
+        }
+        .vdt-related__heading {
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+          line-height: 1.12;
+          letter-spacing: -0.01em;
+          color: #1a1a1a;
+          margin: 0 0 28px;
+        }
+        .vdt-related__list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 20px;
+        }
+        .vdt-related__link {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          gap: 10px;
+          padding: 26px 24px;
+          background: #fbf7ee;
+          border: 1px solid rgba(26, 26, 26, 0.10);
+          border-radius: 16px;
+          text-decoration: none;
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .vdt-related__link:hover {
+          border-color: rgba(26, 26, 26, 0.28);
+          transform: translateY(-2px);
+        }
+        .vdt-related__kicker {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 10.5px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #dc2626;
+        }
+        .vdt-related__title {
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 1.05rem;
+          line-height: 1.3;
+          color: #1a1a1a;
+        }
+        .vdt-related__excerpt {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 15px;
+          line-height: 1.6;
+          color: #6f6a60;
+        }
+        .vdt-related__more {
+          margin-top: auto;
+          padding-top: 6px;
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #1a1a1a;
+        }
+        @media (max-width: 720px) {
+          .vdt-related__list { grid-template-columns: minmax(0, 1fr); }
+        }
+
+        /* ============================================================
          *  Coda — signature, CTA, back link.
          * ============================================================ */
         .vdt-coda__sig {
@@ -627,6 +705,7 @@ export default function BlogLayout({
                 and the row needs that width for Services. */}
             <Link href="/work">Work</Link>
             <Link href="/services">Services</Link>
+            <Link href="/reviews" data-nav="reviews">Reviews</Link>
             <Link href="/about" data-nav="about">About</Link>
             <Link href="/blog" data-nav="blog">Blog</Link>
             <a href="/contact" className="dest-cta">
