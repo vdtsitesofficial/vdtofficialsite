@@ -155,6 +155,76 @@ export default function BlogIndexPage() {
           </div>
         </>
       )}
+
+      {/* ── Closing note ─────────────────────────────── */}
+      {/* An index of card links is nearly all markup and almost no prose,
+          which is why this page measured 86 words in the Aug 2026 Semrush
+          audit. This block gives the page something to actually be about,
+          and sends readers somewhere useful instead of dead-ending. */}
+      <section
+        style={{
+          marginTop: "80px",
+          paddingTop: "40px",
+          borderTop: `1px solid ${RULE}`,
+        }}
+        aria-labelledby="blog-about"
+      >
+        <h2
+          id="blog-about"
+          style={{
+            fontFamily: DISPLAY,
+            fontWeight: 700,
+            fontSize: "clamp(1.35rem, 2.5vw, 1.7rem)",
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
+            color: INK,
+            margin: "0 0 20px",
+          }}
+        >
+          Why we write these
+        </h2>
+        <div
+          style={{
+            fontFamily: BODY,
+            fontSize: "17px",
+            lineHeight: 1.7,
+            color: "#2a2823",
+            maxWidth: "68ch",
+          }}
+        >
+          <p style={{ margin: "0 0 18px" }}>
+            Most of what gets written about small business websites is written
+            to sell something. The result is a lot of articles that talk around
+            a question instead of answering it, because the honest answer would
+            be inconvenient for whoever is publishing.
+          </p>
+          <p style={{ margin: "0 0 18px" }}>
+            These are the questions we actually get asked, on the phone, by
+            people running real businesses on Vancouver Island. What a website
+            should cost. Why theirs is invisible on Google. Whether a Facebook
+            page is genuinely enough. We answer each one the way we would answer
+            it in a conversation, including the parts where the answer is that
+            you probably do not need to hire anyone.
+          </p>
+          <p style={{ margin: 0 }}>
+            If you have a question that is not covered here, send it to us and
+            we will answer it directly. Ask enough times and it becomes the next
+            article.{" "}
+            <Link href="/contact" style={{ color: ACCENT, fontWeight: 600 }}>
+              Get in touch
+            </Link>
+            , see{" "}
+            <Link href="/services" style={{ color: ACCENT, fontWeight: 600 }}>
+              what we do
+            </Link>
+            , or read{" "}
+            <Link href="/reviews" style={{ color: ACCENT, fontWeight: 600 }}>
+              what our clients say
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

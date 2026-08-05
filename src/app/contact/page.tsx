@@ -95,6 +95,124 @@ export default function ContactPage() {
 
       <main className="flex-1">
         <ContactCard />
+
+        {/* Body copy, deliberately below the card so the form stays above
+            the fold. This page was 61 words of real content (Semrush audit,
+            Aug 2026), which is a thin page by any measure and gave a visitor
+            deciding whether to call nothing to go on. Original copy on
+            purpose: the homepage FAQ is not repeated here, because trading a
+            low-word-count flag for a duplicate-content one is not a fix. */}
+        <section
+          className="mx-auto max-w-3xl px-6 pb-20 pt-16 md:pt-24"
+          aria-labelledby="what-happens-next"
+        >
+          <h2
+            id="what-happens-next"
+            className="text-2xl font-bold leading-tight md:text-3xl"
+            style={{ fontFamily: SYNE }}
+          >
+            What happens after you get in touch
+          </h2>
+
+          <ol className="mt-8 space-y-7">
+            <li className="flex gap-4">
+              <span
+                className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#dc2626] text-[13px] font-bold text-white"
+                aria-hidden
+              >
+                1
+              </span>
+              <p className="text-[15px] leading-relaxed text-[#0d0d0d]/75">
+                <strong className="font-semibold text-[#0d0d0d]">
+                  We reply within one business day.
+                </strong>{" "}
+                Usually the same day if you catch us before mid-afternoon. If
+                you asked us to call, we phone at the time you picked rather
+                than whenever it suits us.
+              </p>
+            </li>
+            <li className="flex gap-4">
+              <span
+                className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#dc2626] text-[13px] font-bold text-white"
+                aria-hidden
+              >
+                2
+              </span>
+              <p className="text-[15px] leading-relaxed text-[#0d0d0d]/75">
+                <strong className="font-semibold text-[#0d0d0d]">
+                  A short, practical conversation.
+                </strong>{" "}
+                What your business does, who you are trying to reach, and what
+                your current site is getting wrong if you have one. Fifteen
+                minutes is usually enough. There is no script and no pitch deck.
+              </p>
+            </li>
+            <li className="flex gap-4">
+              <span
+                className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#dc2626] text-[13px] font-bold text-white"
+                aria-hidden
+              >
+                3
+              </span>
+              <p className="text-[15px] leading-relaxed text-[#0d0d0d]/75">
+                <strong className="font-semibold text-[#0d0d0d]">
+                  A fixed written quote, free.
+                </strong>{" "}
+                One price for the whole project, agreed before any work starts,
+                so there is no hourly meter running and no invoice that arrives
+                bigger than you expected.
+              </p>
+            </li>
+          </ol>
+
+          <h2
+            className="mt-14 text-2xl font-bold leading-tight md:text-3xl"
+            style={{ fontFamily: SYNE }}
+          >
+            Useful things to mention
+          </h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-[#0d0d0d]/75">
+            None of this is required, and a one-line message is genuinely fine.
+            But if you already know the answers, saying so up front means the
+            first reply you get is a useful one instead of a list of questions:
+          </p>
+          <ul className="mt-5 space-y-2.5 text-[15px] leading-relaxed text-[#0d0d0d]/75">
+            <li className="flex gap-3">
+              <span className="text-[#dc2626]" aria-hidden>
+                &bull;
+              </span>
+              <span>What your business does, and where you are based.</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#dc2626]" aria-hidden>
+                &bull;
+              </span>
+              <span>
+                Whether you have a website now, and what you dislike about it.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#dc2626]" aria-hidden>
+                &bull;
+              </span>
+              <span>
+                Roughly when you want to be live. Most sites take three to four
+                days once the content is in hand.
+              </span>
+            </li>
+          </ul>
+
+          <p className="mt-10 border-t border-black/10 pt-8 text-[15px] leading-relaxed text-[#0d0d0d]/75">
+            We are based in Nanaimo and work with businesses across Vancouver
+            Island and the Vancouver area, so being out of town is not a
+            problem. Everything can be handled by phone, email and video call if
+            that is easier. And there is no obligation at the end of any of
+            this: plenty of these conversations finish with some advice and no
+            invoice, which is a perfectly good outcome. If we are not the right
+            fit for what you need, we would rather tell you and point you
+            somewhere that is.
+          </p>
+        </section>
       </main>
 
       <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
