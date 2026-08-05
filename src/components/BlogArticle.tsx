@@ -1,4 +1,24 @@
-import { Block, headingId } from "@/lib/blog";
+import Link from "next/link";
+import { Block, headingId, parseInline } from "@/lib/blog";
+
+/**
+ * Expand [label](/path) into real anchors. Internal paths only, enforced by
+ * the pattern in lib/blog.ts, so next/link is always the right element and
+ * there is no target/rel decision to get wrong.
+ */
+function inline(text: string): React.ReactNode {
+  const nodes = parseInline(text);
+  if (nodes.length === 1 && nodes[0].kind === "text") return text;
+  return nodes.map((n, i) =>
+    n.kind === "link" ? (
+      <Link key={i} href={n.href} className="vdt-prose__link">
+        {n.text}
+      </Link>
+    ) : (
+      <span key={i}>{n.text}</span>
+    ),
+  );
+}
 
 /* ────────────────────────────────────────────────────────────────────
  * BlogArticle — editorial long-form renderer.
@@ -61,13 +81,13 @@ export default function BlogArticle({ content }: { content: Block[] }) {
           return (
             <ul key={i}>
               {block.items.map((item, j) => (
-                <li key={j}>{item}</li>
+                <li key={j}>{inline(item)}</li>
               ))}
             </ul>
           );
         }
 
-        return <p key={i}>{block.text}</p>;
+        return <p key={i}>{inline(block.text)}</p>;
       })}
     </div>
   );

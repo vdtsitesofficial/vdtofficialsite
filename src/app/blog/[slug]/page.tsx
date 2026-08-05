@@ -11,6 +11,23 @@ import {
   SITE_URL,
   type BlogPost,
 } from "@/lib/blog";
+import { getAuthor } from "@/lib/authors";
+import { parseInline, stripInline } from "@/lib/blog";
+
+/** Same inline-link expansion the article body uses, for FAQ answers. */
+function inlineFaq(text: string): React.ReactNode {
+  const nodes = parseInline(text);
+  if (nodes.length === 1 && nodes[0].kind === "text") return text;
+  return nodes.map((n, i) =>
+    n.kind === "link" ? (
+      <Link key={i} href={n.href} className="vdt-prose__link">
+        {n.text}
+      </Link>
+    ) : (
+      <span key={i}>{n.text}</span>
+    ),
+  );
+}
 
 type RouteParams = { slug: string };
 
@@ -126,6 +143,7 @@ export default async function BlogPostPage({
   );
   const words = wordCount(post);
   const related = getRelatedPosts(post.slug);
+  const author = getAuthor(post.author);
 
   /* BlogPosting structured data — earns the rich article treatment in
      search and feeds Google's understanding of authorship + dates. */
@@ -140,7 +158,20 @@ export default async function BlogPostPage({
     articleSection: post.category,
     keywords: post.keywords.join(", "),
     inLanguage: "en-CA",
-    author: { "@type": "Organization", name: post.author, url: SITE_URL },
+    /* Person, not Organization. A named author with a real background is
+       the E-E-A-T signal an Organization byline throws away, and it is what
+       AI answers look at when deciding whose account of something to cite.
+       Falls back to an Organization author if the byline has no entry in
+       lib/authors.ts, so an unknown name never emits a hollow Person. */
+    author: author
+      ? {
+          "@type": "Person",
+          name: author.name,
+          description: author.role,
+          url: author.url,
+          worksFor: { "@id": `${SITE_URL}/#business` },
+        }
+      : { "@type": "Organization", name: post.author, url: SITE_URL },
     publisher: {
       "@type": "Organization",
       name: "VDT Sites",
@@ -159,7 +190,10 @@ export default async function BlogPostPage({
         mainEntity: post.faqs.map((f) => ({
           "@type": "Question",
           name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
+          /* stripInline, not the raw string: schema values are plain text,
+             so an un-stripped answer would put literal "[label](/path)"
+             brackets into a rich result. */
+          acceptedAnswer: { "@type": "Answer", text: stripInline(f.a) },
         })),
       }
     : null;
@@ -277,11 +311,32 @@ export default async function BlogPostPage({
                 {post.faqs.map((f) => (
                   <div key={f.q} className="vdt-faq__item">
                     <dt className="vdt-faq__q">{f.q}</dt>
-                    <dd className="vdt-faq__a">{f.a}</dd>
+                    <dd className="vdt-faq__a">{inlineFaq(f.a)}</dd>
                   </div>
                 ))}
               </dl>
             </section>
+          )}
+
+          {/* Author bio. Ships together with the Person schema above, same
+              rule as the FAQ block: markup describes something the reader
+              can actually see. This is the visible half of the E-E-A-T
+              signal, and it is where a reader decides whether the client
+              anecdotes in the article are worth believing. */}
+          {author && (
+            <aside className="vdt-author" aria-label="About the author">
+              <span className="vdt-author__avatar" aria-hidden="true">
+                {monogram(author.name)}
+              </span>
+              <div className="vdt-author__text">
+                <p className="vdt-author__name">{author.name}</p>
+                <p className="vdt-author__role">{author.role}</p>
+                <p className="vdt-author__bio">{author.bio}</p>
+                <Link href="/about" className="vdt-author__link">
+                  More about the studio
+                </Link>
+              </div>
+            </aside>
           )}
 
           <div className="vdt-coda__sig">

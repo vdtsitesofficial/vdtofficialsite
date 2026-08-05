@@ -495,6 +495,86 @@ export default function BlogLayout({
           margin: 0;
         }
 
+        /* Inline links inside body copy and FAQ answers. Underlined rather
+           than colour-only, so they are distinguishable without relying on
+           hue. */
+        .vdt-prose__link {
+          color: #b3341f;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          text-decoration-thickness: 1px;
+          text-decoration-color: rgba(179, 52, 31, 0.4);
+          transition: text-decoration-color 0.15s ease;
+        }
+        .vdt-prose__link:hover { text-decoration-color: #b3341f; }
+
+        /* ============================================================
+         *  Author bio. Visible half of the Person schema.
+         * ============================================================ */
+        .vdt-author {
+          margin-top: 64px;
+          padding-top: 36px;
+          border-top: 1px solid rgba(26, 26, 26, 0.12);
+          display: flex;
+          gap: 18px;
+          align-items: flex-start;
+        }
+        .vdt-author__avatar {
+          flex: 0 0 auto;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          background: #1a1a1a;
+          color: #f4efe6;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 17px;
+          letter-spacing: 0.02em;
+        }
+        .vdt-author__name {
+          font-family: 'Syne', 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 1.05rem;
+          color: #1a1a1a;
+          margin: 0;
+        }
+        .vdt-author__role {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #6f6a60;
+          margin: 4px 0 0;
+        }
+        .vdt-author__bio {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 15.5px;
+          line-height: 1.65;
+          color: #2a2823;
+          margin: 12px 0 0;
+        }
+        .vdt-author__link {
+          display: inline-block;
+          margin-top: 10px;
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #dc2626;
+          text-decoration: none;
+          border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+        }
+        .vdt-author__link:hover { border-bottom-color: #dc2626; }
+        @media (max-width: 520px) {
+          .vdt-author { gap: 14px; }
+          .vdt-author__avatar { width: 44px; height: 44px; font-size: 15px; }
+        }
+
         /* ============================================================
          *  Keep reading — related posts.
          *  Same rule-above-heading rhythm as the FAQ block so the coda
