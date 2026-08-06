@@ -163,7 +163,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       q: "Why do some web designers charge $10,000 for a website?",
-      a: "Sometimes the work genuinely justifies it: custom functionality, integrations, booking or membership systems all take real time. Other times you are paying agency overhead rather than a better website. The way to tell is to look at their past work and ask what specifically is included, rather than assuming a higher price means a better result.",
+      a: "Sometimes the work genuinely justifies it: custom functionality, integrations, booking or membership systems all take real time, and so does full brand work, where the logo, print materials and site are designed together. We sell that as one package, covered on [logo design in Nanaimo](/logo-design-nanaimo). Other times you are paying agency overhead rather than a better website. The way to tell is to look at their past work and ask what specifically is included, rather than assuming a higher price means a better result.",
     },
     {
       q: "Is a monthly fee for a website worth paying?",
