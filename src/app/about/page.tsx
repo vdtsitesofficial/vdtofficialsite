@@ -329,15 +329,15 @@ export default function AboutPage() {
                 flagged it as needing. */}
             <p className="mx-auto mt-3 max-w-lg text-center text-[15px] leading-relaxed text-[#0d0d0d]/60">
               Coffee roasters, food trucks, counsellors, importers, tradespeople
-              and clubs, mostly here on Vancouver Island. Running a non-profit or
-              a charity?{" "}
+              and clubs, mostly here on Vancouver Island. Running a non-profit
+              or a charity? That build is different enough that{" "}
               <a
                 href="/non-profit-website-design-vancouver"
                 className="font-semibold text-[#dc2626] underline underline-offset-2"
               >
-                That build is different enough to have its own page
-              </a>
-              .
+                non-profit website design
+              </a>{" "}
+              has its own page.
             </p>
 
             <ul className="mt-9 flex flex-wrap justify-center gap-3">

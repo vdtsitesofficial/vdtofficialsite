@@ -621,6 +621,31 @@ export default function ServicesPage() {
           </div>
         </section>
 
+        {/* Transition header. "How it works" used to run straight into
+            "01 Websites" with nothing telling the reader the numbered
+            groups are the full service catalogue (Sem, 2026-08-05). */}
+        <section className="px-6 pt-24 md:px-14 md:pt-32">
+          <div className="mx-auto max-w-6xl">
+            <Reveal>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
+                The full list
+              </p>
+              <h2
+                className="mt-4 max-w-[20ch] text-[30px] font-bold leading-[1.1] md:text-[44px]"
+                style={{ fontFamily: SYNE }}
+              >
+                Everything we offer, in five groups.
+              </h2>
+              <p className="mt-5 max-w-xl text-[15px] leading-[1.75] text-[#0d0d0d]/65">
+                The numbered sections below are the complete list of what VDT
+                does: websites, hosting and care, local SEO and search, design
+                and brand, and custom apps. If the thing you need is not on it,
+                ask anyway. The list grows when clients do.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
         {/* service groups. Sticky group column on the left, hairline-divided
             rows on the right. Deliberately not a card grid. */}
         {GROUPS.map((group, gi) => (

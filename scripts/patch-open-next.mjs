@@ -103,6 +103,35 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 export default {
   ...__vdtWorkerCore,
   async fetch(request, env, ctx) {
+    // www -> apex 301, added 2026-08-05. Both hostnames are custom domains
+    // on this Worker, and www used to serve the full site with a 200 -
+    // canonicals meant Google consolidated it, but every other crawler saw
+    // two complete copies (the Aug 4 Semrush audit counted 44 pages on a
+    // 22-page site). This check lives HERE and not in Next middleware
+    // because enableCacheInterception answers prerendered routes before
+    // the routing layer runs, so middleware would be bypassed on exactly
+    // the pages that matter. The wrapper is the one place every request
+    // passes through.
+    const url = new URL(request.url);
+    if (url.hostname.replace(/\\.$/, "") === "www.vdtsites.com") {
+      url.hostname = "vdtsites.com";
+      // 301 for GET/HEAD (the permanent signal every SEO tool expects);
+      // 308 for everything else so a POST to /api/contact or /api/admin
+      // that somehow arrives on www keeps its method and body (Codex
+      // review 2026-08-05: some clients rewrite POST->GET across a 301).
+      // Explicit one-day cache: permanent enough to be cheap, short
+      // enough that a mistake is recoverable without waiting out a
+      // browser's heuristic forever-cache of an uncached 301.
+      const status =
+        request.method === "GET" || request.method === "HEAD" ? 301 : 308;
+      return new Response(null, {
+        status,
+        headers: {
+          location: url.toString(),
+          "cache-control": "public, max-age=86400",
+        },
+      });
+    }
     const resp = await __vdtWorkerCore.fetch(request, env, ctx);
     const cc = resp.headers.get("cache-control") || "";
     if (cc.includes("s-maxage=31536000")) {
@@ -115,6 +144,6 @@ export default {
 };
 `;
     fs.writeFileSync(target, src, "utf8");
-    console.log("[patch-open-next] PATCH 2 OK - prerendered HTML now max-age=0, must-revalidate");
+    console.log("[patch-open-next] PATCH 2 OK - prerendered HTML now max-age=0, must-revalidate + www->apex 301");
   }
 }
