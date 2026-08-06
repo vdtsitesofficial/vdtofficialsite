@@ -25,11 +25,11 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: "Can I edit my own website after it's built?",
-    a: "Yes. We build in an editor that lets you change text and images directly on your live page: click the text, type the new version, save. No technical knowledge and no separate dashboard to learn. Bigger changes we handle for you.",
+    a: "Yes. We build in an editor that lets you change text and images directly on your live page: click the text, type the new version, save. No technical knowledge and no separate dashboard to learn. For bigger changes we are one message away.",
   },
   {
     q: "How long does it take to build a website?",
-    a: "Once we have your content, most sites are live in three to four days. The main variable is how quickly we get your text, photos and feedback, not the build. Projects that run longer are almost always waiting on something from the business rather than something from us.",
+    a: `Once we have your content, most sites are live in three to four days. That is the ${PRICE_BUILD_FROM} website package; extra work bought alongside it, like a brand kit or custom features, is quoted and scheduled separately and is not part of that window. The main variable is how quickly we get your text, photos and feedback, not the build. Projects that run longer are almost always waiting on something from the business rather than something from us.`,
   },
   {
     q: "What does the monthly fee cover?",
@@ -37,6 +37,6 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: "Do I own my website?",
-    a: "Yes. Once your project is paid in full the site is yours, and we'll hand over a full export of the code on request. We'd rather keep you because the work is good than because you're locked in.",
+    a: "Yes. Once your project is paid in full the site is yours, and we'll hand over a full export of the code on request.",
   },
 ];

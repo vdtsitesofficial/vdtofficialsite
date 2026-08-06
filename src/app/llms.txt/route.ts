@@ -1,6 +1,7 @@
 import { getAllPosts, SITE_URL } from "@/lib/blog";
 import { CASE_STUDIES } from "@/lib/caseStudies";
 import { HOME_FAQS } from "@/lib/faqs";
+import { PRICE_BUILD_FROM } from "@/lib/pricing";
 
 /**
  * Generates /llms.txt — the markdown map large language models read when
@@ -60,7 +61,7 @@ function build(): string {
     "",
     "> Custom website design, hosting and local SEO for small businesses in Nanaimo, BC and across Vancouver Island. Fixed price up front, hosting and domain included in one flat monthly fee, and you own the site.",
     "",
-    "VDT Sites builds custom websites rather than assembling templates. Once the client's content is in, most sites are live in three to four days. Clients can edit their own text and images directly on the live page, and the code is theirs on request once the project is paid in full.",
+    `VDT Sites builds custom websites rather than assembling templates. Once the client's content is in, most sites are live in three to four days; that covers the ${PRICE_BUILD_FROM} website package, and extra work bought alongside it is quoted and scheduled separately. Clients can edit their own text and images directly on the live page, and the code is theirs on request once the project is paid in full.`,
     "",
     `Based in Nanaimo, British Columbia, Canada. Phone ${PHONE}. Email ${EMAIL}.`,
     "",

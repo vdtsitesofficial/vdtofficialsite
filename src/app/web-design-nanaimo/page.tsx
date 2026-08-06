@@ -126,7 +126,7 @@ export default function LandingPage() {
           </div>
 
           <p className="mt-5 text-[13px] text-[#0d0d0d]/50">
-            Free quotes · No pressure · We reply within one business day
+            Free quotes · No pressure · We reply within one day
           </p>
         </section>
 

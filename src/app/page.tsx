@@ -1533,7 +1533,8 @@ export default function Home() {
                 <p>
                   Yes. We build in an editor that lets you change text and images directly on your
                   live page: click the text, type the new version, save. No technical
-                  knowledge and no separate dashboard to learn. Bigger changes we handle for you.
+                  knowledge and no separate dashboard to learn. For bigger changes we are one
+                  message away.
                 </p>
               </div>
             </details>
@@ -1546,7 +1547,10 @@ export default function Home() {
               <div className="faq-a">
                 <p>
                   Once we have your content, most sites are live in{" "}
-                  <strong>three to four days</strong>. The main variable is how quickly we get
+                  <strong>three to four days</strong>. That is the {PRICE_BUILD_FROM}{" "}
+                  website package; extra work bought alongside it, like a brand kit or
+                  custom features, is quoted and scheduled separately and is not part of
+                  that window. The main variable is how quickly we get
                   your text, photos and feedback, not the build. Projects that run longer are
                   almost always waiting on something from the business rather than something
                   from us.
@@ -1576,8 +1580,7 @@ export default function Home() {
               <div className="faq-a">
                 <p>
                   Yes. Once your project is paid in full the site is yours, and we&rsquo;ll hand
-                  over a full export of the code on request. We&rsquo;d rather keep you because the
-                  work is good than because you&rsquo;re locked in.
+                  over a full export of the code on request.
                 </p>
               </div>
             </details>

@@ -89,7 +89,7 @@ export default function ContactPage() {
             250-616-2087
           </a>
           , send a message, or schedule a call below and we&rsquo;ll phone you
-          at the time you pick. We reply within one business day.
+          at the time you pick. We reply within one day.
         </p>
       </div>
 
@@ -124,7 +124,7 @@ export default function ContactPage() {
               </span>
               <p className="text-[15px] leading-relaxed text-[#0d0d0d]/75">
                 <strong className="font-semibold text-[#0d0d0d]">
-                  We reply within one business day.
+                  We reply within one day.
                 </strong>{" "}
                 Usually the same day if you catch us before mid-afternoon. If
                 you asked us to call, we phone at the time you picked rather

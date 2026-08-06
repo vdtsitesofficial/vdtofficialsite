@@ -184,7 +184,7 @@ const INCLUDED = [
   "SSL security certificate",
   "Backups and security monitoring",
   "Ongoing support from the person who built it",
-  "Minor text and image edits free for the first month",
+  "Minor text and image edits free for the first two weeks",
 ];
 
 /**
@@ -201,7 +201,7 @@ const BUILD_INCLUDED = [
   // Indexing, NOT ranking. "Submitted so your pages appear" is a thing we
   // actually do (sitemap + IndexNow ping on deploy) and can promise. Never
   // let this drift into implying a position in the results.
-  "Your pages submitted to Google and Bing the day you launch",
+  "Your pages submitted to Google and Bing to be accessible as soon as possible after launch",
   "Everything set up, tested and taken live for you",
 ];
 
@@ -250,30 +250,40 @@ const USUALLY_EXTRA = [
  * five together or the site contradicts itself (it did, until 2026-08-03: five
  * places said "one to three weeks" and two said "one to two").
  */
+/**
+ * The real four days, corrected by Sem 2026-08-06. The previous version was
+ * written from assumption and promised a finished homepage design on day
+ * one, which is not what happens: day one is the plan, and design does not
+ * start until the client's information is actually in hand. That ordering
+ * matters, because the whole timeline hangs off it.
+ *
+ * Day 2 is deliberately worded "once we have what we need from you". It is
+ * the honest gate on the four days and it matches the FAQ answer.
+ */
 const PHASES = [
   {
     n: "01",
     when: "Day one",
-    title: "Free quote and consult",
-    body: "A call or an email about the business, what it needs and which pages it takes. You get a fixed written price back. No charge, and no pressure attached to it.",
+    title: "Your site plan, page by page",
+    body: "A free quote, then a written breakdown of the site: every page and what sits on it. Home carries the intro, services, testimonials and the rest; a projects page carries your projects. You see the whole structure before anyone designs anything, so there are no surprises about what you are getting.",
   },
   {
     n: "02",
-    when: "Day one",
-    title: "Your homepage design",
-    body: "The homepage gets designed first and we go through it together. That is where the look of the whole site gets settled, so nothing else gets built until you are happy with it.",
+    when: "Day two",
+    title: "Design starts",
+    body: "Design begins once we have everything we need from you: your text, photos and any details we asked for. You review it, and revisions happen here. This is also the step that decides the timeline, because the clock only really starts when your information arrives.",
   },
   {
     n: "03",
-    when: "Days two and three",
-    title: "Build and review",
-    body: "The rest of the site gets built out, checking in as it goes so you watch it take shape instead of waiting weeks for a reveal you either love or quietly do not.",
+    when: "Day three",
+    title: "Build, tweaks and changes",
+    body: "The site gets built out, and anything that comes up along the way gets changed as we go. You watch it take shape instead of waiting for a reveal you either love or quietly do not.",
   },
   {
     n: "04",
-    when: "Day three or four",
-    title: "Launch",
-    body: "The site goes live and your domain points at it. One more run through for final edits, then we show you how to keep it up to date yourself.",
+    when: "Day four",
+    title: "Launch and handover",
+    body: "If everything is on track, we point your domain at the site, test your contact form, and send you a short info sheet: how to reach your admin panel, how to edit your own pages, and details for anything extra you bought alongside the site.",
   },
 ];
 
@@ -600,8 +610,10 @@ export default function ServicesPage() {
               </h2>
               <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/65">
                 Once we have your content, most sites are live in three to four
-                days. The main variable is how fast we get your photos and
-                feedback, not the build.
+                days. That is the {FROM_PRICE} website package; extra work
+                bought alongside it is quoted and scheduled separately. The main
+                variable is how fast we get your photos and feedback, not the
+                build.
               </p>
             </Reveal>
 
