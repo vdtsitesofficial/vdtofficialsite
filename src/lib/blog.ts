@@ -1172,7 +1172,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website.",
+      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website. If you would rather hand this work off than do it yourself, it is exactly what our [local SEO setup in Nanaimo](/seo-nanaimo) covers, as a one-time job rather than a monthly bill.",
     },
     {
       kind: "p",

@@ -72,6 +72,8 @@ type ServiceGroup = {
   title: string;
   intro: string;
   services: Service[];
+  /** Optional deep link to the group's dedicated service page. */
+  more?: { label: string; href: string };
 };
 
 const GROUPS: ServiceGroup[] = [
@@ -126,6 +128,7 @@ const GROUPS: ServiceGroup[] = [
   {
     id: "seo",
     title: "Local SEO and search",
+    more: { label: "How we sell SEO in Nanaimo", href: "/seo-nanaimo" },
     intro:
       "A site nobody can find is a poster. The search groundwork is built into every project, and we go further when you need to compete locally.",
     services: [
@@ -146,6 +149,7 @@ const GROUPS: ServiceGroup[] = [
   {
     id: "brand",
     title: "Logo and brand",
+    more: { label: "Logo design in Nanaimo", href: "/logo-design-nanaimo" },
     intro:
       "A site and a brand that were designed apart always look it. We do both, so yours match.",
     services: [
@@ -416,10 +420,22 @@ export default function ServicesPage() {
         <section className="px-5 pt-14 md:px-14 md:pt-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
-              <p className="max-w-3xl text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
-                Two ways to start, both fixed price. Bigger builds cost more
-                and we tell you the number before any work begins, so nothing
-                arrives as a surprise on an invoice.
+              {/* "Website packages" is deliberate wording: the two-offer
+                  block IS the packages answer for the "website packages"
+                  cluster (320/mo KD 20 + "small business website packages"
+                  260/mo KD 23, Semrush ca Aug 2026). A separate packages
+                  page would cannibalise this one, so the keyword lives here. */}
+              <h2
+                className="max-w-[24ch] text-[26px] font-bold leading-[1.12] md:text-[34px]"
+                style={{ fontFamily: SYNE }}
+              >
+                Website packages, both fixed price.
+              </h2>
+              <p className="mt-4 max-w-3xl text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
+                Two small business website packages and nothing hidden between
+                them. Bigger builds cost more and we tell you the number before
+                any work begins, so nothing arrives as a surprise on an
+                invoice.
               </p>
             </Reveal>
 
@@ -674,6 +690,14 @@ export default function ServicesPage() {
                 <p className="mt-4 max-w-sm text-[15px] leading-[1.75] text-[#0d0d0d]/60">
                   {group.intro}
                 </p>
+                {group.more && (
+                  <a
+                    href={group.more.href}
+                    className="mt-4 inline-block text-[13px] font-semibold uppercase tracking-[0.12em] text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                  >
+                    {group.more.label} &rarr;
+                  </a>
+                )}
               </Reveal>
 
               <div className="border-t border-black/10">

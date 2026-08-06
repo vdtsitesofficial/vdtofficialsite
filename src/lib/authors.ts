@@ -17,10 +17,11 @@
  *   - Person author schema inside the BlogPosting JSON-LD
  *   - Open Graph article:author
  *
- * Spelling note: Sem writes his surname "van Duist", lowercase particle,
- * which is the Dutch convention. app/about/page.tsx currently renders
- * "Sem Van Duist". Entity consistency matters for exactly this kind of
- * signal, so those should be made to match. Flagged 2026-08-05.
+ * Spelling rule (Sem, 2026-08-05): "Sem van Duist", lowercase particle,
+ * everywhere his full name appears. /about and /work were fixed the same
+ * day. The one deliberate exception is "Van Duist & Treitel" in the terms
+ * of service: standalone surnames capitalize the particle in Dutch
+ * convention, and it is the legal entity name.
  * --------------------------------------------------------------------- */
 
 export type Author = {

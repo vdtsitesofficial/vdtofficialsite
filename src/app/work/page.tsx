@@ -207,7 +207,7 @@ export default function WorkIndexPage() {
                   tiny. These are cropped tight on the face at 3x the
                   display size instead. */}
               {[
-                { src: "/team/sem-avatar.webp", alt: "Sem Van Duist" },
+                { src: "/team/sem-avatar.webp", alt: "Sem van Duist" },
                 { src: "/team/phillip-avatar.webp", alt: "Phillip Treitel" },
               ].map((p) => (
                 /* eslint-disable-next-line @next/next/no-img-element */

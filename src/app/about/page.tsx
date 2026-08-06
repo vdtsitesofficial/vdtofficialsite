@@ -31,10 +31,10 @@ type Founder = {
 
 const FOUNDERS: Founder[] = [
   {
-    name: "Sem Van Duist",
+    name: "Sem van Duist",
     role: "Design & build",
     photo: "/team/sem.webp",
-    alt: "Sem Van Duist, co-founder of VDT Sites",
+    alt: "Sem van Duist, co-founder of VDT Sites",
     bio: "Sem studies computer science and accounting at VIU. The computer science half is where the building comes from. The accounting half is why he treats a website as something that has to pay for itself, not just look good in a portfolio.",
     facts: ["VIU student", "Computer science", "Accounting"],
   },
@@ -73,19 +73,19 @@ const ABOUT_TESTIMONIALS = TESTIMONIALS.slice(0, 2);
 export const metadata: Metadata = {
   title: "About Us: The Team Behind VDT Sites",
   description:
-    "Meet Sem Van Duist and Phillip Treitel, the two VIU students in Nanaimo, BC building websites for Vancouver Island small businesses.",
+    "Meet Sem van Duist and Phillip Treitel, the two VIU students in Nanaimo, BC building websites for Vancouver Island small businesses.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About Us: The Team Behind VDT Sites",
     description:
-      "Meet Sem Van Duist and Phillip Treitel, the two VIU students in Nanaimo, BC building websites for Vancouver Island small businesses.",
+      "Meet Sem van Duist and Phillip Treitel, the two VIU students in Nanaimo, BC building websites for Vancouver Island small businesses.",
     images: [`${SITE}/team/sem.webp`],
   },
   twitter: {
     card: "summary_large_image",
     title: "About Us: The Team Behind VDT Sites",
     description:
-      "Meet Sem Van Duist and Phillip Treitel, the two VIU students in Nanaimo, BC building websites for Vancouver Island small businesses.",
+      "Meet Sem van Duist and Phillip Treitel, the two VIU students in Nanaimo, BC building websites for Vancouver Island small businesses.",
     images: [`${SITE}/team/sem.webp`],
   },
 };
