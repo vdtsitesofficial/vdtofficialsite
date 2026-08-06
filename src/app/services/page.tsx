@@ -851,6 +851,19 @@ export default function ServicesPage() {
                 </a>
                 .
               </p>
+              {/* Same reason as the line above: the Victoria city page needs a
+                  real inbound link from a page with authority before it ships. */}
+              <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
+                Based down-island? We build for Victoria and the Capital
+                Regional District too:{" "}
+                <a
+                  href="/web-design-victoria"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  website design in Victoria
+                </a>
+                .
+              </p>
               <p className="mt-10 text-[13px] text-[#0d0d0d]/40">
                 {allServices.length} services · Nanaimo and across Vancouver
                 Island

@@ -79,6 +79,7 @@ function build(): string {
     `- [Non-profit website design in Vancouver](${SITE_URL}/non-profit-website-design-vancouver): websites for Vancouver non-profits and registered charities, including donations, volunteer-friendly editing and the website requirements behind a Google Ad Grants application.`,
     `- [Local SEO in Nanaimo](${SITE_URL}/seo-nanaimo): one-time local SEO setup at a fixed price, no monthly retainer. Google Business Profile, on-page fixes, listings and measurement.`,
     `- [Logo design in Nanaimo](${SITE_URL}/logo-design-nanaimo): custom logo as part of the Full Brand Kit, which includes business card design, an invoice template, brand typefaces and the website itself.`,
+    `- [Website design in Victoria, BC](${SITE_URL}/web-design-victoria): websites for Victoria and Capital Regional District businesses, built up-island in Nanaimo (90 minutes away, no ferry) without downtown agency overhead.`,
     "",
     "## Services",
     "",

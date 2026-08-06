@@ -612,7 +612,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "This cuts both ways and it is worth saying plainly: it is also why we can quote what we quote from Nanaimo. We are not cheaper because the work is thinner. We are cheaper because we are two people on Vancouver Island rather than a floor of staff on Georgia Street.",
+      text: "This cuts both ways and it is worth saying plainly: it is also why we can quote what we quote from Nanaimo. We are not cheaper because the work is thinner. We are cheaper because we are two people on Vancouver Island rather than a floor of staff on Georgia Street. If you are down-island, the same maths is why we take work in [Victoria](/web-design-victoria) at up-island prices.",
     },
     { kind: "h3", text: "Freelancer, studio or agency" },
     {
