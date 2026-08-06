@@ -31,19 +31,23 @@ import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
  * rank here. Directories take #4 (DesignRush) and #7 (Bark), which are
  * citation targets, not competitors.
  *
- * ── The anti-doorway angle, and why it is not swappable
- * Nanaimo to Victoria is ~110km of highway, about 90 minutes, and
- * critically NO FERRY. That is the one thing a Vancouver page could never
- * say, and it is the spine of this page: same island, same timezone,
- * reachable in person if it ever actually matters, without Victoria
- * agency overhead. Find-and-replace "Victoria" with any mainland city and
- * the page falls apart, which is the test.
+ * ── The angle (revised by Sem, 2026-08-06)
+ * The first cut sold proximity as if in-person meetings were the point.
+ * Sem's correction: clients almost never meet us, and the actual sell is
+ * SERVICE — a small company where a question reaches the person who built
+ * the site, by one email or call, within a day. Proximity stays as a
+ * nice-to-have ("close if you ever want to meet"), and the geography
+ * (90 minutes up-island, no ferry, no downtown overhead) still anchors
+ * the page to Victoria specifically, which keeps the find-and-replace
+ * anti-doorway test passing.
  *
  * ── Honesty constraint (do not "improve" this away)
  * There is NO Victoria client. lib/caseStudies.ts is Nanaimo, Parksville,
- * Calgary, plus one island-wide and one BC-wide. The page never implies
- * otherwise: it says plainly that the work is up-island and lets the
- * reader judge. Same rule as the non-profit page.
+ * Calgary, plus one island-wide and one BC-wide. The page must not IMPLY
+ * a Victoria client — but per Sem (2026-08-06) it also must not volunteer
+ * the gap unprompted: no "straight answer first" disclaimers, no counting
+ * the portfolio ("eight" reads small), no "if being first bothers you"
+ * lines. Describe the real work, link to /work and /reviews, stop there.
  *
  * "wordpress developer victoria" (110/mo, KD 10) is deliberately NOT
  * targeted. VDT does not build WordPress, and ranking for it would earn
@@ -85,7 +89,7 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: "Do you actually work with businesses in Victoria?",
-    a: "We work across Vancouver Island and Victoria is on it, about ninety minutes down the highway from us. We will be straight with you though: our built-and-launched work so far is Nanaimo, Parksville and island-wide rather than Victoria specifically. If you want a designer who can point at ten Victoria storefronts they built, there are agencies downtown who can. What we can point at is every site we have built and every review from the people we built them for.",
+    a: "Yes. We work with businesses across Vancouver Island, and Victoria is about ninety minutes down the highway from our base in Nanaimo. Everything runs by phone, email and video call, exactly the way it does for our up-island clients, and you get the same service either way: questions answered within a day by the people who built your site.",
   },
   {
     q: "How much does a website cost in Victoria?",
@@ -109,10 +113,17 @@ const FAQS = [
   },
 ];
 
+/**
+ * Reason 1 rewritten 2026-08-06 on Sem's direction. The first cut sold
+ * proximity as if in-person meetings were the point; in reality clients
+ * almost never meet us and the real differentiator is service: a small
+ * company where a question reaches the person who built the site, within
+ * a day. Closeness stays as a nice-to-have, not the pitch.
+ */
 const REASONS = [
   {
-    title: "Same island, no ferry",
-    body: "Victoria is about 110 kilometres down the Trans-Canada from us, roughly ninety minutes, and there is no water in between. That sounds like a small thing until you compare it to hiring on the mainland, where an in-person meeting means a ferry booking and half a day gone. Same timezone, same island, reachable if it ever actually matters.",
+    title: "One call away, always",
+    body: "We are a small company by choice, and the thing we sell hardest is service. When you have a question, you reach the people who actually built your site, by one email or one phone call, and you hear back within a day, usually the same one. No ticket queue, no account manager relaying messages. And since we are just up-island in Nanaimo rather than across the country, it is nice to know we are close, even though most of our clients never need us in the room.",
   },
   {
     title: "You are not paying for a downtown office",
@@ -360,13 +371,6 @@ export default function WebDesignVictoriaPage() {
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  Straight answer first: our launched work is Nanaimo,
-                  Parksville and island-wide rather than Victoria specifically.
-                  We are not going to dress that up. What we can show you is
-                  every build and every review that came with it, which is more
-                  than most sites in this market will put in front of you.
-                </p>
-                <p>
                   A coffee roaster with a real online store. A counselling
                   practice that left Squarespace. A Japanese import business, a
                   food truck run from the owner&rsquo;s phone, a city council
@@ -376,7 +380,7 @@ export default function WebDesignVictoriaPage() {
                     href="/work"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"
                   >
-                    All eight are written up properly
+                    Every build is written up properly
                   </Link>
                   , and{" "}
                   <Link
@@ -388,8 +392,10 @@ export default function WebDesignVictoriaPage() {
                   .
                 </p>
                 <p>
-                  If being first in Victoria bothers you, say so on the call and
-                  we will talk about it honestly rather than talk you out of it.
+                  Every one of those businesses reaches us the same way you
+                  would: one message, answered by the person who built their
+                  site. That is the part of the work you cannot see in a
+                  portfolio, and it is the part our reviews keep coming back to.
                 </p>
               </div>
             </div>
