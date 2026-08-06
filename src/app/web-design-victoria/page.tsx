@@ -65,7 +65,7 @@ const SPLIT =
 
 export const metadata: Metadata = {
   title: "Website Design in Victoria, BC",
-  description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY} plus ${PRICE_MONTHLY} a month. Built up-island in Nanaimo, 90 minutes away and no ferry. Free quote: 250-616-2087.`,
+  description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY} plus ${PRICE_MONTHLY} a month. Quick, personal service from up-island in Nanaimo. Free quote: 250-616-2087.`,
   keywords: [
     "victoria website design",
     "web designer victoria",
@@ -77,12 +77,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/web-design-victoria" },
   openGraph: {
     title: "Website Design in Victoria, BC | VDT Sites",
-    description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY}. Same island, no ferry, and no downtown agency overhead in the quote.`,
+    description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY}. One call away with quick, personal service, and no downtown agency overhead in the quote.`,
     url: "/web-design-victoria",
   },
   twitter: {
     title: "Website Design in Victoria, BC | VDT Sites",
-    description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY}. Same island, no ferry, no agency overhead.`,
+    description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY}. Quick, personal service, no agency overhead.`,
   },
 };
 
