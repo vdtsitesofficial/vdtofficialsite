@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import MobileDrawer from "@/components/MobileDrawer";
 
@@ -93,6 +92,35 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google tag (gtag.js). PLAIN <script> elements, deliberately NOT
+            next/script.
+
+            next/script with strategy="afterInteractive" was tried first and
+            looked fine in a browser, but it does NOT emit a <script> element
+            server-side — it ships a <link rel="preload"> plus an entry in the
+            RSC flight payload, and the real element is only created once React
+            hydrates. Anything reading the HTML without running our JS therefore
+            sees no tag at all, and Google Ads' own tag detector reported
+            "Google tag wasn't detected on vdtsites.com" while the tag was in
+            fact working for real visitors.
+
+            Plain elements in <head> are what Google's install instructions ask
+            for, and they put the tag in the served HTML where a detector can
+            find it. async keeps it off the render path. */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`,
+          }}
+        />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* Site-wide font baseline. The OLD showcase design loaded Fraunces,
@@ -115,21 +143,6 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        {/* Google tag (gtag.js). afterInteractive, so it never competes with
-            the hero for first paint — an ad click that bounces before load
-            was never going to convert anyway. */}
-        <Script
-          id="gtag-src"
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-window.gtag = gtag;
-gtag('js', new Date());
-gtag('config', '${GOOGLE_ADS_ID}');`}
-        </Script>
         {/* One drawer for every route. The three headers (#zoom-header and
             #site-chrome in page.tsx, <PageHeader> on the cream pages) each
             render only a [data-vdt-burger] button; this wires them all. */}
