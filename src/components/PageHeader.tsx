@@ -1,14 +1,13 @@
+// Matches the homepage chrome exactly: below the collapse breakpoint the row
+// keeps Work + Contact and everything else moves into <MobileDrawer>. The
+// links still render at every width — `vdt-ph__drop` only hides them from the
+// row, and the drawer carries its own copy. See public/lab/style.css.
 const LINKS = [
   { label: "Work", href: "/work", drop: "" },
-  { label: "Services", href: "/services", drop: "" },
-  // Drop order matches the homepage chrome exactly: About goes at 860px,
-  // Blog at 720px. See the priority note in public/lab/style.css.
-  // Reviews drops first, at 960px — it's the lowest-priority link of the
-  // set, and it was added here so /reviews isn't a near-orphan (it sat on
-  // one inbound link from /about while being listed in the sitemap).
-  { label: "Reviews", href: "/reviews", drop: "vdt-ph__drop-960" },
-  { label: "About", href: "/about", drop: "vdt-ph__drop-860" },
-  { label: "Blog", href: "/blog", drop: "vdt-ph__drop-720" },
+  { label: "Services", href: "/services", drop: "vdt-ph__drop" },
+  { label: "Reviews", href: "/reviews", drop: "vdt-ph__drop" },
+  { label: "About", href: "/about", drop: "vdt-ph__drop" },
+  { label: "Blog", href: "/blog", drop: "vdt-ph__drop" },
 ];
 
 /**
@@ -63,6 +62,18 @@ export default function PageHeader({
         <a href="/contact" className="vdt-ph__cta">
           Contact&nbsp;Us
         </a>
+        {/* Styled by MobileDrawer's scoped sheet, which layout.tsx renders on
+            every route — these pages don't load /lab/style.css. */}
+        <button
+          className="vdt-burger"
+          type="button"
+          data-vdt-burger
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="vdt-drawer"
+        >
+          <span /><span /><span />
+        </button>
       </nav>
     </>
   );
@@ -121,18 +132,19 @@ export default function PageHeader({
           font-weight: 600 !important;
         }
 
-        @media (max-width: 960px) {
-          .vdt-ph__drop-960 { display: none; }
-        }
-        @media (max-width: 860px) {
-          .vdt-ph__drop-860 { display: none; }
+        /* Keep this query identical to COLLAPSE in MobileDrawer.tsx and the
+           trim block in public/lab/style.css. The touch half catches iOS
+           "Request Desktop Website", which reports a viewport wider than
+           960px and would otherwise hand a phone the full row. */
+        @media (max-width: 960px), (hover: none) and (pointer: coarse) {
+          .vdt-ph__drop { display: none; }
         }
         @media (max-width: 720px) {
-          .vdt-ph__drop-720 { display: none; }
           .vdt-ph { padding: 14px 16px; }
           .vdt-ph__mark { width: 28px; height: 28px; }
           .vdt-ph__brand span { font-size: 12px; letter-spacing: 0.04em; }
-          .vdt-ph__nav { gap: 10px; }
+          /* Was 10px when this row had to seat five items. */
+          .vdt-ph__nav { gap: 18px; }
           .vdt-ph__nav a { font-size: 11px; letter-spacing: 0.04em; }
           .vdt-ph__cta {
             padding: 8px 12px;
@@ -141,7 +153,7 @@ export default function PageHeader({
           }
         }
         @media (max-width: 380px) {
-          .vdt-ph__nav { gap: 5px; }
+          .vdt-ph__nav { gap: 14px; }
           .vdt-ph__nav a { font-size: 10px; }
         }
         @media (max-width: 339px) {

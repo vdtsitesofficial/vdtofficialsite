@@ -373,11 +373,23 @@ export default function Home() {
             keeps this row fitting on a phone. */}
         <nav className="zh-nav">
           <a href="/work">Work</a>
-          <a href="/services">Services</a>
+          <a href="/services" data-nav="services">Services</a>
           <a href="/reviews" data-nav="reviews">Reviews</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact">Contact&nbsp;Us</a>
+          {/* Collapses the row to Work + Contact and opens <MobileDrawer>,
+              which carries all six. See layout.tsx. */}
+          <button
+            className="vdt-burger"
+            type="button"
+            data-vdt-burger
+            aria-label="Menu"
+            aria-expanded="false"
+            aria-controls="vdt-drawer"
+          >
+            <span /><span /><span />
+          </button>
         </nav>
       </header>
 
@@ -521,11 +533,21 @@ export default function Home() {
         </a>
         <nav className="dest-nav">
           <a href="/work">Work</a>
-          <a href="/services">Services</a>
+          <a href="/services" data-nav="services">Services</a>
           <a href="/reviews" data-nav="reviews">Reviews</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact" className="dest-cta">Contact&nbsp;Us</a>
+          <button
+            className="vdt-burger"
+            type="button"
+            data-vdt-burger
+            aria-label="Menu"
+            aria-expanded="false"
+            aria-controls="vdt-drawer"
+          >
+            <span /><span /><span />
+          </button>
         </nav>
       </header>
 

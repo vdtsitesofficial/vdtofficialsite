@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import MobileDrawer from "@/components/MobileDrawer";
 
 // Google Analytics and the cookie-consent banner were removed 2026-07-29.
 // GA4 was consent-gated, which meant it only ever counted visitors who
@@ -97,7 +98,13 @@ export default function RootLayout({
             unused preload). They now live in app/page.tsx alongside the
             <picture> elements they actually serve. Keep them there. */}
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* One drawer for every route. The three headers (#zoom-header and
+            #site-chrome in page.tsx, <PageHeader> on the cream pages) each
+            render only a [data-vdt-burger] button; this wires them all. */}
+        <MobileDrawer />
+      </body>
     </html>
   );
 }
