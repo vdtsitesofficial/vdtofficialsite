@@ -10,12 +10,14 @@
  * Voice: no em dashes or en dashes (see lib/caseStudies.ts).
  */
 
+import { PRICE_BUILD_FROM, PRICE_MONTHLY } from "@/lib/pricing";
+
 export type Faq = { q: string; a: string };
 
 export const HOME_FAQS: Faq[] = [
   {
     q: "How much does a small business website cost?",
-    a: "Every project is quoted individually based on how many pages and features you need. You get a fixed price up front, so there are no hourly surprises. Most small business sites include design, build, hosting setup and launch. Get in touch and we'll put a quote together for free.",
+    a: `We build small business websites from ${PRICE_BUILD_FROM}, plus ${PRICE_MONTHLY} a month for hosting, updates and support. Bigger builds cost more and you get a fixed price up front, so there are no hourly surprises. Most small business sites include design, build, hosting setup and launch. Get in touch and we'll put a quote together for free.`,
   },
   {
     q: "Do you work with businesses outside Nanaimo?",

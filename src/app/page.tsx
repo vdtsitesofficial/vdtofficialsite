@@ -21,6 +21,7 @@ import MobileHomeHero from "@/components/MobileHomeHero";
 import { LAB_V } from "@/lib/labVersion";
 import { TESTIMONIALS } from "@/lib/testimonials";
 import { HOME_FAQS } from "@/lib/faqs";
+import { PRICE_BUILD_FROM, PRICE_MONTHLY } from "@/lib/pricing";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
 const IMPORTMAP = JSON.stringify({
@@ -1498,8 +1499,10 @@ export default function Home() {
               </summary>
               <div className="faq-a">
                 <p>
-                  Every project is quoted individually based on how many pages and features you
-                  need. You get a <strong>fixed price up front</strong>, so there are no
+                  We build small business websites{" "}
+                  <strong>from {PRICE_BUILD_FROM}</strong>, plus {PRICE_MONTHLY} a
+                  month for hosting, updates and support. Bigger builds cost more
+                  and you get a <strong>fixed price up front</strong>, so there are no
                   hourly surprises. Most small business sites include design, build, hosting setup
                   and launch. Get in touch and we&rsquo;ll put a quote together for free.
                 </p>
