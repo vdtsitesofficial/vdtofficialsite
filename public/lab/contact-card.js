@@ -199,10 +199,24 @@
         sendBtn.classList.add("cc-sent");
         label.textContent = isCall ? "Call booked ✓" : "Message sent ✓";
         form.reset();
-        // GA4 conversion — only on confirmed delivery, not on attempt.
-        // generate_lead fires for both intents (it's the lead conversion);
-        // book_call on top distinguishes scheduled callbacks.
+        // Conversion pings — only on confirmed delivery, never on attempt.
+        // Living inside the ok branch is the point: a click that fails to
+        // send is not a lead, and Google Ads must not be told it was, or it
+        // optimises the campaign toward broken submissions.
         if (typeof window.gtag === "function") {
+          // Google Ads "Contact" conversion. This is the one Performance Max
+          // actually bids on. send_to is required — the tag in layout.tsx
+          // configures AW-18345910455, and the label after the slash is what
+          // maps this ping to the Contact conversion action in the Ads UI.
+          window.gtag("event", "conversion", {
+            send_to: "AW-18345910455/mizMCKWIot0cELfBgaxE",
+          });
+
+          // GA4 events. INERT as of 2026-08-06: GA4 was removed in July 2026
+          // and deliberately did not come back with Ads, so nothing consumes
+          // these today. Left in place because they cost nothing and are
+          // already correct if a GA4 property is ever added. Do not "fix"
+          // them by adding a G- tag without updating the legal pages.
           window.gtag("event", "generate_lead", { form_id: "contact_card" });
           if (isCall) {
             window.gtag("event", "book_call", { form_id: "contact_card" });

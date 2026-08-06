@@ -11,12 +11,18 @@ import type { Metadata } from "next";
  * form (name/email/message stored + emailed via Cloudflare), Cloudflare
  * hosting, and Google Fonts.
  *
- * Google Analytics and the cookie banner were REMOVED on 2026-07-29.
- * Measurement is now Cloudflare Web Analytics, which is cookieless, so
- * there is no consent to collect and no banner. Nothing on a public page
- * sets a cookie. No advertising pixels or cross-site trackers, and none
- * before this either. Keep this page and /cookie-policy describing the
- * same reality, in the same commit.
+ * Google Analytics and the cookie banner were REMOVED on 2026-07-29 and did
+ * NOT come back. Traffic measurement is Cloudflare Web Analytics, which is
+ * cookieless.
+ *
+ * 2026-08-06: VDT started running Google Ads, so the Google Ads tag
+ * (AW-18345910455, in app/layout.tsx) now runs site-wide and sets the
+ * first-party _gcl_au advertising cookie. It measures VDT's own ads only —
+ * no retargeting, no cross-site tracking, no profile building. Sections 3
+ * and 5 below say so; do not let them drift back to "no cookies".
+ *
+ * Keep this page, /cookie-policy and the tag in app/layout.tsx describing
+ * the same reality, in the same commit.
  */
 
 export const metadata: Metadata = {
@@ -46,7 +52,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
             VDT Sites Privacy Policy
           </h1>
-          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: July 29, 2026</p>
+          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: August 6, 2026</p>
         </header>
 
         <div className="space-y-6 text-[16px] leading-[1.75] text-[#3a3a3c]">
@@ -86,7 +92,7 @@ export default function PrivacyPolicyPage() {
             <strong>Analytics: cookieless, and no consent needed.</strong> We use Cloudflare Web Analytics to see how many people read a page and roughly how they arrived. It sets <strong>no cookies</strong>, does not fingerprint your browser, and cannot follow you to any other website. It gives us counts and trends, and nothing that identifies you.
           </p>
           <p>
-            We previously used Google Analytics behind a consent banner. We removed both in July 2026, so there is no longer any analytics request to Google, no analytics cookie, and no banner to click. Details are in our{" "}
+            We previously used Google Analytics behind a consent banner. We removed both in July 2026 and did not bring them back, so there is no analytics cookie on this Site and no banner to click. Details are in our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
@@ -96,7 +102,10 @@ export default function PrivacyPolicyPage() {
             .
           </p>
           <p>
-            We do <strong>not</strong> run advertising pixels, social-media trackers, or any behavioural-tracking or ad-profiling tools on this Site.
+            <strong>Advertising measurement.</strong> We advertise on Google, and since August 2026 the Site loads the Google Ads tag so we can tell which ads actually lead to someone contacting us. It sets a first-party cookie (<span className="font-mono text-[13px]">_gcl_au</span>), and when you successfully send the contact form it reports to Google that a conversion happened. What Google receives is the fact of a conversion, <strong>not</strong> your name, your email address, or the contents of your message. We do not upload customer data to Google, and we do not use enhanced conversions.
+          </p>
+          <p>
+            We do <strong>not</strong> run retargeting, social-media trackers, or any behavioural-profiling tools. Nothing on this Site follows you to other websites, and we do not build an advertising profile of you.
           </p>
         </Section>
 
@@ -131,6 +140,9 @@ export default function PrivacyPolicyPage() {
             <li>
               <strong>Cloudflare Web Analytics:</strong> cookieless traffic measurement, so we can see how many people read a page. It stores nothing on your device and collects no information that identifies you.
             </li>
+            <li>
+              <strong>Google Ads:</strong> conversion measurement for our own advertising. The Google Ads tag sets the <span className="font-mono text-[13px]">_gcl_au</span> cookie and tells Google when a visit resulted in a contact form submission, so we can see which ads are worth paying for. It receives the fact that a conversion occurred, not the personal information you typed into the form.
+            </li>
           </ul>
           <p>
             These services handle data under their own privacy policies, which we encourage you to review.
@@ -139,7 +151,7 @@ export default function PrivacyPolicyPage() {
 
         <Section title="5. Cookies">
           <p>
-            Browsing this Site sets <strong>no cookies</strong>. Our analytics is cookieless, and there are no advertising or cross-site tracking cookies, so there is no banner and nothing to opt out of. Our hosting and security provider (Cloudflare) may set an essential security cookie when its protection features are triggered, and signing in to the private admin area sets one session cookie. For the full list, see our{" "}
+            Browsing this Site sets <strong>one</strong> non-essential cookie, <span className="font-mono text-[13px]">_gcl_au</span>, which measures our own Google advertising and is described above. Our analytics remains cookieless, and there are no cross-site tracking cookies. Our hosting and security provider (Cloudflare) may set an essential security cookie when its protection features are triggered, and signing in to the private admin area sets one session cookie. Blocking the advertising cookie changes nothing about how the Site works for you. For the full list and how to block it, see our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"

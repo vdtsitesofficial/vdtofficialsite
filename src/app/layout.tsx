@@ -1,18 +1,33 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import MobileDrawer from "@/components/MobileDrawer";
 
-// Google Analytics and the cookie-consent banner were removed 2026-07-29.
-// GA4 was consent-gated, which meant it only ever counted visitors who
-// accepted, so the numbers were structurally low and usable for trends
-// only. Its one real advantage was feeding conversions to Google Ads, and
-// VDT does not run Ads. Traffic is now measured by Cloudflare Web
-// Analytics, which is cookieless, needs no consent and therefore no
-// banner, and counts everyone. Nothing on a public page sets a cookie.
-// If Google Ads ever starts, GA4 and the banner both come back together;
-// see git history for the removed components.
+// TAGGING HISTORY — read before touching GOOGLE_ADS_ID below.
+//
+// 2026-07-29: Google Analytics and the cookie-consent banner were removed.
+// GA4 was consent-gated, so it only ever counted visitors who accepted and
+// the numbers were structurally low. Its one real advantage was feeding
+// conversions to Google Ads, and at the time VDT did not run Ads.
+//
+// 2026-08-06: VDT started running Ads (Performance Max, "We Can Design Your
+// Website"), so the Ads tag below went in. Note what did NOT come back: GA4.
+// The campaign needs conversion attribution, not behavioural analytics, and
+// traffic measurement stays on Cloudflare Web Analytics, which is cookieless
+// and counts everyone. That is why there is still no consent banner.
+//
+// gtag.js DOES set the first-party _gcl_au advertising cookie. /cookie-policy
+// and /privacy-policy were rewritten in the same commit to say so. If you ever
+// remove or change this tag, change those two pages with it — they are a
+// published promise, not decoration.
+//
+// Conversions fire from public/lab/contact-card.js on confirmed delivery only.
 
 const SITE_URL = "https://vdtsites.com";
+
+// Google Ads account tag. Conversion labels live with the events that fire
+// them, in contact-card.js, not here.
+const GOOGLE_ADS_ID = "AW-18345910455";
 
 // viewport-fit=cover lets the page draw into the notch / home-bar safe-area
 // insets on modern phones; themeColor tints the mobile browser chrome cream.
@@ -100,6 +115,21 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        {/* Google tag (gtag.js). afterInteractive, so it never competes with
+            the hero for first paint — an ad click that bounces before load
+            was never going to convert anyway. */}
+        <Script
+          id="gtag-src"
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`}
+        </Script>
         {/* One drawer for every route. The three headers (#zoom-header and
             #site-chrome in page.tsx, <PageHeader> on the cream pages) each
             render only a [data-vdt-burger] button; this wires them all. */}
