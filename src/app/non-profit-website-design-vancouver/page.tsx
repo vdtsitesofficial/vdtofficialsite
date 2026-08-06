@@ -121,7 +121,7 @@ const FAQS = [
   },
   {
     q: "Do we own the website?",
-    a: "Yes. Once the project is paid in full the site is yours, and we will hand over a full export of the code on request. For a non-profit that matters more than for most clients, because the person who commissioned it usually is not the person who inherits it three years later.",
+    a: "Yes. Once the project is paid in full the website is yours: the design, the content and everything on it. For a non-profit that matters more than for most clients, because the person who commissioned it usually is not the person who inherits it three years later.",
   },
 ];
 

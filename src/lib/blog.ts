@@ -2266,7 +2266,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "The honest trade is that it costs more up front than a builder subscription and you are dependent on whoever built it being reachable. That second point is worth pressing anyone you hire on, including us. Ask what happens if they disappear, and whether you get the code.",
+      text: "The honest trade is that it costs more up front than a builder subscription and you are dependent on whoever built it being reachable. That second point is worth pressing anyone you hire on, including us. Ask what happens if they disappear, who holds the domain, and what you actually keep.",
     },
     {
       kind: "p",

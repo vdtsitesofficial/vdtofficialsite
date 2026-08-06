@@ -1579,8 +1579,9 @@ export default function Home() {
               </summary>
               <div className="faq-a">
                 <p>
-                  Yes. Once your project is paid in full the site is yours, and we&rsquo;ll hand
-                  over a full export of the code on request.
+                  Yes. Once your project is paid in full the website is yours: the design,
+                  the content and everything on it. It was built for your business and it
+                  is not a template we resell to anyone else.
                 </p>
               </div>
             </details>

@@ -37,6 +37,6 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: "Do I own my website?",
-    a: "Yes. Once your project is paid in full the site is yours, and we'll hand over a full export of the code on request.",
+    a: "Yes. Once your project is paid in full the website is yours: the design, the content and everything on it. It was built for your business and it is not a template we resell to anyone else.",
   },
 ];
