@@ -175,7 +175,41 @@ export default function MobileDrawer() {
           font-size: 13px;
         }
 
+        /* --- close button ------------------------------------------------ */
+        /* The burger animates into an X (see body.vdt-menu-open above), but
+           the drawer is fixed/inset-0 at z-index 70 and the headers sit at
+           60, so that X is painted UNDER the drawer: invisible, unclickable,
+           and on a phone there is no Escape key to fall back on. This is the
+           real close affordance. Positioned to land exactly where the burger
+           was, so it reads as the same control rather than a new one. */
+        .vdt-drawer__close {
+          position: absolute;
+          top: 28px;
+          right: 46px;
+          width: 44px;
+          height: 44px;
+          padding: 0;
+          border: 0;
+          background: none;
+          color: #1a1a1a;
+          cursor: pointer;
+        }
+        .vdt-drawer__close span {
+          position: absolute;
+          left: 11px;
+          top: 21.5px;
+          width: 22px;
+          height: 1.5px;
+          background: currentColor;
+        }
+        .vdt-drawer__close span:nth-child(1) { transform: rotate(45deg); }
+        .vdt-drawer__close span:nth-child(2) { transform: rotate(-45deg); }
+        @media (max-width: 720px) {
+          .vdt-drawer__close { top: 14px; right: 6px; }
+        }
+
         .vdt-burger:focus-visible,
+        .vdt-drawer__close:focus-visible,
         .vdt-drawer a:focus-visible {
           outline: 2px solid #dc2626;
           outline-offset: 3px;
@@ -202,6 +236,15 @@ export default function MobileDrawer() {
           if ((e.target as HTMLElement).closest("a")) setOpen(false);
         }}
       >
+        <button
+          type="button"
+          className="vdt-drawer__close"
+          aria-label="Close menu"
+          onClick={() => setOpen(false)}
+        >
+          <span /><span />
+        </button>
+
         {LINKS.map((l) => (
           <a key={l.href} href={l.href}>
             {l.label}
