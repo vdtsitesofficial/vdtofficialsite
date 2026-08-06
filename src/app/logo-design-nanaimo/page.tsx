@@ -33,7 +33,7 @@ const SPLIT =
   "grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]";
 
 export const metadata: Metadata = {
-  title: "Logo Design in Nanaimo, BC",
+  title: "Logo Design in Nanaimo, BC: Full Brand Kit",
   description:
     "Custom logo design in Nanaimo as part of the Full Brand Kit: logo, card design, invoice template, typefaces and your website, one price. Call 250-616-2087.",
   keywords: [
