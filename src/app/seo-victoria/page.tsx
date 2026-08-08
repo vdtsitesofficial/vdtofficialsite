@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 
 /**
@@ -59,8 +60,9 @@ const SPLIT =
 
 export const metadata: Metadata = {
   title: "SEO Services in Victoria, BC",
+  // Kept under ~155 chars so the phone number survives SERP truncation.
   description:
-    "SEO for Victoria, BC businesses: get found on Google by people searching for what you do. One-time setup at a fixed price, no monthly retainer. Call 250-616-2087.",
+    "SEO for Victoria businesses: get found on Google by people searching for what you do. One-time setup, fixed price, no retainer. Call 250-616-2087.",
   keywords: [
     "seo victoria bc",
     "seo services victoria",
@@ -426,7 +428,12 @@ export default function SeoVictoriaPage() {
         </section>
 
         {/* ── CTA ──────────────────────────────────────────── */}
-        <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
+        {/* id="contact" so MobileActionBar hides while this section is on
+            screen (it observes that id) instead of covering the buttons. */}
+        <section
+          id="contact"
+          className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20"
+        >
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
@@ -463,6 +470,8 @@ export default function SeoVictoriaPage() {
           </div>
         </section>
       </main>
+
+      <MobileActionBar messageHref="/contact" />
 
       <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>

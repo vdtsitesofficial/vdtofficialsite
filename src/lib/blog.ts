@@ -773,6 +773,7 @@ const websiteCostPost: BlogPost = {
    describes the move as keeping the search equity the old site had earned. */
 const notShowingOnGooglePost: BlogPost = {
   slug: "why-isnt-my-business-showing-up-on-google",
+  // updatedAt bumped 2026-08-08: added the /seo-victoria link.
   /* H1 follows the Semrush brief. The SLUG deliberately does not: this post
      has been indexed since 2026-08-03 and changing the URL would throw that
      away for a 301 and no gain. metaTitle stays short so the SERP title
@@ -786,7 +787,7 @@ const notShowingOnGooglePost: BlogPost = {
     "You search your own business name and your website isn't there. Before you spend a dollar on ads or SEO, here is how to find out whether Google can even see your site, and what to do next.",
   category: "SEO",
   publishedAt: "2026-08-03",
-  updatedAt: "2026-08-05",
+  updatedAt: "2026-08-08",
   readingMinutes: 14,
   keywords: [
     "how to get your site to show up on google",
@@ -1172,7 +1173,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website. If you would rather hand this work off than do it yourself, it is exactly what our [local SEO setup in Nanaimo](/seo-nanaimo) covers, as a one-time job rather than a monthly bill.",
+      text: "We rebuilt our own profile from scratch not long ago and watched it go from invisible to competitive on local searches, without touching the website. If you would rather hand this work off than do it yourself, it is exactly what our [local SEO setup in Nanaimo](/seo-nanaimo) covers, as a one-time job rather than a monthly bill, and the same setup is available [in Victoria](/seo-victoria).",
     },
     {
       kind: "p",

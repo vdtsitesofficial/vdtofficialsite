@@ -9,8 +9,17 @@ import { useEffect, useState } from "react";
  * and hides again while the #contact section is on screen so it doesn't
  * cover the actual form. The tel: link is counted as a phone_call_click
  * conversion by the Analytics component's delegated listener.
+ *
+ * messageHref: pages without an embedded form (e.g. /seo-victoria) pass
+ * "/contact" so "Message us" goes to the form page instead of a dead
+ * same-page anchor. Give such pages id="contact" on their closing CTA
+ * section so the hide-when-visible behaviour still works.
  */
-export default function MobileActionBar() {
+export default function MobileActionBar({
+  messageHref = "#contact",
+}: {
+  messageHref?: string;
+}) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -66,7 +75,7 @@ export default function MobileActionBar() {
           Call 250-616-2087
         </a>
         <a
-          href="#contact"
+          href={messageHref}
           className="flex-1 rounded-full border border-[#0d0d0d]/25 py-3 text-center text-[14px] font-semibold text-[#0d0d0d]"
         >
           Message us
