@@ -851,6 +851,19 @@ export default function ServicesPage() {
                 </a>
                 .
               </p>
+              {/* Home-market city page. Shipped orphaned (Aug 2026): nothing on
+                  the site linked to it, so it sat unlinked while /seo-nanaimo
+                  and /logo-design-nanaimo both had entry points from here. */}
+              <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
+                Right here in town? Most of our work starts at home:{" "}
+                <a
+                  href="/web-design-nanaimo"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  website design in Nanaimo
+                </a>
+                .
+              </p>
               {/* Same reason as the line above: the Victoria city page needs a
                   real inbound link from a page with authority before it ships. */}
               <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
