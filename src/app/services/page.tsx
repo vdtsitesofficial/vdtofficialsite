@@ -884,6 +884,25 @@ export default function ServicesPage() {
                 </a>
                 .
               </p>
+              {/* Mid-island city pages (2026-08-08): same entry-point rule as
+                  every landing page above — no orphans. */}
+              <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
+                Elsewhere on the island? We build in{" "}
+                <a
+                  href="/web-design-parksville"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  Parksville
+                </a>{" "}
+                and across the{" "}
+                <a
+                  href="/web-design-comox-valley"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  Comox Valley and Campbell River
+                </a>
+                .
+              </p>
               <p className="mt-10 text-[13px] text-[#0d0d0d]/40">
                 {allServices.length} services · Nanaimo and across Vancouver
                 Island
