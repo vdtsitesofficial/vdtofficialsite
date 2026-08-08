@@ -875,6 +875,13 @@ export default function ServicesPage() {
                 >
                   website design in Victoria
                 </a>
+                , and if the site exists but nobody finds it,{" "}
+                <a
+                  href="/seo-victoria"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  SEO in Victoria
+                </a>
                 .
               </p>
               <p className="mt-10 text-[13px] text-[#0d0d0d]/40">

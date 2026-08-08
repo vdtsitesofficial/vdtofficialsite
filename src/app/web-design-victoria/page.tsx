@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
+import WorkCarousel from "@/components/WorkCarousel";
+import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
 
 /**
@@ -86,7 +88,9 @@ export const metadata: Metadata = {
   },
 };
 
-const FAQS = [
+/* `link` renders as a visible link after the answer text; the FAQPage
+   schema uses only `a`, so the JSON-LD stays plain text. */
+const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "Do you actually work with businesses in Victoria?",
     a: "Yes. We work with businesses across Vancouver Island, and Victoria is about ninety minutes down the highway from our base in Nanaimo. Everything runs by phone, email and video call, exactly the way it does for our up-island clients, and you get the same service either way: questions answered within a day by the people who built your site.",
@@ -105,7 +109,8 @@ const FAQS = [
   },
   {
     q: "Can you help with local SEO for a Victoria business?",
-    a: "Yes. The search groundwork is built into every site we make: clean structure, fast load, proper titles, structured data and a sitemap that actually gets submitted. If you already have a site and need the local side sorted out, that is a separate one-time setup rather than a monthly retainer, and it works the same wherever on the island you are.",
+    a: "Yes. The search groundwork is built into every site we make: clean structure, fast load, proper titles, structured data and a sitemap that actually gets submitted. If you already have a site and need the local side sorted out, that is a separate one-time setup rather than a monthly retainer, and it has its own page explaining exactly what it covers.",
+    link: { href: "/seo-victoria", label: "SEO in Victoria" },
   },
   {
     q: "How long does it take?",
@@ -402,6 +407,16 @@ export default function WebDesignVictoriaPage() {
           </div>
         </section>
 
+        {/* ── Work carousel ────────────────────────────────── */}
+        {/* Same carousel as /web-design-nanaimo (Sem, 2026-08-08): the proof
+            prose above describes the builds; this shows them. No horizontal
+            padding on the section — WorkCarousel carries its own px-6 gutter
+            and max-w-6xl column, so nesting it inside the padded column
+            would double-pad and shrink the track. */}
+        <section className="border-t border-black/10 py-16 md:py-20">
+          <WorkCarousel items={WORK_ITEMS} />
+        </section>
+
         {/* ── FAQ ──────────────────────────────────────────── */}
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
@@ -422,6 +437,18 @@ export default function WebDesignVictoriaPage() {
                   </dt>
                   <dd className="mt-3 text-[15px] leading-relaxed text-[#0d0d0d]/70">
                     {f.a}
+                    {f.link && (
+                      <>
+                        {" "}
+                        <Link
+                          href={f.link.href}
+                          className="font-semibold text-[#dc2626] underline underline-offset-2"
+                        >
+                          {f.link.label}
+                        </Link>
+                        .
+                      </>
+                    )}
                   </dd>
                 </div>
               ))}

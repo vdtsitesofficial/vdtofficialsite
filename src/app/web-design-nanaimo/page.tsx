@@ -4,6 +4,7 @@ import { LAB_V } from "@/lib/labVersion";
 import ContactCard from "@/components/ContactCard";
 import PageHeader from "@/components/PageHeader";
 import WorkCarousel from "@/components/WorkCarousel";
+import { WORK_ITEMS } from "@/lib/workItems";
 
 /**
  * Google Ads landing page.
@@ -41,21 +42,7 @@ export const metadata: Metadata = {
 
 const SYNE = "'Syne', 'Inter', sans-serif";
 
-/* Ordered strongest-first — the first two load eagerly and are what most
-   visitors see before scrolling the track.
-   Cards link to the /work case studies (2026-07-28): keeps paid visitors
-   on-site and in the funnel instead of handing them to a client's site.
-   Internal links open in the same tab; WorkCarousel only new-tabs
-   external hrefs. */
-const WORK = [
-  { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "/work/mo-coffee" },
-  { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville", href: "/work/morky-auto-imports" },
-  { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo", href: "/work/therapeutic-value" },
-  { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo", href: "/work/sherri-kozubal" },
-  { img: "/work/isleair.webp", name: "Isle Air Chicken", line: "Air-fried chicken · Vancouver Island", href: "/work/isle-air-chicken" },
-  { img: "/work/ceva.webp", name: "CEVA Volleyball", line: "Tournament platform · live scoreboards", href: "/work/ceva-volleyball" },
-  { img: "/work/paulvanryssel.webp", name: "Paul Van Ryssel", line: "Campaign website · Nanaimo", href: "/work/paul-van-ryssel" },
-];
+/* Card list lives in lib/workItems.ts, shared with /web-design-victoria. */
 
 const REASONS = [
   {
@@ -132,7 +119,7 @@ export default function LandingPage() {
 
         {/* proof — real client work, above the objections */}
         <section className="pt-10 md:pt-16">
-          <WorkCarousel items={WORK} />
+          <WorkCarousel items={WORK_ITEMS} />
         </section>
 
         {/* the three objections that actually close */}
