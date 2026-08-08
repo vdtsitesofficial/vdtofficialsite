@@ -21,10 +21,15 @@ import PageHeader from "@/components/PageHeader";
  *
  * Mirrors /seo-nanaimo deliberately: same offer (one-time Local SEO Setup,
  * NO retainer), same three pillars, same structure. That page is the one
- * page Semrush shows ranking, so this copies what works. The no-retainer
- * angle bites HARDER in Victoria because the SERP is full of agencies
- * selling monthly packages; being the fixed-price one-time option is the
- * differentiator, not a downgrade.
+ * page Semrush shows ranking, so this copies what works.
+ *
+ * ── Tone (Sem, 2026-08-08): softened from the first cut. The anti-retainer
+ * copy ("nobody honest sells those", "why no retainer, in a city full of
+ * agencies selling them") read too aggressive; the hero jab, the pillars
+ * intro and the bordered why-no-retainer paragraph were removed. The offer
+ * still leads with one-time fixed price, and the retainer nuance lives in
+ * the FAQ where it reads as an answer, not a punch. Do not reintroduce
+ * swipes at other agencies here.
  *
  * ── Anti-cannibalization (why this page exists at all)
  * /web-design-victoria owns build intent ("web design victoria bc").
@@ -221,9 +226,7 @@ export default function SeoVictoriaPage() {
               <p className="text-[17px] leading-relaxed text-[#0d0d0d]/70">
                 SEO services for Victoria businesses that want to be found by
                 people searching for what they do, not just for their name.
-                One-time setup at a fixed quoted price. No monthly SEO
-                retainer, no twelve month contract, and no ranking guarantees,
-                because nobody honest sells those.
+                One-time setup at a fixed quoted price.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
                 <Link
@@ -246,20 +249,12 @@ export default function SeoVictoriaPage() {
         {/* ── What local SEO actually is ───────────────────── */}
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
-            <div className={SPLIT}>
-              <h2
-                className="text-3xl font-bold leading-tight md:text-[40px]"
-                style={{ fontFamily: SYNE }}
-              >
-                What local SEO actually is
-              </h2>
-              <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70 md:pt-2">
-                Strip the jargon away and local search runs on three things.
-                Everything a Victoria SEO company could sell you is a piece of
-                one of them, which also makes it easy to check what you are
-                actually buying.
-              </p>
-            </div>
+            <h2
+              className="text-3xl font-bold leading-tight md:text-[40px]"
+              style={{ fontFamily: SYNE }}
+            >
+              What local SEO actually is
+            </h2>
 
             <div className="mt-12 space-y-10">
               {PILLARS.map((p, i) => (
@@ -339,17 +334,6 @@ export default function SeoVictoriaPage() {
                   consistent, and connect Search Console so results are
                   measured rather than claimed. Fixed price, quoted up front,
                   finished in days rather than billed for months.
-                </p>
-                <p className="border-l-2 border-[#dc2626] pl-5">
-                  Why no retainer, in a city full of agencies selling them?
-                  Because for most local businesses the recurring work that
-                  genuinely moves local rankings is a steady flow of reviews
-                  and keeping your information current, and that is work only
-                  you can do. Paying an agency monthly for it mostly buys
-                  reports. Victoria does have genuinely contested markets
-                  where ongoing content and authority work earns its keep, and
-                  if your situation is one of them we will say so and say why,
-                  but we will not default you into it.
                 </p>
                 <p>
                   Want to try the free half yourself first? Fair. We published
