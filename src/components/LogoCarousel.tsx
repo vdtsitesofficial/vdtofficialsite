@@ -97,15 +97,18 @@ function TherapeuticValueLockup() {
 const LOGOS: Array<
   { name: string; src: string; h: string } | { name: string; inline: ReactNode }
 > = [
-  // C:\Websites\MO Coffee\Images\MO Coffee Logo long.png (745x335)
-  { name: "MO Coffee", src: "/logos/mo-coffee.png", h: "h-14" },
+  // Dark "mo" + maple leaf card (Sem's pick 2026-08-09, from MO Coffee
+  // Images/Gemini_Generated_Image_ah0y7oah0y7oah0y.png): sparkle
+  // watermark painted out, corners rounded in the asset itself.
+  { name: "MO Coffee", src: "/logos/mo-coffee.png", h: "h-16" },
   // C:\Websites\Horizon Hues\logo\lockup-horizontal-amber.svg — the
   // black-and-gold variant (Sem's pick over the all-navy default).
   { name: "Horizon Hues", src: "/logos/horizon-hues.svg", h: "h-11" },
   // C:\Websites\Sherri Kozubal\public\assets\logo-blue.png (512x480)
   { name: "Sherri Kozubal", src: "/logos/sherri-kozubal.png", h: "h-16" },
-  // westro-mark recolored 2026-08-09: the wordmark and mountain were
-  // white (invisible on cream); near-white pixels inked to #0d0d0d.
+  // westro-mark reworked 2026-08-09 (Sem): pillars and mountain stay
+  // brand-white, wordmark and rules inked black so the name reads on
+  // cream. Regenerate from westro-clone/public/img/westro-mark.png.
   { name: "Westro", src: "/logos/westro.png", h: "h-16" },
   // Recreated inline; see PaulLockup above.
   { name: "Paul Van Ryssel", inline: <PaulLockup /> },
