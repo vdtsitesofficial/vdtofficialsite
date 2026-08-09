@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
+import { LAB_V } from "@/lib/labVersion";
+import ContactCard from "@/components/ContactCard";
+import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
+import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 import { PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
 
@@ -73,6 +78,10 @@ const FAQS = [
   {
     q: "What happens if my site goes down?",
     a: "Monitoring pings the site around the clock, so most outages are being worked on before anyone notices. The honest caveat is that nobody can promise a specific response time at this price, and anyone who does has not been woken by an outage yet. What we can say is that the stack we host on is built for uptime, and the record so far backs it.",
+  },
+  {
+    q: "How long does website maintenance take?",
+    a: "Depends what you mean. Small fixes, swapping photos, changing hours, repairing something that broke, usually take less than a day. A full rebuild of an aging site is three to four days once we have your content. If you are not sure which side your site falls on, ask us, it is free: send the address and we will tell you honestly what it needs.",
   },
   {
     q: "Are small updates really included?",
@@ -161,6 +170,13 @@ export default function WebsiteMaintenancePage() {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
+      {/* <ContactCard> renders unstyled and cannot submit without these. */}
+      <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <Script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        strategy="afterInteractive"
+      />
+      <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -199,12 +215,12 @@ export default function WebsiteMaintenancePage() {
                 fix a typo.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
-                <Link
-                  href="/contact"
+                <a
+                  href="#contact"
                   className="rounded-full bg-[#0d0d0d] px-7 py-3.5 text-[14px] font-semibold text-[#f4efe6] transition-opacity hover:opacity-85"
                 >
                   Get on the plan
-                </Link>
+                </a>
                 <a
                   href="tel:+12506162087"
                   className="text-[15px] font-semibold text-[#dc2626] underline underline-offset-4"
@@ -370,12 +386,12 @@ export default function WebsiteMaintenancePage() {
                   fixed number before anything starts.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                  <Link
-                    href="/contact"
+                  <a
+                    href="#contact"
                     className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
                   >
                     Get on the plan
-                  </Link>
+                  </a>
                   <a
                     href="tel:+12506162087"
                     className="text-[15px] font-semibold text-[#0d0d0d] underline underline-offset-4"
@@ -391,11 +407,18 @@ export default function WebsiteMaintenancePage() {
                     See who you&rsquo;d be working with!
                   </Link>
                 </p>
+                <ReviewPull author="Root 86 Coffee" />
               </div>
             </div>
           </div>
         </section>
+        {/* The enquiry form itself, so visitors at peak intent convert here
+            instead of spending a click on /contact. Needs the GSAP +
+            contact-card assets loaded above. */}
+        <ContactCard paddingTop={64} paddingBottom={72} />
       </main>
+
+      <MobileActionBar />
 
       <ServiceAreas />
 

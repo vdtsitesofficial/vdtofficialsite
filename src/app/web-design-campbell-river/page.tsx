@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
 const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "Do you really work with businesses as far up as Campbell River?",
-    a: "Yes. Our clients are spread across Vancouver Island and almost none of them have ever needed us in the room: everything runs by phone, email and video call, and questions get answered within a day by the person who built the site. Campbell River is a morning's drive up the highway from us in Nanaimo, same island, no ferry, so if a meeting ever genuinely matters, it happens.",
+    a: "Yes. Our clients are spread across Vancouver Island and almost none of them have ever needed us in the room: everything runs by phone, email and video call, and questions get answered within a day by Sem or Phillip, the two of us who build every site. Campbell River is a morning's drive up the highway from us in Nanaimo, same island, no ferry, so if a meeting ever genuinely matters, it happens.",
   },
   {
     q: "How much does a website cost in Campbell River?",
@@ -95,7 +96,7 @@ const REASONS = [
   },
   {
     title: "One call away, same island",
-    body: "We are a small company by choice, and the thing we sell hardest is service. When you have a question, you reach the person who actually built your site, by one email or one phone call, and you hear back within a day. No ticket queue, no account manager relaying messages up and down the island.",
+    body: "We are a small company by choice, and the thing we sell hardest is service. When you have a question, you reach Sem or Phillip, the two of us who actually built your site, by one email or one phone call, and you hear back within a day. No ticket queue, no account manager relaying messages up and down the island.",
   },
   {
     title: "Built to be found, not just to look good",
@@ -338,6 +339,11 @@ export default function WebDesignCampbellRiverPage() {
         {/* ── Work carousel ────────────────────────────────── */}
         <section className="border-t border-black/10 py-16 md:py-20">
           <WorkCarousel items={WORK_ITEMS} />
+        </section>
+
+        {/* ── The team: faces under the proof (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard />
         </section>
 
         {/* ── FAQ ──────────────────────────────────────────── */}

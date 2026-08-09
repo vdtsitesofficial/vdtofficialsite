@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
+import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 
 /**
@@ -452,6 +453,9 @@ export default function SeoNanaimoPage() {
                     250-616-2087
                   </a>
                 </div>
+                {/* City-matched on purpose (Sem's rule): Paul is a Nanaimo
+                    client, so his review may sit on a Nanaimo page. */}
+                <ReviewPull author="Paul Van Ryssel" />
               </div>
             </div>
           </div>

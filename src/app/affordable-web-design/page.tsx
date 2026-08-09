@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
+import { LAB_V } from "@/lib/labVersion";
+import ContactCard from "@/components/ContactCard";
+import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
+import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 import TeamCard from "@/components/TeamCard";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -160,6 +165,13 @@ export default function AffordableWebDesignPage() {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
+      {/* <ContactCard> renders unstyled and cannot submit without these. */}
+      <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <Script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        strategy="afterInteractive"
+      />
+      <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -198,12 +210,12 @@ export default function AffordableWebDesignPage() {
                 sales call. The numbers are public.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
-                <Link
-                  href="/contact"
+                <a
+                  href="#contact"
                   className="rounded-full bg-[#0d0d0d] px-7 py-3.5 text-[14px] font-semibold text-[#f4efe6] transition-opacity hover:opacity-85"
                 >
                   Get a fixed quote
-                </Link>
+                </a>
                 <a
                   href="tel:+12506162087"
                   className="text-[15px] font-semibold text-[#dc2626] underline underline-offset-4"
@@ -384,12 +396,12 @@ export default function AffordableWebDesignPage() {
                   known to say so.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                  <Link
-                    href="/contact"
+                  <a
+                    href="#contact"
                     className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
                   >
                     Get a fixed quote
-                  </Link>
+                  </a>
                   <a
                     href="tel:+12506162087"
                     className="text-[15px] font-semibold text-[#0d0d0d] underline underline-offset-4"
@@ -397,11 +409,18 @@ export default function AffordableWebDesignPage() {
                     250-616-2087
                   </a>
                 </div>
+                <ReviewPull author="Yoko Ho" />
               </div>
             </div>
           </div>
         </section>
+        {/* The enquiry form itself, so visitors at peak intent convert here
+            instead of spending a click on /contact. Needs the GSAP +
+            contact-card assets loaded above. */}
+        <ContactCard paddingTop={64} paddingBottom={72} />
       </main>
+
+      <MobileActionBar />
 
       <ServiceAreas />
 

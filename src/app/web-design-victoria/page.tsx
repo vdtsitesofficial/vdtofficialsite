@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -98,7 +99,7 @@ export const metadata: Metadata = {
 const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "Do you actually work with businesses in Victoria?",
-    a: "Yes. We work with businesses across Vancouver Island, and Victoria is about ninety minutes down the highway from our base in Nanaimo. Everything runs by phone, email and video call, exactly the way it does for our up-island clients, and you get the same service either way: questions answered within a day by the people who built your site.",
+    a: "Yes. We work with businesses across Vancouver Island, and Victoria is about ninety minutes down the highway from our base in Nanaimo. Everything runs by phone, email and video call, exactly the way it does for our up-island clients, and you get the same service either way: questions answered within a day by Sem or Phillip, the two of us who built your site.",
   },
   {
     q: "How much does a website cost in Victoria?",
@@ -429,6 +430,11 @@ export default function WebDesignVictoriaPage() {
             would double-pad and shrink the track. */}
         <section className="border-t border-black/10 py-16 md:py-20">
           <WorkCarousel items={WORK_ITEMS} />
+        </section>
+
+        {/* ── The team: faces under the proof (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard />
         </section>
 
         {/* ── FAQ ──────────────────────────────────────────── */}

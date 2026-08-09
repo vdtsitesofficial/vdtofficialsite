@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
+import { LAB_V } from "@/lib/labVersion";
+import ContactCard from "@/components/ContactCard";
+import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
+import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
 
@@ -94,6 +99,10 @@ const FAQS = [
     a: "Yes. We rebuild rather than patch, because stacking a new coat of paint on a slow platform keeps the slowness. Whatever ranks and whatever matters carries over, and what you get back is a site you own outright with no platform subscription underneath it.",
   },
   {
+    q: "Can AI redesign my website?",
+    a: "Honestly, yes, and it is worth knowing about. There are plenty of AI website builders around now, and they will design you a decent looking site. The catch is search: AI tools have no SEO specialization, they do not know what ranks and what does not, so the result tends to look fine and stay invisible. If you are considering the DIY route it is definitely worth a shot. And if you want the speed without the invisible part, that is roughly what we sell: we can rebuild your site from little more than photos, do the search groundwork properly, host it and stand behind it. Contact us and ask.",
+  },
+  {
     q: "What if my site just needs small fixes, not a redesign?",
     a: `Then that is what we will tell you. Sometimes the honest answer is a few hours of repair and our ${PRICE_MONTHLY} a month care plan, not a rebuild. We would rather keep a working site alive cheaply than sell you a redesign it does not need, and we put that in writing on the quote.`,
   },
@@ -160,6 +169,13 @@ export default function WebsiteRedesignPage() {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
+      {/* <ContactCard> renders unstyled and cannot submit without these. */}
+      <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <Script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        strategy="afterInteractive"
+      />
+      <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -198,12 +214,12 @@ export default function WebsiteRedesignPage() {
                 {PRICE_BUILD_FROM} {CURRENCY}.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
-                <Link
-                  href="/contact"
+                <a
+                  href="#contact"
                   className="rounded-full bg-[#0d0d0d] px-7 py-3.5 text-[14px] font-semibold text-[#f4efe6] transition-opacity hover:opacity-85"
                 >
                   Get a fixed quote
-                </Link>
+                </a>
                 <a
                   href="tel:+12506162087"
                   className="text-[15px] font-semibold text-[#dc2626] underline underline-offset-4"
@@ -373,12 +389,12 @@ export default function WebsiteRedesignPage() {
                   site is better than you think, we will say that too.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                  <Link
-                    href="/contact"
+                  <a
+                    href="#contact"
                     className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
                   >
                     Get a fixed quote
-                  </Link>
+                  </a>
                   <a
                     href="tel:+12506162087"
                     className="text-[15px] font-semibold text-[#0d0d0d] underline underline-offset-4"
@@ -394,11 +410,20 @@ export default function WebsiteRedesignPage() {
                     See who you&rsquo;d be working with!
                   </Link>
                 </p>
+                {/* Sherri's review IS the redesign pitch: she left two
+                    website builders and cut her yearly costs. */}
+                <ReviewPull author="Sherri K" />
               </div>
             </div>
           </div>
         </section>
+        {/* The enquiry form itself, so visitors at peak intent convert here
+            instead of spending a click on /contact. Needs the GSAP +
+            contact-card assets loaded above. */}
+        <ContactCard paddingTop={64} paddingBottom={72} />
       </main>
+
+      <MobileActionBar />
 
       <ServiceAreas />
 

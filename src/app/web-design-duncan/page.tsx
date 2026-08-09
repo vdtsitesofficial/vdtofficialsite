@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -89,7 +90,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
 const REASONS = [
   {
     title: "Closer than you think",
-    body: "Duncan sits forty five minutes from our desk, closer than Victoria, and Ladysmith and Chemainus are closer still. We are the nearest custom studio for a good stretch of the valley, and one call reaches the person who actually builds your site, not a front desk.",
+    body: "Duncan sits forty five minutes from our desk, closer than Victoria, and Ladysmith and Chemainus are closer still. We are the nearest custom studio for a good stretch of the valley, and one call reaches Sem or Phillip, the two of us who actually build the sites, not a front desk.",
   },
   {
     title: "Built for how the valley sells",
@@ -334,6 +335,11 @@ export default function WebDesignDuncanPage() {
         {/* ── Work carousel ────────────────────────────────── */}
         <section className="border-t border-black/10 py-16 md:py-20">
           <WorkCarousel items={WORK_ITEMS} />
+        </section>
+
+        {/* ── The team: faces under the proof (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard />
         </section>
 
         {/* ── FAQ ──────────────────────────────────────────── */}

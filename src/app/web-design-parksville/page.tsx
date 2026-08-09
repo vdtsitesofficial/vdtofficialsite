@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -100,7 +101,7 @@ const REASONS = [
   },
   {
     title: "Twenty minutes away, one call away",
-    body: "We are a small company based in Nanaimo, and the thing we sell hardest is service. When you have a question, you reach the person who actually built your site, by one email or one phone call, and you hear back within a day. And because we are just down the highway, close is not a figure of speech.",
+    body: "We are a small company based in Nanaimo, and the thing we sell hardest is service. When you have a question, you reach Sem or Phillip, the two of us who actually built your site, by one email or one phone call, and you hear back within a day. And because we are just down the highway, close is not a figure of speech.",
   },
   {
     title: "Built to be found, not just to look good",
@@ -295,6 +296,11 @@ export default function WebDesignParksvillePage() {
         {/* ── Work carousel (Morky leads) ──────────────────── */}
         <section className="border-t border-black/10 py-16 md:py-20">
           <WorkCarousel items={WORK} />
+        </section>
+
+        {/* ── The team: faces under the proof (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard />
         </section>
 
         {/* ── Why us ───────────────────────────────────────── */}

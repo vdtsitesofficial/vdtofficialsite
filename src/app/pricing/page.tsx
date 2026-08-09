@@ -2,11 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import Script from "next/script";
+import { LAB_V } from "@/lib/labVersion";
+import ContactCard from "@/components/ContactCard";
+import MobileActionBar from "@/components/MobileActionBar";
+import ReviewPull from "@/components/ReviewPull";
+import TeamCard from "@/components/TeamCard";
 import {
   PRICE_BUILD_FROM,
   PRICE_BRAND_FROM,
   PRICE_MONTHLY,
   CURRENCY,
+  PRICES_REVIEWED,
 } from "@/lib/pricing";
 
 /**
@@ -164,6 +171,13 @@ export default function PricingPage() {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
+      {/* <ContactCard> renders unstyled and cannot submit without these. */}
+      <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <Script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        strategy="afterInteractive"
+      />
+      <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -208,12 +222,14 @@ export default function PricingPage() {
                 figure for your site before work starts.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
-                <Link
-                  href="/contact"
+                {/* Scrolls to the form at the foot of this page rather than
+                    spending a click on /contact. */}
+                <a
+                  href="#contact"
                   className="rounded-full bg-[#0d0d0d] px-7 py-3.5 text-[14px] font-semibold text-[#f4efe6] transition-opacity hover:opacity-85"
                 >
                   Get a fixed quote
-                </Link>
+                </a>
                 <a
                   href="tel:+12506162087"
                   className="text-[15px] font-semibold text-[#dc2626] underline underline-offset-4"
@@ -238,7 +254,12 @@ export default function PricingPage() {
               <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70 md:pt-2">
                 Three options, no tiers theatre. Two are one-time builds, one
                 is the flat monthly that runs everything. Prices reviewed
-                against what we actually quote, and updated here first.
+                against what we actually quote, and updated here first.{" "}
+                {/* PRICES_REVIEWED lives in lib/pricing; bump it there when
+                    prices change and this line stays honest by itself. */}
+                <span className="mt-1 block text-[13px] text-[#0d0d0d]/50">
+                  Prices updated {PRICES_REVIEWED}.
+                </span>
               </p>
             </div>
 
@@ -308,14 +329,19 @@ export default function PricingPage() {
               >
                 Want to get started?
               </p>
-              <Link
-                href="/contact"
+              <a
+                href="#contact"
                 className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
               >
                 Contact us here!
-              </Link>
+              </a>
             </div>
           </div>
+        </section>
+
+        {/* ── The team, right next to the numbers (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard blurb="Every package above is designed and built by the two of us, no subcontractors and no account managers in between." />
         </section>
 
         {/* ── How the quote works ──────────────────────────── */}
@@ -428,12 +454,12 @@ export default function PricingPage() {
                   instead, free.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                  <Link
-                    href="/contact"
+                  <a
+                    href="#contact"
                     className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
                   >
                     Get a fixed quote
-                  </Link>
+                  </a>
                   <a
                     href="tel:+12506162087"
                     className="text-[15px] font-semibold text-[#0d0d0d] underline underline-offset-4"
@@ -441,19 +467,18 @@ export default function PricingPage() {
                     250-616-2087
                   </a>
                 </div>
-                <p className="mt-6 text-[15px] leading-relaxed text-[#0d0d0d]/70">
-                  <Link
-                    href="/about"
-                    className="font-semibold text-[#dc2626] underline underline-offset-2"
-                  >
-                    See who you&rsquo;d be working with!
-                  </Link>
-                </p>
+                <ReviewPull author="Peter S." />
               </div>
             </div>
           </div>
         </section>
+        {/* The enquiry form itself, so visitors at peak intent convert here
+            instead of spending a click on /contact. Needs the GSAP +
+            contact-card assets loaded above. */}
+        <ContactCard paddingTop={64} paddingBottom={72} />
       </main>
+
+      <MobileActionBar />
 
       <ServiceAreas />
 

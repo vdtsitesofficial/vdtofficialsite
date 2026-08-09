@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
 const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "Do you actually work with businesses this far up-island?",
-    a: "Yes. Our clients are spread across Vancouver Island and beyond, and almost none of them have ever needed us in the room: everything runs by phone, email and video call, and questions get answered within a day by the person who built the site. Courtenay is about ninety minutes up the highway from us in Nanaimo, so if a meeting ever genuinely matters, it is a drive, not a flight.",
+    a: "Yes. Our clients are spread across Vancouver Island and beyond, and almost none of them have ever needed us in the room: everything runs by phone, email and video call, and questions get answered within a day by Sem or Phillip, the two of us who build every site. Courtenay is about ninety minutes up the highway from us in Nanaimo, so if a meeting ever genuinely matters, it is a drive, not a flight.",
   },
   {
     q: "How much does a website cost in the Comox Valley?",
@@ -91,7 +92,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
 const REASONS = [
   {
     title: "One call away, wherever you are on the island",
-    body: "We are a small company by choice, and the thing we sell hardest is service. When you have a question, you reach the person who actually built your site, by one email or one phone call, and you hear back within a day, usually the same one. No ticket queue, no account manager relaying messages.",
+    body: "We are a small company by choice, and the thing we sell hardest is service. When you have a question, you reach Sem or Phillip, the two of us who actually built your site, by one email or one phone call, and you hear back within a day, usually the same one. No ticket queue, no account manager relaying messages.",
   },
   {
     title: "Same island, same understanding",
@@ -333,6 +334,11 @@ export default function WebDesignComoxValleyPage() {
         {/* ── Work carousel ────────────────────────────────── */}
         <section className="border-t border-black/10 py-16 md:py-20">
           <WorkCarousel items={WORK_ITEMS} />
+        </section>
+
+        {/* ── The team: faces under the proof (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard />
         </section>
 
         {/* ── FAQ ──────────────────────────────────────────── */}

@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -116,7 +117,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
   },
   {
     q: "Why hire an island studio instead of a big city agency?",
-    a: "Because your customers are here. An island business lives on local search, seasonal rhythms, tourists planning from far away and word of mouth, and we build for those realities every week. You also get the person who built your site answering your emails, which is a service model that gets rarer the bigger the shop.",
+    a: "Because your customers are here. An island business lives on local search, seasonal rhythms, tourists planning from far away and word of mouth, and we build for those realities every week. You also get Sem or Phillip, the two of us who built your site, answering your emails, which is a service model that gets rarer the bigger the shop.",
   },
   {
     q: "How long does it take?",
@@ -363,6 +364,11 @@ export default function WebDesignVancouverIslandPage() {
         {/* ── Work carousel ────────────────────────────────── */}
         <section className="border-t border-black/10 py-16 md:py-20">
           <WorkCarousel items={WORK_ITEMS} />
+        </section>
+
+        {/* ── The team: faces under the proof (Sem, 2026-08-10) ── */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard />
         </section>
 
         {/* ── FAQ ──────────────────────────────────────────── */}
