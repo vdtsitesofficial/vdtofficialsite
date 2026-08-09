@@ -83,6 +83,12 @@ const FAQS = [
     a: `Ours start at ${PRICE_BUILD_FROM} ${CURRENCY}, the same as a new build, because that is what a proper redesign is. You get a fixed quote before any work starts, based on what your current site has that needs carrying over. Anyone quoting a redesign without looking at the existing site first is guessing.`,
   },
   {
+    // Sem's spec (2026-08-10): conditions only, no year number, single
+    // topic, free honest-assessment close. Do not add a timeframe.
+    q: "How often should a website be redesigned?",
+    a: "There is no schedule, and we would rather lose a sale than invent one. If your site is working, loading fast, looking current and bringing in customers, it does not need a redesign, full stop. If it is old and outdated, it is worth considering. And if the build or the search performance is not what you are looking for, if it is slow, invisible on Google or impossible to update, that is when a redesign genuinely pays for itself. Not sure which one describes yours? Send us the address and we will tell you honestly, free, including when the answer is that you do not need us yet.",
+  },
+  {
     q: "Will a redesign hurt my Google rankings?",
     a: "Done carelessly, yes, and this is the most common way businesses lose rankings they spent years earning. Done properly, no. Before we touch anything we record what your site ranks for and which pages earn it. Every URL is either kept or permanently redirected to its replacement, the domain stays yours and stays put, and the new site ships with the structure and speed Google rewards. That work is part of every redesign, not an add-on.",
   },
