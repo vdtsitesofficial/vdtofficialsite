@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
+import { LAB_V } from "@/lib/labVersion";
+import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import WorkCarousel from "@/components/WorkCarousel";
@@ -173,6 +176,13 @@ export default function WebDesignParksvillePage() {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
         rel="stylesheet"
       />
+      {/* <ContactCard> renders unstyled and cannot submit without these. */}
+      <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
+      <Script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        strategy="afterInteractive"
+      />
+      <Script src={`/lab/contact-card.js?v=${LAB_V}`} strategy="afterInteractive" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -211,12 +221,14 @@ export default function WebDesignParksvillePage() {
                 Parksville business you may already know.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
-                <Link
-                  href="/contact"
+                {/* Scrolls to the form at the foot of this page rather than
+                    spending a click on /contact. */}
+                <a
+                  href="#contact"
                   className="rounded-full bg-[#0d0d0d] px-7 py-3.5 text-[14px] font-semibold text-[#f4efe6] transition-opacity hover:opacity-85"
                 >
                   Get a free quote
-                </Link>
+                </a>
                 <a
                   href="tel:+12506162087"
                   className="text-[15px] font-semibold text-[#dc2626] underline underline-offset-4"
@@ -366,12 +378,9 @@ export default function WebDesignParksvillePage() {
         </section>
 
         {/* ── CTA ──────────────────────────────────────────── */}
-        {/* id="contact" so MobileActionBar hides while this section is on
-            screen instead of covering the buttons. */}
-        <section
-          id="contact"
-          className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20"
-        >
+        {/* id="contact" now belongs to <ContactCard> below, which is the
+            thing worth scrolling to. MobileActionBar hides against that. */}
+        <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
@@ -389,12 +398,12 @@ export default function WebDesignParksvillePage() {
                   somewhere that is.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                  <Link
-                    href="/contact"
+                  <a
+                    href="#contact"
                     className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
                   >
                     Get a free quote
-                  </Link>
+                  </a>
                   <a
                     href="tel:+12506162087"
                     className="text-[15px] font-semibold text-[#0d0d0d] underline underline-offset-4"
@@ -406,9 +415,14 @@ export default function WebDesignParksvillePage() {
             </div>
           </div>
         </section>
+
+        {/* The enquiry form itself, so paid and organic traffic can convert
+            here instead of spending a click on /contact. Needs the GSAP +
+            contact-card assets loaded above. */}
+        <ContactCard paddingTop={64} paddingBottom={72} />
       </main>
 
-      <MobileActionBar messageHref="/contact" />
+      <MobileActionBar />
 
       <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>
