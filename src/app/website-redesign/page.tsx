@@ -386,6 +386,14 @@ export default function WebsiteRedesignPage() {
                     250-616-2087
                   </a>
                 </div>
+                <p className="mt-6 text-[15px] leading-relaxed text-[#0d0d0d]/70">
+                  <Link
+                    href="/about"
+                    className="font-semibold text-[#dc2626] underline underline-offset-2"
+                  >
+                    See who you&rsquo;d be working with!
+                  </Link>
+                </p>
               </div>
             </div>
           </div>

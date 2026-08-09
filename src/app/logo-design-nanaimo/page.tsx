@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LogoCarousel from "@/components/LogoCarousel";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
 import { PRICE_BRAND_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -147,7 +148,7 @@ export default function LogoDesignNanaimoPage() {
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Montserrat:ital,wght@0,600;1,500&display=swap"
         rel="stylesheet"
       />
       <script
@@ -289,6 +290,34 @@ export default function LogoDesignNanaimoPage() {
                   to the case study, because nobody had to guess what matched.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Logo proof strip ─────────────────────────────── */}
+        <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className={SPLIT}>
+              <h2
+                className="text-3xl font-bold leading-tight md:text-[40px]"
+                style={{ fontFamily: SYNE }}
+              >
+                Some of our work
+              </h2>
+              <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70 md:pt-2">
+                Logos we have designed for real businesses, most of them
+                sitting on websites we built too. The full stories are in{" "}
+                <Link
+                  href="/work"
+                  className="font-semibold text-[#dc2626] underline underline-offset-2"
+                >
+                  the case studies
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="mt-12">
+              <LogoCarousel />
             </div>
           </div>
         </section>

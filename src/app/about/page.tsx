@@ -151,7 +151,7 @@ export default function AboutPage() {
                 href="/contact"
                 className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
               >
-                Get a free quote
+                Contact us
               </a>
               <a
                 href="/work"
@@ -383,7 +383,7 @@ export default function AboutPage() {
               href="/contact"
               className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
             >
-              Get a free quote
+              Contact us
             </a>
             <a
               href="tel:+12506162087"
