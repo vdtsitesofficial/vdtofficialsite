@@ -3,6 +3,7 @@ import Script from "next/script";
 import { LAB_V } from "@/lib/labVersion";
 import ContactCard from "@/components/ContactCard";
 import PageHeader from "@/components/PageHeader";
+import ServiceAreas from "@/components/ServiceAreas";
 
 /**
  * Standalone /contact page — the direct route to a conversation for people
@@ -215,7 +216,9 @@ export default function ContactPage() {
         </section>
       </main>
 
-      <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
+      <ServiceAreas />
+
+      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>
         <nav aria-label="Legal" className="flex gap-5">
           <a href="/terms-of-service" className="hover:text-[#0d0d0d]">Terms</a>

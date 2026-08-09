@@ -1721,10 +1721,48 @@ export default function Home() {
         <div className="vdt-fl__top">
           <div className="vdt-fl__brand">
             <span className="vdt-fl__brand-name">VDT&nbsp;Sites</span>
+            {/* City names double as the homepage's only links into the local
+                landing pages (internal-link mesh, SEO Plan Phase 0). Styles
+                are inline on purpose: footer.css lives in the hand-synced
+                /lab mirror, so no new classes there. */}
             <span className="vdt-fl__brand-blurb">
               Website design studio in Nanaimo, BC. We build fast, modern websites for
-              small businesses across Vancouver Island: Parksville, Ladysmith,
-              Victoria, and beyond.
+              small businesses across Vancouver Island:{" "}
+              <a
+                href="/web-design-parksville"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Parksville
+              </a>
+              , Ladysmith, the{" "}
+              <a
+                href="/web-design-comox-valley"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Comox Valley
+              </a>
+              ,{" "}
+              <a
+                href="/web-design-victoria"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Victoria
+              </a>
+              , and beyond. We also do{" "}
+              <a
+                href="/seo-nanaimo"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Nanaimo SEO
+              </a>{" "}
+              and{" "}
+              <a
+                href="/logo-design-nanaimo"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                logo design
+              </a>
+              .
             </span>
           </div>
           <ul className="vdt-fl__nav">

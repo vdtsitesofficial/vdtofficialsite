@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
+import ServiceAreas from "@/components/ServiceAreas";
 
 /**
  * /seo-nanaimo
@@ -39,10 +40,14 @@ const SPLIT =
   "grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]";
 
 export const metadata: Metadata = {
-  title: "Local SEO Services in Nanaimo, BC",
+  // "Nanaimo SEO" leads the title on purpose: it is the exact phrase the
+  // page ranks for (Semrush ca, pos 62 on 2026-08-09, KD 7) and the old
+  // title only carried the reversed word order.
+  title: "Nanaimo SEO Services, Without the Monthly Retainer",
   description:
     "Local SEO in Nanaimo: get found on Google by people searching for what you do. One-time setup at a fixed price, no monthly retainer. Call 250-616-2087.",
   keywords: [
+    "nanaimo seo",
     "seo nanaimo",
     "seo services nanaimo",
     "local seo nanaimo",
@@ -51,13 +56,13 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo-nanaimo" },
   openGraph: {
-    title: "Local SEO Services in Nanaimo, BC | VDT Sites",
+    title: "Nanaimo SEO Services, Without the Monthly Retainer | VDT Sites",
     description:
       "Get found on Google by Nanaimo customers searching for what you do. One-time setup, fixed price, no monthly retainer.",
     url: "/seo-nanaimo",
   },
   twitter: {
-    title: "Local SEO Services in Nanaimo, BC | VDT Sites",
+    title: "Nanaimo SEO Services, Without the Monthly Retainer | VDT Sites",
     description:
       "Get found on Google by Nanaimo customers searching for what you do. One-time setup, fixed price, no retainer.",
   },
@@ -112,7 +117,7 @@ export default function SeoNanaimoPage() {
       {
         "@type": "WebPage",
         "@id": URL,
-        name: "Local SEO Services in Nanaimo, BC",
+        name: "Nanaimo SEO Services, Without the Monthly Retainer",
         description:
           "Local SEO for Nanaimo businesses: Google Business Profile, on-page fixes, listings and measurement. One-time setup at a fixed price, no retainer.",
         isPartOf: { "@id": `${SITE}/#website` },
@@ -204,7 +209,7 @@ export default function SeoNanaimoPage() {
 
             <div className="mt-8 grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
               <p className="text-[17px] leading-relaxed text-[#0d0d0d]/70">
-                Local SEO services for Nanaimo businesses that want to be found
+                Nanaimo SEO services for local businesses that want to be found
                 by people searching for what they do, not just for their name.
                 One-time setup at a fixed quoted price. No monthly SEO
                 retainer, no twelve month contract, and no ranking guarantees,
@@ -453,7 +458,9 @@ export default function SeoNanaimoPage() {
         </section>
       </main>
 
-      <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
+      <ServiceAreas current="/seo-nanaimo" />
+
+      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>
         <nav aria-label="Legal" className="flex gap-5">
           <a href="/terms-of-service" className="hover:text-[#0d0d0d]">Terms</a>

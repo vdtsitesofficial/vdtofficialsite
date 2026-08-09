@@ -5,6 +5,7 @@ import { LAB_V } from "@/lib/labVersion";
 import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
+import ServiceAreas from "@/components/ServiceAreas";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
@@ -417,7 +418,9 @@ export default function WebDesignComoxValleyPage() {
 
       <MobileActionBar />
 
-      <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
+      <ServiceAreas current="/web-design-comox-valley" />
+
+      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>
         <nav aria-label="Legal" className="flex gap-5">
           <a href="/terms-of-service" className="hover:text-[#0d0d0d]">Terms</a>
