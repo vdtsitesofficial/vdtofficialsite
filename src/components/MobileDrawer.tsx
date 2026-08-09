@@ -27,7 +27,7 @@ import { useEffect, useRef, useState } from "react";
 
 const COLLAPSE = "(max-width: 960px), (hover: none) and (pointer: coarse)";
 
-/** All six destinations. The row keeps Work + Contact; the rest live here. */
+/** All six destinations. The row keeps Contact only; the rest live here. */
 const LINKS = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },

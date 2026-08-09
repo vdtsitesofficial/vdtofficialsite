@@ -578,8 +578,9 @@ html.vdt-mobile-intro body {
    This used to drop items one at a time as the row narrowed - Reviews at
    960, About + Portfolio at 860, Blog at 720 - which left a phone with
    Work / Services / Contact and NO route at all to the other three. The row
-   now trims to its two highest-intent links and hands everything to the
-   burger, so no destination is ever hidden without a way to reach it.
+   now trims to Contact Us + the burger (2026-08-08; Work dropped too) and
+   hands every destination to the drawer, so nothing is hidden without a way
+   to reach it. Desktop still carries the full row.
 
    The touch half of the query is not redundant with the width half: iOS
    Safari's "Request Desktop Website" reports a viewport far wider than
@@ -588,10 +589,12 @@ html.vdt-mobile-intro body {
    in src/components/MobileDrawer.tsx and the .vdt-ph rules in
    src/components/PageHeader.tsx. */
 @media (max-width: 960px), (hover: none) and (pointer: coarse) {
+  .zh-nav a[data-nav="work"],
   .zh-nav a[data-nav="services"],
   .zh-nav a[data-nav="reviews"],
   .zh-nav a[data-nav="about"],
   .zh-nav a[data-nav="blog"],
+  .dest-nav a[data-nav="work"],
   .dest-nav a[data-nav="services"],
   .dest-nav a[data-nav="reviews"],
   .dest-nav a[data-nav="about"],
@@ -604,7 +607,7 @@ html.vdt-mobile-intro body {
   .zh-mark { width: 28px; height: 28px; }
   .zh-brand span { font-size: 12px; letter-spacing: 0.04em; }
   /* Was 12px, when this row still had to seat five items. It now carries
-     Work + Contact + the burger, so the clearance goes back into the gap. */
+     Contact + the burger, so the clearance goes back into the gap. */
   .zh-nav { gap: 18px; }
   .zh-nav a { font-size: 11px; letter-spacing: 0.04em; }
   /* "Home" no longer exists in the markup at any width (the prism mark is

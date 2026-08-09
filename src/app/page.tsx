@@ -373,13 +373,13 @@ export default function Home() {
             It also happens to be narrower than "Portfolio", which is what
             keeps this row fitting on a phone. */}
         <nav className="zh-nav">
-          <a href="/work">Work</a>
+          <a href="/work" data-nav="work">Work</a>
           <a href="/services" data-nav="services">Services</a>
           <a href="/reviews" data-nav="reviews">Reviews</a>
           <a href="/about" data-nav="about">About</a>
           <a href="/blog" data-nav="blog">Blog</a>
           <a href="/contact">Contact&nbsp;Us</a>
-          {/* Collapses the row to Work + Contact and opens <MobileDrawer>,
+          {/* Collapses the row to Contact + burger and opens <MobileDrawer>,
               which carries all six. See layout.tsx. */}
           <button
             className="vdt-burger"
@@ -533,7 +533,7 @@ export default function Home() {
           <span>VDT&nbsp;SITES</span>
         </a>
         <nav className="dest-nav">
-          <a href="/work">Work</a>
+          <a href="/work" data-nav="work">Work</a>
           <a href="/services" data-nav="services">Services</a>
           <a href="/reviews" data-nav="reviews">Reviews</a>
           <a href="/about" data-nav="about">About</a>

@@ -1,9 +1,9 @@
 // Matches the homepage chrome exactly: below the collapse breakpoint the row
-// keeps Work + Contact and everything else moves into <MobileDrawer>. The
-// links still render at every width — `vdt-ph__drop` only hides them from the
-// row, and the drawer carries its own copy. See public/lab/style.css.
+// trims to Contact Us + the burger and every link moves into <MobileDrawer>.
+// The links still render at every width — `vdt-ph__drop` only hides them from
+// the row, and the drawer carries its own copy. See public/lab/style.css.
 const LINKS = [
-  { label: "Work", href: "/work", drop: "" },
+  { label: "Work", href: "/work", drop: "vdt-ph__drop" },
   { label: "Services", href: "/services", drop: "vdt-ph__drop" },
   { label: "Reviews", href: "/reviews", drop: "vdt-ph__drop" },
   { label: "About", href: "/about", drop: "vdt-ph__drop" },

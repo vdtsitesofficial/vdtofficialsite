@@ -782,15 +782,28 @@ export default function BlogLayout({
           </a>
           <nav className="dest-nav">
             {/* No "Home" link: the brand mark to the left already goes home,
-                and the row needs that width for Services. */}
-            <Link href="/work">Work</Link>
-            <Link href="/services">Services</Link>
+                and the row needs that width for Services. Every link carries
+                data-nav, so below the collapse breakpoint the row trims to
+                Contact Us + the burger and <MobileDrawer> carries the rest.
+                See public/lab/style.css. */}
+            <Link href="/work" data-nav="work">Work</Link>
+            <Link href="/services" data-nav="services">Services</Link>
             <Link href="/reviews" data-nav="reviews">Reviews</Link>
             <Link href="/about" data-nav="about">About</Link>
             <Link href="/blog" data-nav="blog">Blog</Link>
             <a href="/contact" className="dest-cta">
               Contact&nbsp;Us
             </a>
+            <button
+              className="vdt-burger"
+              type="button"
+              data-vdt-burger
+              aria-label="Menu"
+              aria-expanded="false"
+              aria-controls="vdt-drawer"
+            >
+              <span /><span /><span />
+            </button>
           </nav>
         </header>
 
