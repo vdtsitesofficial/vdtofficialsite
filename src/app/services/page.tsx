@@ -81,6 +81,7 @@ const GROUPS: ServiceGroup[] = [
   {
     id: "websites",
     title: "Websites",
+    more: { label: "The full price list, published", href: "/pricing" },
     intro:
       "Every site is built for your business rather than assembled from a template. Fixed price quoted up front, so you know the number before anyone starts.",
     services: [
@@ -109,6 +110,7 @@ const GROUPS: ServiceGroup[] = [
   {
     id: "hosting",
     title: "Hosting and care",
+    more: { label: "What the care plan covers", href: "/website-maintenance" },
     intro:
       "The monthly fee covers everything it takes to keep the site online, current and safe. One bill, one person to call.",
     services: [
@@ -837,6 +839,32 @@ export default function ServicesPage() {
               <p className="mt-9 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
                 Once we have your content, most sites are live in three to four
                 days.
+              </p>
+              {/* Entry points for the Phase 1 money pages (SEO Plan, Aug
+                  2026): same no-orphans rule as every landing page below. */}
+              <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
+                Want numbers before a conversation? Fair.{" "}
+                <a
+                  href="/pricing"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  The pricing is published
+                </a>
+                , including where the{" "}
+                <a
+                  href="/affordable-web-design"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  affordable web design
+                </a>{" "}
+                price comes from. Site exists but shows its age? Start at{" "}
+                <a
+                  href="/website-redesign"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  website redesign
+                </a>
+                .
               </p>
               {/* Entry point for the non-profit landing page. Without a real
                   link from a page that has authority, that page launches as an

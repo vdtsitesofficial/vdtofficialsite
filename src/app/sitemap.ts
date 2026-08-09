@@ -75,6 +75,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // only) these target terms nothing else on the site competes for, so
     // they are indexable and belong here.
     {
+      url: `${SITE_URL}/pricing`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/website-maintenance`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/website-redesign`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/affordable-web-design`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/non-profit-website-design-vancouver`,
       lastModified: new Date(),
       changeFrequency: "monthly",

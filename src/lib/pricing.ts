@@ -12,6 +12,10 @@
  * ── Consumers (keep this list current)
  *   - app/services/page.tsx          pricing cards, metadata, body copy
  *   - lib/blog.ts                    websiteCostPost body + FAQ answers
+ *   - app/pricing/page.tsx           packages, metadata, schema offers
+ *   - app/website-maintenance/page.tsx   fee in copy, metadata, schema
+ *   - app/website-redesign/page.tsx      from-price in copy + FAQ
+ *   - app/affordable-web-design/page.tsx prices in copy, metadata, schema
  *
  * ── When you change a price
  * Every number above updates automatically, so the site can never quote two

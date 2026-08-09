@@ -194,7 +194,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       kind: "p",
-      text: `The range comes down almost entirely to what the site has to do, not who builds it. For a straight answer with our own numbers in it: we build small business websites from ${PRICE_BUILD_FROM} ${CURRENCY}, plus ${PRICE_MONTHLY} a month for hosting, updates and support, quoted up front before anything starts.`,
+      text: `The range comes down almost entirely to what the site has to do, not who builds it. For a straight answer with our own numbers in it: we build small business websites from ${PRICE_BUILD_FROM} ${CURRENCY}, plus ${PRICE_MONTHLY} a month for hosting, updates and support, quoted up front before anything starts. The full list is on [the pricing page](/pricing), in public.`,
     },
     {
       kind: "p",
