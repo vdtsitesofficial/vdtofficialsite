@@ -20,11 +20,20 @@
 
 const AREAS = [
   { label: "Website design in Nanaimo", href: "/" },
+  {
+    label: "Web design across Vancouver Island",
+    href: "/web-design-vancouver-island",
+  },
   { label: "Website design in Victoria", href: "/web-design-victoria" },
+  { label: "Website design in Duncan", href: "/web-design-duncan" },
   { label: "Website design in Parksville", href: "/web-design-parksville" },
   {
-    label: "Web design in the Comox Valley & Campbell River",
+    label: "Web design in the Comox Valley",
     href: "/web-design-comox-valley",
+  },
+  {
+    label: "Website design in Campbell River",
+    href: "/web-design-campbell-river",
   },
   { label: "Nanaimo SEO", href: "/seo-nanaimo" },
   { label: "Victoria SEO", href: "/seo-victoria" },

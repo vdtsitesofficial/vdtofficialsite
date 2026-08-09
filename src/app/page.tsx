@@ -1727,7 +1727,14 @@ export default function Home() {
                 /lab mirror, so no new classes there. */}
             <span className="vdt-fl__brand-blurb">
               Website design studio in Nanaimo, BC. We build fast, modern websites for
-              small businesses across Vancouver Island:{" "}
+              small businesses across{" "}
+              <a
+                href="/web-design-vancouver-island"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Vancouver Island
+              </a>
+              :{" "}
               <a
                 href="/web-design-parksville"
                 style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}

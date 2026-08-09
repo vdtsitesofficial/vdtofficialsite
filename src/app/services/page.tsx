@@ -922,13 +922,34 @@ export default function ServicesPage() {
                   className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
                 >
                   Parksville
-                </a>{" "}
-                and across the{" "}
+                </a>
+                ,{" "}
+                <a
+                  href="/web-design-duncan"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  Duncan and the Cowichan Valley
+                </a>
+                , the{" "}
                 <a
                   href="/web-design-comox-valley"
                   className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
                 >
-                  Comox Valley and Campbell River
+                  Comox Valley
+                </a>
+                ,{" "}
+                <a
+                  href="/web-design-campbell-river"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  Campbell River
+                </a>{" "}
+                and{" "}
+                <a
+                  href="/web-design-vancouver-island"
+                  className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                >
+                  across Vancouver Island
                 </a>
                 .
               </p>

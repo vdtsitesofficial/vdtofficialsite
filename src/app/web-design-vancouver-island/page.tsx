@@ -11,25 +11,21 @@ import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
 
 /**
- * /web-design-comox-valley
+ * /web-design-vancouver-island
  *
- * Region page: Comox Valley (Courtenay, Comox, Cumberland). Campbell
- * River SPLIT OUT to /web-design-campbell-river 2026-08-10 (SEO Plan
- * Phase 2): its 2x140/mo KD 41 terms deserve an exact-match page, and
- * keeping it here diluted both. This page keeps the valley cluster
+ * The island-wide hub page (SEO Plan Phase 2, 2026-08-10). Targets the
+ * umbrella terms the homepage title mentions but no page owns outright
  * (Semrush ca, Aug 2026):
- *   courtenay web design          40/mo  KD 0
- *   web design comox valley       40/mo  KD 0
- *   web design courtenay          30/mo  KD 0
- *   comox valley web design       20/mo  KD 0
- *   ~130/mo, all KD 0.
+ *   website design vancouver island  210/mo  KD 46
+ *   web design vancouver island      170/mo  KD 41
+ *   vancouver island web design      (variant, folded in)
+ * KD 40+ means this matures with authority; its second job is being the
+ * hub that passes link equity to every city page below it, so it earns
+ * its keep from day one either way.
  *
- * ── Honesty constraint (do not "improve" this away)
- * There is NO Comox Valley or Campbell River client. Same rule as the
- * Victoria page: describe the real work, link to /work and /reviews,
- * never imply a local client, and do not volunteer the gap unprompted.
- * The local anchor is geographic (up-island, same island, no ferry) and
- * the service model (remote-first, one call away), both true.
+ * ── Structure note: the Regions list is the point of the page. It is
+ * a real navigation hub (every city page linked with a one-line local
+ * claim), not decoration; keep the links and their anchors descriptive.
  *
  * ── Tone: no swipes at other agencies (see Copy & Messaging, 2026-08-08).
  *
@@ -38,49 +34,89 @@ import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
 
 const SYNE = "'Syne', 'Inter', sans-serif";
 const SITE = "https://vdtsites.com";
-const URL = `${SITE}/web-design-comox-valley`;
+const URL = `${SITE}/web-design-vancouver-island`;
 
 const SPLIT =
   "grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]";
 
 export const metadata: Metadata = {
-  title: "Web Design in the Comox Valley",
+  title: "Web Design Across Vancouver Island",
   // Kept under ~155 chars so the phone number survives SERP truncation.
   description:
-    "Website design for Courtenay, Comox and Cumberland businesses. Fixed price, hosting included, built on-island. Free quote: 250-616-2087.",
+    "Website design for Vancouver Island businesses, from Victoria to Campbell River. One studio, one fixed price, hosting included. Call 250-616-2087.",
   keywords: [
-    "web design comox valley",
-    "comox valley web design",
-    "courtenay web design",
-    "web design courtenay",
-    "website design comox",
+    "web design vancouver island",
+    "website design vancouver island",
+    "vancouver island web design",
+    "web designer vancouver island",
+    "vancouver island website design",
   ],
-  alternates: { canonical: "/web-design-comox-valley" },
+  alternates: { canonical: "/web-design-vancouver-island" },
   openGraph: {
-    title: "Web Design in the Comox Valley | VDT Sites",
+    title: "Web Design Across Vancouver Island | VDT Sites",
     description:
-      "Website design for Courtenay, Comox and Cumberland businesses. Fixed price, hosting included, built on-island in Nanaimo.",
-    url: "/web-design-comox-valley",
+      "Website design for Vancouver Island businesses, from Victoria to Campbell River. One studio in Nanaimo, one fixed price, hosting included.",
+    url: "/web-design-vancouver-island",
   },
   twitter: {
-    title: "Web Design in the Comox Valley | VDT Sites",
+    title: "Web Design Across Vancouver Island | VDT Sites",
     description:
-      "Website design for Courtenay, Comox and Cumberland businesses. Fixed price, hosting included, built on-island.",
+      "Website design for Vancouver Island businesses, from Victoria to Campbell River. One fixed price, hosting included.",
   },
 };
 
+/* The hub: every city page, with the one-line reason it exists. */
+const REGIONS = [
+  {
+    name: "Nanaimo",
+    href: "/",
+    anchor: "Website design in Nanaimo",
+    line: "Home base. The studio is here, most of our clients are here, and the homepage tells that story.",
+  },
+  {
+    name: "Victoria & the CRD",
+    href: "/web-design-victoria",
+    anchor: "Website design in Victoria",
+    line: "The island's biggest market, served without the downtown office premium.",
+  },
+  {
+    name: "Duncan & the Cowichan Valley",
+    href: "/web-design-duncan",
+    anchor: "Website design in Duncan",
+    line: "Forty five minutes south: Duncan, Ladysmith, Chemainus and the valley's farms and makers.",
+  },
+  {
+    name: "Parksville & Oceanside",
+    href: "/web-design-parksville",
+    anchor: "Website design in Parksville",
+    line: "Twenty minutes north, and home to one of our favourite builds, Morky Auto Imports.",
+  },
+  {
+    name: "The Comox Valley",
+    href: "/web-design-comox-valley",
+    anchor: "Web design in the Comox Valley",
+    line: "Courtenay, Comox and Cumberland, an hour up the highway.",
+  },
+  {
+    name: "Campbell River & the North Island",
+    href: "/web-design-campbell-river",
+    anchor: "Website design in Campbell River",
+    line: "The Salmon Capital's charters, trades and tourism operators, built for two kinds of customer at once.",
+  },
+];
+
 const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
-    q: "Do you actually work with businesses this far up-island?",
-    a: "Yes. Our clients are spread across Vancouver Island and beyond, and almost none of them have ever needed us in the room: everything runs by phone, email and video call, and questions get answered within a day by the person who built the site. Courtenay is about ninety minutes up the highway from us in Nanaimo, so if a meeting ever genuinely matters, it is a drive, not a flight.",
+    q: "Do you serve the whole island?",
+    a: "Yes. We are based in Nanaimo, which puts most of the island's population within about an hour of us, and the work itself runs by phone, email and video call, so Port Alberni or Tofino are as easy to serve as our own street. Same island, same understanding of how island businesses find their customers.",
   },
   {
-    q: "How much does a website cost in the Comox Valley?",
-    a: `Ours start at ${PRICE_BUILD_FROM} ${CURRENCY} for the build, plus ${PRICE_MONTHLY} a month covering hosting, your domain, SSL, backups, monitoring and support. The price is fixed and quoted in writing before any work begins, and it is the same in Courtenay, Comox, Cumberland or Royston.`,
+    q: "Is the price different depending on where I am?",
+    a: `No. ${PRICE_BUILD_FROM} ${CURRENCY} for the build and ${PRICE_MONTHLY} a month for hosting, domain, SSL, backups, monitoring and support, whether you are in Victoria, Duncan or Campbell River. The quote is fixed in writing before any work begins, and geography has never been a line item on it.`,
   },
   {
-    q: "Can you help my business show up on Google here?",
-    a: "The search groundwork is built into every site we make: clean structure, fast load, proper titles and descriptions, structured data and a sitemap that actually gets submitted. For a local business in a market this size, that groundwork plus a well set up Google Business Profile is most of the battle.",
+    q: "Why hire an island studio instead of a big city agency?",
+    a: "Because your customers are here. An island business lives on local search, seasonal rhythms, tourists planning from far away and word of mouth, and we build for those realities every week. You also get the person who built your site answering your emails, which is a service model that gets rarer the bigger the shop.",
   },
   {
     q: "How long does it take?",
@@ -88,35 +124,16 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
   },
 ];
 
-const REASONS = [
-  {
-    title: "One call away, wherever you are on the island",
-    body: "We are a small company by choice, and the thing we sell hardest is service. When you have a question, you reach the person who actually built your site, by one email or one phone call, and you hear back within a day, usually the same one. No ticket queue, no account manager relaying messages.",
-  },
-  {
-    title: "Same island, same understanding",
-    body: "A business in Courtenay or Campbell River lives on local customers, seasonal rhythms and word of mouth, and we build for that every week across Vancouver Island. Your site gets structured around how island customers actually find and choose a local business, not a template built for nowhere in particular.",
-  },
-  {
-    title: "Built to be found, not just to look good",
-    body: "A site that never appears in search is a poster. Every build ships with the search groundwork already in it: clean page structure, fast loading on a phone, proper titles and descriptions, structured data and a sitemap submitted the week you launch. Not an upsell on a later invoice.",
-  },
-  {
-    title: "You can update it yourself",
-    body: "Change text and images directly on your live page: click the text, type the new version, save. No dashboard to learn, no waiting on us for a price change or a new photo, and no invoice for a five minute edit. For anything bigger we are one message away.",
-  },
-];
-
-export default function WebDesignComoxValleyPage() {
+export default function WebDesignVancouverIslandPage() {
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebPage",
         "@id": URL,
-        name: "Web Design in the Comox Valley",
+        name: "Web Design Across Vancouver Island",
         description:
-          "Website design for Courtenay, Comox and Cumberland businesses. Fixed price, hosting included, built on-island in Nanaimo.",
+          "Website design for Vancouver Island businesses, from Victoria to Campbell River. One studio in Nanaimo, one fixed price, hosting included.",
         isPartOf: { "@id": `${SITE}/#website` },
         about: { "@id": `${SITE}/#business` },
         breadcrumb: {
@@ -132,7 +149,7 @@ export default function WebDesignComoxValleyPage() {
             {
               "@type": "ListItem",
               position: 3,
-              name: "Web Design in the Comox Valley",
+              name: "Web Design Across Vancouver Island",
               item: URL,
             },
           ],
@@ -141,17 +158,20 @@ export default function WebDesignComoxValleyPage() {
       {
         "@type": "Service",
         "@id": `${URL}#service`,
-        name: "Web Design in the Comox Valley",
+        name: "Web Design Across Vancouver Island",
         serviceType:
-          "Custom website design and development for small businesses in the Comox Valley",
+          "Custom website design and development for small businesses across Vancouver Island",
         provider: { "@id": `${SITE}/#business` },
         areaServed: [
-          { "@type": "City", name: "Courtenay" },
-          { "@type": "City", name: "Comox" },
-          { "@type": "City", name: "Cumberland" },
-          { "@type": "Place", name: "Royston" },
-          { "@type": "Place", name: "Comox Valley Regional District" },
           { "@type": "Place", name: "Vancouver Island" },
+          { "@type": "City", name: "Nanaimo" },
+          { "@type": "City", name: "Victoria" },
+          { "@type": "City", name: "Duncan" },
+          { "@type": "City", name: "Parksville" },
+          { "@type": "City", name: "Courtenay" },
+          { "@type": "City", name: "Campbell River" },
+          { "@type": "City", name: "Port Alberni" },
+          { "@type": "Place", name: "Tofino" },
         ],
       },
       {
@@ -199,30 +219,23 @@ export default function WebDesignComoxValleyPage() {
 
           <div className="relative mx-auto max-w-6xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
-              Courtenay · Comox · Cumberland
+              Victoria to Campbell River
             </p>
             <h1
-              className="mt-4 max-w-[19ch] text-4xl font-bold leading-[1.05] md:text-[60px]"
+              className="mt-4 max-w-[18ch] text-4xl font-bold leading-[1.05] md:text-[60px]"
               style={{ fontFamily: SYNE }}
             >
-              Website design for the Comox Valley.
+              Web design for the whole of Vancouver Island.
             </h1>
 
             <div className="mt-8 grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
               <p className="text-[17px] leading-relaxed text-[#0d0d0d]/70">
-                Custom websites for businesses in Courtenay, Comox and
-                Cumberland, from {PRICE_BUILD_FROM} {CURRENCY} plus{" "}
-                {PRICE_MONTHLY} a month with hosting, domain and support
-                included. Built on-island in Nanaimo, delivered the way we
-                deliver everywhere: fast, personal, and priced in writing
-                before we start. Up in{" "}
-                <Link
-                  href="/web-design-campbell-river"
-                  className="font-semibold text-[#dc2626] underline underline-offset-2"
-                >
-                  Campbell River
-                </Link>
-                ? That page is yours.
+                One studio in Nanaimo, building custom websites for
+                businesses across Vancouver Island, from {PRICE_BUILD_FROM}{" "}
+                {CURRENCY} plus {PRICE_MONTHLY} a month with hosting, domain
+                and support included. Every client, Victoria to Campbell
+                River, gets the same fixed written price and the same person
+                answering the phone.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
                 {/* Scrolls to the form at the foot of this page rather than
@@ -244,7 +257,7 @@ export default function WebDesignComoxValleyPage() {
           </div>
         </section>
 
-        {/* ── Why us ───────────────────────────────────────── */}
+        {/* ── The regions hub ──────────────────────────────── */}
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
@@ -252,37 +265,49 @@ export default function WebDesignComoxValleyPage() {
                 className="text-3xl font-bold leading-tight md:text-[40px]"
                 style={{ fontFamily: SYNE }}
               >
-                Why hire us from an hour down-island
+                Where we build
               </h2>
               <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70 md:pt-2">
-                Because distance stopped mattering for this work years ago,
-                and service never did.
+                Every region below has its own page, because every region
+                does business a little differently. Find yours.
               </p>
             </div>
 
-            <div className="mt-12 grid gap-x-16 gap-y-11 md:grid-cols-2">
-              {REASONS.map((r, i) => (
-                <div key={r.title}>
-                  <div className="flex items-baseline gap-3">
-                    <span
-                      className="text-[13px] font-bold text-[#dc2626]"
-                      aria-hidden
+            <div className="mt-12 divide-y divide-black/10 border-y border-black/10">
+              {REGIONS.map((r) => (
+                <div
+                  key={r.href}
+                  className="grid gap-2 py-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] md:items-baseline"
+                >
+                  <h3
+                    className="text-lg font-bold leading-snug"
+                    style={{ fontFamily: SYNE }}
+                  >
+                    <Link
+                      href={r.href}
+                      className="underline decoration-black/15 decoration-2 underline-offset-4 transition-colors hover:decoration-[#dc2626]"
                     >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3
-                      className="text-xl font-bold leading-snug"
-                      style={{ fontFamily: SYNE }}
-                    >
-                      {r.title}
-                    </h3>
-                  </div>
-                  <p className="mt-3 pl-8 text-[15px] leading-relaxed text-[#0d0d0d]/70">
-                    {r.body}
+                      {r.anchor}
+                    </Link>
+                  </h3>
+                  <p className="text-[15px] leading-relaxed text-[#0d0d0d]/70">
+                    {r.line}
                   </p>
                 </div>
               ))}
             </div>
+
+            <p className="mt-8 max-w-3xl text-[15px] leading-relaxed text-[#0d0d0d]/60">
+              Somewhere else on the island, Port Alberni to Tofino to Port
+              Hardy? Same service, same price, no page needed:{" "}
+              <a
+                href="#contact"
+                className="font-semibold text-[#dc2626] underline underline-offset-2"
+              >
+                just get in touch
+              </a>
+              .
+            </p>
           </div>
         </section>
 
@@ -294,15 +319,15 @@ export default function WebDesignComoxValleyPage() {
                 className="text-3xl font-bold leading-tight md:text-[40px]"
                 style={{ fontFamily: SYNE }}
               >
-                What we have actually built
+                Island businesses we have built for
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  A coffee roaster with a real online store. A Japanese vehicle
-                  importer. A counselling practice that left Squarespace, a
-                  food truck run from the owner&rsquo;s phone, and an
-                  accounting firm whose old site had been invisible to Google
-                  for years.{" "}
+                  A Nanaimo coffee roaster with a real online store. A
+                  Japanese vehicle importer in Parksville. A counselling
+                  practice serving clients across BC, a food truck run from
+                  the owner&rsquo;s phone, an electrician, an accounting
+                  firm.{" "}
                   <Link
                     href="/work"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"
@@ -319,11 +344,16 @@ export default function WebDesignComoxValleyPage() {
                   .
                 </p>
                 <p>
-                  Every one of those businesses reaches us the same way you
-                  would from Courtenay or Cumberland: one message, answered
-                  by the person who built their site. That is the part of the
-                  work you cannot see in a portfolio, and it is the part our
-                  reviews keep coming back to.
+                  The prices those businesses paid are the prices on{" "}
+                  <Link
+                    href="/pricing"
+                    className="font-semibold text-[#dc2626] underline underline-offset-2"
+                  >
+                    the pricing page
+                  </Link>
+                  , in public. That is deliberate: an island this size runs
+                  on reputation, and quoting one neighbour double what the
+                  other paid is how you lose one.
                 </p>
               </div>
             </div>
@@ -375,7 +405,7 @@ export default function WebDesignComoxValleyPage() {
         </section>
 
         {/* ── CTA ──────────────────────────────────────────── */}
-        {/* id="contact" now belongs to <ContactCard> below, which is the
+        {/* id="contact" belongs to <ContactCard> below, which is the
             thing worth scrolling to. MobileActionBar hides against that. */}
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
@@ -384,14 +414,14 @@ export default function WebDesignComoxValleyPage() {
                 className="text-3xl font-bold leading-tight md:text-[40px]"
                 style={{ fontFamily: SYNE }}
               >
-                Tell us about your business.
+                Tell us about your island business.
               </h2>
               <div className="md:pt-2">
                 <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70">
-                  What you do, who you want to reach, and what your current
-                  site is getting wrong if you have one. You get a fixed
-                  written quote back, free, with no obligation attached to it.
-                  If we are not the right fit we will tell you and point you
+                  What you do, where you are, and what your current site is
+                  getting wrong if you have one. You get a fixed written
+                  quote back, free, with no obligation attached to it. If we
+                  are not the right fit we will tell you and point you
                   somewhere that is.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
@@ -421,7 +451,7 @@ export default function WebDesignComoxValleyPage() {
 
       <MobileActionBar />
 
-      <ServiceAreas current="/web-design-comox-valley" />
+      <ServiceAreas current="/web-design-vancouver-island" />
 
       <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>
