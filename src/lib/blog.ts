@@ -2389,7 +2389,135 @@ const wixVsDesignerPost: BlogPost = {
   ],
 };
 
+/* Outline approved by Sem 2026-08-10 (SEO Plan suggestion 7): his three
+   criteria lead (published pricing, response speed, verifiable reviews),
+   the other four were approved as proposed. Ships as draft: true so Sem
+   can read the finished post at /blog/what-to-look-for-in-a-web-designer
+   before it goes live; publishing is deleting that one line.
+   Target pattern (Semrush ca, Aug 2026): the Toronto variant of "what to
+   look for in a web designer" pulls 140/mo at KD 12; this is the
+   BC/Vancouver Island seat of the same intent. */
+const chooseDesignerPost: BlogPost = {
+  slug: "what-to-look-for-in-a-web-designer",
+  title: "What to Look For in a Good Web Designer (From Two People Who Are One)",
+  metaTitle: "What to Look For in a Good Web Designer: 7 Checks",
+  description:
+    "Seven things to check before hiring a web designer, from published pricing to reviews you can verify. Written by two web designers, so judge us by the same list.",
+  excerpt:
+    "Choosing a web designer is hard precisely because every option looks polished. Here are seven checks that cut through it, and yes, we expect to be judged by them too.",
+  category: "Getting Started",
+  publishedAt: "2026-08-10",
+  updatedAt: "2026-08-10",
+  readingMinutes: 7,
+  keywords: [
+    "what to look for in a web designer",
+    "how to choose a web designer",
+    "hiring a web designer",
+    "questions to ask a web designer",
+    "web designer red flags",
+  ],
+  author: DEFAULT_AUTHOR,
+  draft: true,
+  faqs: [
+    {
+      q: "How do I choose a web designer?",
+      a: "Check seven things before you pay anyone: pricing you can see without a sales call, how fast they answer your first enquiry, reviews from named businesses you can verify, a portfolio of live sites you can click, confirmation that you will own the domain and the site, honest talk about SEO with no ranking guarantees, and the ability to edit the site yourself after handoff. Any designer worth hiring passes all seven without flinching.",
+    },
+    {
+      q: "What are red flags when hiring a web designer?",
+      a: "The big ones: no prices anywhere until you get on a call, slow replies while they are still trying to win your business, a portfolio of screenshots with no live links, hosting arrangements where leaving means losing your site or domain, and guaranteed Google rankings, which nobody outside Google can honestly promise.",
+    },
+    {
+      q: "Should I hire a local web designer or a big agency?",
+      a: "Size matters less than the seven checks. What a small local studio genuinely offers is that the person answering your emails is the person who built your site, and that they live in the market your customers search from. What matters either way is that the pricing is honest, the work is verifiable, and you own what you paid for.",
+    },
+  ],
+  content: [
+    {
+      kind: "p",
+      text: "We should say this up front: we are web designers, so an article like this from us is a conflict of interest with a table of contents. Here is how we square it. Every check below is one you can verify yourself, on anyone, in minutes, including on us. If a point on this list made you rule us out, the list did its job.",
+    },
+    {
+      kind: "p",
+      text: "The reason choosing feels hard is that every designer's own website looks polished, and polish is exactly the thing being sold. So none of these checks are about how anything looks. They are about how the business behind the website behaves.",
+    },
+    { kind: "h2", text: "1. Pricing you can see without a sales call" },
+    {
+      kind: "p",
+      text: "If a price only appears after a discovery call, the price depends on you: your budget, your urgency, how much you seem willing to pay. Published pricing removes that game. It does not need to be exact to the dollar, real projects vary, but a designer who will not put any number in public is telling you the number is negotiable in one direction.",
+    },
+    {
+      kind: "p",
+      text: "Ours are on [the pricing page](/pricing), including the monthly cost of keeping a site running, which is the number that quietly grows elsewhere. Whoever you talk to, ask for their equivalent before you share your budget, not after.",
+    },
+    { kind: "h2", text: "2. They respond fast, before you are a customer" },
+    {
+      kind: "p",
+      text: "Response time during the sales conversation is the best preview you will ever get of the service afterwards, because right now is when they are trying hardest. A designer who takes four days to answer a new enquiry will not get faster once the invoice is paid.",
+    },
+    {
+      kind: "p",
+      text: "Send two or three candidates the same short question and watch what happens. You are not measuring politeness, you are measuring what a question will cost you in waiting, every time you have one, for years.",
+    },
+    { kind: "h2", text: "3. Reviews from real businesses you can verify" },
+    {
+      kind: "p",
+      text: "Anonymous praise on a designer's own site proves nothing, anyone can type it. What counts is reviews from named businesses on a platform the designer does not control, where you can click the reviewer, find their business, and see the website that made them happy.",
+    },
+    {
+      kind: "p",
+      text: "Google reviews are the easiest to check. Read the low ones too if they exist, because how a business responds to criticism tells you more than the five star average does. Ours are on [the reviews page](/reviews), reproduced word for word, and every reviewer is findable.",
+    },
+    { kind: "h2", text: "4. A portfolio of live sites, not screenshots" },
+    {
+      kind: "p",
+      text: "A screenshot cannot prove a site loads fast, works on a phone, or still exists. Live links can. Open a designer's recent work on your own phone, on cellular rather than wifi, and pay attention to the first three seconds, because that is the experience your customers would get.",
+    },
+    {
+      kind: "p",
+      text: "While you are there, scroll to the footer. Most designers credit themselves on sites they built, so a portfolio you can cross-check against real footers is a portfolio you can trust. [Ours is here](/work), written up build by build, live links included.",
+    },
+    { kind: "h2", text: "5. You own everything when it is done" },
+    {
+      kind: "p",
+      text: "Two questions, asked in writing before any money moves: is the domain registered in my name, and if we part ways, do I keep the site? The wrong answers create a quiet hostage situation where the monthly fee is really a ransom, and leaving means starting over from nothing.",
+    },
+    {
+      kind: "p",
+      text: "A fair arrangement survives the relationship ending. Your domain stays yours, your content stays yours, and the handover is a chore rather than a crisis. Any designer who hesitates on either question has answered both.",
+    },
+    { kind: "h2", text: "6. Honest SEO talk, with no ranking guarantees" },
+    {
+      kind: "p",
+      text: "A good designer can explain, in plain words, what they do so Google can find and rank your site: proper titles, clean structure, fast loading, structured data, a submitted sitemap. That groundwork is real, checkable work, and it should be part of the build rather than a mysterious add-on.",
+    },
+    {
+      kind: "p",
+      text: "What nobody outside Google can honestly promise is a position. Guaranteed first page rankings are the single most reliable red flag in this industry, because the person saying it is either wrong about how search works or hoping you are. We wrote up [how local search actually works](/seo-nanaimo) so you can see the difference between groundwork and guarantees.",
+    },
+    { kind: "h2", text: "7. You can edit the site yourself" },
+    {
+      kind: "p",
+      text: "Prices change, hours change, photos age. If every one of those changes needs an email and an invoice, your website is a subscription to someone else's calendar, not an asset you own. Ask to see, on a real site, how an owner changes text or swaps a photo, and how long it took to learn.",
+    },
+    {
+      kind: "p",
+      text: "The answer you want is minutes, on the page itself, from a phone. The sites we build let owners [edit directly on the live page](/services), and the reason is selfish as much as generous: our time should go into building new sites, not billing old friends for typo fixes.",
+    },
+    { kind: "h2", text: "Use the list on us" },
+    {
+      kind: "p",
+      text: "That is the whole checklist: visible pricing, fast answers, verifiable reviews, live work, real ownership, honest SEO, and a site you can run yourself. It takes about twenty minutes to run any designer through it, us included, and twenty minutes is cheap insurance on something your business will live in for years.",
+    },
+    {
+      kind: "p",
+      text: "If we pass your version of the checklist, [tell us about your project](/contact) and you will get a fixed written quote back, free. And if someone else passes it better, genuinely, hire them. A good decision made with clear eyes is the outcome this article was for.",
+    },
+  ],
+};
+
 export const BLOG_POSTS: BlogPost[] = [
+  chooseDesignerPost,
   wixVsDesignerPost,
   howLongDoesItTakePost,
   facebookPageVsWebsitePost,
