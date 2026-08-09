@@ -148,7 +148,7 @@ export default function LogoDesignNanaimoPage() {
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Montserrat:ital,wght@0,600;1,500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Montserrat:ital,wght@0,600;1,500&family=Fraunces:wght@500&display=swap"
         rel="stylesheet"
       />
       <script

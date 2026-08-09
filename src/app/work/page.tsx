@@ -3,6 +3,7 @@ import { CASE_STUDIES } from "@/lib/caseStudies";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 
 /**
  * /work — case study index. Links every project page and carries
@@ -199,48 +200,7 @@ export default function WorkIndexPage() {
             direction, so the two proof pages point at each other instead of
             both dead-ending at /contact. Reuses the /about headshots. */}
         <section className="px-6 pb-20 md:px-14">
-          <div className="mx-auto max-w-2xl rounded-2xl border border-black/10 bg-white/55 px-6 py-9 text-center">
-            <div className="flex items-center justify-center -space-x-3">
-              {/* Dedicated 168px square crops, NOT the 800x1000 portraits.
-                  Letting the browser squeeze a 4:5 portrait into a 56px
-                  circle downscaled ~14x (aliased and soft) and, with
-                  object-top, framed head-through-chest so the face was
-                  tiny. These are cropped tight on the face at 3x the
-                  display size instead. */}
-              {[
-                { src: "/team/sem-avatar.webp", alt: "Sem van Duist" },
-                { src: "/team/phillip-avatar.webp", alt: "Phillip Treitel" },
-              ].map((p) => (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  key={p.src}
-                  src={p.src}
-                  alt={p.alt}
-                  width={168}
-                  height={168}
-                  className="size-14 rounded-full border-2 border-[#f4efe6] object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ))}
-            </div>
-            <h2
-              className="mt-4 text-[22px] font-bold md:text-[26px]"
-              style={{ fontFamily: SYNE }}
-            >
-              Who you&rsquo;d actually be working with
-            </h2>
-            <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-[#0d0d0d]/70">
-              Every project above was designed and built by the two of us, no
-              subcontractors and no account managers in between.
-            </p>
-            <a
-              href="/about"
-              className="mt-5 inline-block text-[14px] font-semibold text-[#dc2626] hover:underline"
-            >
-              Meet Sem and Phillip &rarr;
-            </a>
-          </div>
+          <TeamCard blurb="Every project above was designed and built by the two of us, no subcontractors and no account managers in between." />
         </section>
       </main>
 

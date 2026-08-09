@@ -23,9 +23,9 @@
     <rect x="84" y="0" width="26" height="160" fill="#0F1A29"/>
     </g>
     <g mask="url(#cutA)">
-    <rect x="48" y="107" width="110" height="26" fill="url(#spec)"/>
-    <rect x="48" y="40" width="26" height="160" fill="url(#spec)"/>
-    <rect x="132" y="40" width="26" height="160" fill="url(#spec)"/>
+    <rect x="48" y="107" width="110" height="26" fill="#F29A2E"/>
+    <rect x="48" y="40" width="26" height="160" fill="#F29A2E"/>
+    <rect x="132" y="40" width="26" height="160" fill="#F29A2E"/>
     </g>
     <rect x="0" y="67" width="110" height="26" fill="#0F1A29"/>
   </g>

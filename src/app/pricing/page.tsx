@@ -298,16 +298,23 @@ export default function PricingPage() {
               . The number always arrives before the work does.
             </p>
 
-            <p className="mt-6 max-w-3xl text-[16px] leading-relaxed">
-              Want to get started?{" "}
+            {/* Prominent on purpose (Sem, 2026-08-09): a reader who just
+                scanned the packages is at peak intent, so this is a real
+                CTA, not a text link. */}
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <p
+                className="text-xl font-bold md:text-[24px]"
+                style={{ fontFamily: SYNE }}
+              >
+                Want to get started?
+              </p>
               <Link
                 href="/contact"
-                className="font-semibold text-[#dc2626] underline underline-offset-2"
+                className="rounded-full bg-[#dc2626] px-7 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-85"
               >
-                Contact us here
+                Contact us here!
               </Link>
-              !
-            </p>
+            </div>
           </div>
         </section>
 

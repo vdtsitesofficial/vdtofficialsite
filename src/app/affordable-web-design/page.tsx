@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import TeamCard from "@/components/TeamCard";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
 
 /**
@@ -257,6 +258,13 @@ export default function AffordableWebDesignPage() {
           </div>
         </section>
 
+        {/* ── The team, right where the price claim needs a face
+            (Sem, 2026-08-09: "See who you'd be working with" belongs
+            under the affordability section, with the photos). */}
+        <section className="px-6 pb-16 md:px-14 md:pb-20">
+          <TeamCard blurb="Every site we ship is designed and built by the two of us, no subcontractors and no account managers in between. That structure is the price." />
+        </section>
+
         {/* ── Affordable vs cheap ──────────────────────────── */}
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
@@ -389,14 +397,6 @@ export default function AffordableWebDesignPage() {
                     250-616-2087
                   </a>
                 </div>
-                <p className="mt-6 text-[15px] leading-relaxed text-[#0d0d0d]/70">
-                  <Link
-                    href="/about"
-                    className="font-semibold text-[#dc2626] underline underline-offset-2"
-                  >
-                    See who you&rsquo;d be working with!
-                  </Link>
-                </p>
               </div>
             </div>
           </div>

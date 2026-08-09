@@ -16,6 +16,8 @@
  * aria-hidden so screen readers hear each client once.
  */
 
+import type { ReactNode } from "react";
+
 const RULE_GOLD = "rgba(201, 131, 22, 0.85)";
 
 function PaulLockup() {
@@ -58,21 +60,57 @@ function PaulLockup() {
   );
 }
 
+/* Therapeutic Value's emblem is icon-only (no wordmark file exists), so
+   the name half of the lockup mirrors their site header: Fraunces serif
+   ink title over a tiny tracked mono label (SiteShell.tsx in their repo).
+   The page's font link must include Fraunces:500. */
+function TherapeuticValueLockup() {
+  return (
+    <span className="flex items-center gap-3">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/logos/therapeutic-value-mark.png"
+        alt=""
+        className="h-12 w-auto object-contain"
+        loading="lazy"
+      />
+      <span className="flex flex-col leading-none">
+        <span
+          className="text-[17px] tracking-tight"
+          style={{ fontFamily: "'Fraunces', Georgia, serif", color: "#15110B", fontWeight: 500 }}
+        >
+          Therapeutic Value
+        </span>
+        <span
+          className="mt-1 text-[9px] font-medium uppercase tracking-[0.28em]"
+          style={{ fontFamily: "ui-monospace, monospace", color: "#97774E" }}
+        >
+          Counselling Services
+        </span>
+      </span>
+    </span>
+  );
+}
+
 /* One entry per client. `h` tunes each logo's visual weight so the row
    reads balanced despite the mixed aspect ratios. */
 const LOGOS: Array<
-  { name: string; src: string; h: string } | { name: string; inline: true }
+  { name: string; src: string; h: string } | { name: string; inline: ReactNode }
 > = [
   // C:\Websites\MO Coffee\Images\MO Coffee Logo long.png (745x335)
   { name: "MO Coffee", src: "/logos/mo-coffee.png", h: "h-14" },
-  // C:\Websites\Horizon Hues\logo\lockup-horizontal.svg (vector)
+  // C:\Websites\Horizon Hues\logo\lockup-horizontal-amber.svg — the
+  // black-and-gold variant (Sem's pick over the all-navy default).
   { name: "Horizon Hues", src: "/logos/horizon-hues.svg", h: "h-11" },
   // C:\Websites\Sherri Kozubal\public\assets\logo-blue.png (512x480)
   { name: "Sherri Kozubal", src: "/logos/sherri-kozubal.png", h: "h-16" },
-  // C:\Websites\westro-clone\public\img\westro-mark.png (1400x845)
+  // westro-mark recolored 2026-08-09: the wordmark and mountain were
+  // white (invisible on cream); near-white pixels inked to #0d0d0d.
   { name: "Westro", src: "/logos/westro.png", h: "h-16" },
   // Recreated inline; see PaulLockup above.
-  { name: "Paul Van Ryssel", inline: true },
+  { name: "Paul Van Ryssel", inline: <PaulLockup /> },
+  // Emblem cropped from their glow canvas; lockup recreated inline.
+  { name: "Therapeutic Value", inline: <TherapeuticValueLockup /> },
 ];
 
 function Row({ hidden }: { hidden?: boolean }) {
@@ -81,7 +119,7 @@ function Row({ hidden }: { hidden?: boolean }) {
       {LOGOS.map((l) => (
         <span key={l.name} className="vdt-logos__item">
           {"inline" in l ? (
-            <PaulLockup />
+            l.inline
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
