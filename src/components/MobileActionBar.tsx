@@ -7,8 +7,17 @@ import { useEffect, useState } from "react";
  * standard action bar, on our own site. Slides up once the visitor has
  * scrolled past the hero (so it never overlays the tap-to-enter intro)
  * and hides again while the #contact section is on screen so it doesn't
- * cover the actual form. The tel: link is counted as a phone_call_click
- * conversion by the Analytics component's delegated listener.
+ * cover the actual form.
+ *
+ * Call tracking: the tel: link fires NO event of its own. This comment used
+ * to claim a phone_call_click conversion was recorded "by the Analytics
+ * component's delegated listener" — there is no Analytics component and that
+ * string appears nowhere else in the codebase, so taps here were untracked
+ * from the day the bar shipped until 2026-08-10. Calls are now measured by
+ * Google Ads instead of by us: the phone snippet in app/layout.tsx swaps in a
+ * forwarding number for ad visitors and reports calls over 30 seconds. That
+ * counts real conversations rather than taps, so do not add a click event
+ * here — it would double-count every ad visitor who taps and connects.
  *
  * messageHref: pages without an embedded form (e.g. /seo-victoria) pass
  * "/contact" so "Message us" goes to the form page instead of a dead

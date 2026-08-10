@@ -25,8 +25,33 @@ import MobileDrawer from "@/components/MobileDrawer";
 const SITE_URL = "https://vdtsites.com";
 
 // Google Ads account tag. Conversion labels live with the events that fire
-// them, in contact-card.js, not here.
+// them, in contact-card.js, not here. The one exception is the phone snippet
+// below: it is a config call, not an event, so it has to sit with the tag.
 const GOOGLE_ADS_ID = "AW-18345910455";
+
+// Call conversion tracking, added 2026-08-10.
+//
+// Until now the campaign could only see contact-form submissions. For a local
+// trades-facing business the phone is plausibly most of the leads, so every
+// bid decision was being made on a partial signal — and reported cost per lead
+// was overstated by however many people called instead of typing.
+//
+// This is the "Calls from a number on your website" conversion. gtag swaps a
+// Google forwarding number in for PHONE_NUMBER on sessions that arrived from
+// an ad, then reports calls over 30 seconds as conversions. Organic visitors
+// keep seeing the real number.
+//
+// Two things this depends on, both easy to break:
+//  - The number must render as TEXT matching PHONE_NUMBER's format. Every page
+//    prints it as 250-616-2087 and links it as tel:+12506162087. Change the
+//    display format anywhere and the swap silently stops on that page.
+//  - The config call must run on every page, which is why it lives here rather
+//    than in a component.
+//
+// Calls placed straight from the ad are a SEPARATE conversion action ("Calls
+// from ads") handled by the campaign's call asset. It needs no code.
+const PHONE_CONVERSION_LABEL = `${GOOGLE_ADS_ID}/KI5tCITPrd8cELfBgaxE`;
+const PHONE_NUMBER = "250-616-2087";
 
 // viewport-fit=cover lets the page draw into the notch / home-bar safe-area
 // insets on modern phones; themeColor tints the mobile browser chrome cream.
@@ -117,7 +142,10 @@ export default function RootLayout({
 function gtag(){dataLayer.push(arguments);}
 window.gtag = gtag;
 gtag('js', new Date());
-gtag('config', '${GOOGLE_ADS_ID}');`,
+gtag('config', '${GOOGLE_ADS_ID}');
+gtag('config', '${PHONE_CONVERSION_LABEL}', {
+  'phone_conversion_number': '${PHONE_NUMBER}'
+});`,
           }}
         />
 
