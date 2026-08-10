@@ -1,6 +1,7 @@
 import { getAllPosts, SITE_URL } from "@/lib/blog";
 import { CASE_STUDIES } from "@/lib/caseStudies";
 import { HOME_FAQS } from "@/lib/faqs";
+import { LEGAL_PAGES, MAIN_PAGES } from "@/lib/pages";
 import { PRICE_BUILD_FROM } from "@/lib/pricing";
 
 /**
@@ -8,14 +9,19 @@ import { PRICE_BUILD_FROM } from "@/lib/pricing";
  * they land on the domain (the AI-era counterpart to sitemap.xml).
  *
  * Built from the same modules as sitemap.ts and the homepage FAQ schema, so
- * a new case study or post shows up here without anyone remembering to
- * update it. Drafts are excluded: getAllPosts() already filters them.
+ * a new page, case study or post shows up here without anyone remembering
+ * to update it. Drafts are excluded: getAllPosts() already filters them.
  *
- * Deliberately omitted, and why:
- *  - /web-design-nanaimo is the noindex Google Ads landing page. The
- *    homepage is meant to own "web design Nanaimo" organically, so pointing
- *    a retrieval crawler at the ad page would work against that.
- *  - /admin and /api/* are disallowed in robots.txt.
+ * The "Main pages" and "Legal" lists come from lib/pages.ts. They were
+ * hand-written here until 2026-08-10, while sitemap.ts hand-wrote the same
+ * list separately, and the two drifted: this file described an 11 page site
+ * for the two months it took to build 21, so AI retrieval crawlers never
+ * saw /pricing or any of the money pages. Do not reintroduce a literal
+ * array here.
+ *
+ * Deliberately omitted, and why: see the exclusion notes in lib/pages.ts
+ * (/web-design-nanaimo is noindex on purpose, /admin and /api/* are
+ * disallowed in robots.txt).
  *
  * Voice: no em dashes or en dashes (see lib/caseStudies.ts).
  */
@@ -69,21 +75,13 @@ function build(): string {
     "",
     "## Main pages",
     "",
-    `- [Home](${SITE_URL}): what VDT Sites does, selected work, reviews and the enquiry form.`,
-    `- [Services and pricing](${SITE_URL}/services): the full service list and how projects are quoted.`,
-    `- [Work](${SITE_URL}/work): case studies of real client builds.`,
-    `- [Reviews](${SITE_URL}/reviews): client reviews.`,
-    `- [About](${SITE_URL}/about): who runs the studio and how projects are run.`,
-    `- [Contact](${SITE_URL}/contact): phone, email and the enquiry form.`,
-    `- [Blog](${SITE_URL}/blog): articles on small business websites, cost and local search.`,
-    `- [Non-profit website design in Vancouver](${SITE_URL}/non-profit-website-design-vancouver): websites for Vancouver non-profits and registered charities, including donations, volunteer-friendly editing and the website requirements behind a Google Ad Grants application.`,
-    `- [Local SEO in Nanaimo](${SITE_URL}/seo-nanaimo): one-time local SEO setup at a fixed price, no monthly retainer. Google Business Profile, on-page fixes, listings and measurement.`,
-    `- [Logo design in Nanaimo](${SITE_URL}/logo-design-nanaimo): custom logo as part of the Full Brand Kit, which includes business card design, an invoice template, brand typefaces and the website itself.`,
-    `- [Website design in Victoria, BC](${SITE_URL}/web-design-victoria): websites for Victoria and Capital Regional District businesses, built up-island in Nanaimo (90 minutes away, no ferry) without downtown agency overhead.`,
-    "",
-    "## Services",
-    "",
   ];
+
+  for (const p of MAIN_PAGES) {
+    lines.push(`- [${p.label}](${SITE_URL}${p.path}): ${p.description}`);
+  }
+
+  lines.push("", "## Services", "");
 
   for (const [group, services] of SERVICE_GROUPS) {
     lines.push(`- ${group}: ${services.join(", ")}.`);
@@ -106,14 +104,11 @@ function build(): string {
     lines.push(`### ${q}`, "", a, "");
   }
 
-  lines.push(
-    "## Legal",
-    "",
-    `- [Privacy policy](${SITE_URL}/privacy-policy)`,
-    `- [Cookie policy](${SITE_URL}/cookie-policy)`,
-    `- [Terms of service](${SITE_URL}/terms-of-service)`,
-    "",
-  );
+  lines.push("## Legal", "");
+  for (const p of LEGAL_PAGES) {
+    lines.push(`- [${p.label}](${SITE_URL}${p.path}): ${p.description}`);
+  }
+  lines.push("");
 
   return lines.join("\n");
 }
