@@ -2417,7 +2417,6 @@ const chooseDesignerPost: BlogPost = {
     "web designer red flags",
   ],
   author: DEFAULT_AUTHOR,
-  draft: true,
   faqs: [
     {
       q: "How do I choose a web designer?",
