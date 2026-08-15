@@ -50,6 +50,6 @@
     // address, sent via Resend when the RESEND_API_KEY secret is set, else
     // via the SEND_EMAIL binding (which requires the address to be a
     // verified Email Routing destination — vdtsites@gmail.com is).
-    "ADMIN_EMAILS": "vdtsites@gmail.com"
+    "ADMIN_EMAILS": "vdtsites@gmail.com,vanduist.sem@gmail.com"
   }
 }
