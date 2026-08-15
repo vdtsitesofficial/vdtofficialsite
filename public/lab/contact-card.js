@@ -8,12 +8,21 @@
  * Requires GSAP (loaded via CDN <script> in index.html).
  * ============================================================= */
 (function () {
-  if (typeof gsap === "undefined") return;
   const root = document.querySelector(".vdt-contact-card");
   if (!root) return;
 
   const q  = (sel) => root.querySelectorAll(sel);
   const q1 = (sel) => root.querySelector(sel);
+
+  // GSAP powers the decorative animation ONLY. Everything functional below
+  // (mode toggle, form submit → /api/contact, click-to-copy) must keep
+  // working when the CDN script is blocked or fails to load — a missing
+  // animation library must never cost a lead. Before 2026-08-15 this whole
+  // file bailed out when gsap was undefined, which left the form's submit
+  // handler unbound and silently ate a real enquiry.
+  const hasGsap = typeof gsap !== "undefined";
+
+  if (hasGsap) {
 
   /* ENTRY — gate behind IntersectionObserver so animations don't
      fire until the user scrolls into the section. */
@@ -79,6 +88,8 @@
       driftIO.observe(root);
     }
   }
+
+  } // end if (hasGsap) — everything below runs with or without GSAP
 
   /* Card magnetic hover (mousemove tilt/translate) removed 2026-08-03 —
      Sem found the cards moving under the cursor annoying. */

@@ -1668,7 +1668,9 @@ export default function Home() {
             <div className="cc-role">Start a conversation</div>
             <div className="cc-divider"></div>
 
-            <form className="cc-form" noValidate>
+            {/* action/method = no-JS fallback to a native POST; see
+                components/ContactCard.tsx for the full rationale. */}
+            <form className="cc-form" action="/api/contact" method="POST">
               <div className="cc-field">
                 <label htmlFor="cc-name-input">Name</label>
                 <input id="cc-name-input" name="name" type="text" required autoComplete="name" />

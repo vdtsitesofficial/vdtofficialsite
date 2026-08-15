@@ -106,7 +106,14 @@ export default function ContactCard({
             </button>
           </div>
 
-          <form className="cc-form" noValidate>
+          {/* action/method are the no-JS safety net: if contact-card.js never
+              runs (blocked CDN, dead hydration, stale HTML), the browser still
+              POSTs to /api/contact, which answers native submits with a plain
+              confirmation page. With JS alive, the handler preventDefaults and
+              fetches as before. Without the action, a dead-JS submit did a GET
+              reload that LOOKED successful and sent nothing (lost a real
+              enquiry ~2026-08-01). */}
+          <form className="cc-form" action="/api/contact" method="POST">
             <div className="cc-field">
               <label htmlFor="cc-name-input">Name</label>
               <input id="cc-name-input" name="name" type="text" required autoComplete="name" />

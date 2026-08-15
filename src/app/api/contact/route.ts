@@ -92,28 +92,88 @@ async function deliver(
   }
 }
 
+/**
+ * Native (no-JS) submissions: the form's action/method fallback POSTs
+ * application/x-www-form-urlencoded when contact-card.js never ran (blocked
+ * GSAP CDN, dead hydration from stale HTML). Those requests come from a
+ * browser expecting a page, not JSON — so they get a small self-contained
+ * HTML answer. This path exists because a dead-JS submit used to reload the
+ * page looking successful while sending nothing (a real enquiry was lost
+ * ~2026-08-01; found 2026-08-15).
+ */
+function htmlReply(status: number, title: string, detail: string) {
+  const html = [
+    `<!doctype html><html lang="en"><head><meta charset="utf-8">`,
+    `<meta name="viewport" content="width=device-width, initial-scale=1">`,
+    `<meta name="robots" content="noindex">`,
+    `<title>${title} — VDT Sites</title></head>`,
+    `<body style="margin:0;min-height:100svh;display:flex;align-items:center;justify-content:center;background:#f4efe6;color:#0d0d0d;font-family:Inter,system-ui,sans-serif;text-align:center;padding:24px">`,
+    `<div><h1 style="font-size:26px;margin:0 0 12px">${title}</h1>`,
+    `<p style="font-size:15px;line-height:1.6;opacity:.75;max-width:26rem;margin:0 auto 20px">${detail}</p>`,
+    `<a href="/contact" style="color:#dc2626;font-weight:600">Back to the contact page</a></div>`,
+    `</body></html>`,
+  ].join("");
+  return new NextResponse(html, {
+    status,
+    headers: { "content-type": "text/html; charset=utf-8" },
+  });
+}
+
 export async function POST(req: Request) {
+  const contentType = req.headers.get("content-type") ?? "";
+  // A native form submit is urlencoded; the JS handler always sends JSON.
+  const isNative = contentType.includes("application/x-www-form-urlencoded");
+
   const raw = await req.text();
   if (raw.length > 10_000) {
-    return NextResponse.json({ error: "Message is too long." }, { status: 413 });
+    return isNative
+      ? htmlReply(413, "Message too long", "Please shorten your message and try again.")
+      : NextResponse.json({ error: "Message is too long." }, { status: 413 });
   }
 
   let body: Payload;
-  try {
-    const parsed: unknown = JSON.parse(raw);
-    // A cast alone would let `null`, arrays, or non-string fields through to
-    // `.trim()` calls below and 500 the route.
-    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+  if (isNative) {
+    const params = new URLSearchParams(raw);
+    body = {
+      name: params.get("name") ?? "",
+      email: params.get("email") ?? "",
+      message: params.get("message") ?? "",
+      phone: params.get("phone") ?? "",
+      callDate: params.get("callDate") ?? "",
+      callTime: params.get("callTime") ?? "",
+      website: params.get("website") ?? "",
+    };
+  } else {
+    try {
+      const parsed: unknown = JSON.parse(raw);
+      // A cast alone would let `null`, arrays, or non-string fields through to
+      // `.trim()` calls below and 500 the route.
+      if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+        return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+      }
+      body = parsed as Payload;
+    } catch {
       return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
-    body = parsed as Payload;
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
+
+  // Errors below this point can come from either path; answer in kind.
+  const fail = (status: number, error: string) =>
+    isNative
+      ? htmlReply(status, "That didn't go through", error)
+      : NextResponse.json({ error }, { status });
+  const succeed = () =>
+    isNative
+      ? htmlReply(
+          200,
+          "Message sent",
+          "Thanks — we got your message and will get back to you within one business day.",
+        )
+      : NextResponse.json({ ok: true });
 
   // Honeypot - silently accept for naive bots.
   if (typeof body.website === "string" && body.website.length > 0) {
-    return NextResponse.json({ ok: true });
+    return succeed();
   }
 
   const name = typeof body.name === "string" ? body.name : "";
@@ -134,10 +194,10 @@ export async function POST(req: Request) {
   const isCall = Boolean(callDate || callTime);
 
   if (!name.trim() || !email.trim() || (!isCall && !message.trim())) {
-    return NextResponse.json({ error: "All fields are required." }, { status: 400 });
+    return fail(400, "All fields are required.");
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-    return NextResponse.json({ error: "That email doesn't look right." }, { status: 400 });
+    return fail(400, "That email doesn't look right.");
   }
   if (isCall) {
     // Object.hasOwn: a plain `TIME_SLOTS[callTime]` check passes prototype
@@ -146,16 +206,10 @@ export async function POST(req: Request) {
       !/^\d{4}-\d{2}-\d{2}$/.test(callDate) ||
       !Object.hasOwn(TIME_SLOTS, callTime)
     ) {
-      return NextResponse.json(
-        { error: "Pick a day and a time window for the call." },
-        { status: 400 },
-      );
+      return fail(400, "Pick a day and a time window for the call.");
     }
     if (!phone) {
-      return NextResponse.json(
-        { error: "We need a phone number to call you at." },
-        { status: 400 },
-      );
+      return fail(400, "We need a phone number to call you at.");
     }
     // Round-trip the date so impossible days ("2026-02-31") are rejected
     // rather than left to engine-specific Date normalization, then bound it
@@ -176,10 +230,7 @@ export async function POST(req: Request) {
       callDate < todayPacific ||
       picked.getTime() > Date.now() + 90 * DAY
     ) {
-      return NextResponse.json(
-        { error: "Pick a day within the next couple of months." },
-        { status: 400 },
-      );
+      return fail(400, "Pick a day within the next couple of months.");
     }
   }
 
@@ -244,25 +295,19 @@ export async function POST(req: Request) {
         void deliverPromise.catch(() => {});
       }
     }
-    return NextResponse.json({ ok: true });
+    return succeed();
   }
 
   // KV save failed. If email isn't configured we have no way to capture the
   // message — fail visibly. Otherwise try email synchronously as a fallback.
   if (!emailConfigured) {
-    return NextResponse.json(
-      { error: "Could not send. Try again later." },
-      { status: 502 },
-    );
+    return fail(502, "Could not send. Try again later.");
   }
   const result = await deliver(from!, to!, subject, text, email);
   if (!result.ok) {
-    return NextResponse.json(
-      { error: "Could not send. Try again later." },
-      { status: 502 },
-    );
+    return fail(502, "Could not send. Try again later.");
   }
-  return NextResponse.json({ ok: true });
+  return succeed();
 }
 
 // Helper for the fire-and-forget pattern above. Returns the whole
