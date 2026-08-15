@@ -13,11 +13,11 @@ import { SITE_PAGES } from "@/lib/pages";
  * there, and the two drifted for two months. Add a page in lib/pages.ts and
  * both files pick it up.
  *
- * Deliberately NOT listed: /web-design-nanaimo. It is the Google Ads
- * landing page and carries robots noindex on purpose, so that the homepage
- * (not the ad page) owns "web design Nanaimo" organically. Listing a
- * noindex URL here is a contradictory signal. See the note at the top of
- * app/web-design-nanaimo/page.tsx before changing this.
+ * /web-design-nanaimo used to be excluded here, because it was a noindex
+ * ads landing page and the homepage was supposed to own "web design
+ * Nanaimo" organically. As of 2026-08-15 it is the indexable Nanaimo city
+ * page and comes through lib/pages.ts like every other one. See the note at
+ * the top of app/web-design-nanaimo/page.tsx.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = SITE_PAGES.map((p) => ({
