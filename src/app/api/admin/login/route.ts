@@ -5,22 +5,24 @@ import { confirmPin, requestPin, SESSION_COOKIE, SESSION_SECONDS } from "@/lib/a
 export const dynamic = "force-dynamic";
 
 type Body = {
-  step?: "password" | "pin";
+  step?: "email" | "password" | "pin";
   email?: string;
-  password?: string;
+  password?: string; // legacy field from the old two-step UI; ignored
   pin?: string;
 };
 
 /**
- * Two-step admin login.
- *  - step "password": verify email + password, email a one-time PIN.
+ * Email-only admin login (password step removed 2026-08-15).
+ *  - step "email": email a one-time PIN to an allowlisted address.
+ *    ("password" is accepted as an alias so a stale cached copy of the old
+ *    login page still works — its password value is simply ignored.)
  *  - step "pin": verify the PIN, set the signed session cookie.
  */
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => ({}))) as Body;
 
-  if (body.step === "password") {
-    const r = await requestPin(body.email ?? "", body.password ?? "");
+  if (body.step === "email" || body.step === "password") {
+    const r = await requestPin(body.email ?? "");
     return NextResponse.json(r, { status: r.ok ? 200 : 401 });
   }
 

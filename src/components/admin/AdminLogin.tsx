@@ -13,17 +13,16 @@ const C = {
   danger: "#FF6B6B",
 };
 
-type Step = "password" | "pin";
+type Step = "email" | "pin";
 
 export default function AdminLogin() {
-  const [step, setStep] = useState<Step>("password");
+  const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [pin, setPin] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function submitPassword(e: React.FormEvent) {
+  async function submitEmail(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError(null);
@@ -31,7 +30,7 @@ export default function AdminLogin() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ step: "password", email, password }),
+        body: JSON.stringify({ step: "email", email }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (res.ok) {
@@ -96,10 +95,11 @@ export default function AdminLogin() {
           </span>
         </div>
 
-        {step === "password" ? (
-          <form onSubmit={submitPassword} className="mt-6">
+        {step === "email" ? (
+          <form onSubmit={submitEmail} className="mt-6">
             <p className="text-[13px] mb-5" style={{ color: C.inkMuted }}>
-              Sign in to manage the site.
+              Enter your admin email and we&rsquo;ll send you a one-time
+              sign-in code.
             </p>
             <label className="block text-[12px] mb-1" style={{ color: C.inkMuted }}>
               Email
@@ -110,18 +110,6 @@ export default function AdminLogin() {
               autoComplete="username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md px-3 py-2 text-[14px] mb-4 outline-none"
-              style={inputStyle}
-            />
-            <label className="block text-[12px] mb-1" style={{ color: C.inkMuted }}>
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-md px-3 py-2 text-[14px] outline-none"
               style={inputStyle}
             />
@@ -136,14 +124,14 @@ export default function AdminLogin() {
               className="mt-6 w-full rounded-md py-2.5 text-[13px] font-medium transition-opacity disabled:opacity-50"
               style={{ background: C.accent, color: "#fff" }}
             >
-              {busy ? "Checking..." : "Continue"}
+              {busy ? "Sending..." : "Email me a code"}
             </button>
           </form>
         ) : (
           <form onSubmit={submitPin} className="mt-6">
             <p className="text-[13px] mb-5" style={{ color: C.inkMuted }}>
-              We emailed a 6-digit code to{" "}
-              <span style={{ color: C.ink }}>{email}</span>. Enter it below. It
+              If <span style={{ color: C.ink }}>{email}</span> is an admin
+              address, a 6-digit code is on its way. Enter it below — it
               expires in 10 minutes.
             </p>
             <label className="block text-[12px] mb-1" style={{ color: C.inkMuted }}>
@@ -176,7 +164,7 @@ export default function AdminLogin() {
             <button
               type="button"
               onClick={() => {
-                setStep("password");
+                setStep("email");
                 setPin("");
                 setError(null);
               }}

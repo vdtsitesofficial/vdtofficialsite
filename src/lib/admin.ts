@@ -26,10 +26,15 @@ type Env = {
   SEND_EMAIL?: SendEmailBinding;
   /** Comma-separated allowlist of admin email addresses. */
   ADMIN_EMAILS?: string;
-  /** Shared admin password (Cloudflare secret). */
-  ADMIN_PASSWORD?: string;
   /** HMAC key for signing session cookies (Cloudflare secret). */
   ADMIN_SESSION_SECRET?: string;
+  /**
+   * Resend API key (Cloudflare secret, optional). When set, sign-in PINs go
+   * out via the Resend API (fastest to the inbox); without it they fall back
+   * to the Workers send_email binding, which requires the destination to be
+   * a verified Email Routing address.
+   */
+  RESEND_API_KEY?: string;
   CONTACT_FROM_EMAIL?: string;
 };
 
@@ -123,12 +128,14 @@ export const SESSION_SECONDS = 8 * 60 * 60; // 8 hours
 const PIN_TTL_SECONDS = 10 * 60; // 10 minutes
 const MAX_PIN_ATTEMPTS = 5;
 const PIN_PREFIX = "pin:";
-// Password-step brute-force throttle: at most MAX_PW_ATTEMPTS failed
-// email+password attempts per address within the rolling window before the
-// password step is refused. Auto-clears on success or after the TTL.
-const MAX_PW_ATTEMPTS = 10;
-const PWFAIL_TTL_SECONDS = 15 * 60; // 15 minutes
-const PWFAIL_PREFIX = "pwfail:";
+// PIN-request throttle: with no password step (removed 2026-08-15), the only
+// cost of a request is an email — so cap how many codes any one address can
+// trigger inside the rolling window, or the form becomes an email-bombing
+// tool aimed at the admin inbox. Counts EVERY request (known address or
+// not), auto-expires after the TTL.
+const MAX_PIN_REQUESTS = 5;
+const PINREQ_TTL_SECONDS = 15 * 60; // 15 minutes
+const PINREQ_PREFIX = "pinreq:";
 
 const enc = new TextEncoder();
 
@@ -183,39 +190,25 @@ function isAllowedEmail(env: Env, email: string): boolean {
   return list.includes(normalizeEmail(email));
 }
 
-function passwordOk(env: Env, password: string): boolean {
-  const expected = env.ADMIN_PASSWORD ?? "";
-  if (!expected) return false;
-  return constantTimeEqual(password, expected);
-}
-
-/* ---- password-step throttle (fail-open) ---------------------------------- */
+/* ---- PIN-request throttle (fail-open) ------------------------------------ */
 
 async function isThrottled(kv: AdminKV, email: string): Promise<boolean> {
   try {
-    const raw = await kv.get(PWFAIL_PREFIX + normalizeEmail(email));
-    return raw != null && Number(raw) >= MAX_PW_ATTEMPTS;
+    const raw = await kv.get(PINREQ_PREFIX + normalizeEmail(email));
+    return raw != null && Number(raw) >= MAX_PIN_REQUESTS;
   } catch {
     return false; // never lock out the real admin on a storage hiccup
   }
 }
 
-async function recordPwFailure(kv: AdminKV, email: string): Promise<void> {
+async function recordPinRequest(kv: AdminKV, email: string): Promise<void> {
   try {
-    const key = PWFAIL_PREFIX + normalizeEmail(email);
+    const key = PINREQ_PREFIX + normalizeEmail(email);
     const raw = await kv.get(key);
     const n = (raw != null ? Number(raw) : 0) + 1;
-    await kv.put(key, String(n), { expirationTtl: PWFAIL_TTL_SECONDS });
+    await kv.put(key, String(n), { expirationTtl: PINREQ_TTL_SECONDS });
   } catch {
     /* ignore — throttling is best-effort */
-  }
-}
-
-async function clearPwFailures(kv: AdminKV, email: string): Promise<void> {
-  try {
-    await kv.delete(PWFAIL_PREFIX + normalizeEmail(email));
-  } catch {
-    /* ignore */
   }
 }
 
@@ -227,15 +220,36 @@ function randomPin(): string {
   return String(arr[0] % 1_000_000).padStart(6, "0");
 }
 
-type PinRecord = { pin: string; attempts: number };
+type PinRecord = { pin: string; attempts: number; issuedAt?: number };
 
 async function issuePin(kv: AdminKV, email: string): Promise<string> {
   const pin = randomPin();
-  const record: PinRecord = { pin, attempts: 0 };
+  const record: PinRecord = { pin, attempts: 0, issuedAt: Date.now() };
   await kv.put(PIN_PREFIX + normalizeEmail(email), JSON.stringify(record), {
     expirationTtl: PIN_TTL_SECONDS,
   });
   return pin;
+}
+
+/**
+ * True if a PIN for this address was issued within the last minute. Used as
+ * a resend cooldown: KV has no atomic increment, so the request counter can
+ * be raced by parallel bursts — this second gate caps the blast radius at
+ * roughly one email per minute regardless. Fail-open (a storage hiccup must
+ * not lock the admin out).
+ */
+async function pinRecentlyIssued(kv: AdminKV, email: string): Promise<boolean> {
+  try {
+    const raw = await kv.get(PIN_PREFIX + normalizeEmail(email));
+    if (!raw) return false;
+    const record = JSON.parse(raw) as PinRecord;
+    return (
+      typeof record.issuedAt === "number" &&
+      Date.now() - record.issuedAt < 60_000
+    );
+  } catch {
+    return false;
+  }
 }
 
 async function checkPin(
@@ -289,6 +303,43 @@ async function sendPinEmail(
     "It expires in 10 minutes and can only be used once.",
     "If you didn't try to sign in, you can ignore this email.",
   ].join("\n");
+
+  // Resend first (when the secret is set): direct API delivery, no Email
+  // Routing hop, and no verified-destination requirement. A failed Resend
+  // call falls through to the send_email binding below rather than losing
+  // the sign-in.
+  if (env.RESEND_API_KEY) {
+    try {
+      const resp = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${env.RESEND_API_KEY}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          // onboarding@resend.dev is Resend's shared sender, deliverable to
+          // the account owner's own address — which is exactly who admin
+          // PINs go to. Swap for a verified-domain sender if one is added.
+          from: "VDT Sites Admin <onboarding@resend.dev>",
+          to,
+          subject,
+          text,
+        }),
+      });
+      if (resp.ok) return true;
+      console.error(
+        "[VDT admin] Resend PIN send failed:",
+        resp.status,
+        await resp.text().catch(() => ""),
+      );
+    } catch (e) {
+      console.error(
+        "[VDT admin] Resend PIN send threw:",
+        e instanceof Error ? e.message : e,
+      );
+    }
+    // fall through to the binding
+  }
 
   if (!env.SEND_EMAIL) {
     if (process.env.NODE_ENV !== "production") {
@@ -363,33 +414,38 @@ async function verifySessionToken(
 /* ---- public auth API ----------------------------------------------------- */
 
 /**
- * Step 1 of login: verify email + password, then email a one-time PIN.
- * Returns a generic error on any failure so valid emails aren't revealed.
+ * Step 1 of login: email a one-time PIN to an allowlisted address.
+ * (Password step removed 2026-08-15 — possession of the admin inbox is the
+ * credential; the emailed single-use PIN plus the session HMAC carry auth.)
+ *
+ * Anti-enumeration: unknown addresses get the SAME success response as real
+ * ones — they just never receive a code. The only visible failures are the
+ * throttle and a genuine send error for a real admin.
  */
 export async function requestPin(
   email: string,
-  password: string,
 ): Promise<{ ok: boolean; error?: string }> {
   const env = await getCfEnv();
   if (!env?.ADMIN_KV) {
     return { ok: false, error: "Admin storage is unavailable." };
   }
-  // Brute-force throttle (fail-open): refuse the password step after too many
-  // recent failures for this address. Generic message so we don't reveal
-  // whether the email is valid.
+  if (!email?.trim()) {
+    return { ok: false, error: "Enter your email." };
+  }
+  // Rate-limit code requests per address (fail-open on storage hiccups).
   if (await isThrottled(env.ADMIN_KV, email)) {
-    return { ok: false, error: "Too many attempts. Please try again later." };
+    return { ok: false, error: "Too many codes requested. Try again in a few minutes." };
   }
-  if (
-    !email?.trim() ||
-    !password ||
-    !isAllowedEmail(env, email) ||
-    !passwordOk(env, password)
-  ) {
-    await recordPwFailure(env.ADMIN_KV, email);
-    return { ok: false, error: "Invalid email or password." };
+  await recordPinRequest(env.ADMIN_KV, email);
+  if (!isAllowedEmail(env, email)) {
+    return { ok: true }; // same shape as success — reveal nothing
   }
-  await clearPwFailures(env.ADMIN_KV, email);
+  // Resend cooldown: a code sent in the last minute is still on its way —
+  // treat the request as satisfied instead of emailing another. Absorbs
+  // double-clicks and blunts counter races (see pinRecentlyIssued).
+  if (await pinRecentlyIssued(env.ADMIN_KV, email)) {
+    return { ok: true };
+  }
   const pin = await issuePin(env.ADMIN_KV, email);
   const sent = await sendPinEmail(env, normalizeEmail(email), pin);
   if (!sent) {

@@ -46,8 +46,10 @@
     // account, or send_email returns a delivery error.
     "CONTACT_TO_EMAIL": "vdtsites@gmail.com",
     // Allowlist of admin emails that may sign in to /admin. Comma-separated.
-    // Replace with the real admin addresses (both must be verified Email
-    // Routing destinations so their sign-in PIN can be delivered).
-    "ADMIN_EMAILS": "admin@vdtsites.ca"
+    // Login is email-only (2026-08-15): a one-time PIN is emailed to the
+    // address, sent via Resend when the RESEND_API_KEY secret is set, else
+    // via the SEND_EMAIL binding (which requires the address to be a
+    // verified Email Routing destination — vdtsites@gmail.com is).
+    "ADMIN_EMAILS": "vdtsites@gmail.com"
   }
 }
