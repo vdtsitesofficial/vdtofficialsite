@@ -91,6 +91,15 @@ const FAQS = [
     a: "Victoria SEO agencies mostly sell monthly packages, and the common range runs from several hundred to a few thousand dollars a month before anyone can tell you what changed. Ours is a one-time setup at a fixed price, quoted before any work starts, and the number depends on the state of your current site rather than on a menu. A site that just needs its basics fixed costs less than one that needs pages rebuilt.",
   },
   {
+    /* Added 2026-08-15. "victoria seo company" (480/mo KD 24) and "seo agency
+       victoria" (170-210/mo KD 12-18) are real queries the page carried no
+       wording for. Answered honestly rather than claiming the label: per the
+       header note this is NOT a swipe at agencies, and it ends by conceding
+       the agency model suits some people. */
+    q: "Are you an SEO agency?",
+    a: "Not in the usual sense, and it is worth knowing before you compare quotes. Most SEO companies working in Victoria are built around a monthly retainer and put an account manager between you and whoever does the work. We are a small studio up-island in Nanaimo, so the person who audits your site is the person who fixes it and the person who replies when you ask what changed. If what you want is a large agency with a dedicated account team and a monthly report, that is a real thing to want and we are honestly not it.",
+  },
+  {
     q: "Do you guarantee a first page ranking?",
     a: "No, and you should walk away from anyone who does. Google decides rankings and nobody outside Google controls them. What we can honestly promise is the work: a site Google can read, a Google Business Profile set up properly, accurate listings, and measurement so you can see for yourself what changed.",
   },
@@ -226,10 +235,17 @@ export default function SeoVictoriaPage() {
             </h1>
 
             <div className="mt-8 grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+              {/* "Search engine optimization" is spelled out here on purpose.
+                  The acronym was the only form on the page until 2026-08-15,
+                  and the spelled-out phrase is a separate query: "search
+                  engine optimization victoria bc" is 390/mo at KD 9 and the
+                  highest CPC in the whole cluster ($9.37). Do not compress it
+                  back to "SEO" for tidiness. */}
               <p className="text-[17px] leading-relaxed text-[#0d0d0d]/70">
-                SEO services for Victoria businesses that want to be found by
-                people searching for what they do, not just for their name.
-                One-time setup at a fixed quoted price.
+                Search engine optimization for Victoria businesses that want to
+                be found by people searching for what they do, not just for
+                their name. SEO services across Victoria and the Capital
+                Regional District, as a one-time setup at a fixed quoted price.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
                 <Link
