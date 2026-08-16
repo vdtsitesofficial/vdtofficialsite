@@ -13,6 +13,7 @@ import type { WorkItem } from "@/components/WorkCarousel";
  */
 export const WORK_ITEMS: WorkItem[] = [
   { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "/work/mo-coffee" },
+  { img: "/work/horizonhues.webp", name: "Horizon Hues", line: "Electrical contractor · Nanaimo", href: "/work/horizon-hues" },
   { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville", href: "/work/morky-auto-imports" },
   { img: "/work/therapeutic.webp", name: "Therapeutic Value", line: "Counselling · Nanaimo", href: "/work/therapeutic-value" },
   { img: "/work/sherri.webp", name: "Sherri Kozubal", line: "Clinical hypnotherapy · Nanaimo", href: "/work/sherri-kozubal" },
