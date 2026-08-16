@@ -109,19 +109,19 @@ export const CASE_STUDIES: CaseStudy[] = [
     kicker: "Electrical contractor · Nanaimo, BC",
     headline: "A brand and a website for an electrician starting from nothing",
     intro:
-      "Horizon Hues Installations is one electrician on Vancouver Island. There was no logo, no domain and no website when we started. We built the identity and the site together, then rebuilt the site onto our shared stack without changing a single pixel.",
+      "Horizon Hues Installations is one electrician on Vancouver Island. There was no logo, no domain and no website when we started. We built the brand and the site together, and he changes every word on it himself.",
     liveUrl: "https://horizonhues.ca",
     year: "2026",
     stackLine: "Custom build · Full brand kit · Self-serve editing",
     metaTitle: "Electrician Website Design in Nanaimo, BC",
     metaDescription:
-      "How we built Horizon Hues Installations a logo, a brand and a five page website from scratch, then ported it onto the shared VDT stack with parity checked element for element so the design did not move.",
+      "How we built a Nanaimo electrical contractor a logo, a brand and a five page website from scratch, with his trade certifications up front and every word on the site editable by him.",
     client:
       "Horizon Hues Installations is Eric Pizzingrilli, a licensed electrical contractor working out of Nanaimo across Vancouver Island from Victoria up to Campbell River. Residential, commercial, service repair and EV chargers, and he is the person who quotes your job and the person who turns up to do it.",
     needed:
       "Everything. A new trade business has no logo, no domain, no email on its own name and nothing for a customer to find when they search. It also has the credibility problem every new contractor has: the certifications are real and hard won, but nobody sees them until they are put somewhere. And the site had to be one Eric could change himself, because he is out of cell service for stretches and cannot be waiting on someone else to fix a typo.",
     builtIntro:
-      "We built the brand first, then the site around it, then moved the whole thing onto the same codebase every other VDT site runs.",
+      "We built the brand first, then the site around it, and it has been quietly improved since without Eric having to do anything.",
     built: [
       {
         title: "The identity, from a blank page",
@@ -132,8 +132,8 @@ export const CASE_STUDIES: CaseStudy[] = [
         body: "Licensed Electrical Contractor, Red Seal, FSR Class A and Master Electrician, all four surfaced in the hero rather than buried on an About page. For a trade nobody can assess by looking, the certifications are the product, so they go above the fold.",
       },
       {
-        title: "A rebuild that changed nothing on purpose",
-        body: "The site launched as eight hand authored HTML files. We ported it onto Next.js on Cloudflare Workers with our shared inline editor, and checked parity element for element against the original rather than trusting our eyes. The design did not move. The original is still preserved at a git tag if we ever need to prove it.",
+        title: "A rebuild you cannot see",
+        body: "A few months after launch we moved the site onto the same system the rest of our sites run on, so that when we improve something once, Eric's site gets it too without anyone touching it. The risk with a move like that is the design quietly shifting. We compared the new version against the old one piece by piece instead of trusting our eyes, and kept the original so we could prove nothing had moved. It looks exactly the same, which was the entire point.",
       },
       {
         title: "He edits it himself, in the browser",
@@ -143,9 +143,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     design:
       "Electrical work happens in the dark and the sell is confidence, so the site is near black with a single amber accent and almost nothing else. The hero is a Vancouver Island treeline at dusk with one glowing line running along the horizon, which is the logo mark drawn at full width. Restraint is the point: a trade site that shouts reads as a franchise, and Horizon Hues is deliberately one person.",
     stats: [
-      { value: "8 files → 1 stack", label: "hand authored HTML ported onto the shared VDT codebase" },
-      { value: "0 visual changes", label: "parity machine checked element for element through the rebuild" },
-      { value: "100%", label: "of page copy editable by Eric, in place on the live site" },
+      { value: "3 logo concepts", label: "drawn from scratch, and the one he picked is his to keep in every format he will need" },
+      { value: "4 certifications", label: "the tickets that took years to earn, now the first thing a customer sees" },
+      { value: "100%", label: "of the words on the site, changed by Eric himself without calling us" },
     ],
     result:
       "A new electrical contractor that looks established from the first search, with a brand he owns outright and a site he can change from a job site. The certifications that took years to earn are now the first thing anyone sees.",
