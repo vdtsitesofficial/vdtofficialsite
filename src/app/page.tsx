@@ -318,8 +318,18 @@ export default function Home() {
             // entity instead of guessing. Stable CID URL — deliberately NOT
             // a share.google/… short link, those rot (see vault: UniSol
             // Accounting/Decisions).
+            //
+            // Facebook added 2026-08-15. The Page had no username until that
+            // day, so its only address was facebook.com/profile.php?id=615903…
+            // which is not a stable public identifier and was not worth
+            // claiming here. It is now facebook.com/VDTSites, and the Page,
+            // the Instagram account and the Business Profile all read
+            // "VDT Sites", so all three can be asserted as one entity.
+            // If the Facebook username is ever changed, change it here too or
+            // this becomes a 404 that Google reads as a bad entity claim.
             sameAs: [
               "https://www.instagram.com/vdtsites",
+              "https://www.facebook.com/VDTSites",
               "https://maps.google.com/?cid=10419426377693999665",
             ],
             hasMap: "https://maps.google.com/?cid=10419426377693999665",
