@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { siteShotAlt } from "@/lib/imageAlt";
+
 /**
  * Horizontal client-work carousel for the ads landing page.
  *
@@ -113,7 +115,7 @@ export default function WorkCarousel({ items }: { items: WorkItem[] }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={w.img}
-                alt={`${w.name} website designed by VDT Sites`}
+                alt={siteShotAlt(w.name, w.line)}
                 width={900}
                 height={675}
                 /* first two are likely in view on load — don't defer those */

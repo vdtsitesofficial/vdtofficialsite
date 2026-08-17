@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CASE_STUDIES, getCaseStudy, getCaseReview } from "@/lib/caseStudies";
+import { siteShotAlt } from "@/lib/imageAlt";
 import { GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
@@ -169,7 +170,7 @@ export default async function CaseStudyPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/work-case/${cs.slug}-hero.webp`}
-              alt={`${cs.name} website, designed and built by VDT Sites`}
+              alt={siteShotAlt(cs.name, cs.kicker)}
               className="mt-10 w-full rounded-2xl border border-black/10 shadow-[0_18px_50px_rgba(0,0,0,0.12)]"
               width={1200}
               height={900}
@@ -226,7 +227,7 @@ export default async function CaseStudyPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/work-case/${cs.slug}-desktop.webp`}
-              alt={`${cs.name} website on desktop`}
+              alt={siteShotAlt(cs.name, cs.kicker, "shown on a desktop screen")}
               className="w-full rounded-xl border border-black/10 md:w-[68%]"
               loading="lazy"
               decoding="async"
@@ -236,7 +237,7 @@ export default async function CaseStudyPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/work-case/${cs.slug}-mobile.webp`}
-              alt={`${cs.name} website on a phone`}
+              alt={siteShotAlt(cs.name, cs.kicker, "shown on a phone")}
               className="w-full max-w-[240px] self-center rounded-xl border border-black/10 md:w-[26%] md:self-start"
               loading="lazy"
               decoding="async"

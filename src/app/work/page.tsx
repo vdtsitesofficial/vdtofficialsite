@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CASE_STUDIES } from "@/lib/caseStudies";
+import { siteShotAlt } from "@/lib/imageAlt";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
@@ -136,7 +137,7 @@ export default function WorkIndexPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/work-case/${featured.slug}-hero.webp`}
-                  alt={`${featured.name} website by VDT Sites`}
+                  alt={siteShotAlt(featured.name, featured.kicker)}
                   className="w-full rounded-xl border border-black/10"
                   decoding="async"
                   width={1200}
@@ -172,7 +173,7 @@ export default function WorkIndexPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`/work-case/${c.slug}-hero.webp`}
-                    alt={`${c.name} website by VDT Sites`}
+                    alt={siteShotAlt(c.name, c.kicker)}
                     className="w-full rounded-xl border border-black/10"
                     loading="lazy"
                     decoding="async"

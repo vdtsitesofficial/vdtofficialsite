@@ -835,7 +835,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/unisol.webp"
-                      alt="UniSol Accounting landing page"
+                      alt="UniSol Accounting website by VDT Sites, accounting in Nanaimo, BC"
                       loading="lazy"
                       decoding="async"
                     />
@@ -859,7 +859,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/sherrikozubal.webp"
-                      alt="Sherri Kozubal landing page"
+                      alt="Sherri Kozubal website by VDT Sites, clinical hypnotherapy in Nanaimo, BC"
                       loading="lazy"
                       decoding="async"
                     />
@@ -883,7 +883,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/mocoffee.webp"
-                      alt="MO Coffee landing page"
+                      alt="MO Coffee website by VDT Sites, coffee roaster in Nanaimo, BC"
                       loading="lazy"
                       decoding="async"
                     />
@@ -907,7 +907,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/horizonhues.webp"
-                      alt="Horizon Hues landing page"
+                      alt="Horizon Hues website by VDT Sites, electrical contractor in Nanaimo, BC"
                       loading="lazy"
                       decoding="async"
                     />
@@ -931,7 +931,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/isleair.webp"
-                      alt="Isle Air Chicken landing page"
+                      alt="Isle Air Chicken website by VDT Sites, food truck on Vancouver Island, BC"
                       loading="lazy"
                       decoding="async"
                     />
@@ -955,7 +955,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/morky.webp"
-                      alt="Morky Auto Imports landing page"
+                      alt="Morky Auto Imports website by VDT Sites, vehicle imports in Parksville, BC"
                       loading="lazy"
                       decoding="async"
                     />
@@ -979,7 +979,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/therapeuticvalue.webp"
-                      alt="Therapeutic Value landing page"
+                      alt="Therapeutic Value website by VDT Sites, counselling in British Columbia"
                       loading="lazy"
                       decoding="async"
                     />
@@ -1003,7 +1003,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/ceva.webp"
-                      alt="CEVA Volleyball landing page"
+                      alt="CEVA Volleyball website by VDT Sites, sports organization in Calgary, AB"
                       loading="lazy"
                       decoding="async"
                     />
@@ -1027,7 +1027,7 @@ export default function Home() {
                     <img
                       className="vdt-portfolio__card-shot"
                       src="/lab/shots/paulvanryssel.webp"
-                      alt="Paul Van Ryssel landing page"
+                      alt="Paul Van Ryssel website by VDT Sites, campaign website in Nanaimo, BC"
                       loading="lazy"
                       decoding="async"
                     />
