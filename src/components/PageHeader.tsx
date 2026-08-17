@@ -45,7 +45,7 @@ export default function PageHeader({
     <>
       <a className="vdt-ph__brand" href="/" aria-label="VDT Sites, home">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="vdt-ph__mark" src="/vdt-glass-logo.png" alt="" />
+        <img className="vdt-ph__mark" src="/vdt-glass-logo.png" alt="VDT Sites" />
         <span>VDT&nbsp;SITES</span>
       </a>
       <nav className="vdt-ph__nav" aria-label="Main">

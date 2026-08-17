@@ -26,7 +26,7 @@ function PaulLockup() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/logos/paul-van-ryssel-mark.png"
-        alt=""
+        alt="Paul Van Ryssel logo"
         className="h-10 w-10 object-contain"
         loading="lazy"
       />
@@ -70,7 +70,7 @@ function TherapeuticValueLockup() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/logos/therapeutic-value-mark.png"
-        alt=""
+        alt="Therapeutic Value logo"
         className="h-12 w-auto object-contain"
         loading="lazy"
       />
@@ -125,9 +125,13 @@ function Row({ hidden }: { hidden?: boolean }) {
             l.inline
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
+            /* The duplicate marquee rows are aria-hidden, which already
+               strips them from the accessibility tree - so giving them the
+               same alt costs nothing and keeps crawlers (Screaming Frog)
+               from flagging empty alts. */
             <img
               src={l.src}
-              alt={hidden ? "" : `${l.name} logo, designed by VDT Sites`}
+              alt={`${l.name} logo, designed by VDT Sites`}
               className={`${l.h} w-auto object-contain`}
               loading="lazy"
             />
