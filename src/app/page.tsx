@@ -19,7 +19,7 @@ import Script from "next/script";
 import MobileActionBar from "@/components/MobileActionBar";
 import MobileHomeHero from "@/components/MobileHomeHero";
 import { LAB_V } from "@/lib/labVersion";
-import { TESTIMONIALS } from "@/lib/testimonials";
+import { TESTIMONIALS, GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
 import { HOME_FAQS } from "@/lib/faqs";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY } from "@/lib/pricing";
 
@@ -719,8 +719,12 @@ export default function Home() {
                   </div>
 
                   <div className="vdt-hero__text">
+                    {/* The {" "} between the spans is load-bearing: JSX strips
+                        the newline, and without it crawlers read the H1 as the
+                        single word "WebsiteDesign". Whitespace text nodes are
+                        invisible in this flex container (gap = w2 margin). */}
                     <h1 className="vdt-hero__title">
-                      <span className="vdt-hero__w1">Website</span>
+                      <span className="vdt-hero__w1">Website</span>{" "}
                       <span className="vdt-hero__w2">Design</span>
                     </h1>
 
@@ -735,7 +739,7 @@ export default function Home() {
                         />
                       </svg>
                       <span>
-                        Website design studio in <strong>Nanaimo, BC</strong> · Serving <strong>Vancouver Island</strong> &amp; beyond
+                        Professional website design studio in <strong>Nanaimo, BC</strong> · Serving <strong>Vancouver Island</strong> &amp; beyond
                       </span>
                     </p>
                   </div>
@@ -819,6 +823,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/unisol-accounting"
+                aria-label="UniSol Accounting case study"
                 data-name="UniSol Accounting"
                 data-tags="Accounting · Tax Tools"
               >
@@ -842,6 +847,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/sherri-kozubal"
+                aria-label="Sherri Kozubal case study"
                 data-name="Sherri Kozubal"
                 data-tags="Hypnotherapy · Bookings"
               >
@@ -865,6 +871,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/mo-coffee"
+                aria-label="MO Coffee case study"
                 data-name="MO Coffee"
                 data-tags="Hospitality · E-Commerce"
               >
@@ -888,6 +895,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/isle-air-chicken"
+                aria-label="Isle Air Chicken case study"
                 data-name="Isle Air Chicken"
                 data-tags="Food Truck · Menu"
               >
@@ -911,6 +919,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/morky-auto-imports"
+                aria-label="Morky Auto Imports case study"
                 data-name="Morky Auto Imports"
                 data-tags="Automotive · Inventory"
               >
@@ -934,6 +943,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/therapeutic-value"
+                aria-label="Therapeutic Value case study"
                 data-name="Therapeutic Value"
                 data-tags="Wellness · Bookings"
               >
@@ -957,6 +967,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/ceva-volleyball"
+                aria-label="CEVA Volleyball case study"
                 data-name="CEVA Volleyball"
                 data-tags="Athletics · Programs"
               >
@@ -980,6 +991,7 @@ export default function Home() {
                 className="vdt-portfolio__card"
                 role="listitem"
                 href="/work/paul-van-ryssel"
+                aria-label="Paul Van Ryssel case study"
                 data-name="Paul Van Ryssel"
                 data-tags="Civic · Campaign"
               >
@@ -1738,7 +1750,7 @@ export default function Home() {
                 are inline on purpose: footer.css lives in the hand-synced
                 /lab mirror, so no new classes there. */}
             <span className="vdt-fl__brand-blurb">
-              Website design studio in Nanaimo, BC. We build fast, modern websites for
+              Professional website design studio in Nanaimo, BC. We build fast, modern websites for
               small businesses across{" "}
               <a
                 href="/web-design-vancouver-island"
@@ -1830,6 +1842,16 @@ export default function Home() {
             <a className="vdt-fl__credit" href="/privacy-policy">Privacy</a>
             <a className="vdt-fl__credit" href="/cookie-policy">Cookies</a>
           </nav>
+          {/* Visible site→GBP link (schema sameAs already points at Maps;
+              this is the human-clickable trust/entity signal). */}
+          <a
+            className="vdt-fl__credit"
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Find us on Google
+          </a>
           <a className="vdt-fl__credit" href="https://vdtsites.com" target="_blank" rel="noreferrer">
             Site by VDTSITES.COM
           </a>

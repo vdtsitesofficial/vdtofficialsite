@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     template: "%s | VDT Sites",
   },
   description:
-    "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
+    "Professional website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
   keywords: [
     "website design Nanaimo",
     "web design Nanaimo",
@@ -89,13 +89,13 @@ export const metadata: Metadata = {
     siteName: "VDT Sites",
     title: "Website Design Nanaimo & Vancouver Island | VDT Sites",
     description:
-      "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
+      "Professional website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Website Design Nanaimo & Vancouver Island | VDT Sites",
     description:
-      "Custom website design for small businesses in Nanaimo and across Vancouver Island.",
+      "Professional website design for small businesses in Nanaimo and across Vancouver Island.",
   },
   robots: {
     index: true,
