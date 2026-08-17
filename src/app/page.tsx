@@ -894,6 +894,30 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="/work/horizon-hues"
+                aria-label="Horizon Hues case study"
+                data-name="Horizon Hues"
+                data-tags="Electrical · Brand Kit"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/horizonhues.webp"
+                      alt="Horizon Hues landing page"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="/work/isle-air-chicken"
                 aria-label="Isle Air Chicken case study"
                 data-name="Isle Air Chicken"
