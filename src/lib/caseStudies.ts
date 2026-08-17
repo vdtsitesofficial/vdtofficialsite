@@ -447,7 +447,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom build · Self-serve editing · Service pages · Tax tools",
     metaTitle: "Accounting Website Design in Nanaimo, BC",
     metaDescription:
-      "How we rebuilt a Nanaimo accounting firm's WordPress site as a fast custom website with click-to-edit copy, four service pages and a GST calculator, and moved the domain with every old URL redirected.",
+      "How we rebuilt a Nanaimo accounting firm's WordPress site as a fast custom website with click-to-edit copy, and moved the domain with every URL redirected.",
     client:
       "UniSol Accounting Services is a Nanaimo accounting firm led by Rimpy Mahal, working with businesses and individuals across Vancouver Island on bookkeeping, corporate tax, personal income tax and financial consulting.",
     needed:

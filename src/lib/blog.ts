@@ -138,7 +138,7 @@ const websiteCostPost: BlogPost = {
   title: "How Much Does a Website Cost in Canada?",
   metaTitle: "How Much Does a Website Cost in Canada? (2026)",
   description:
-    "What a website actually costs in Canada in 2026, in Canadian dollars. Real price ranges for one-page, standard and advanced builds, what drives the number up, and what to check before you pay anyone.",
+    "What a website actually costs in Canada in 2026, in Canadian dollars: real price ranges for one-page, standard and advanced builds, and what moves it.",
   excerpt:
     "One company quotes $500, another quotes $15,000. Here is what a website actually costs in Canada in 2026, in Canadian dollars, and what actually matters when you pay for one.",
   category: "Pricing",
@@ -2014,7 +2014,7 @@ const wixVsDesignerPost: BlogPost = {
   title: "Wix Alternatives: What Small Businesses Actually Move To",
   metaTitle: "Wix Alternatives for a Small Business Website (2026)",
   description:
-    "An honest look at the real alternatives to Wix in 2026: Squarespace, WordPress, Webflow, Shopify and a custom build. What each is genuinely good at, what it costs, and how to move without losing your rankings.",
+    "An honest look at the real Wix alternatives in 2026: Squarespace, WordPress, Webflow, Shopify and a custom build, what each costs, and how to move safely.",
   excerpt:
     "Most people looking for a Wix alternative are not shopping, they are stuck. Here is what each of the real options is actually good at, including the ones we do not sell.",
   category: "Getting Started",
