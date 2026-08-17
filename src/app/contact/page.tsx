@@ -64,9 +64,32 @@ export default function ContactPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "ContactPage",
-            url: "https://vdtsites.com/contact",
-            about: { "@id": "https://vdtsites.com/#business" },
+            "@graph": [
+              {
+                "@type": "ContactPage",
+                url: "https://vdtsites.com/contact",
+                about: { "@id": "https://vdtsites.com/#business" },
+              },
+              /* Compact copy of the homepage's business node so this page
+                 is self-contained for crawlers that don't resolve cross-page
+                 @id references (BrightLocal flagged its absence here). Full
+                 node with areaServed/sameAs lives on the homepage; NAP here
+                 must stay identical to it and to the GBP. */
+              {
+                "@type": "ProfessionalService",
+                "@id": "https://vdtsites.com/#business",
+                name: "VDT Sites",
+                url: "https://vdtsites.com",
+                telephone: "+1-250-616-2087",
+                email: "vdtsites@gmail.com",
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: "Nanaimo",
+                  addressRegion: "BC",
+                  addressCountry: "CA",
+                },
+              },
+            ],
           }),
         }}
       />

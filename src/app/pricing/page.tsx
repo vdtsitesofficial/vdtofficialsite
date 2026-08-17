@@ -140,6 +140,23 @@ export default function PricingPage() {
           ],
         },
       },
+      /* Compact copy of the homepage's business node so the pricing page is
+         self-contained for crawlers that don't resolve cross-page @id refs.
+         NAP must stay identical to the homepage node and the GBP. */
+      {
+        "@type": "ProfessionalService",
+        "@id": `${SITE}/#business`,
+        name: "VDT Sites",
+        url: SITE,
+        telephone: "+1-250-616-2087",
+        email: "vdtsites@gmail.com",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Nanaimo",
+          addressRegion: "BC",
+          addressCountry: "CA",
+        },
+      },
       {
         "@type": "OfferCatalog",
         "@id": `${URL}#packages`,
