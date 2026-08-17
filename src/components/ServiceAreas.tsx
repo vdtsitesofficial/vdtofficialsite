@@ -11,15 +11,20 @@
  * the anchor text is the ranking signal, so don't shorten them to
  * bare city names.
  *
- * "Website design in Nanaimo" points at the HOMEPAGE on purpose:
- * /web-design-nanaimo is the noindex Google Ads landing page and the
- * homepage owns that term organically (see app/sitemap.ts).
+ * "Website design in Nanaimo" pointed at the HOMEPAGE until 2026-08-17,
+ * because /web-design-nanaimo was then a noindex Google Ads landing page
+ * and the homepage was the elected organic owner of that term. Both halves
+ * of that stopped being true on 2026-08-15, when the noindex was reversed
+ * and /web-design-nanaimo became the owner (its own file explains why:
+ * the homepage ranked nowhere in the top 100 for it, and its H1 carries no
+ * city). The link kept pointing at the homepage anyway, which left the home
+ * city with one inbound internal link while every sibling city had ten.
  *
  * Voice: no em dashes or en dashes (see lib/caseStudies.ts).
  */
 
 const AREAS = [
-  { label: "Website design in Nanaimo", href: "/" },
+  { label: "Website design in Nanaimo", href: "/web-design-nanaimo" },
   {
     label: "Web design across Vancouver Island",
     href: "/web-design-vancouver-island",
