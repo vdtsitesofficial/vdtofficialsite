@@ -1774,8 +1774,14 @@ export default function Home() {
                 are inline on purpose: footer.css lives in the hand-synced
                 /lab mirror, so no new classes there. */}
             <span className="vdt-fl__brand-blurb">
-              Professional website design studio in Nanaimo, BC. We build fast, modern websites for
-              small businesses across{" "}
+              Professional website design studio in{" "}
+              <a
+                href="/web-design-nanaimo"
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Nanaimo, BC
+              </a>
+              . We build fast, modern websites for small businesses across{" "}
               <a
                 href="/web-design-vancouver-island"
                 style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
