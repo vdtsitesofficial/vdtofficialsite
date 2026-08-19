@@ -36,10 +36,18 @@
   // destination address, or its PIN email will not deliver.
   "send_email": [{ "name": "SEND_EMAIL" }],
   "vars": {
-    // FROM address. Must live on a domain (or subdomain) that has Email
-    // Routing enabled in this Cloudflare account. Since nothing else uses
-    // vdtsites.ca mail, we point the FROM at the apex directly.
-    "CONTACT_FROM_EMAIL": "VDT Contact Form <noreply@vdtsites.ca>",
+    // FROM address. Valid for BOTH delivery paths, which is why it is this
+    // and not vdtsites.ca:
+    //   - Resend (preferred): vdtsites.com is a verified sending domain
+    //     (DKIM at resend._domainkey.vdtsites.com, bounce domain
+    //     send.vdtsites.com). Do NOT be fooled by the apex SPF pointing at
+    //     Cloudflare Email Routing - Resend authenticates the apex by DKIM
+    //     and never uses the apex SPF.
+    //   - send_email binding (fallback): requires the FROM domain to have
+    //     Email Routing enabled on this account, and vdtsites.com does.
+    // Standardised 2026-08-16 onto <name>@vdtsites.com across every VDT
+    // site so sender reputation accrues to one domain instead of three.
+    "CONTACT_FROM_EMAIL": "VDT Sites <contact@vdtsites.com>",
     // Displayed to the user as the contact destination; actual delivery
     // happens via the SEND_EMAIL binding above. NOTE: this address must
     // be a verified destination in Cloudflare Email Routing for the

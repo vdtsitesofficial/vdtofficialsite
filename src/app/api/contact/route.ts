@@ -23,6 +23,7 @@ const TIME_SLOTS: Record<string, string> = {
 type SendEmailBinding = { send(message: unknown): Promise<void> };
 type Env = {
   SEND_EMAIL?: SendEmailBinding;
+  RESEND_API_KEY?: string;
   CONTACT_FROM_EMAIL?: string;
   CONTACT_TO_EMAIL?: string;
 };
@@ -50,6 +51,43 @@ async function deliver(
   replyTo: string,
 ): Promise<{ ok: true } | { ok: false; reason: string }> {
   const env = await getEnv();
+
+  // Resend first when the secret is set, exactly as the admin PIN path in
+  // src/lib/admin.ts already does. Two reasons it is preferred over the
+  // Cloudflare Email Routing binding:
+  //   - the binding can only deliver to a VERIFIED destination on the
+  //     Cloudflare account, so the recipient can never be changed to a
+  //     client address without a manual verification step first
+  //   - it is an Email Routing hop rather than direct API delivery, so a
+  //     routing misconfiguration silently swallows leads
+  // A failed Resend call deliberately falls THROUGH to the binding instead
+  // of returning - this form has lost enquiries before (Karen Hlady, ~Aug 1)
+  // and losing one to a transient 500 would be the same failure twice.
+  if (env?.RESEND_API_KEY) {
+    try {
+      const resp = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${env.RESEND_API_KEY}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ from, to: [to], reply_to: replyTo, subject, text }),
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (resp.ok) return { ok: true };
+      console.error(
+        "[VDTTest contact form] Resend send failed:",
+        resp.status,
+        await resp.text().catch(() => ""),
+      );
+    } catch (e) {
+      console.error(
+        "[VDTTest contact form] Resend send threw:",
+        e instanceof Error ? e.message : String(e),
+      );
+    }
+    // fall through to the binding
+  }
 
   if (!env?.SEND_EMAIL) {
     if (process.env.NODE_ENV !== "production") {
@@ -238,8 +276,11 @@ export async function POST(req: Request) {
   // No placeholder fallbacks: if the addresses aren't configured we DON'T send
   // (never email an example.com stranger). The submission is still saved to KV
   // below, so the lead is captured in /admin regardless.
-  const to = env?.CONTACT_TO_EMAIL ?? process.env.CONTACT_TO_EMAIL ?? null;
-  const from = env?.CONTACT_FROM_EMAIL ?? process.env.CONTACT_FROM_EMAIL ?? null;
+  const to = env?.CONTACT_TO_EMAIL || process.env.CONTACT_TO_EMAIL || null;
+  // `||` not `??`: an empty-string env var is "set" as far as ?? is
+  // concerned, which would make emailConfigured true and then hand an
+  // invalid sender to Resend / the binding. Blank must mean unconfigured.
+  const from = env?.CONTACT_FROM_EMAIL || process.env.CONTACT_FROM_EMAIL || null;
   const emailConfigured = Boolean(to && from);
   // Strip CR/LF from the user-supplied name before it enters the Subject
   // header (header-injection guard); the body keeps the original text.

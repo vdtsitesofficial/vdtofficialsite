@@ -87,8 +87,22 @@ export async function saveMessage(
   // Date.now() is a fixed-width prefix, so key order == chronological order.
   const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const record: ContactMessage = { id, at: new Date().toISOString(), ...m };
-  await kv.put(messageKey(id), JSON.stringify(record));
-  return true;
+  // MUST return false rather than throw. The contact route treats `false` as
+  // "KV did not capture it" and falls back to sending the email
+  // SYNCHRONOUSLY so the lead still reaches the inbox. An uncaught throw here
+  // escapes before that fallback runs, and the enquiry is then neither stored
+  // nor emailed - lost with only a stack trace in the Worker log. That exact
+  // shape of silent loss already cost a real lead on this form (~2026-08-01).
+  try {
+    await kv.put(messageKey(id), JSON.stringify(record));
+    return true;
+  } catch (e) {
+    console.error(
+      "[VDT contact] KV put failed, falling back to synchronous email:",
+      e instanceof Error ? e.message : String(e),
+    );
+    return false;
+  }
 }
 
 /** Every stored contact message, newest first. */
@@ -295,7 +309,9 @@ async function sendPinEmail(
   to: string,
   pin: string,
 ): Promise<boolean> {
-  const from = env.CONTACT_FROM_EMAIL ?? "VDT Sites <noreply@vdtsites.ca>";
+  // `||` not `??`: an empty-string var is "set" as far as ?? is concerned,
+  // and would be handed to Resend/the binding as an invalid sender.
+  const from = env.CONTACT_FROM_EMAIL || "VDT Sites <contact@vdtsites.com>";
   const subject = "Your VDT Sites admin sign-in code";
   const text = [
     `Your admin sign-in code is: ${pin}`,
@@ -317,10 +333,12 @@ async function sendPinEmail(
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          // onboarding@resend.dev is Resend's shared sender, deliverable to
-          // the account owner's own address — which is exactly who admin
-          // PINs go to. Swap for a verified-domain sender if one is added.
-          from: "VDT Sites Admin <onboarding@resend.dev>",
+          // Was onboarding@resend.dev, Resend's shared sender, which only
+          // reaches the Resend account owner's own address. vdtsites.com is
+          // now a verified sending domain, so this uses it: same sender
+          // domain as every other VDT site, and it would still deliver if
+          // an admin address were ever added that is not the account owner.
+          from,
           to,
           subject,
           text,
