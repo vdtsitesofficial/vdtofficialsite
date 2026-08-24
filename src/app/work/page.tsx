@@ -23,14 +23,14 @@ export const metadata: Metadata = {
     title: "Our Work: Small Business Websites on Vancouver Island",
     description:
       "Case studies of websites we designed and built for Vancouver Island small businesses.",
-    images: [`${SITE}/work-case/isle-air-chicken-hero.webp`],
+    images: [`${SITE}/work-case/junk-matters-hero.webp`],
   },
   twitter: {
     card: "summary_large_image",
     title: "Our Work: Small Business Websites on Vancouver Island",
     description:
       "Case studies of websites we designed and built for Vancouver Island small businesses.",
-    images: [`${SITE}/work-case/isle-air-chicken-hero.webp`],
+    images: [`${SITE}/work-case/junk-matters-hero.webp`],
   },
 };
 

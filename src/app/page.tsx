@@ -822,6 +822,30 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="/work/junk-matters"
+                aria-label="Junk Matters case study"
+                data-name="Junk Matters"
+                data-tags="Junk Removal · SEO Migration"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/junkmatters.webp"
+                      alt="Junk Matters website by VDT Sites, junk removal in Nanaimo, BC"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="/work/unisol-accounting"
                 aria-label="UniSol Accounting case study"
                 data-name="UniSol Accounting"

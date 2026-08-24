@@ -12,6 +12,7 @@ import type { WorkItem } from "@/components/WorkCarousel";
  * links open in the same tab; WorkCarousel only new-tabs external hrefs.
  */
 export const WORK_ITEMS: WorkItem[] = [
+  { img: "/work/junkmatters.webp", name: "Junk Matters", line: "Junk removal · Nanaimo", href: "/work/junk-matters" },
   { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "/work/mo-coffee" },
   { img: "/work/horizonhues.webp", name: "Horizon Hues", line: "Electrical contractor · Nanaimo", href: "/work/horizon-hues" },
   { img: "/work/morky.webp", name: "Morky Auto Imports", line: "Japanese imports · Parksville", href: "/work/morky-auto-imports" },

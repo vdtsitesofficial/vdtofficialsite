@@ -312,7 +312,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* client strip — breadth of work, and eight internal links into /work/* */}
+        {/* client strip — breadth of work, and one internal link per case study into /work/* */}
         <section className="px-6 pt-16 md:px-14 md:pt-24">
           <div className="mx-auto max-w-4xl">
             <h2

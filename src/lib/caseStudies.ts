@@ -56,6 +56,57 @@ export type CaseStudy = {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    slug: "junk-matters",
+    name: "Junk Matters",
+    kicker: "Junk removal · Nanaimo, BC",
+    headline: "A junk removal site moved off Wix without losing a search result",
+    intro:
+      "Junk Matters had years of Google rankings sitting on a Wix site with 174 addresses. We rebuilt the whole thing custom and moved the domain across with every one of those addresses accounted for.",
+    liveUrl: "https://junkmatters.ca",
+    year: "2026",
+    stackLine: "Custom build · SEO migration · Self-serve editing · AI site assistant",
+    metaTitle: "Junk Removal Website Design in Nanaimo, BC",
+    metaDescription:
+      "How we rebuilt a Nanaimo junk removal company's Wix site as a fast custom website and moved 178 URLs across without losing a search result. A VDT Sites case study.",
+    client:
+      "Junk Matters is Shawn Wheldon, running junk removal, donation and recycling out of Nanaimo across central Vancouver Island. He has built a 5.0 rating on more than 130 Google reviews doing it, and the site had to earn the same trust before anyone picks up the phone.",
+    needed:
+      "The old site was on Wix, and it ranked. That is the hard part of a job like this: 174 addresses had years of search history behind them, and a careless move wipes that out overnight. He also wanted out of the template, pages for each town he serves, pricing that reads the way he actually charges, and the ability to change any of it himself without waiting on a developer.",
+    builtIntro:
+      "We rebuilt the site from scratch, mapped the old one address by address, and only then moved the domain.",
+    built: [
+      {
+        title: "The migration, checked before it happened",
+        body: "We inventoried every address on the old site, decided one at a time whether it stayed or pointed somewhere new, and had him approve the map before anything moved. Then we crawled the old site and the new one side by side and proved it: 178 out of 178 correct, 151 redirects returning a literal 301 rather than the 308 most frameworks emit by default, and 27 ranking pages kept exactly where they were.",
+      },
+      {
+        title: "Services and towns, structured to be found",
+        body: "An A to Z index of everything he takes, feeding into real service pages for the big jobs: appliances, mattresses, hot tubs, estate and hoarding cleanouts, construction debris. Each town he serves has its own page, with the honest version of what he covers there rather than a promise he cannot keep in Port Alberni.",
+      },
+      {
+        title: "An estimate that matches how he really prices",
+        body: "A junk quote is not a menu price. The final charge comes from what actually ends up in the trailer, so the calculator gives an estimate and says so plainly, with the surcharges that can sit on top named up front. It took a couple of passes with him to get the wording right, because the easy version of this page promises things a junk hauler cannot promise.",
+      },
+      {
+        title: "Every word on the site, editable by him",
+        body: "He signs in with a code emailed to him, clicks any text on the live page and retypes it. Around twelve hundred pieces of copy across the whole site, plus his own before and after photo gallery and a blog he publishes himself. Nothing on the site needs us to change it.",
+      },
+      {
+        title: "A site assistant that only knows his site",
+        body: "Visitors can ask a question in plain English and get an answer drawn from his own pages, never invented. It refuses to quote a price the site does not publish, and it keeps a log of what people asked, including the questions it could not answer, which is a list of the pages the site still needs.",
+      },
+    ],
+    design:
+      "Junk removal sites mostly look like clip art. This one is built on his actual jobs: real trailers, real driveways, real before and afters, with the type doing the heavy lifting. The line we designed the whole thing around is his own, You Matter, We Matter, Junk Matters, and the landfill being the last stop rather than the first.",
+    stats: [
+      { value: "178 / 178", label: "addresses verified in a side by side crawl before the domain moved" },
+      { value: "151 / 151", label: "redirects returning a literal 301 to the right page" },
+      { value: "750 / 750", label: "responsive checks passing across browsers and screen sizes" },
+    ],
+    result:
+      "The site went live on his own domain in one afternoon with nothing broken behind it, and the search history he spent years building came with it. He runs the site now, and we are still the ones who make it faster.",
+  },
+  {
     slug: "sherri-kozubal",
     name: "Sherri Kozubal",
     kicker: "Clinical hypnotherapy · Nanaimo, BC",
