@@ -148,7 +148,23 @@ export default {
     }
     const resp = await __vdtWorkerCore.fetch(request, env, ctx);
     const cc = resp.headers.get("cache-control") || "";
-    if (cc.includes("s-maxage=31536000")) {
+    // Matches ANY s-maxage, not the year-long SSG value it used to look for.
+    //
+    // 2026-08-24: this condition was the literal s-maxage=31536000, which was
+    // the only value a pure-SSG build ever emitted. Turning on ISR for the
+    // inline editor changed the header to "s-maxage=296, stale-while-
+    // revalidate=2592000" - so the guard silently stopped firing and a month
+    // of stale-while-revalidate went straight to browsers and shared caches.
+    // That is precisely the 2026-08-01 incident this patch exists to prevent:
+    // HTML outliving its hashed /_next/static chunks, so React never hydrates
+    // and the homepage lab freezes.
+    //
+    // Do not narrow this back to a literal value. The intent is "any
+    // prerendered response must revalidate", and the value moves whenever
+    // revalidate does. Static assets never reach here (the ASSETS binding
+    // answers first) and /api/* responses are no-store, so this only touches
+    // prerendered HTML and RSC payloads, which is the target.
+    if (cc.includes("s-maxage=")) {
       const patched = new Response(resp.body, resp);
       patched.headers.set("cache-control", "public, max-age=0, must-revalidate");
       return patched;
