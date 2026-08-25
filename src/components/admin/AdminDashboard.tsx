@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ContactMessage } from "@/lib/admin";
+import { C, SYNE, FONT_HREF } from "./theme";
 
 type Tab = "messages" | "posts" | "copy";
 
@@ -11,16 +12,6 @@ const SLOT_LABELS: Record<string, string> = {
   afternoon: "Afternoon (12 – 4 PM)",
   evening: "Evening (4 – 7 PM)",
   anytime: "Anytime",
-};
-
-const C = {
-  bg: "#0E1116",
-  panel: "#161A21",
-  panelHi: "#1E232C",
-  line: "rgba(255,255,255,0.10)",
-  ink: "#E8EAED",
-  inkMuted: "#8A92A0",
-  accent: "#3B6FE0",
 };
 
 export default function AdminDashboard({
@@ -55,32 +46,48 @@ export default function AdminDashboard({
   }
 
   return (
-    <main className="min-h-screen" style={{ background: C.bg, color: C.ink }}>
+    <main className="min-h-svh" style={{ background: C.bg, color: C.ink }}>
+      <link href={FONT_HREF} rel="stylesheet" />
+
       {/* Top bar */}
       <header
-        className="px-6 sm:px-10 py-4 flex items-center justify-between"
+        className="flex flex-wrap items-center justify-between gap-3 px-6 py-4 sm:px-10"
         style={{ borderBottom: `1px solid ${C.line}` }}
       >
         <div className="flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/vdt-glass-logo.png"
+            alt=""
+            width={28}
+            height={28}
+            className="size-7 shrink-0"
+          />
           <span
-            className="size-7 rounded-md flex items-center justify-center text-[11px] font-bold"
-            style={{ background: C.accent, color: "#fff" }}
+            className="text-[15px] font-bold tracking-tight"
+            style={{ fontFamily: SYNE }}
           >
-            VDT
+            VDT Sites
           </span>
-          <span className="text-sm font-semibold tracking-wide">
-            VDT Sites Admin
+          <span
+            className="rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]"
+            style={{ background: "rgba(220,38,38,0.10)", color: C.accentDeep }}
+          >
+            Admin
           </span>
         </div>
-        <div className="flex items-center gap-4 text-xs" style={{ color: C.inkMuted }}>
-          <span>{email}</span>
-          <a href="/" className="hover:text-white transition-colors">
+        <div
+          className="flex items-center gap-4 text-[12px] font-medium"
+          style={{ color: C.inkMuted }}
+        >
+          <span className="hidden sm:inline">{email}</span>
+          <a href="/" className="transition-opacity hover:opacity-70">
             View site →
           </a>
           <button
             type="button"
             onClick={signOut}
-            className="hover:text-white transition-colors"
+            className="transition-opacity hover:opacity-70"
           >
             Sign out
           </button>
@@ -103,10 +110,11 @@ export default function AdminDashboard({
                 key={id}
                 type="button"
                 onClick={() => setTab(id)}
-                className="px-4 py-2 rounded-md text-[13px] font-medium transition-colors"
+                className="rounded-full px-4 py-2 text-[13px] font-semibold transition-colors"
                 style={{
-                  background: active ? C.panelHi : "transparent",
-                  color: active ? C.ink : C.inkMuted,
+                  background: active ? C.accent : "transparent",
+                  color: active ? "#fff" : C.inkMuted,
+                  border: `1px solid ${active ? C.accent : C.line}`,
                 }}
               >
                 {label}
@@ -127,7 +135,7 @@ export default function AdminDashboard({
                 {messages.map((m) => (
                   <li
                     key={m.id}
-                    className="rounded-lg p-5"
+                    className="rounded-xl p-5"
                     style={{ background: C.panel, border: `1px solid ${C.line}` }}
                   >
                     <div className="flex items-start justify-between gap-4">
@@ -167,8 +175,8 @@ export default function AdminDashboard({
                           disabled={busyId === m.id}
                           className="text-[11px] px-2.5 py-1 rounded transition-colors disabled:opacity-50"
                           style={{
-                            color: "#FF6B6B",
-                            border: "1px solid rgba(255,107,107,0.3)",
+                            color: C.danger,
+                            border: `1px solid ${C.lineHi}`,
                           }}
                         >
                           {busyId === m.id ? "..." : "Delete"}
@@ -178,7 +186,7 @@ export default function AdminDashboard({
                     {m.callDate && (
                       <p
                         className="mt-3 text-[13px] font-semibold"
-                        style={{ color: "#FFB454" }}
+                        style={{ color: C.highlight }}
                       >
                         📞 Call requested:{" "}
                         {new Date(`${m.callDate}T12:00:00Z`).toLocaleDateString(
@@ -197,7 +205,7 @@ export default function AdminDashboard({
                     )}
                     <p
                       className="mt-3 text-[14px] leading-relaxed whitespace-pre-wrap"
-                      style={{ color: "#C7CCD4" }}
+                      style={{ color: "rgba(13,13,13,0.78)" }}
                     >
                       {m.message}
                     </p>
@@ -229,10 +237,12 @@ export default function AdminDashboard({
 function Empty({ title, body }: { title: string; body: string }) {
   return (
     <div
-      className="rounded-lg p-12 text-center"
+      className="rounded-xl p-12 text-center"
       style={{ background: C.panel, border: `1px solid ${C.line}` }}
     >
-      <p className="font-medium mb-2">{title}</p>
+      <p className="mb-2 text-[17px] font-bold" style={{ fontFamily: SYNE }}>
+        {title}
+      </p>
       <p className="text-[13px] max-w-sm mx-auto leading-relaxed" style={{ color: C.inkMuted }}>
         {body}
       </p>

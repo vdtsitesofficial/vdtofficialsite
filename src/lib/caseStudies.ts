@@ -89,7 +89,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Every word on the site, editable by them",
-        body: "They sign in with a code emailed to them, click any text on the live page and retype it. Around twelve hundred pieces of copy across the whole site, plus their own before and after photo gallery and a blog they publish themselves. Nothing on the site needs us to change it.",
+        body: "They sign in with a code emailed to them, click any text on the live page and retype it. Around twelve hundred pieces of copy across the whole site, plus their own before and after photo gallery and a scheduled blog post editor, so a post written today can publish itself next Tuesday morning. Nothing on the site needs us to change it.",
       },
       {
         title: "A site assistant that only knows their site",
