@@ -37,8 +37,22 @@ import { fileURLToPath } from "node:url";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
-// ---------- PATCH 1 (warn-only) ----------
-{
+// ---------- PATCH 1 (DISABLED 2026-08-24) ----------
+//
+// This patch only does anything when `enableCacheInterception` is on, because
+// it fixes a bug in the interceptor's handling of the root path. Interception
+// was removed from open-next.config.ts (its stale-entry path throws
+// "FatalError: Dummy queue is not implemented" and took the site down for
+// three hours), so the patch is now inert.
+//
+// Left in place, disabled, because it still printed "PATCH 1 OK - root path
+// cache interception enabled" on every build — a line that would have read as
+// confirmation that interception was working while it was in fact off. If
+// interception ever comes back (it needs a real queue first), flip this to
+// true and the patch resumes.
+const PATCH_1_ENABLED = false;
+
+if (PATCH_1_ENABLED) {
   const target = path.join(root, ".open-next", "middleware", "handler.mjs");
   const replacements = [
     {

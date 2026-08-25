@@ -31,6 +31,17 @@
       "id": "5c9d9a3f47a843c59f95b904be022835"
     }
   ],
+  // Revalidation tag store for OpenNext (see open-next.config.ts). Without it
+  // `revalidatePath` has nowhere to record an invalidation, so a save in the
+  // inline editor would not surface until the ISR window expired on its own.
+  // Table is a single `revalidations` (tag, revalidatedAt, stale, expire).
+  "d1_databases": [
+    {
+      "binding": "NEXT_TAG_CACHE_D1",
+      "database_name": "vdtsites-next-tag-cache",
+      "database_id": "7f209896-f440-4ff6-a8a3-cabf709f3ad1"
+    }
+  ],
   // Custom domains. Cloudflare creates the DNS automatically on deploy.
   // vdtsites.com is the canonical site; www redirects/serves alongside it.
   // vdtsites.ca is intentionally NOT here - it 301-redirects to vdtsites.com
