@@ -24,6 +24,21 @@ jobs:
           node-version: 22
           cache: npm
 
+      # vdt-site-kit is a PRIVATE repo and the lockfile pins it over git+ssh,
+      # so `npm ci` needs its own credential: the job's GITHUB_TOKEN only
+      # reaches this repo. Without this step npm ci fails with "Permission
+      # denied (publickey)" and every deploy silently stops happening, which
+      # is exactly what went unnoticed on Horizon Hues for three deploys.
+      # The key is a read-only deploy key on vdtsitesofficial/vdt-site-kit.
+      - name: SSH access for the private vdt-site-kit dependency
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VDT_SITE_KIT_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          # GitHub's published ed25519 host key, pinned. Not ssh-keyscan,
+          # which trusts whatever the network answers at runtime.
+          echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" >> ~/.ssh/known_hosts
+
       - run: npm ci
 
       # deploy = OpenNext build + root-cache-interception patch + deploy

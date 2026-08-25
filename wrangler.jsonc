@@ -14,6 +14,21 @@
     {
       "binding": "ADMIN_KV",
       "id": "c3690d7ca5fe41fdad5a6a7daec42775"
+    },
+    // Site copy for the vdt-site-kit inline editor, plus its save history.
+    // Deliberately a SEPARATE namespace from ADMIN_KV: contact messages are
+    // transient and get deleted, site copy is the site itself. Keeping them
+    // apart means a careless prefix sweep on one can never touch the other.
+    {
+      "binding": "CONTENT_KV",
+      "id": "d54e46e3b23b4958b936554e8ccdd5c0"
+    },
+    // OpenNext's ISR cache. Required to be WRITABLE now that the root layout
+    // sets `revalidate`: see the note in open-next.config.ts. Machine-managed
+    // cache entries only, safe to purge wholesale if it ever misbehaves.
+    {
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "5c9d9a3f47a843c59f95b904be022835"
     }
   ],
   // Custom domains. Cloudflare creates the DNS automatically on deploy.

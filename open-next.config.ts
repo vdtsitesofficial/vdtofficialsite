@@ -1,5 +1,5 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
-import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache";
+import kvIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/kv-incremental-cache";
 
 /**
  * Why this isn't the empty default config:
@@ -9,17 +9,22 @@ import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incre
  * React on the Worker for EVERY request — ~180ms average CPU time for what
  * should be static HTML.
  *
- * - staticAssetsIncrementalCache: the build copies the prerendered pages
- *   (.open-next/cache) into the Worker's static assets (under
- *   cdn-cgi/_next_cache/) and serves them from there. Read-only — fine here
- *   because this site has no ISR/revalidation, just SSG + dynamic /admin.
+ * - kvIncrementalCache: cache entries live in the NEXT_INC_CACHE_KV binding,
+ *   which is READ-WRITE at runtime.
  * - enableCacheInterception: answer prerendered routes straight from that
  *   cache BEFORE booting the Next.js server, skipping SSR entirely.
  *
- * If we ever add `revalidate`/`revalidateTag`, swap this for an R2/KV
- * incremental cache — the static-assets one can't be written to at runtime.
+ * 2026-08-24 — this used to be `staticAssetsIncrementalCache`, and the note
+ * here said to swap it "if we ever add revalidate/revalidateTag". That day
+ * arrived: the inline editor made app/layout.tsx ISR (`revalidate = 300`) and
+ * saves purge the page cache with revalidatePath. The static-assets cache is
+ * baked at build time and its set()/delete() are error-logging no-ops, so
+ * with ISR turned on it would have failed in two ways at once — a saved edit
+ * could never invalidate anything, and every request past the 5-minute window
+ * would pay a full re-render whose result was then thrown away. Do not swap
+ * back while `revalidate` exists in the root layout.
  */
 export default defineCloudflareConfig({
-  incrementalCache: staticAssetsIncrementalCache,
+  incrementalCache: kvIncrementalCache,
   enableCacheInterception: true,
 });

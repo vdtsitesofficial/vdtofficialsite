@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { confirmPin, requestPin, SESSION_COOKIE, SESSION_SECONDS } from "@/lib/admin";
+import { ADMIN_HINT_COOKIE } from "@/lib/editor-cookies";
 
 // Auth must never be cached.
 export const dynamic = "force-dynamic";
@@ -37,6 +38,19 @@ export async function POST(req: Request) {
     const res = NextResponse.json({ ok: true });
     res.cookies.set(SESSION_COOKIE, r.token, {
       httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_SECONDS,
+    });
+    // Second cookie, readable by page JavaScript ON PURPOSE. It carries no
+    // secret and grants nothing: it only tells the inline editor that it is
+    // worth asking /api/session whether this visitor is an admin. That is what
+    // lets every public page stay cached and cookie-free for everyone else.
+    // A forged hint just buys one probe that answers no; the httpOnly session
+    // above stays the only authority.
+    res.cookies.set(ADMIN_HINT_COOKIE, "1", {
+      httpOnly: false,
       secure: true,
       sameSite: "lax",
       path: "/",

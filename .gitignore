@@ -32,3 +32,10 @@ tsconfig.tsbuildinfo
 
 # responsive-audit sweep artifacts (screenshots + report JSON, regenerated per run)
 responsive-audit-out*/
+
+# vdt-site-kit dev fallback. With no CONTENT_KV binding (i.e. `next dev`) the
+# kit reads and WRITES site copy to these paths. Committing either would bake
+# local scratch copy into every prerendered page on the next CI deploy, since
+# the build reads defaults, not KV.
+/content.local.json
+/public/uploads/

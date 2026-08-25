@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { CASE_STUDIES } from "@/lib/caseStudies";
+import PageText from "@/components/PageText";
+import { loadContent } from "@/lib/content-store";
 import {
   TESTIMONIALS,
   REVIEW_COUNT,
@@ -91,7 +93,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  // One memoized read per request. Each field gets its display value passed
+  // down, so the cached public payload carries only the strings this page
+  // shows and not the whole content document.
+  const content = await loadContent();
+  const about = content.pages?.about;
+
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
@@ -319,7 +327,7 @@ export default function AboutPage() {
               className="text-center text-[26px] font-bold md:text-[34px]"
               style={{ fontFamily: SYNE }}
             >
-              Businesses we build for
+              <PageText page="about" k="clientsHeading" live={about} />
             </h2>
             {/* The second sentence is a deliberate phrasing: it points at the
                 non-profit service page without listing non-profits among

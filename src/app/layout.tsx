@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import MobileDrawer from "@/components/MobileDrawer";
+import { EditorRoot } from "vdt-site-kit";
 
 // TAGGING HISTORY — read before touching GOOGLE_ADS_ID below.
 //
@@ -109,6 +110,23 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Cache-first, and it has to stay that way.
+ *
+ * Public pages under this layout render once and are served from the ISR
+ * cache. The inline editor's saves purge that cache (revalidatePath over the
+ * whole tree), so an edit still shows immediately and this window is only a
+ * backstop, not the wait.
+ *
+ * NEVER call cookies() or headers(), and never set force-dynamic, in this
+ * layout or any public page. One cookie read here opts EVERY route out of
+ * caching and buys a full React server render per visitor request. That is
+ * why the editor detects an admin in the browser (readable hint cookie, then
+ * a server-verified probe) instead of the obvious way. force-dynamic and
+ * cookie reads are fine on /admin and on API route files.
+ */
+export const revalidate = 300;
+
 export default function RootLayout({
   children,
 }: {
@@ -170,11 +188,18 @@ gtag('config', '${PHONE_CONVERSION_LABEL}', {
             <picture> elements they actually serve. Keep them there. */}
       </head>
       <body>
-        {children}
-        {/* One drawer for every route. The three headers (#zoom-header and
-            #site-chrome in page.tsx, <PageHeader> on the cream pages) each
-            render only a [data-vdt-burger] button; this wires them all. */}
-        <MobileDrawer />
+        {/* No `content` and no `editable` prop, on purpose. The cached public
+            shell therefore ships with the editor OFF and carries only the
+            values each page already displays, not the whole content document.
+            For a confirmed admin the kit fetches the full content once from
+            /api/content and turns editing on client-side. */}
+        <EditorRoot>
+          {children}
+          {/* One drawer for every route. The three headers (#zoom-header and
+              #site-chrome in page.tsx, <PageHeader> on the cream pages) each
+              render only a [data-vdt-burger] button; this wires them all. */}
+          <MobileDrawer />
+        </EditorRoot>
       </body>
     </html>
   );
