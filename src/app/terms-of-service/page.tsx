@@ -41,7 +41,7 @@ export default function TermsOfServicePage() {
             VDT Sites Terms of Service
           </h1>
           <p className="mt-6 text-sm text-[#6e6e73]">
-            Last Updated: July 6, 2026
+            Last Updated: August 28, 2026
           </p>
         </header>
 
@@ -91,7 +91,7 @@ export default function TermsOfServicePage() {
             Each project is individually discussed with the client. The exact scope, pricing, timeline, features, and included services may vary by client and will generally be described in a proposal, invoice, written message, project discussion, or other written communication.
           </p>
           <p>
-            VDT Sites may create websites and web applications from scratch. Mobile applications may be built as hybrid applications using web technology, including Capacitor or similar tools, where the website or web application is packaged into an iOS or Android app experience.
+            VDT Sites may create websites and web applications from scratch. Mobile applications may be built as native applications, as applications using cross-platform frameworks such as React Native, or as hybrid applications where a website or web application is packaged into an iOS or Android app experience. The approach used depends on the project and is not guaranteed to be any particular technology.
           </p>
           <p>
             Unless specifically agreed in writing, VDT Sites is not responsible for services outside the agreed project scope.
@@ -261,6 +261,9 @@ export default function TermsOfServicePage() {
             Unless otherwise agreed in writing, after the client has paid all amounts owed for the relevant project, the client owns the completed website or app deliverable created specifically for that client.
           </p>
           <p>
+            <strong>Some VDT Sites services are provided as a platform or subscription product rather than as a bespoke deliverable.</strong> Where a service is identified as a platform, product, hosted application, or software-as-a-service, including ClubHub, the client receives a licence to use that product for the term of their agreement and does not acquire ownership of it. VDT Sites retains ownership of the product, its source code, database design, interfaces, and documentation, and may continue to develop that product and license it to other clients. The client owns the data that it and its users enter into the product, and owns its own brand assets. Where a separate agreement or schedule describes a platform licence, that document prevails over this section.
+          </p>
+          <p>
             Upon request and after all amounts owed are paid, VDT Sites may provide the client with a website folder or code files for the completed website so the client can host the website elsewhere. VDT Sites may charge a reasonable fee for migration assistance, technical support, custom export work, documentation, troubleshooting, or work beyond providing standard available files.
           </p>
           <p>
@@ -348,7 +351,7 @@ export default function TermsOfServicePage() {
 
         <Section title="21. Mobile Applications">
           <p>
-            VDT Sites may create iOS and Android applications, including hybrid applications using Capacitor or similar technologies. These apps may display or connect to a website or web application inside a native app shell.
+            VDT Sites may create iOS and Android applications. Depending on the project these may be native applications, applications built with cross-platform frameworks such as React Native, or hybrid applications that display or connect to a website or web application inside a native app shell.
           </p>
           <p>
             The client understands that app functionality may depend on third-party services, app stores, Apple, Google, device operating systems, browsers, push notification services, permissions, user settings, app review processes, and changing technical requirements.
@@ -388,6 +391,9 @@ export default function TermsOfServicePage() {
           </p>
           <p>
             Stripe and other payment processors manage payment processing, funds, chargebacks, payment disputes, payout timing, payment security, customer payment data, and processor rules. VDT Sites does not process, hold, control, guarantee, or insure client revenue or customer funds.
+          </p>
+          <p>
+            <strong>Where a VDT Sites platform product collects payments from the client&rsquo;s own customers or members</strong>, including registration or membership fees taken through ClubHub, those payments are processed by Stripe and settle to a Stripe account connected to the client. <strong>The money belongs to the client, not to VDT Sites.</strong> VDT Sites does not take custody of it, and card details are handled by Stripe and are never received or stored by VDT Sites. The client is responsible for setting its own fees, for its own refund and cancellation policy toward its customers or members, and for any taxes that apply to them. The client must hold its own Stripe account and comply with Stripe&rsquo;s terms; VDT Sites is not responsible for Stripe account approval, holds, reserves, or closures.
           </p>
           <p>
             The client is responsible for taxes, refunds, chargebacks, payment disputes, product pricing, subscription terms, customer service, receipts, consumer law compliance, tax reporting, accounting, financial reporting, and any legal obligations related to selling products or services.
@@ -433,6 +439,9 @@ export default function TermsOfServicePage() {
           </p>
           <p>
             The client must not provide VDT Sites with sensitive, unnecessary, excessive, or unlawful personal information unless it is required for the Services and appropriate safeguards have been discussed.
+          </p>
+          <p>
+            Where a service is designed to hold sensitive personal information, the categories it holds and the safeguards that apply are described in the applicable privacy policy or in a separate agreement, and the client&rsquo;s use of that service for those categories is not a breach of this section.
           </p>
         </Section>
 
