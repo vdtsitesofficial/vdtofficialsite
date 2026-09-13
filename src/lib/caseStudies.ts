@@ -533,6 +533,60 @@ export const CASE_STUDIES: CaseStudy[] = [
     result:
       "A firm that owns its website, edits it without calling anyone, and kept every bit of search equity it had built up. The old site was something they paid for. This one works for them.",
   },
+  {
+    slug: "westro",
+    // SEO surfaces use "Westro Construction" (the name on their Business
+    // Profile and in their schema); the site itself brands as
+    // "Westro | Home Improvements", which the client paragraph carries.
+    name: "Westro Construction",
+    kicker: "Home improvement supplier · Nanaimo, BC",
+    headline: "A supplier site taken off WordPress with nothing left behind",
+    intro:
+      "Westro supplies cabinets, windows, doors, fencing and baths across Vancouver Island. Their site ran on WordPress on a host they wanted to leave. We cloned it until it owed that host nothing, redesigned it, and moved the domain across without their email missing a message.",
+    liveUrl: "https://westro.ca",
+    year: "2026",
+    stackLine: "Static rebuild · Hosting migration · Domain cutover · Redesign",
+    metaTitle: "Home Improvement Website Design in Nanaimo, BC",
+    metaDescription:
+      "How we cloned Westro Construction's WordPress site into a self-contained static site, redesigned it, and moved westro.ca onto Cloudflare with their email and their ads tag intact.",
+    client:
+      "Westro is a Nanaimo home improvement supplier serving Vancouver Island, branded on its own site as Westro | Home Improvements. They import direct, and they supply seven different product lines: custom kitchen cabinets, aluminum windows, folding doors, garage doors, composite fencing, bathtubs and vanities. That is seven things to explain properly before anyone picks up the phone.",
+    needed:
+      "The site was WordPress, sitting on a host they wanted off, and the design was carrying more of the template than the business. Leaving a host is where sites break. The old pages had years of addresses behind them, and the same domain runs the company's Google Workspace email, so a careless move takes the mail down alongside the website.",
+    builtIntro:
+      "We made the site self-contained first, redesigned it on top of that, and only then touched the domain.",
+    built: [
+      {
+        title: "A copy that owes the old host nothing",
+        body: "We pulled the WordPress site down asset by asset until the copy ran entirely on its own, with no call back to the old server for a stylesheet, a script or a photograph. That is the step that makes everything after it safe: once the site is genuinely self-contained, the old host can be switched off on any day without a single page changing.",
+      },
+      {
+        title: "Seven product pages out of one system",
+        body: "Every product page is generated from one source, so a layout change reaches all seven at once and none of them can quietly drift apart. The words came across from the original page by page, checked by machine against the archived WordPress versions rather than by eye, because the fastest way to damage a supplier is to reword a specification without noticing.",
+      },
+      {
+        title: "The cutover, checked before it happened",
+        body: "Before the nameservers moved we read the live records off the domain's own authoritative server instead of a public one, which was still handing out stale answers and would have said the move had not happened. All five Google mail records, the sender policy and both Search Console records were rebuilt first. Then the addresses: every old WordPress URL redirects, and 172 out of 172 old image addresses still answer, so nothing anyone had ever linked to went dark.",
+      },
+      {
+        title: "Hosting with no server doing work",
+        body: "The site serves as plain files from Cloudflare with nothing computing a page per visit, which is the fastest and the least breakable shape a site like this can have. Their existing Google Ads tag came across and kept firing through the move, so the campaigns pointing at the site never noticed it had changed hands.",
+      },
+      {
+        title: "Made quick on a phone",
+        body: "Every photograph got smaller modern versions written alongside it, sized against the space it actually fills rather than a guess, and the originals were left untouched so the old addresses keep answering. A product page that used to cost a phone 5.8MB now costs it around a fifth of a megabyte.",
+      },
+    ],
+    design:
+      "The old site was the theme they bought. The new one is a dark editorial showroom: near black and graphite with a single gold accent, their own project photography at full width, and diagonal seams between sections rather than a flat change of colour. Specifications are set as spec sheet rows keyed by the word that matters, pricing or hardware or sizing, because that is how a supplier's information is actually read.",
+    stats: [
+      { value: "172 / 172", label: "old image addresses still answering after the host change" },
+      { value: "5.8MB → 0.2MB", label: "what a product page costs a phone after our image pass" },
+      { value: "812 / 812", label: "responsive checks passing across browsers and screen sizes" },
+    ],
+    result:
+      "westro.ca runs on files now, with no old host behind it and no server doing work on each visit. Seven product lines each have a page that loads immediately on a phone, the company's email never dropped a message on the way across, and the enquiry form reaches their sales inbox for real instead of hoping the visitor has a mail app.",
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {

@@ -870,6 +870,30 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="/work/westro"
+                aria-label="Westro Construction case study"
+                data-name="Westro Construction"
+                data-tags="Home Improvement · Hosting Migration"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/westro.webp"
+                      alt="Westro Construction website by VDT Sites, home improvement supplier in Nanaimo, BC"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="/work/sherri-kozubal"
                 aria-label="Sherri Kozubal case study"
                 data-name="Sherri Kozubal"
