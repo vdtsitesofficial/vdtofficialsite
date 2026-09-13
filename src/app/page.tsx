@@ -1129,6 +1129,23 @@ export default function Home() {
             Start a conversation
           </a>
         </div>
+        {/* In-body anchor for the SEO landing page. The footer blurb links it
+            as "Nanaimo SEO"; this is the exact-match phrase, in body prose,
+            rather than one more footer row. */}
+        <p
+          className="mx-auto mt-6 max-w-[54ch] text-[13px] leading-relaxed text-[#0d0d0d]/55"
+          style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+        >
+          Building the site is one half of it. If you also need customers to
+          find you on Google, we offer{" "}
+          <a
+            href="/seo-nanaimo"
+            className="underline underline-offset-2 hover:text-[#dc2626]"
+          >
+            local SEO services in Nanaimo
+          </a>{" "}
+          alongside the build.
+        </p>
       </section>
 
       {/* VDT Our Process · horizontal scroll-story */}

@@ -359,6 +359,17 @@ export default function LandingPage() {
               , a city council campaign site built to a hard deadline with donations
               and volunteer sign-up. None of those are templates.
             </p>
+            {/* Only in-body link to the logo page from here (2026-09-13): this
+                page had no entry point into it at all, footer aside. */}
+            <p className="mt-4 text-[16px] leading-[1.8] text-[#0d0d0d]/70">
+              A fair number of those jobs start before the site does. If the
+              branding needs sorting out first, we also do{" "}
+              <Link href="/logo-design-nanaimo" className="underline underline-offset-2 hover:text-[#dc2626]">
+                logo design in Nanaimo
+              </Link>
+              , so the mark and the website get designed together instead of
+              being bolted onto each other later.
+            </p>
           </div>
         </section>
 

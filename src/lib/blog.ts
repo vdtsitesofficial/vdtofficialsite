@@ -763,6 +763,10 @@ const websiteCostPost: BlogPost = {
       kind: "p",
       text: "And in today's world, having a strong online presence is almost always a benefit to your business.",
     },
+    {
+      kind: "p",
+      text: "If you want the numbers above applied to your own business, here is what we do: [website design in Nanaimo](/web-design-nanaimo) for the build itself, and [local SEO in Nanaimo](/seo-nanaimo) when the site exists but nobody is finding it.",
+    },
   ],
 };
 
@@ -2385,6 +2389,10 @@ const wixVsDesignerPost: BlogPost = {
     {
       kind: "p",
       text: "It stops being cheaper the moment the site sits half-built, or loads too slowly to keep anyone, or never shows up when someone searches for exactly what you sell. At that point you've paid anyway, in work you never found out you didn't get.",
+    },
+    {
+      kind: "p",
+      text: "If you land on the hire-someone side of that, this is the work we do: [website design in Nanaimo](/web-design-nanaimo) for a build off the template treadmill, and [local SEO in Nanaimo](/seo-nanaimo) if the problem is that nobody is finding the site you already have.",
     },
   ],
 };

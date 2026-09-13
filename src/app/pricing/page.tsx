@@ -402,6 +402,23 @@ export default function PricingPage() {
                   month. No renewal invoices, no surprise line items, and no
                   charge for calling us.
                 </p>
+                {/* Exact-match anchor into the home-market city page. Pricing
+                    is a high-intent page, so the link is worth more from here
+                    than from another footer row. */}
+                <p>
+                  <strong className="font-semibold text-[#0d0d0d]">
+                    These are our numbers, not a regional average.
+                  </strong>{" "}
+                  If you would rather see the work before the price, our page
+                  on hiring a{" "}
+                  <Link
+                    href="/web-design-nanaimo"
+                    className="font-semibold text-[#dc2626] underline underline-offset-2"
+                  >
+                    Nanaimo website designer
+                  </Link>{" "}
+                  goes through the local builds these figures paid for.
+                </p>
                 <p className="border-l-2 border-[#dc2626] pl-5">
                   Wondering why the industry's numbers are all over the map?
                   We wrote the honest breakdown:{" "}
