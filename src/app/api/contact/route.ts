@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveMessage } from "@/lib/admin";
+import { isBlockedSender } from "@/lib/blockedSenders";
 
 type Payload = {
   name: string;
@@ -217,6 +218,15 @@ export async function POST(req: Request) {
   const name = typeof body.name === "string" ? body.name : "";
   const email = typeof body.email === "string" ? body.email : "";
   const message = typeof body.message === "string" ? body.message : "";
+
+  // A banned sender gets the same silent success as the honeypot above: no
+  // stored message, no email, and nothing that tells them they were refused,
+  // since a visible rejection only prompts them to come back on a new address.
+  if (isBlockedSender(email)) {
+    console.warn("[VDT contact form] dropped a submission from a blocked sender");
+    return succeed();
+  }
+
   // Optional callback number: free-form (people type "250-616-2087" or
   // "+1 (250) ..."), just bounded and stripped of line breaks. Type-guarded:
   // a non-string phone in the JSON is ignored, not a 500.
