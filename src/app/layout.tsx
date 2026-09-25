@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import MobileDrawer from "@/components/MobileDrawer";
 import { EditorRoot } from "vdt-site-kit";
+import { GA4_SNIPPET } from "@/lib/tracking";
 
 // TAGGING HISTORY — read before touching GOOGLE_ADS_ID below.
 //
@@ -22,6 +23,13 @@ import { EditorRoot } from "vdt-site-kit";
 // published promise, not decoration.
 //
 // Conversions fire from public/lab/contact-card.js on confirmed delivery only.
+//
+// 2026-09-24: GA4 (G-NWRY7LS38E) came back, at Sem's request, to see page
+// views, phone clicks, portfolio clicks and leads in one place. It is NOT
+// consent-gated this time (the gate is what made the July numbers useless),
+// it shares the Ads gtag.js below rather than loading a second tag, and it
+// sets _ga / _ga_<id>. The config and the click tracking live in
+// lib/tracking.ts; both legal pages were updated in the same commit.
 
 const SITE_URL = "https://vdtsites.com";
 
@@ -163,7 +171,8 @@ gtag('js', new Date());
 gtag('config', '${GOOGLE_ADS_ID}');
 gtag('config', '${PHONE_CONVERSION_LABEL}', {
   'phone_conversion_number': '${PHONE_NUMBER}'
-});`,
+});
+${GA4_SNIPPET}`,
           }}
         />
 

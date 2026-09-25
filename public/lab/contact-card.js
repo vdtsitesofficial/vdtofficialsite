@@ -223,11 +223,9 @@
             send_to: "AW-18345910455/mizMCKWIot0cELfBgaxE",
           });
 
-          // GA4 events. INERT as of 2026-08-06: GA4 was removed in July 2026
-          // and deliberately did not come back with Ads, so nothing consumes
-          // these today. Left in place because they cost nothing and are
-          // already correct if a GA4 property is ever added. Do not "fix"
-          // them by adding a G- tag without updating the legal pages.
+          // GA4 key events. Live again since 2026-09-24 (G-NWRY7LS38E,
+          // configured in src/lib/tracking.ts). No send_to, so they also
+          // reach the Ads tag, which ignores them.
           window.gtag("event", "generate_lead", { form_id: "contact_card" });
           if (isCall) {
             window.gtag("event", "book_call", { form_id: "contact_card" });

@@ -21,6 +21,10 @@ import type { Metadata } from "next";
  * no retargeting, no cross-site tracking, no profile building. Sections 3
  * and 5 below say so; do not let them drift back to "no cookies".
  *
+ * 2026-09-24: GA4 (G-NWRY7LS38E) came back, with no banner, sharing the
+ * Ads gtag.js (config and click events in lib/tracking.ts). Sections 1, 4
+ * and 5 describe it. Google signals and ad personalisation are off.
+ *
  * Keep this page, /cookie-policy and the tag in app/layout.tsx describing
  * the same reality, in the same commit.
  */
@@ -52,7 +56,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
             VDT Sites Privacy Policy
           </h1>
-          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: August 6, 2026</p>
+          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: September 24, 2026</p>
         </header>
 
         <div className="space-y-6 text-[16px] leading-[1.75] text-[#3a3a3c]">
@@ -89,10 +93,16 @@ export default function PrivacyPolicyPage() {
             <strong>Information collected automatically.</strong> Like most websites, our hosting provider records basic technical data needed to serve and secure the Site, such as IP address, browser type, device type, and the pages requested. This is used for security, performance, and troubleshooting, not for advertising or profiling.
           </p>
           <p>
-            <strong>Analytics: cookieless, and no consent needed.</strong> We use Cloudflare Web Analytics to see how many people read a page and roughly how they arrived. It sets <strong>no cookies</strong>, does not fingerprint your browser, and cannot follow you to any other website. It gives us counts and trends, and nothing that identifies you.
-          </p>
-          <p>
-            We previously used Google Analytics behind a consent banner. We removed both in July 2026 and did not bring them back, so there is no analytics cookie on this Site and no banner to click. Details are in our{" "}
+            <strong>Analytics.</strong> We use Google Analytics to understand how the Site is used: which pages are read, how visitors arrive, and which buttons they use, such as tapping our phone number, opening a case study, or starting the contact form. It sets two first-party cookies (<span className="font-mono text-[13px]">_ga</span> and <span className="font-mono text-[13px]">_ga_NWRY7LS38E</span>) holding a random identifier, and it sends Google technical details such as your browser, device type, approximate location derived from your IP address, and the pages you view. It does <strong>not</strong> receive your name, email address, or anything you type into the contact form. We have switched off Google signals and ad personalisation, so this data is not used for advertising and is not tied to your Google account. You can opt out with{" "}
+            <a
+              href="https://tools.google.com/dlpage/gaoptout"
+              className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Google&rsquo;s opt-out add-on
+            </a>{" "}
+            or by blocking cookies; details are in our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
@@ -100,6 +110,9 @@ export default function PrivacyPolicyPage() {
               Cookie Policy
             </a>
             .
+          </p>
+          <p>
+            We also use Cloudflare Web Analytics, which is cookieless: it stores nothing on your device, does not fingerprint your browser, and cannot follow you to any other website.
           </p>
           <p>
             <strong>Advertising measurement.</strong> We advertise on Google, and since August 2026 the Site loads the Google Ads tag so we can tell which ads actually lead to someone contacting us. It sets a first-party cookie (<span className="font-mono text-[13px]">_gcl_au</span>), and when you successfully send the contact form it reports to Google that a conversion happened. What Google receives is the fact of a conversion, <strong>not</strong> your name, your email address, or the contents of your message. We do not upload customer data to Google, and we do not use enhanced conversions.
@@ -138,6 +151,9 @@ export default function PrivacyPolicyPage() {
               <strong>Google Fonts:</strong> the Site loads fonts from Google&rsquo;s servers to render its typography. This means your browser makes a request to Google, which can expose your IP address to Google. Google Fonts does not set cookies for this purpose.
             </li>
             <li>
+              <strong>Google Analytics:</strong> measures how the Site is used (pages viewed, how visitors arrive, and which links and buttons they use). It sets the <span className="font-mono text-[13px]">_ga</span> and <span className="font-mono text-[13px]">_ga_NWRY7LS38E</span> cookies. Google signals and ad personalisation are switched off, so it is not used for advertising.
+            </li>
+            <li>
               <strong>Cloudflare Web Analytics:</strong> cookieless traffic measurement, so we can see how many people read a page. It stores nothing on your device and collects no information that identifies you.
             </li>
             <li>
@@ -151,7 +167,7 @@ export default function PrivacyPolicyPage() {
 
         <Section title="5. Cookies">
           <p>
-            Browsing this Site sets <strong>one</strong> non-essential cookie, <span className="font-mono text-[13px]">_gcl_au</span>, which measures our own Google advertising and is described above. Our analytics remains cookieless, and there are no cross-site tracking cookies. Our hosting and security provider (Cloudflare) may set an essential security cookie when its protection features are triggered, and signing in to the private admin area sets one session cookie. Blocking the advertising cookie changes nothing about how the Site works for you. For the full list and how to block it, see our{" "}
+            Browsing this Site sets <strong>three</strong> non-essential cookies: <span className="font-mono text-[13px]">_ga</span> and <span className="font-mono text-[13px]">_ga_NWRY7LS38E</span> for Google Analytics, and <span className="font-mono text-[13px]">_gcl_au</span>, which measures our own Google advertising. All three are described above, and there are no cross-site tracking cookies. Our hosting and security provider (Cloudflare) may set an essential security cookie when its protection features are triggered, and signing in to the private admin area sets one session cookie. Blocking the analytics or advertising cookies changes nothing about how the Site works for you. For the full list and how to block them, see our{" "}
             <a
               href="/cookie-policy"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"

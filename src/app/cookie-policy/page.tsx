@@ -13,6 +13,11 @@ import type { Metadata } from "next";
  * /admin sets one essential session cookie. Traffic measurement is still
  * cookieless Cloudflare Web Analytics; GA4 did NOT come back.
  *
+ * 2026-09-24: GA4 (G-NWRY7LS38E) DID come back, with no banner, on the same
+ * gtag.js as Ads (config in lib/tracking.ts). It sets _ga and
+ * _ga_NWRY7LS38E. Google signals and ad personalisation are off in code and
+ * must stay off in the GA4 admin, or section 2 below becomes false.
+ *
  * History: from 2026-07-29 to 2026-08-06 the public Site genuinely set no
  * cookies at all, and this page said so. Google Ads started on 2026-08-06
  * and the tag came with it. Do not restore the old "no cookies at all"
@@ -25,7 +30,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Cookie Policy",
   description:
-    "VDT Sites Cookie Policy. What cookies vdtsites.com uses and how to manage them, including the Google Ads advertising cookie and essential security cookies.",
+    "VDT Sites Cookie Policy. What cookies vdtsites.com uses and how to manage them, including Google Analytics, the Google Ads advertising cookie and essential security cookies.",
   alternates: { canonical: "/cookie-policy" },
   openGraph: {
     title: "Cookie Policy - VDT Sites",
@@ -49,7 +54,7 @@ export default function CookiePolicyPage() {
           <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
             VDT Sites Cookie Policy
           </h1>
-          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: August 6, 2026</p>
+          <p className="mt-6 text-sm text-[#6e6e73]">Last Updated: September 24, 2026</p>
         </header>
 
         <div className="space-y-6 text-[16px] leading-[1.75] text-[#3a3a3c]">
@@ -80,7 +85,7 @@ export default function CookiePolicyPage() {
 
         <Section title="2. How We Use Cookies">
           <p>
-            We keep this short: browsing this Site sets <strong>one</strong> cookie that is not strictly essential, and it is there to measure our own advertising. Everything else is security or sign-in.
+            We keep this short: browsing this Site sets <strong>three</strong> cookies that are not strictly essential. Two tell us how the Site is used, and one measures our own advertising. Everything else is security or sign-in.
           </p>
           <p>
             <strong>Advertising measurement:</strong> we advertise on Google. When you visit, the Google Ads tag sets a first-party cookie called <span className="font-mono text-[13px]">_gcl_au</span> so that, if you later contact us, Google can tell us that one of our ads led to it. It measures <em>our</em> ads. We do not use it to build a profile of you, we do not sell or share it, and we do not run retargeting or show you ads elsewhere based on your visit.
@@ -89,7 +94,7 @@ export default function CookiePolicyPage() {
             <strong>Essential cookies:</strong> our hosting and security provider, Cloudflare, may set a cookie when its protection features are triggered, for example if it needs to tell a person apart from an automated bot. These exist for security, cannot be switched off, and are not set on every visit.
           </p>
           <p>
-            <strong>Measurement:</strong> we count visits using Cloudflare Web Analytics. It is <strong>cookieless</strong>: it sets nothing on your device, does not fingerprint your browser, and cannot follow you to any other site. We deliberately did not add Google Analytics back when we started advertising, so there is still no analytics cookie on this Site.
+            <strong>Analytics:</strong> we use Google Analytics to see which pages people read and which buttons they use, for example how many visitors tap our phone number or open a case study. It sets two first-party cookies, <span className="font-mono text-[13px]">_ga</span> and <span className="font-mono text-[13px]">_ga_NWRY7LS38E</span>, so a return visit is counted as the same browser rather than a new person. We have switched off Google signals and ad personalisation for it, so it is not used for advertising and is not linked to your Google account. We also use Cloudflare Web Analytics, which is cookieless and counts visits without storing anything on your device.
           </p>
           <p>
             We use <strong>no</strong> social-media trackers, no advertising pixels from any other network, and nothing that follows you across other websites.
@@ -108,6 +113,18 @@ export default function CookiePolicyPage() {
                 </tr>
               </thead>
               <tbody className="align-top">
+                <tr className="border-b border-black/[0.06]">
+                  <td className="py-3 pr-4 font-mono text-[13px]">_ga</td>
+                  <td className="py-3 pr-4">Analytics</td>
+                  <td className="py-3 pr-4">Google</td>
+                  <td className="py-3">Google Analytics: tells one visit apart from another so pages and clicks are counted accurately. Contains a random identifier, not your name or contact details. Expires after 2 years.</td>
+                </tr>
+                <tr className="border-b border-black/[0.06]">
+                  <td className="py-3 pr-4 font-mono text-[13px]">_ga_NWRY7LS38E</td>
+                  <td className="py-3 pr-4">Analytics</td>
+                  <td className="py-3 pr-4">Google</td>
+                  <td className="py-3">Google Analytics: keeps track of the current visit (session). Expires after 2 years.</td>
+                </tr>
                 <tr className="border-b border-black/[0.06]">
                   <td className="py-3 pr-4 font-mono text-[13px]">_gcl_au</td>
                   <td className="py-3 pr-4">Advertising</td>
@@ -139,16 +156,25 @@ export default function CookiePolicyPage() {
             Cloudflare sets its cookies only when its security features are triggered, so you may receive none of them on a normal visit. They contain no advertising or personal-profiling data.
           </p>
           <p>
-            That is the complete list. There is still no analytics cookie, because our analytics does not use one.
+            That is the complete list.
           </p>
         </Section>
 
         <Section title="4. Your Choice">
           <p>
-            There is no cookie banner on this Site. We would rather explain ourselves here than make you click a box. The one non-essential cookie we set, <span className="font-mono text-[13px]">_gcl_au</span>, exists so we can tell whether our own advertising works, and blocking it costs you nothing at all: the Site looks and behaves exactly the same, and you can still reach us by any method on the contact page.
+            There is no cookie banner on this Site. We would rather explain ourselves here than make you click a box. The non-essential cookies we set exist so we can tell whether the Site and our own advertising work, and blocking them costs you nothing at all: the Site looks and behaves exactly the same, and you can still reach us by any method on the contact page.
           </p>
           <p>
-            If you would rather not be counted, you can block it in your browser settings (see section 6), use an ad or tracker blocker, or opt out of Google&rsquo;s ad personalisation at{" "}
+            If you would rather not be counted, you can block them in your browser settings (see section 6), use an ad or tracker blocker, install Google&rsquo;s{" "}
+            <a
+              href="https://tools.google.com/dlpage/gaoptout"
+              className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Analytics opt-out add-on
+            </a>
+            , or opt out of Google&rsquo;s ad personalisation at{" "}
             <a
               href="https://myadcenter.google.com"
               className="text-[#1d1d1f] underline underline-offset-2 hover:text-black"
@@ -169,7 +195,7 @@ export default function CookiePolicyPage() {
             The Site loads fonts from Google Fonts, and a small number of code libraries from public content-delivery networks, to render its typography and animation. This causes your browser to request files from those servers, which can expose your IP address to them. None of them set cookies for this purpose.
           </p>
           <p>
-            Traffic measurement is provided by <strong>Cloudflare Web Analytics</strong>, which is cookieless and collects no information that identifies you personally.
+            Traffic measurement is provided by <strong>Google Analytics</strong>, described in section 2, and by <strong>Cloudflare Web Analytics</strong>, which is cookieless and collects no information that identifies you personally.
           </p>
           <p>
             The Site loads the <strong>Google Ads</strong> tag, described in section 2, which sets the <span className="font-mono text-[13px]">_gcl_au</span> cookie and reports conversions to Google. Beyond that we embed no advertising networks, no social-media widgets, and no third-party trackers.
@@ -195,7 +221,7 @@ export default function CookiePolicyPage() {
             </li>
           </ul>
           <p>
-            Blocking the essential Cloudflare cookies may affect how the Site loads or behaves, since they exist for security and performance. Nothing else on the public Site depends on cookies. Blocking <span className="font-mono text-[13px]">_gcl_au</span> changes nothing about how the Site works for you; it only means we lose the ability to tell that an ad brought you here.
+            Blocking the essential Cloudflare cookies may affect how the Site loads or behaves, since they exist for security and performance. Nothing else on the public Site depends on cookies. Blocking the Google Analytics cookies or <span className="font-mono text-[13px]">_gcl_au</span> changes nothing about how the Site works for you; it only means we see less about how the Site is used, or lose the ability to tell that an ad brought you here.
           </p>
         </Section>
 
