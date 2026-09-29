@@ -107,6 +107,64 @@ export const CASE_STUDIES: CaseStudy[] = [
       "The site went live on their own domain in one afternoon with nothing broken behind it, and the search history they spent years building came with it. They run the site now, and we are still the ones who make it faster.",
   },
   {
+    slug: "smugglers-cove",
+    // "Pub", not "Tavern": the owners settled the name on 2026-09-28 and it
+    // matches their Business Profile, the domain and the logo. The business
+    // is named throughout, never the owners.
+    name: "Smugglers' Cove Pub",
+    kicker: "Neighbourhood pub · Victoria, BC",
+    headline: "A heritage pub site the pub keeps up to date itself",
+    intro:
+      "Smugglers' Cove has been Cadboro Bay's neighbourhood pub since 2005. We designed them a custom site in navy and brass around their own photography, put every price, hour and special in their hands, and moved smugglerscovepub.com off WordPress without touching their email.",
+    liveUrl: "https://smugglerscovepub.com",
+    year: "2026",
+    stackLine: "Custom design · Self-serve editing · Menu schema · Domain migration",
+    metaTitle: "Pub & Restaurant Website Design in Victoria, BC",
+    metaDescription:
+      "How we designed a custom website for Smugglers' Cove Pub in Cadboro Bay, Victoria, with a menu the pub edits itself, menu data Google can read, and a domain move that left their email untouched.",
+    client:
+      "Smugglers' Cove is a cozy British style pub in seaside Cadboro Bay, Victoria, open since 2005. Global comfort fare, fish and chips, weekly specials, a covered terrace and a second floor deck, and in their own words, the friendliest room in Victoria.",
+    needed:
+      "People check a pub's website for three things: the hours, the menu and tonight's special. All three change far more often than anyone wants to call a web designer, and the old WordPress site did not even agree with itself about when the kitchen closed. The same domain also carries the pub's Google Workspace email, so the move could not cost them a single message.",
+    builtIntro:
+      "We designed around the room itself, then handed the pub the keys to everything that changes.",
+    built: [
+      {
+        title: "A homepage that opens like a door",
+        body: "The site opens on a framed photograph of the pub that widens to fill the screen as you scroll, the name giving way to an invitation to the menu while the photo's colour comes back. It follows the scroll rather than a timer, so it moves at the visitor's pace. The text contrast was measured against every photo instead of judged by eye, with headroom left over, because the pub can swap in brighter photos of its own.",
+      },
+      {
+        title: "Every price and hour in the pub's hands",
+        body: "More than 140 parts of the site edit in place. Staff sign in with a one-time code sent to their email, click the text on the page and type. The full menu across four tabs, the weekly specials, the tap feature, the hours and the photos all change without a call to us, and an edit is public within seconds.",
+      },
+      {
+        title: "A menu Google can read",
+        body: "Behind the page, the menu is published as structured data: 37 dishes in four sections, each with its price, and the two size dishes as a proper price range. It reads straight from what the pub edits, so a price change on the page reaches Google's copy without anyone remembering to update it. Search engines are told once a day when something has changed, and left alone when nothing has.",
+      },
+      {
+        title: "Their own photography, sized for a phone",
+        body: "The pub's professional shoot and their own photos became a 62 photo board with Food, Drinks, The Rooms and Sweets filters and a lightbox that works from the keyboard. Every image comes in three sizes matched to the space it fills, so a phone downloads the one it needs rather than the full print file.",
+      },
+      {
+        title: "Built for the phone at the door",
+        body: "An Open now badge knows the difference between the kitchen closing and the doors closing, so it never tells someone the pub is shut while it is still pouring. On a phone, Call, Directions and Order stay pinned to the bottom of the screen, and Order goes straight to the online ordering the pub already used. Enquiries from the contact form are saved before the email goes out, so none can be lost on the way to the inbox.",
+      },
+      {
+        title: "A domain move with nothing dropped",
+        body: "smugglerscovepub.com moved to Cloudflare with the Google Workspace mail records rebuilt first and left alone. All 20 addresses from the old WordPress site, from the gallery to the weekly specials, redirect to their new home, and the old site stayed one switch away as a fallback until the new one had proven itself.",
+      },
+    ],
+    design:
+      "Heritage navy, cream and brass, the colours of an old harbour pub sign, set in engraved Cinzel capitals over Cormorant Garamond. Sections are joined by hand drawn dividers: rolling swells, a rope and compass, and a square rigged ship that sails across the page between the taps and the story. The pub's own seal, recoloured from their original artwork, sits in the header, the footer and the browser tab.",
+    stats: [
+      { value: "140+", label: "parts of the site the pub edits itself, menu prices included" },
+      { value: "20 / 20", label: "old WordPress addresses redirected to their new home" },
+      { value: "464 / 464", label: "responsive checks passing across browsers and screen sizes" },
+    ],
+    result:
+      "smugglerscovepub.com now looks the way the pub feels, and it stays right without us. The hours, the menu and the specials are the pub's to change, Google reads the same menu the customers see, the email carried on through the move untouched, and every enquiry lands in the pub's inbox.",
+  },
+  {
     slug: "sherri-kozubal",
     name: "Sherri Kozubal",
     kicker: "Clinical hypnotherapy · Nanaimo, BC",
