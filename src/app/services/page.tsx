@@ -187,7 +187,7 @@ const INCLUDED = [
   "SSL security certificate",
   "Backups and security monitoring",
   "Ongoing support from the person who built it",
-  "Minor text and image edits free for the first two weeks",
+  "Minor text and image edits free for the first month",
 ];
 
 /**
