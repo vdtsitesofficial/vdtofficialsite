@@ -5,6 +5,14 @@
 // To ban someone, add their address here and push (main auto-deploys).
 const BLOCKED_SENDERS = [
   "gregoryj8tl2@gmail.com",
+  "joshuaguerrero2v7t40d@gmail.com",
+];
+
+// Names we refuse to hear from, whatever address they arrive on. Matched
+// after stripping everything but letters and lowercasing, so "Robert Trocky",
+// "robert.trocky" and "RobertTrocky" all hit "roberttrocky".
+const BLOCKED_NAMES = [
+  "roberttrocky",
 ];
 
 // Gmail ignores dots and anything after a "+" in the local part, and treats
@@ -27,7 +35,17 @@ export function normalizeEmail(raw: string): string {
 
 const BLOCKED = new Set(BLOCKED_SENDERS.map(normalizeEmail));
 
-export function isBlockedSender(email: unknown): boolean {
+function normalizeName(raw: string): string {
+  return raw.toLowerCase().replace(/[^\p{L}]/gu, "");
+}
+
+const BLOCKED_NAME_KEYS = BLOCKED_NAMES.map(normalizeName);
+
+export function isBlockedSender(email: unknown, name?: unknown): boolean {
+  if (typeof name === "string" && name.trim()) {
+    const key = normalizeName(name);
+    if (BLOCKED_NAME_KEYS.some((blocked) => key.includes(blocked))) return true;
+  }
   if (typeof email !== "string" || !email.trim()) return false;
   return BLOCKED.has(normalizeEmail(email));
 }

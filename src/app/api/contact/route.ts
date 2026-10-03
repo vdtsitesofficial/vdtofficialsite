@@ -219,10 +219,11 @@ export async function POST(req: Request) {
   const email = typeof body.email === "string" ? body.email : "";
   const message = typeof body.message === "string" ? body.message : "";
 
-  // A banned sender gets the same silent success as the honeypot above: no
-  // stored message, no email, and nothing that tells them they were refused,
-  // since a visible rejection only prompts them to come back on a new address.
-  if (isBlockedSender(email)) {
+  // A banned sender (by address or name) gets the same silent success as the
+  // honeypot above: no stored message, no email, and nothing that tells them
+  // they were refused, since a visible rejection only prompts them to come back
+  // on a new address.
+  if (isBlockedSender(email, name)) {
     console.warn("[VDT contact form] dropped a submission from a blocked sender");
     return succeed();
   }
