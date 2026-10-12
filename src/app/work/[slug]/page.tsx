@@ -23,7 +23,11 @@ import Stars from "@/components/Stars";
 
 const SYNE = "'Syne', 'Inter', sans-serif";
 const SITE = "https://vdtsites.com";
+/** Reviews longer than this render as body text rather than a pull quote. */
+const LONG_QUOTE = 600;
 
+/** Star emoji some reviewers open with; the real stars sit under the quote. */
+const cleanQuote = (q: string) => q.replace(/^(?:\s*⭐️?)+\s*/u, "").trim();
 /** Grain for the dark result slab. Matches /services. */
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
@@ -139,7 +143,7 @@ export default async function CaseStudyPage({
 
         {/* hero */}
         <section className="px-6 pt-8 md:px-14 md:pt-12">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             {/* The kicker used to sit above the H1 as an uppercase eyebrow,
                 which Shared/Design Preferences rules out. It carries real
                 information though, so it moves below the headline and joins
@@ -180,7 +184,7 @@ export default async function CaseStudyPage({
 
         {/* story */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
-          <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-2 md:gap-14">
+          <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:gap-14">
             <div>
               <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
               <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
@@ -200,7 +204,7 @@ export default async function CaseStudyPage({
 
         {/* what we built */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
             <h2 className="mt-4 text-[24px] font-bold" style={{ fontFamily: SYNE }}>
               What we built
@@ -208,7 +212,8 @@ export default async function CaseStudyPage({
             <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70">
               {cs.builtIntro}
             </p>
-            <div className="mt-8 grid gap-7 md:grid-cols-2">
+            {/* Four cards sit best as 2 x 2; five or six use the wider page as threes. */}
+            <div className={`mt-8 grid gap-7 md:grid-cols-2 ${cs.built.length === 4 ? "" : "lg:grid-cols-3"}`}>
               {cs.built.map((f) => (
                 <div key={f.title} className="rounded-xl border border-black/10 bg-white/55 p-6">
                   <h3 className="text-[16px] font-bold" style={{ fontFamily: SYNE }}>
@@ -223,7 +228,7 @@ export default async function CaseStudyPage({
 
         {/* screenshots */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
-          <div className="mx-auto flex max-w-4xl flex-col items-start gap-6 md:flex-row">
+          <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 md:flex-row">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/work-case/${cs.slug}-desktop.webp`}
@@ -249,7 +254,7 @@ export default async function CaseStudyPage({
 
         {/* design notes */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
             <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
               Design notes
@@ -261,7 +266,7 @@ export default async function CaseStudyPage({
         {/* results */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
           <div
-            className="relative mx-auto max-w-4xl overflow-hidden rounded-[18px] bg-[#0d0d0d] px-7 py-10 text-white md:rounded-[24px] md:rounded-br-[72px] md:px-10 md:py-12"
+            className="relative mx-auto max-w-6xl overflow-hidden rounded-[18px] bg-[#0d0d0d] px-7 py-10 text-white md:rounded-[24px] md:rounded-br-[72px] md:px-10 md:py-12"
             style={{ backgroundImage: GRAIN, backgroundBlendMode: "overlay" }}
           >
             <span
@@ -296,19 +301,37 @@ export default async function CaseStudyPage({
             The link goes to the Business Profile so the stars are earned there. */}
         {review && (
           <section className="px-6 pt-14 md:px-14 md:pt-20">
-            <figure className="mx-auto max-w-4xl">
+            <figure className="mx-auto max-w-6xl">
               <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
               <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
                 What the client said
               </h2>
-              <blockquote
-                className="mt-5 max-w-3xl text-[19px] leading-[1.6] text-[#0d0d0d]/85 md:text-[22px] md:leading-[1.55]"
-                style={{ fontFamily: SYNE }}
-              >
-                <span aria-hidden="true" className="text-[#dc2626]">&ldquo;</span>
-                {review.quote}
-                <span aria-hidden="true" className="text-[#dc2626]">&rdquo;</span>
-              </blockquote>
+              {/* A short review reads as a pull quote in Syne. A long one (Junk
+                  Matters' runs past 1,600 characters) is a wall in a wide
+                  display face, so it drops to body type across the full section
+                  width (Sem: match the width of the sections above). */}
+              {(() => {
+                const quote = cleanQuote(review.quote);
+                if (quote.length <= LONG_QUOTE) {
+                  return (
+                    <blockquote
+                      className="mt-5 max-w-3xl text-[19px] leading-[1.6] text-[#0d0d0d]/85 md:text-[22px] md:leading-[1.55]"
+                      style={{ fontFamily: SYNE }}
+                    >
+                      <span aria-hidden="true" className="text-[#dc2626]">&ldquo;</span>
+                      {quote}
+                      <span aria-hidden="true" className="text-[#dc2626]">&rdquo;</span>
+                    </blockquote>
+                  );
+                }
+                return (
+                  <blockquote className="mt-5 text-[16px] leading-[1.75] text-[#0d0d0d]/80 md:text-[17px]">
+                    <span aria-hidden="true" className="text-[#dc2626]">&ldquo;</span>
+                    {quote}
+                    <span aria-hidden="true" className="text-[#dc2626]">&rdquo;</span>
+                  </blockquote>
+                );
+              })()}
               <figcaption className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px]">
                 <Stars />
                 <span className="font-semibold">{review.displayAuthor}</span>
@@ -353,7 +376,7 @@ export default async function CaseStudyPage({
 
         {/* prev / next */}
         <nav aria-label="More projects" className="px-6 pb-16 pt-10 md:px-14">
-          <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 border-t border-black/10 pt-6 text-[14px] font-semibold">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 border-t border-black/10 pt-6 text-[14px] font-semibold">
             <a href={`/work/${prev.slug}`} className="hover:text-[#dc2626]">
               ← {prev.name}
             </a>
