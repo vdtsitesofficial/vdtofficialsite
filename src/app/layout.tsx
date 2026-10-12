@@ -4,6 +4,7 @@ import MobileDrawer from "@/components/MobileDrawer";
 import { EditorRoot } from "vdt-site-kit";
 import { GA4_SNIPPET } from "@/lib/tracking";
 import { OG_IMAGE } from "@/lib/og";
+import { PRICE_BUILD_FROM, CURRENCY } from "@/lib/pricing";
 
 // TAGGING HISTORY — read before touching GOOGLE_ADS_ID below.
 //
@@ -77,7 +78,11 @@ export const metadata: Metadata = {
     template: "%s | VDT Sites",
   },
   description:
-    "Professional website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
+    // Rewritten 2026-10-12 for click-through: the homepage sat at position
+    // 6.7 for "website design nanaimo" (297 impressions, 1% CTR, 3 months)
+    // with a generic snippet. Price, fixed quote and self-editing are the
+    // three things the SERP competitors do not say.
+    `Website design in Nanaimo from ${PRICE_BUILD_FROM} ${CURRENCY}: custom built on a fixed quote, hosting included, and you can edit it yourself. Call 250-616-2087.`,
   keywords: [
     "website design Nanaimo",
     "web design Nanaimo",
@@ -100,7 +105,7 @@ export const metadata: Metadata = {
     siteName: "VDT Sites",
     title: "Website Design Nanaimo & Vancouver Island | VDT Sites",
     description:
-      "Professional website design for small businesses in Nanaimo and across Vancouver Island. Fast, modern, SEO-ready websites that turn visitors into customers.",
+        `Website design in Nanaimo from ${PRICE_BUILD_FROM} ${CURRENCY}: custom built on a fixed quote, hosting included, and you can edit it yourself. Call 250-616-2087.`,
   },
   twitter: {
     card: "summary_large_image",

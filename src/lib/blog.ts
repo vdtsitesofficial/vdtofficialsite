@@ -17,6 +17,11 @@ import {
   CURRENCY,
 } from "@/lib/pricing";
 import { DEFAULT_AUTHOR } from "@/lib/authors";
+import {
+  websiteHostingCostPost,
+  rebrandSignsPost,
+  leavingWordPressPost,
+} from "@/lib/blog-oct-2026";
 
 export const SITE_URL = "https://vdtsites.com";
 
@@ -2524,6 +2529,10 @@ const chooseDesignerPost: BlogPost = {
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  // Drafts for Sem to approve (2026-10-12); see lib/blog-oct-2026.ts.
+  websiteHostingCostPost,
+  rebrandSignsPost,
+  leavingWordPressPost,
   chooseDesignerPost,
   wixVsDesignerPost,
   howLongDoesItTakePost,
