@@ -636,7 +636,7 @@ const websiteCostPost: BlogPost = {
     { kind: "h3", text: "A .ca domain is not more expensive, and it is worth having" },
     {
       kind: "p",
-      text: "A .ca costs roughly the same as a .com, around $15 to $25 a year, and it signals to a Canadian customer that you are actually here. If your business name is taken on .com, this is usually the easier win rather than paying a domain squatter four figures.",
+      text: "A .ca costs roughly the same as a .com, around $15 to $25 a year, and it signals to a Canadian customer that you are actually here. If your business name is taken on .com, this is usually the easier win rather than paying a domain squatter four figures. If you would rather not juggle the domain and hosting yourself, [this is how ours work](/website-hosting-nanaimo).",
     },
 
     { kind: "h2", text: "Why Monthly Website Fees Can Be Fair" },
@@ -2272,7 +2272,7 @@ const wixVsDesignerPost: BlogPost = {
     { kind: "h3", text: "A custom-built site" },
     {
       kind: "p",
-      text: "This is what we do, so weigh it accordingly. You get a site with no template underneath it, built to load fast, structured properly for search, and editable by you without a monthly platform fee attached to your ability to use it.",
+      text: "This is what we do, so weigh it accordingly. You get a site with no template underneath it, built to load fast, structured properly for search, and editable by you without a monthly platform fee attached to your ability to use it. What that looks like for stores, inventories and booking is on our [web development page](/web-development-nanaimo).",
     },
     {
       kind: "p",

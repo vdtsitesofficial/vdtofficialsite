@@ -247,6 +247,13 @@ export default function LogoDesignNanaimoPage() {
                   >
                     services and pricing page
                   </Link>
+                  , and the whole package is laid out on the{" "}
+                  <Link
+                    href="/branding-nanaimo"
+                    className="font-semibold text-[#dc2626] underline underline-offset-2"
+                  >
+                    branding packages page
+                  </Link>
                   . Genuinely only need a logo? Ask anyway, and we will quote
                   it straight rather than upsell you.
                 </p>

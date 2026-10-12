@@ -317,7 +317,15 @@ export default function WebsiteMaintenancePage() {
                     quote it as a fixed price
                   </Link>{" "}
                   before starting. The monthly fee never quietly grows into a
-                  retainer.
+                  retainer. How the hosting and your domain are handled is on
+                  the{" "}
+                  <Link
+                    href="/website-hosting-nanaimo"
+                    className="font-semibold text-[#dc2626] underline underline-offset-2"
+                  >
+                    hosting and domains page
+                  </Link>
+                  .
                 </p>
                 <p className="border-l-2 border-[#dc2626] pl-5">
                   Every site we build includes this plan, and it is the whole

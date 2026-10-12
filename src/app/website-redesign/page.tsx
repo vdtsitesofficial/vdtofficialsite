@@ -345,7 +345,14 @@ export default function WebsiteRedesignPage() {
                     the case studies
                   </Link>{" "}
                   for what the before and after looks like for local
-                  businesses.
+                  businesses, and our{" "}
+                  <Link
+                    href="/web-development-nanaimo"
+                    className="font-semibold text-[#dc2626] underline underline-offset-2"
+                  >
+                    web development page
+                  </Link>{" "}
+                  for moves off WordPress and Wix.
                 </p>
               </div>
             </div>
