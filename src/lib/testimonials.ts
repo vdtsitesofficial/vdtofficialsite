@@ -9,6 +9,12 @@
  * 18 reviews, all 5 stars. 15 wrote something; 3 left a rating with no text
  * (see RATING_ONLY below) and therefore cannot be quoted.
  *
+ * Re-captured 2026-10-11 from the same owner console: 22 reviews. Five are
+ * new (Shawn Wheldon of Junk Matters, SanJuan, Awaiz Charoliya, Eric
+ * Pizzingrilli, Adriana Davis) and Root 86 Coffee's review is GONE from the
+ * profile, so its quote came out: /reviews promises every entry is on
+ * Google, and the ReviewPull and case-study links point there.
+ *
  * Do NOT paraphrase, tidy, shorten or invent entries. These are attributed
  * to real people and have to match what they actually wrote: punctuation,
  * smileys, curly apostrophes and stray star emoji included. When a new
@@ -34,7 +40,7 @@ export const GOOGLE_REVIEWS_URL =
   "https://maps.google.com/?cid=10419426377693999665";
 
 /** Total reviews on the profile, written and rating-only combined. */
-export const REVIEW_COUNT = 18;
+export const REVIEW_COUNT = 22;
 
 export type Testimonial = {
   quote: string;
@@ -67,13 +73,28 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
+      "⭐️⭐️⭐️⭐️⭐️ Working with Sem and VDT SITES has been one of the best decisions I’ve made for Junk Matters. Sem didn’t simply build us a website—he took the time to understand our business, our customers, our service areas, and what we needed to grow. Sem completely rebuilt and improved our website, strengthened our local SEO, set up redirects from the previous site, helped with Google Ads conversion tracking, and has been developing a customized business-management system specifically for our operation. He has listened carefully to every request and continued improving the system as our needs have evolved. What stands out most is Sem’s patience, responsiveness, and genuine commitment to getting things right. Whenever I notice an issue or think of a new feature, he takes it seriously, explains the options clearly, and works toward a practical solution. He doesn’t disappear once the initial project is finished—he continues supporting the business and finding ways to make everything work better. It is rare to find someone who combines technical knowledge, creativity, reliability, and such a strong understanding of small-business needs. Sem has gone above and beyond what I originally expected, and his work has given Junk Matters a much stronger and more professional online presence. I would confidently recommend Sem and VDT SITES to any business owner looking for website development, SEO, online advertising support, or a customized business-management system. Sem truly cares about the success of his clients, and it shows in the quality of his work. Thank you, Sem, for everything you have done and continue to do for Junk Matters.",
+    author: "Shawn Wheldon",
+  },
+  {
+    quote:
       "I had an excellent experience working with VDTSites on the development of my campaign website. They were responsive, patient, professional, and easy to work with throughout the entire process. What I appreciated most was their ability to listen carefully, understand the tone and purpose I was trying to create, and translate that into a website that feels clear, polished, and true to who I am. They were also quick to make revisions, offered helpful guidance, and made the process feel straightforward from beginning to end. I am very pleased with the final result and would not hesitate to recommend VDTSites to anyone looking for thoughtful, reliable, and high-quality website development.",
     author: "Paul Van Ryssel",
   },
   {
     quote:
-      "Great service, top level skills and quick personal responses to requests. Highly recommended for your business website and online advertisement.",
-    author: "Root 86 Coffee",
+      "An absolute website wizard! Sem was incredibly helpful and accommodating with all of our requests, and he was so easy to communicate with. He delivers high-quality work in an impressively short amount of time and pays attention to every little detail that others might easily overlook. We’re extremely happy with the final result and would highly recommend Sem for all your web design needs!",
+    author: "Awaiz Charoliya",
+  },
+  {
+    quote:
+      "VDT sites was fantastic to work with, they delivered fast, responded very quick for any other problems I had and delivered an amazing website!",
+    author: "Adriana Davis",
+  },
+  {
+    quote:
+      "Sem and Phillip were super great to work with. They were responsive, kept their word on time frames and created us an excellent website!",
+    author: "SanJuan",
   },
   {
     quote:
@@ -86,6 +107,11 @@ export const TESTIMONIALS: Testimonial[] = [
       "We're really happy with the service & product they made us. The team was easy to work with, responsive, and delivered exactly what we wanted. Highly recommend!",
     author: "Jay Cool",
     avatar: "/avatars/jay.svg",
+  },
+  {
+    quote:
+      "Great guy to work with, very professional and efficient with his work. Would recommend to anyone!",
+    author: "Eric Pizzingrilli",
   },
   {
     quote:
@@ -137,7 +163,7 @@ export function getTestimonialByAuthor(author: string): Testimonial | undefined 
 
 /**
  * Left 5 stars without writing anything. Named on /reviews so the page
- * accounts for all 18 without inventing words for them.
+ * accounts for every review without inventing words for them.
  */
 export const RATING_ONLY = ["Adriane Fugaban", "Kennry Manapat", "Julia Geiger"];
 

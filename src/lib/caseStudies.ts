@@ -58,6 +58,10 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "junk-matters",
     name: "Junk Matters",
+    // Signed "Shawn Wheldon" on Google; printed as the business, per the
+    // refer-to-the-business rule for this client.
+    reviewAuthor: "Shawn Wheldon",
+    reviewAuthorAs: "Junk Matters",
     kicker: "Junk removal · Nanaimo, BC",
     headline: "A junk removal site moved off Wix without losing a search result",
     intro:
@@ -399,8 +403,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     result:
       "A site that sells a considered service the way it deserves, with an inventory the owner updates in minutes. The whole thing serves from cache in milliseconds.",
-    reviewAuthor: "Root 86 Coffee",
-    reviewAuthorAs: "Morky Auto Imports",
   },
   {
     slug: "therapeutic-value",

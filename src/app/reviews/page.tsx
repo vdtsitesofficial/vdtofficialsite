@@ -258,7 +258,7 @@ export default function ReviewsPage() {
               ))}
             </ul>
 
-            {/* Accounts for the rest of the 18 without putting words in
+            {/* Accounts for the rest of the reviews without putting words in
                 their mouths - these three rated 5 stars and wrote nothing. */}
             <p className="mt-12 border-t border-black/10 pt-6 text-[15px] leading-relaxed text-[#0d0d0d]/55">
               {RATING_ONLY.slice(0, -1).join(", ")} and{" "}
