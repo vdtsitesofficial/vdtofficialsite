@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     url: "/terms-of-service",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Terms of Service - Van Duist & Treitel",
     description:
       "The terms that govern services provided by VDT Sites.",

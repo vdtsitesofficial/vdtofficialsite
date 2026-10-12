@@ -61,6 +61,7 @@ export const metadata: Metadata = {
     url: "/pricing",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Packages & Pricing in Nanaimo, BC | VDT Sites",
     description: `Custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. The numbers, in public.`,
   },

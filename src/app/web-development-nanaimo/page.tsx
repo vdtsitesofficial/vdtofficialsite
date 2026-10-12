@@ -47,6 +47,7 @@ export const metadata: Metadata = {
     url: "/web-development-nanaimo",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Web Development in Nanaimo, BC | VDT Sites",
     description:
       "Online stores, inventories, booking, payments and admin tools, custom built in Nanaimo by two local developers.",

@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     url: "/logo-design-nanaimo",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Logo Design in Nanaimo, BC | VDT Sites",
     description:
       "Custom logo design in Nanaimo as part of the Full Brand Kit: logo, cards, invoice template, typefaces and your website in one price.",

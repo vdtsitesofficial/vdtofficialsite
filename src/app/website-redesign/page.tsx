@@ -37,7 +37,7 @@ const SPLIT =
 
 export const metadata: Metadata = {
   title: "Website Redesign Services at a Fixed Price",
-  description: `Website redesign that keeps your Google standing: we audit what ranks, keep or redirect every URL, and rebuild it fast. Fixed quote from ${PRICE_BUILD_FROM} ${CURRENCY}. Call 250-616-2087.`,
+  description: `Website redesign that keeps your Google standing: we audit what ranks, keep or redirect every URL, and rebuild it fast. Fixed quote from ${PRICE_BUILD_FROM} ${CURRENCY}.`,
   keywords: [
     "website redesign services",
     "website redesign cost",
@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     url: "/website-redesign",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Redesign Services at a Fixed Price | VDT Sites",
     description:
       "A redesign that keeps your Google standing: audit what ranks, keep or redirect every URL, rebuild fast and modern. Fixed quote up front.",

@@ -86,13 +86,18 @@ const SITE = "https://vdtsites.com";
 const PAGE_URL = `${SITE}/web-design-nanaimo`;
 
 export const metadata: Metadata = {
-  title: "Website Design in Nanaimo, BC",
+  // "Web design" (not "website design") since 2026-10-12: the homepage ranks
+  // 6.7 for "website design nanaimo" and both pages carried that exact title,
+  // while this page is the elected owner of "web design nanaimo" (176 impr
+  // at pos 25) and the Ads keyword. Splitting the phrasings stops the two
+  // pages competing for one query.
+  title: "Web Design in Nanaimo, BC: Local Web Designers",
   description:
     "Custom website design for Nanaimo small businesses. Fixed pricing, hosting included, and you own the site. Free quote: call 250-616-2087.",
   alternates: { canonical: "/web-design-nanaimo" },
   openGraph: {
     images: [OG_IMAGE],
-    title: "Website Design in Nanaimo, BC | VDT Sites",
+    title: "Web Design in Nanaimo, BC | VDT Sites",
     description:
       "Custom websites for Nanaimo small businesses from $899 CAD plus $40 a month. Built in Nanaimo, not outsourced.",
     url: PAGE_URL,
@@ -100,7 +105,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Design in Nanaimo, BC | VDT Sites",
+    title: "Web Design in Nanaimo, BC | VDT Sites",
     description:
       "Custom websites for Nanaimo small businesses. Fixed price, hosting included.",
   },
@@ -259,7 +264,7 @@ export default function LandingPage() {
             className="mx-auto mt-4 max-w-3xl text-[34px] font-bold leading-[1.05] md:text-[58px]"
             style={{ fontFamily: SYNE }}
           >
-            Website design in Nanaimo, built from scratch.
+            Web design in Nanaimo, built from scratch.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-[#0d0d0d]/70 md:text-[17px]">
             Custom sites for small businesses across Vancouver Island, designed around
@@ -371,6 +376,21 @@ export default function LandingPage() {
               </Link>
               , so the mark and the website get designed together instead of
               being bolted onto each other later.
+            </p>
+            {/* In-body links to the 2026-10-12 service pages, which this page
+                (the "web design nanaimo" owner) did not link to at all. */}
+            <p className="mt-4 text-[16px] leading-[1.8] text-[#0d0d0d]/70">
+              When the site has to do more than inform, sell online, manage
+              stock or take bookings, that is{" "}
+              <Link href="/web-development-nanaimo" className="underline underline-offset-2 hover:text-[#dc2626]">
+                web development in Nanaimo
+              </Link>
+              , and we build that from scratch too. Hosting and your domain are
+              handled for you in one monthly fee, explained on our{" "}
+              <Link href="/website-hosting-nanaimo" className="underline underline-offset-2 hover:text-[#dc2626]">
+                hosting and domains page
+              </Link>
+              .
             </p>
           </div>
         </section>

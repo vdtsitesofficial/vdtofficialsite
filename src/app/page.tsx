@@ -1763,6 +1763,8 @@ export default function Home() {
                   Hosting, your domain name, SSL security, backups, monitoring and ongoing
                   support, all in one flat monthly fee. No separate hosting bill, no renewal
                   surprises, and no chasing three different companies when something breaks.
+                  The details are on our{" "}
+                  <a href="/website-hosting-nanaimo">hosting and domains page</a>.
                 </p>
               </div>
             </details>

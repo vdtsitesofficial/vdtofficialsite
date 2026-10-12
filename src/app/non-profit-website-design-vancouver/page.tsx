@@ -84,6 +84,7 @@ export const metadata: Metadata = {
     url: "/non-profit-website-design-vancouver",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Non-Profit Website Design in Vancouver, BC | VDT Sites",
     description:
       "Websites for Vancouver non-profits and charities: donations, volunteer-friendly editing, and Google Ad Grants ready.",

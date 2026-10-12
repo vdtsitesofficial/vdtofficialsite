@@ -62,6 +62,7 @@ export const metadata: Metadata = {
     url: "/web-design-vancouver-island",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Web Design Across Vancouver Island | VDT Sites",
     description:
       "Website design for Vancouver Island businesses, from Victoria to Campbell River. One fixed price, hosting included.",

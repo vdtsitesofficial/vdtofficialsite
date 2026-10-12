@@ -22,7 +22,7 @@ import { OG_IMAGE } from "@/lib/og";
  */
 
 export const metadata: Metadata = {
-  title: "Contact Us: Website Design in Nanaimo, BC",
+  title: "Contact VDT Sites in Nanaimo, BC",
   description:
     "Contact VDT Sites for website design in Nanaimo, BC. Call 250-616-2087, send a message, or schedule a call and we'll phone you at the time you pick.",
   alternates: { canonical: "/contact" },
@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     url: "/contact",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Contact Us | VDT Sites",
     description:
       "Call 250-616-2087 or send a message. Website design in Nanaimo & across Vancouver Island.",

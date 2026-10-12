@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     url: "/affordable-web-design",
   },
   twitter: {
+    card: "summary_large_image",
     title: `Affordable Web Design From ${PRICE_BUILD_FROM} ${CURRENCY} | VDT Sites`,
     description: `Custom-built websites from ${PRICE_BUILD_FROM} ${CURRENCY}, hosting and care for ${PRICE_MONTHLY} a month. Affordable by structure, not by cutting corners.`,
   },

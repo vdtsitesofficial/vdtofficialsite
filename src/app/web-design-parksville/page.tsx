@@ -70,6 +70,7 @@ export const metadata: Metadata = {
     url: "/web-design-parksville",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Design in Parksville, BC | VDT Sites",
     description:
       "Website design for Parksville businesses, built 20 minutes away in Nanaimo. Fixed price, hosting included.",

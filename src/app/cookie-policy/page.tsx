@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     url: "/cookie-policy",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Cookie Policy - VDT Sites",
     description: "What cookies vdtsites.com uses and how to manage them.",
   },

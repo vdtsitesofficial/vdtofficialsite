@@ -66,6 +66,7 @@ export const metadata: Metadata = {
     url: "/web-design-comox-valley",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Web Design in the Comox Valley | VDT Sites",
     description:
       "Website design for Courtenay, Comox and Cumberland businesses. Fixed price, hosting included, built on-island.",

@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     url: "/branding-nanaimo",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Branding Packages in Nanaimo, BC | VDT Sites",
     description:
       "Logo, business card design, invoice template, typefaces and your website, designed together for one price.",

@@ -45,6 +45,7 @@ export const metadata: Metadata = {
     url: "/website-hosting-nanaimo",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Hosting and Domains in Nanaimo | VDT Sites",
     description:
       "Cloudflare hosting, your domain, SSL, backups and support in one flat monthly fee.",

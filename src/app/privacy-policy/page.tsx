@@ -42,6 +42,7 @@ export const metadata: Metadata = {
     url: "/privacy-policy",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Privacy Policy - VDT Sites",
     description: "How VDT Sites collects, uses, and protects personal information.",
   },

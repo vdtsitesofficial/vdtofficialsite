@@ -66,6 +66,7 @@ export const metadata: Metadata = {
     url: "/web-design-campbell-river",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Design in Campbell River, BC | VDT Sites",
     description:
       "Website design for Campbell River businesses. Fixed price, hosting included, built on-island.",

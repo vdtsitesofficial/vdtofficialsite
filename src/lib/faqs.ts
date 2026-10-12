@@ -33,7 +33,7 @@ export const HOME_FAQS: Faq[] = [
   },
   {
     q: "What does the monthly fee cover?",
-    a: "Hosting, your domain name, SSL security, backups, monitoring and ongoing support, all in one flat monthly fee. No separate hosting bill, no renewal surprises, and no chasing three different companies when something breaks.",
+    a: "Hosting, your domain name, SSL security, backups, monitoring and ongoing support, all in one flat monthly fee. No separate hosting bill, no renewal surprises, and no chasing three different companies when something breaks. The details are on our hosting and domains page.",
   },
   {
     q: "Do I own my website?",

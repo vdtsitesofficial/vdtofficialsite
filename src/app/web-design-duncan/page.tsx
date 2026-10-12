@@ -64,6 +64,7 @@ export const metadata: Metadata = {
     url: "/web-design-duncan",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Design in Duncan & the Cowichan Valley | VDT Sites",
     description:
       "Website design for Duncan and Cowichan Valley businesses. Fixed price, hosting included, built 45 minutes away.",

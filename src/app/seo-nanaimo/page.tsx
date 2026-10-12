@@ -68,6 +68,7 @@ export const metadata: Metadata = {
     url: "/seo-nanaimo",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Nanaimo SEO Services, No Monthly Retainer | VDT Sites",
     description:
       "Get found on Google by Nanaimo customers searching for what you do. One-time setup, fixed price, no retainer.",

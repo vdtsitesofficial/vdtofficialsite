@@ -914,12 +914,13 @@ export default function ServicesPage() {
                 </a>
                 .
               </p>
-              {/* Business cards are part of the same brand job, so they live on
-                  the logo page. This is the only in-body anchor for the term. */}
+              {/* Business cards are part of the Full Brand Kit, whose own page
+                  (/branding-nanaimo, 2026-10-12) targets the term. This is the
+                  only in-body anchor for it; keep it pointed there. */}
               <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
                 Need the print side to match the site? We handle{" "}
                 <a
-                  href="/logo-design-nanaimo"
+                  href="/branding-nanaimo"
                   className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
                 >
                   business card design in Nanaimo

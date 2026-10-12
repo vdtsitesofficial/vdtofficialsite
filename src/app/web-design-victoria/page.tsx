@@ -91,6 +91,7 @@ export const metadata: Metadata = {
     url: "/web-design-victoria",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Website Design in Victoria, BC | VDT Sites",
     description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY}. Quick, personal service, no agency overhead.`,
   },

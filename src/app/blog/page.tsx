@@ -63,6 +63,35 @@ export default function BlogIndexPage() {
   const posts = getAllPosts();
   const [featured, ...rest] = posts;
 
+  // CollectionPage + BreadcrumbList (2026-10-12): the index had no
+  // structured data while every post and service page does.
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${SITE_URL}/blog`,
+        url: `${SITE_URL}/blog`,
+        name: "VDT Sites Blog",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#business` },
+        hasPart: posts.map((p) => ({
+          "@type": "BlogPosting",
+          headline: p.title,
+          url: `${SITE_URL}/blog/${p.slug}`,
+          datePublished: p.publishedAt,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+        ],
+      },
+    ],
+  };
+
   return (
     <main
       style={{
@@ -73,6 +102,10 @@ export default function BlogIndexPage() {
         color: INK,
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       {/* ── Hero ─────────────────────────────────────── */}
       <section
         style={{

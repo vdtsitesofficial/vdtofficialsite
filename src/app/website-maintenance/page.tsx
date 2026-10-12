@@ -55,6 +55,7 @@ export const metadata: Metadata = {
     url: "/website-maintenance",
   },
   twitter: {
+    card: "summary_large_image",
     title: `Website Maintenance for ${PRICE_MONTHLY} a Month | VDT Sites`,
     description: `One flat monthly fee covers hosting, domain, SSL, backups, monitoring and small updates. No contract, no hourly meter.`,
   },
