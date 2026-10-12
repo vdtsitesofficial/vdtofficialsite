@@ -143,7 +143,6 @@ export const rebrandSignsPost: BlogPost = {
     "branding packages nanaimo",
   ],
   author: DEFAULT_AUTHOR,
-  draft: true,
   faqs: [
     {
       q: "How do I know if my business needs a rebrand?",
@@ -226,7 +225,6 @@ export const leavingWordPressPost: BlogPost = {
     "wordpress development nanaimo",
   ],
   author: DEFAULT_AUTHOR,
-  draft: true,
   faqs: [
     {
       q: "Will I lose my Google rankings if I move off WordPress?",
