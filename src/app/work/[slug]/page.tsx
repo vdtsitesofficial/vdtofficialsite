@@ -6,6 +6,7 @@ import { GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
 import Stars from "@/components/Stars";
+import SearchResultsGraph from "@/components/SearchResultsGraph";
 
 /**
  * /work/[slug] — one case study per portfolio project.
@@ -289,6 +290,15 @@ export default async function CaseStudyPage({
             <p className="mt-7 max-w-2xl text-[15px] leading-[1.75] text-white/80">{cs.result}</p>
           </div>
         </section>
+
+        {/* search results: the numbers behind "The result" */}
+        {cs.searchGraph && (
+          <section className="px-6 pt-14 md:px-14 md:pt-20">
+            <div className="mx-auto max-w-6xl">
+              <SearchResultsGraph data={cs.searchGraph} />
+            </div>
+          </section>
+        )}
 
         {/* What the client said
 

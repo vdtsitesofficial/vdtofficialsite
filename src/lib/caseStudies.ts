@@ -8,6 +8,7 @@
  */
 
 import { getTestimonialByAuthor, type Testimonial } from "./testimonials";
+import { JUNK_MATTERS_SEARCH, type SearchGraph } from "./searchGraphs";
 
 export type CaseStat = { value: string; label: string };
 export type CaseFeature = { title: string; body: string };
@@ -52,6 +53,8 @@ export type CaseStudy = {
    * and on the Morky page the review reads as Morky's.
    */
   reviewAuthorAs?: string;
+  /** Search Console before / after graph, shown after "The result". */
+  searchGraph?: SearchGraph;
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -62,6 +65,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     // refer-to-the-business rule for this client.
     reviewAuthor: "Shawn Wheldon",
     reviewAuthorAs: "Junk Matters",
+    searchGraph: JUNK_MATTERS_SEARCH,
     kicker: "Junk removal · Nanaimo, BC",
     headline: "A junk removal site moved off Wix without losing a search result",
     intro:
@@ -103,12 +107,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     design:
       "Junk removal sites mostly look like clip art. This one is built on their own jobs: their trailers, their customers' driveways, their before and afters, with the type doing the heavy lifting. The line we designed the whole thing around is their own, You Matter, We Matter, Junk Matters, and the landfill being the last stop rather than the first.",
     stats: [
-      { value: "178 / 178", label: "addresses verified in a side by side crawl before the domain moved" },
-      { value: "151 / 151", label: "redirects returning a literal 301 to the right page" },
-      { value: "750 / 750", label: "responsive checks passing across browsers and screen sizes" },
+      { value: "24/7", label: "a site assistant answering customers' questions from their own pages, even after hours" },
+      { value: "178 / 178", label: "old web addresses still taking people to the right page, so no Google link or bookmark hits a dead end" },
+      { value: "Every word", label: "on the site is theirs to change, any time, without calling a developer" },
     ],
     result:
-      "The site went live on their own domain in one afternoon with nothing broken behind it, and the search history they spent years building came with it. They run the site now, and we are still the ones who make it faster.",
+      "The years of Google search history behind the old site came across with it, and within a month Google was sending them more clicks than the old site did. They run the site now, and we are still the ones who make it faster.",
   },
   {
     slug: "smugglers-cove",
