@@ -138,7 +138,7 @@ const websiteCostPost: BlogPost = {
   title: "How Much Does a Website Cost in Canada?",
   metaTitle: "How Much Does a Website Cost in Canada? (2026)",
   description:
-    "What a website actually costs in Canada in 2026, in Canadian dollars: real price ranges for one-page, standard and advanced builds, and what moves it.",
+    "What a website actually costs in Canada in 2026, in Canadian dollars: actual price ranges for one-page, standard and advanced builds, and what moves it.",
   excerpt:
     "One company quotes $500, another quotes $15,000. Here is what a website actually costs in Canada in 2026, in Canadian dollars, and what actually matters when you pay for one.",
   category: "Pricing",
@@ -163,7 +163,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       q: "Why do some web designers charge $10,000 for a website?",
-      a: "Sometimes the work genuinely justifies it: custom functionality, integrations, booking or membership systems all take real time, and so does full brand work, where the logo, print materials and site are designed together. We sell that as one package, covered on [logo design in Nanaimo](/logo-design-nanaimo). Other times you are paying agency overhead rather than a better website. The way to tell is to look at their past work and ask what specifically is included, rather than assuming a higher price means a better result.",
+      a: "Sometimes the work genuinely justifies it: custom functionality, integrations, booking or membership systems all take serious time, and so does full brand work, where the logo, print materials and site are designed together. We sell that as one package, covered on [logo design in Nanaimo](/logo-design-nanaimo). Other times you are paying agency overhead rather than a better website. The way to tell is to look at their past work and ask what specifically is included, rather than assuming a higher price means a better result.",
     },
     {
       q: "Is a monthly fee for a website worth paying?",
@@ -171,7 +171,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       q: "What is a fair price for web design in Canada?",
-      a: `For a standard small business site of three to five pages, somewhere between ${PRICE_BUILD_FROM} and $3,000 ${CURRENCY} is a fair range from a freelancer or small studio, and $8,000 and up is normal from a full agency. Below about $400 you are usually buying a template with your logo dropped in, and above about $5,000 you should be getting something genuinely custom: booking, payments, a database, or real design work rather than a layout you have seen before.`,
+      a: `For a standard small business site of three to five pages, somewhere between ${PRICE_BUILD_FROM} and $3,000 ${CURRENCY} is a fair range from a freelancer or small studio, and $8,000 and up is normal from a full agency. Below about $400 you are usually buying a template with your logo dropped in, and above about $5,000 you should be getting something genuinely custom: booking, payments, a database, or original design work rather than a layout you have seen before.`,
     },
     {
       q: "Is web design cheaper in Canada than the United States?",
@@ -622,7 +622,7 @@ const websiteCostPost: BlogPost = {
     { kind: "h3", text: "GST, HST and what you can write off" },
     {
       kind: "p",
-      text: "Quotes from Canadian suppliers may or may not have tax added on top, and it is worth asking rather than assuming, because at these numbers 5% to 15% is real money. If you are registered you will generally be claiming the input tax credit back anyway, which makes the sticker difference smaller than it looks.",
+      text: "Quotes from Canadian suppliers may or may not have tax added on top, and it is worth asking rather than assuming, because at these numbers 5% to 15% is serious money. If you are registered you will generally be claiming the input tax credit back anyway, which makes the sticker difference smaller than it looks.",
     },
     {
       kind: "p",
@@ -786,7 +786,7 @@ const notShowingOnGooglePost: BlogPost = {
     "How to Get Your Site to Show Up on Google: 10 Essential Tips for Beginners",
   metaTitle: "How to Get Your Site to Show Up on Google",
   description:
-    "Your site isn't on Google and you want it there. The free 30 second check that tells you why, then the ten things that actually move it, in the order to do them.",
+    "Your site isn't on Google and you want it there. The free 30 second check that tells you why, then the ten things that move it, in order.",
   excerpt:
     "You search your own business name and your website isn't there. Before you spend a dollar on ads or SEO, here is how to find out whether Google can even see your site, and what to do next.",
   category: "SEO",
@@ -819,7 +819,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       q: "Do I need to pay someone to fix this?",
-      a: "Often not. Checking for a noindex tag, setting up Search Console, submitting a sitemap and claiming your Google Business Profile are all free and none of them need a developer. It is worth doing those first so that if you do hire someone, you are paying them to solve a real problem rather than to find one. If it does turn out to need a rebuild, [what a website costs in Canada](/blog/small-business-website-cost-2026) covers what you should expect to pay.",
+      a: "Often not. Checking for a noindex tag, setting up Search Console, submitting a sitemap and claiming your Google Business Profile are all free and none of them need a developer. It is worth doing those first so that if you do hire someone, you are paying them to solve a known problem rather than to find one. If it does turn out to need a rebuild, [what a website costs in Canada](/blog/small-business-website-cost-2026) covers what you should expect to pay.",
     },
     {
       q: "How long does SEO take to work?",
@@ -868,7 +868,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "This article walks through the real reasons a business website doesn't show up on Google, the free checks that tell you which one applies to you, and what to do about each.",
+      text: "This article walks through the actual reasons a business website doesn't show up on Google, the free checks that tell you which one applies to you, and what to do about each.",
     },
 
     { kind: "h3", text: "Overview of Google Ranking Factors" },
@@ -898,7 +898,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "Spending months on SEO while the first problem is the real one is wasted effort, which is exactly why this is the thing to check before anything else.",
+      text: "Spending months on SEO while the first problem is the actual one is wasted effort, which is exactly why this is the thing to check before anything else.",
     },
 
     {
@@ -1099,7 +1099,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "A page headed Welcome To Our Website is competing for nothing. A page about the specific service you offer, in the specific town you offer it in, is competing for something real.",
+      text: "A page headed Welcome To Our Website is competing for nothing. A page about the specific service you offer, in the specific town you offer it in, is competing for something worth winning.",
     },
     {
       kind: "p",
@@ -1140,7 +1140,7 @@ const notShowingOnGooglePost: BlogPost = {
     { kind: "h3", text: "Understanding Local SEO" },
     {
       kind: "p",
-      text: "Plenty of the time, the real complaint isn't about the website at all.",
+      text: "Plenty of the time, the actual complaint isn't about the website at all.",
     },
     {
       kind: "p",
@@ -1170,7 +1170,7 @@ const notShowingOnGooglePost: BlogPost = {
         "claim and verify the listing,",
         "choose the right primary category, which matters more than almost anything else,",
         "set the areas you actually serve,",
-        "add real photos rather than stock,",
+        "add your own photos rather than stock,",
         "keep your hours accurate,",
         "and ask happy customers for reviews, steadily rather than all at once.",
       ],
@@ -1181,7 +1181,7 @@ const notShowingOnGooglePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "Reviews are the part small businesses most consistently underrate. Count matters, but so does recency and whether you reply, and a steady trickle reads as a real business in a way that fourteen reviews in one week does not.",
+      text: "Reviews are the part small businesses most consistently underrate. Count matters, but so does recency and whether you reply, and a steady trickle reads as an active business in a way that fourteen reviews in one week does not.",
     },
     {
       kind: "p",
@@ -1322,7 +1322,7 @@ const notShowingOnGooglePost: BlogPost = {
     { kind: "h2", text: "Final Thoughts" },
     {
       kind: "p",
-      text: "The thing that stands out to us about both of the real examples in this article is that neither business had done anything wrong.",
+      text: "The thing that stands out to us about both of the examples in this article is that neither business had done anything wrong.",
     },
     {
       kind: "p",
@@ -1361,7 +1361,7 @@ const notShowingOnGooglePost: BlogPost = {
 const facebookPageVsWebsitePost: BlogPost = {
   slug: "do-i-need-a-website-if-i-have-facebook",
   title: "Do I Need a Website If I Already Have Instagram or Facebook?",
-  metaTitle: "Do I Need a Website If I Have Instagram or Facebook?",
+  metaTitle: "Do I Need a Website If I Have a Facebook Page?",
   description:
     "A social page and a website do different jobs. Here is what a page genuinely covers, where it quietly costs you customers, and when you actually need both.",
   excerpt:
@@ -1381,7 +1381,7 @@ const facebookPageVsWebsitePost: BlogPost = {
   faqs: [
     {
       q: "Is a Facebook or Instagram page enough for a small business?",
-      a: "It is enough while you are testing an idea, running a market stall, or doing something that has not become a business yet. Once you are a real business competing for work, a page leaves you invisible to everyone searching for the service rather than for your name, which is where most new customers come from.",
+      a: "It is enough while you are testing an idea, running a market stall, or doing something that has not become a business yet. Once you are an established business competing for work, a page leaves you invisible to everyone searching for the service rather than for your name, which is where most new customers come from.",
     },
     {
       q: "Will my Facebook page show up on Google?",
@@ -1389,7 +1389,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     },
     {
       q: "Should I stop posting on social media once I have a website?",
-      a: "No. They do different jobs. Social media reaches people who were not looking for you, and a website gets found by people who are actively searching and ready to buy. Businesses that drop social entirely after launching a site usually lose something real.",
+      a: "No. They do different jobs. Social media reaches people who were not looking for you, and a website gets found by people who are actively searching and ready to buy. Businesses that drop social entirely after launching a site usually lose something worth keeping.",
     },
     {
       q: "What should my website have that my social page doesn't?",
@@ -1399,7 +1399,7 @@ const facebookPageVsWebsitePost: BlogPost = {
   content: [
     {
       kind: "p",
-      text: "If you're running a real business, yes, you need a website as well. Not because a Facebook or Instagram page is worthless, but because the two do completely different jobs: social reaches people who weren't looking for you, and a website gets found by the people who are actively searching for what you do.",
+      text: "If you're running an established business, yes, you need a website as well. Not because a Facebook or Instagram page is worthless, but because the two do completely different jobs: social reaches people who weren't looking for you, and a website gets found by the people who are actively searching for what you do.",
     },
     {
       kind: "p",
@@ -1407,7 +1407,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "That said, there is a real exception, and we'd rather lead with it than pretend otherwise. It's the next section.",
+      text: "That said, there is a genuine exception, and we'd rather lead with it than pretend otherwise. It's the next section.",
     },
     {
       kind: "p",
@@ -1447,7 +1447,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "In all of those, a page is free, it takes an afternoon, and it's enough to look real.",
+      text: "In all of those, a page is free, it takes an afternoon, and it's enough to look legitimate.",
     },
     {
       kind: "p",
@@ -1455,7 +1455,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "The rest of this article is about what happens after that point, when you are running a real business and the page is still doing all the work.",
+      text: "The rest of this article is about what happens after that point, when you are running an established business and the page is still doing all the work.",
     },
 
     { kind: "h2", text: "The Two Are Not the Same Tool" },
@@ -1628,7 +1628,7 @@ const facebookPageVsWebsitePost: BlogPost = {
         "reaching people who weren't looking for you,",
         "showing your work regularly without anyone having to visit anything,",
         "letting people message you in a place they already are,",
-        "proving there's a real person behind the business,",
+        "proving there's a person behind the business,",
         "and collecting reviews and comments that other people can see.",
       ],
     },
@@ -1638,7 +1638,7 @@ const facebookPageVsWebsitePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "So the answer was never to abandon it. Businesses that drop social entirely once they get a website usually lose something real.",
+      text: "So the answer was never to abandon it. Businesses that drop social entirely once they get a website usually lose something worth keeping.",
     },
 
     { kind: "h2", text: "What It Looks Like When You Have Both" },
@@ -1713,7 +1713,7 @@ const howLongDoesItTakePost: BlogPost = {
   title: "How Long Does It Take to Build a Small Business Website?",
   metaTitle: "How Long Does It Take to Build a Website?",
   description:
-    "Three to four days once your content is in, but the honest answer is it depends on you more than on your developer. Here is where the time goes, and what stretches it.",
+    "Three to four days once your content is in, but the honest answer is it depends on you more than your developer. Here is where the time goes.",
   excerpt:
     "Once we have your content, three to four days is realistic for a small business website. The part nobody tells you is that the timeline depends more on how fast you reply than on how fast anyone builds.",
   category: "Getting Started",
@@ -1749,7 +1749,7 @@ const howLongDoesItTakePost: BlogPost = {
     },
     {
       q: "How long does it take to make a website from scratch?",
-      a: "For a small business site, three to four days of actual build time once the content is in hand. The calendar around that is longer and varies far more: gathering copy, photos and approvals is usually where the weeks go. A site with booking, payments or a database takes longer, because there is genuinely more to build and more to test before it can be trusted with real money.",
+      a: "For a small business site, three to four days of actual build time once the content is in hand. The calendar around that is longer and varies far more: gathering copy, photos and approvals is usually where the weeks go. A site with booking, payments or a database takes longer, because there is genuinely more to build and more to test before it can be trusted with customers' money.",
     },
     {
       q: "What is the typical web design process?",
@@ -1826,7 +1826,7 @@ const howLongDoesItTakePost: BlogPost = {
     { kind: "h3", text: "Launch and handover" },
     {
       kind: "p",
-      text: "Pointing the domain at the new site, checking it on real phones, getting it set up so search engines can find it, and showing you how to run it.",
+      text: "Pointing the domain at the new site, checking it on actual phones, getting it set up so search engines can find it, and showing you how to run it.",
     },
     {
       kind: "p",
@@ -1923,7 +1923,7 @@ const howLongDoesItTakePost: BlogPost = {
       kind: "ul",
       items: [
         "a rough version of what you want each page to say, even if it's messy,",
-        "photos of your real work rather than stock images,",
+        "photos of your own work rather than stock images,",
         "your logo, in the best quality you have,",
         "your services and, if you publish them, your prices,",
         "and the login for wherever your domain is registered.",
@@ -1945,7 +1945,7 @@ const howLongDoesItTakePost: BlogPost = {
     },
     {
       kind: "p",
-      text: "If you have a real date, a season starting, a location opening, an event coming up, then say so at the beginning. It changes how the work is sequenced.",
+      text: "If you have a firm date, a season starting, a location opening, an event coming up, then say so at the beginning. It changes how the work is sequenced.",
     },
     {
       kind: "p",
@@ -2016,11 +2016,11 @@ const wixVsDesignerPost: BlogPost = {
      section believable when it arrives. */
   slug: "wix-alternatives",
   title: "Wix Alternatives: What Small Businesses Actually Move To",
-  metaTitle: "Wix Alternatives for a Small Business Website (2026)",
+  metaTitle: "Wix Alternatives for Small Businesses (2026)",
   description:
-    "An honest look at the real Wix alternatives in 2026: Squarespace, WordPress, Webflow, Shopify and a custom build, what each costs, and how to move safely.",
+    "An honest look at the main Wix alternatives in 2026: Squarespace, WordPress, Webflow, Shopify and a custom build, what each costs, and how to move safely.",
   excerpt:
-    "Most people looking for a Wix alternative are not shopping, they are stuck. Here is what each of the real options is actually good at, including the ones we do not sell.",
+    "Most people looking for a Wix alternative are not shopping, they are stuck. Here is what each of the main options is actually good at, including the ones we do not sell.",
   category: "Getting Started",
   publishedAt: "2026-08-05",
   updatedAt: "2026-08-05",
@@ -2094,7 +2094,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "That's worth something real, and no developer can sell it to you.",
+      text: "That's worth something, and no developer can sell it to you.",
     },
     { kind: "h3", text: "The budget honestly isn't there" },
     {
@@ -2185,7 +2185,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "Someone starts building it with real enthusiasm. Then a busy month arrives, and the site goes live at about eighty percent done, or doesn't go live at all.",
+      text: "Someone starts building it with plenty of enthusiasm. Then a busy month arrives, and the site goes live at about eighty percent done, or doesn't go live at all.",
     },
     { kind: "p", text: "You've seen the result before:" },
     {
@@ -2206,7 +2206,7 @@ const wixVsDesignerPost: BlogPost = {
       text: "This has nothing to do with the platform. It's that building a website is a project, and projects that aren't anybody's actual job tend not to finish.",
     },
 
-    { kind: "h2", text: "The Real Alternatives, One by One" },
+    { kind: "h2", text: "The Main Alternatives, One by One" },
     {
       kind: "p",
       text: "Five options genuinely worth considering, roughly in order of how much work they ask of you.",
@@ -2233,7 +2233,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "The cost is maintenance, and it is a real cost rather than a theoretical one. Plugins update, conflict and occasionally break the site. Security patches are your responsibility. A WordPress install nobody has logged into for a year is a genuine liability, not just a stale site. Budget either your own ongoing attention or someone on retainer.",
+      text: "The cost is maintenance, and it is an ongoing cost rather than a theoretical one. Plugins update, conflict and occasionally break the site. Security patches are your responsibility. A WordPress install nobody has logged into for a year is a genuine liability, not just a stale site. Budget either your own ongoing attention or someone on retainer.",
     },
     {
       kind: "p",
@@ -2323,7 +2323,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "The site wasn't the real cost. The real cost was two years of a business not being represented properly because updating it was a chore.",
+      text: "The site wasn't the expensive part. The expensive part was two years of a business not being represented properly because updating it was a chore.",
     },
     {
       kind: "p",
@@ -2408,9 +2408,9 @@ const wixVsDesignerPost: BlogPost = {
 const chooseDesignerPost: BlogPost = {
   slug: "what-to-look-for-in-a-web-designer",
   title: "What to Look For in a Good Web Designer (From Two People Who Are One)",
-  metaTitle: "What to Look For in a Good Web Designer: 7 Checks",
+  metaTitle: "What to Look For in a Web Designer: 7 Checks",
   description:
-    "Seven things to check before hiring a web designer, from published pricing to reviews you can verify. Written by two web designers, so judge us by the same list.",
+    "Seven things to check before hiring a web designer, from published pricing to reviews you can verify. By two web designers, so judge us by the same list.",
   excerpt:
     "Choosing a web designer is hard precisely because every option looks polished. Here are seven checks that cut through it, and yes, we expect to be judged by them too.",
   category: "Getting Started",
@@ -2451,7 +2451,7 @@ const chooseDesignerPost: BlogPost = {
     { kind: "h2", text: "1. Pricing you can see without a sales call" },
     {
       kind: "p",
-      text: "If a price only appears after a discovery call, the price depends on you: your budget, your urgency, how much you seem willing to pay. Published pricing removes that game. It does not need to be exact to the dollar, real projects vary, but a designer who will not put any number in public is telling you the number is negotiable in one direction.",
+      text: "If a price only appears after a discovery call, the price depends on you: your budget, your urgency, how much you seem willing to pay. Published pricing removes that game. It does not need to be exact to the dollar, projects vary, but a designer who will not put any number in public is telling you the number is negotiable in one direction.",
     },
     {
       kind: "p",
@@ -2466,7 +2466,7 @@ const chooseDesignerPost: BlogPost = {
       kind: "p",
       text: "Send two or three candidates the same short question and watch what happens. You are not measuring politeness, you are measuring what a question will cost you in waiting, every time you have one, for years.",
     },
-    { kind: "h2", text: "3. Reviews from real businesses you can verify" },
+    { kind: "h2", text: "3. Reviews from businesses you can verify" },
     {
       kind: "p",
       text: "Anonymous praise on a designer's own site proves nothing, anyone can type it. What counts is reviews from named businesses on a platform the designer does not control, where you can click the reviewer, find their business, and see the website that made them happy.",
@@ -2482,7 +2482,7 @@ const chooseDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "While you are there, scroll to the footer. Most designers credit themselves on sites they built, so a portfolio you can cross-check against real footers is a portfolio you can trust. [Ours is here](/work), written up build by build, live links included.",
+      text: "While you are there, scroll to the footer. Most designers credit themselves on sites they built, so a portfolio you can cross-check against live footers is a portfolio you can trust. [Ours is here](/work), written up build by build, live links included.",
     },
     { kind: "h2", text: "5. You own everything when it is done" },
     {
@@ -2496,7 +2496,7 @@ const chooseDesignerPost: BlogPost = {
     { kind: "h2", text: "6. Honest SEO talk, with no ranking guarantees" },
     {
       kind: "p",
-      text: "A good designer can explain, in plain words, what they do so Google can find and rank your site: proper titles, clean structure, fast loading, structured data, a submitted sitemap. That groundwork is real, checkable work, and it should be part of the build rather than a mysterious add-on.",
+      text: "A good designer can explain, in plain words, what they do so Google can find and rank your site: proper titles, clean structure, fast loading, structured data, a submitted sitemap. That groundwork is concrete, checkable work, and it should be part of the build rather than a mysterious add-on.",
     },
     {
       kind: "p",
@@ -2505,7 +2505,7 @@ const chooseDesignerPost: BlogPost = {
     { kind: "h2", text: "7. You can edit the site yourself" },
     {
       kind: "p",
-      text: "Prices change, hours change, photos age. If every one of those changes needs an email and an invoice, your website is a subscription to someone else's calendar, not an asset you own. Ask to see, on a real site, how an owner changes text or swaps a photo, and how long it took to learn.",
+      text: "Prices change, hours change, photos age. If every one of those changes needs an email and an invoice, your website is a subscription to someone else's calendar, not an asset you own. Ask to see, on a live site, how an owner changes text or swaps a photo, and how long it took to learn.",
     },
     {
       kind: "p",
@@ -2514,7 +2514,7 @@ const chooseDesignerPost: BlogPost = {
     { kind: "h2", text: "Use the list on us" },
     {
       kind: "p",
-      text: "That is the whole checklist: visible pricing, fast answers, verifiable reviews, live work, real ownership, honest SEO, and a site you can run yourself. It takes about twenty minutes to run any designer through it, us included, and twenty minutes is cheap insurance on something your business will live in for years.",
+      text: "That is the whole checklist: visible pricing, fast answers, verifiable reviews, live work, full ownership, honest SEO, and a site you can run yourself. It takes about twenty minutes to run any designer through it, us included, and twenty minutes is cheap insurance on something your business will live in for years.",
     },
     {
       kind: "p",

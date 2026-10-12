@@ -8,6 +8,7 @@ import ContactCard from "@/components/ContactCard";
 import MobileActionBar from "@/components/MobileActionBar";
 import ReviewPull from "@/components/ReviewPull";
 import TeamCard from "@/components/TeamCard";
+import { OG_IMAGE } from "@/lib/og";
 import {
   PRICE_BUILD_FROM,
   PRICE_BRAND_FROM,
@@ -44,7 +45,7 @@ const SPLIT =
 
 export const metadata: Metadata = {
   title: "Website Design Pricing & Packages, Published",
-  description: `Real website design pricing, in public: custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. No quote form required to see a number.`,
+  description: `Website design pricing, in public: custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. No quote form needed.`,
   keywords: [
     "website design pricing",
     "small business website packages",
@@ -54,6 +55,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/pricing" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Design Pricing & Packages, Published | VDT Sites",
     description: `Custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. The numbers, in public.`,
     url: "/pricing",
@@ -91,7 +93,7 @@ const PACKAGES = [
 const FAQS = [
   {
     q: "How much does a website cost?",
-    a: `Here, ${PRICE_BUILD_FROM} ${CURRENCY} one time for a custom build, plus ${PRICE_MONTHLY} a month to run it. Across the industry the honest range for a small business site is anywhere from a few hundred dollars on a DIY builder to five figures at an agency, and the differences are real but rarely explained. We published a full breakdown of what moves the number so you can compare quotes properly.`,
+    a: `Here, ${PRICE_BUILD_FROM} ${CURRENCY} one time for a custom build, plus ${PRICE_MONTHLY} a month to run it. Across the industry the honest range for a small business site is anywhere from a few hundred dollars on a DIY builder to five figures at an agency, and the differences matter but are rarely explained. We published a full breakdown of what moves the number so you can compare quotes properly.`,
   },
   {
     q: "Why publish prices when everyone else says 'get a quote'?",
@@ -123,7 +125,7 @@ export default function PricingPage() {
         "@type": "WebPage",
         "@id": URL,
         name: "Website Design Pricing & Packages, Published",
-        description: `Real website design pricing: custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}.`,
+        description: `Website design pricing: custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}.`,
         isPartOf: { "@id": `${SITE}/#website` },
         about: { "@id": `${SITE}/#business` },
         breadcrumb: {
@@ -227,7 +229,7 @@ export default function PricingPage() {
             <div className="mt-8 grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
               <p className="text-[17px] leading-relaxed text-[#0d0d0d]/70">
                 Website design pricing should not require a discovery call to
-                discover. These are the real numbers, in {CURRENCY}, the same
+                discover. These are the actual numbers, in {CURRENCY}, the same
                 ones every business in{" "}
                 <Link
                   href="/work"

@@ -7,7 +7,7 @@ const STEPS = [
   {
     n: "01",
     title: "Discovery",
-    body: "We chat about your business, goals, and vision. No jargon, just a real conversation about what you need.",
+    body: "We chat about your business, goals, and vision. No jargon, just a straight conversation about what you need.",
   },
   {
     n: "02",

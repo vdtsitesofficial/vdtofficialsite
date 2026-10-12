@@ -27,10 +27,11 @@ import { useEffect, useRef, useState } from "react";
 
 const COLLAPSE = "(max-width: 960px), (hover: none) and (pointer: coarse)";
 
-/** All six destinations. The row keeps Contact only; the rest live here. */
+/** Every destination. The row keeps Contact only; the rest live here. */
 const LINKS = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Reviews", href: "/reviews" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },

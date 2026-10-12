@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * Public Terms of Service page.
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     "VDT Sites Terms of Service. The terms that govern web design, hosting, and related services provided by VDT Sites in British Columbia, Canada.",
   alternates: { canonical: "/terms-of-service" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Terms of Service - Van Duist & Treitel",
     description:
       "The terms that govern services provided by VDT Sites.",

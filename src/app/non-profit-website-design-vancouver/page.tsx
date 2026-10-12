@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /non-profit-website-design-vancouver
@@ -76,6 +77,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/non-profit-website-design-vancouver" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Non-Profit Website Design in Vancouver, BC | VDT Sites",
     description:
       "Websites for Vancouver non-profits and charities: donations, volunteer-friendly editing, and built to meet Google Ad Grants requirements.",
@@ -141,7 +143,7 @@ const DIFFERENCES = [
   },
   {
     title: "Accessibility is often not optional",
-    body: "Plenty of funding agreements carry accessibility expectations, and beyond compliance the audience for a lot of non-profit work includes people using screen readers, keyboard navigation or high-contrast modes. Proper semantic structure, real contrast and keyboard-navigable menus are how we build anyway.",
+    body: "Plenty of funding agreements carry accessibility expectations, and beyond compliance the audience for a lot of non-profit work includes people using screen readers, keyboard navigation or high-contrast modes. Proper semantic structure, strong contrast and keyboard-navigable menus are how we build anyway.",
   },
 ];
 

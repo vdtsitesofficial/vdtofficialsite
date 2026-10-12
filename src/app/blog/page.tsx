@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts, SITE_URL } from "@/lib/blog";
+import { OG_IMAGE } from "@/lib/og";
 
 // Ink/muted/rule track the lab tokens (see public/lab/style.css :root).
 const INK = "#1a1a1a";
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
     "Practical, no-nonsense advice on web design, website pricing, and SEO for small businesses, from the VDT Sites studio in Nanaimo, BC.",
   alternates: { canonical: "/blog" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     url: `${SITE_URL}/blog`,
     title: "Web Design & SEO Tips for Small Businesses | VDT Sites",
@@ -200,7 +202,7 @@ export default function BlogIndexPage() {
           </p>
           <p style={{ margin: "0 0 18px" }}>
             These are the questions we actually get asked, on the phone, by
-            people running real businesses on Vancouver Island. What a website
+            people running small businesses on Vancouver Island. What a website
             should cost. Why theirs is invisible on Google. Whether a Facebook
             page is genuinely enough. We answer each one the way we would answer
             it in a conversation, including the parts where the answer is that

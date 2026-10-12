@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * Public Cookie Policy page.
@@ -30,9 +31,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Cookie Policy",
   description:
-    "VDT Sites Cookie Policy. What cookies vdtsites.com uses and how to manage them, including Google Analytics, the Google Ads advertising cookie and essential security cookies.",
+    "What cookies vdtsites.com uses and how to manage them: Google Analytics, the Google Ads advertising cookie and essential security cookies.",
   alternates: { canonical: "/cookie-policy" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Cookie Policy - VDT Sites",
     description: "What cookies vdtsites.com uses and how to manage them.",
     url: "/cookie-policy",

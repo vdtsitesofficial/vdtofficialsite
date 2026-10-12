@@ -327,11 +327,43 @@ export default function Home() {
             // "VDT Sites", so all three can be asserted as one entity.
             // If the Facebook username is ever changed, change it here too or
             // this becomes a 404 that Google reads as a bad entity claim.
+            //
+            // Directory profiles added 2026-10-11 (each URL opened and
+            // confirmed live that day). Clutch and GoodFirms are the two
+            // sources AI answers cite most for "web designer Nanaimo", so
+            // tying them to this entity is the point. Same rule as above:
+            // a profile that moves or dies comes out of this list.
             sameAs: [
               "https://www.instagram.com/vdtsites",
               "https://www.facebook.com/VDTSites",
               "https://maps.google.com/?cid=10419426377693999665",
+              "https://clutch.co/profile/vdt-sites",
+              "https://www.goodfirms.co/company/vdt-sites",
+              "https://www.yelp.ca/biz/vdt-sites-nanaimo",
+              "https://www.bbb.org/ca/bc/nanaimo/profile/website-maintenance/vdt-sites-0047-235975986",
+              "https://www.vilocal.ca/biz/34132/vdt-sites",
             ],
+            logo: "https://vdtsites.com/vdt-glass-logo.png",
+            image: "https://vdtsites.com/og-vdtsites.jpg",
+            // The business was registered in 2026; Sem and Phillip have been
+            // building sites since 2022. Listings carry the 2026 date (Sem,
+            // 2026-10-11), so this must match them, not the earlier start.
+            foundingDate: "2026",
+            // Matches the Business Profile's "Open 24 hours" (set 2026-07-26).
+            openingHoursSpecification: {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+              ],
+              opens: "00:00",
+              closes: "23:59",
+            },
             hasMap: "https://maps.google.com/?cid=10419426377693999665",
             priceRange: "$$",
             knowsAbout: [
@@ -723,9 +755,37 @@ export default function Home() {
                         the newline, and without it crawlers read the H1 as the
                         single word "WebsiteDesign". Whitespace text nodes are
                         invisible in this flex container (gap = w2 margin). */}
-                    <h1 className="vdt-hero__title">
+                    {/* "in Nanaimo, BC" joined the H1 on 2026-10-11. The
+                        homepage is the page ranking for "website design
+                        nanaimo" (avg 9.2 in GSC), and its H1 was the two
+                        words alone, with the city only in the title tag and
+                        the locale line. It sits on its own row in the
+                        locale line's small mono caps so the two big words
+                        keep the look; flexBasis 100% forces the wrap at
+                        every width (inline, so the lab CSS and its
+                        laptop-zoom-v2 mirror stay untouched). */}
+                    <h1
+                      className="vdt-hero__title"
+                      style={{ flexWrap: "wrap", justifyContent: "center" }}
+                    >
                       <span className="vdt-hero__w1">Website</span>{" "}
-                      <span className="vdt-hero__w2">Design</span>
+                      <span className="vdt-hero__w2">Design</span>{" "}
+                      <span
+                        style={{
+                          flexBasis: "100%",
+                          textAlign: "center",
+                          marginTop: ".55em",
+                          fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                          fontSize: ".66rem",
+                          fontWeight: 700,
+                          letterSpacing: ".22em",
+                          textTransform: "uppercase",
+                          color: "var(--vdt-hero-ink)",
+                          opacity: 0.75,
+                        }}
+                      >
+                        in Nanaimo, BC
+                      </span>
                     </h1>
 
                     <p className="vdt-hero__pitch">
@@ -739,7 +799,7 @@ export default function Home() {
                         />
                       </svg>
                       <span>
-                        Professional website design studio in <strong>Nanaimo, BC</strong> · Serving <strong>Vancouver Island</strong> &amp; beyond
+                        Professional website design studio · Serving <strong>Vancouver Island</strong> &amp; beyond
                       </span>
                     </p>
                   </div>
@@ -1928,6 +1988,9 @@ export default function Home() {
                 the header from 721px up. */}
             <li>
               <a href="/services">Services</a>
+            </li>
+            <li>
+              <a href="/pricing">Pricing</a>
             </li>
             <li>
               <a href="/about">About</a>

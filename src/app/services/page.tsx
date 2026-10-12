@@ -4,6 +4,7 @@ import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
 import { getTestimonialByAuthor } from "@/lib/testimonials";
+import { OG_IMAGE } from "@/lib/og";
 import {
   PRICE_BUILD_FROM,
   PRICE_BRAND_FROM,
@@ -295,6 +296,7 @@ export const metadata: Metadata = {
   description: `Websites, hosting, local SEO, logos and app development for small businesses on Vancouver Island. Custom sites from ${FROM_PRICE} plus ${MONTHLY} a month, quoted up front.`,
   alternates: { canonical: "/services" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Web Design Services & Pricing | VDT Sites",
     description: `Websites, hosting, local SEO, logos and app development for small businesses on Vancouver Island. Custom sites from ${FROM_PRICE} plus ${MONTHLY} a month.`,
   },

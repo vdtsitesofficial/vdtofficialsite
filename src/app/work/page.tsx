@@ -15,19 +15,19 @@ const SYNE = "'Syne', 'Inter', sans-serif";
 const SITE = "https://vdtsites.com";
 
 export const metadata: Metadata = {
-  title: "Our Work: Small Business Websites on Vancouver Island",
+  title: "Website Portfolio: Vancouver Island Businesses",
   description:
     "Case studies of websites we designed and built for Vancouver Island small businesses: coffee roasters, food trucks, counsellors, importers, campaigns and more.",
   alternates: { canonical: "/work" },
   openGraph: {
-    title: "Our Work: Small Business Websites on Vancouver Island",
+    title: "Website Portfolio: Vancouver Island Businesses",
     description:
       "Case studies of websites we designed and built for Vancouver Island small businesses.",
     images: [`${SITE}/work-case/junk-matters-hero.webp`],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Our Work: Small Business Websites on Vancouver Island",
+    title: "Website Portfolio: Vancouver Island Businesses",
     description:
       "Case studies of websites we designed and built for Vancouver Island small businesses.",
     images: [`${SITE}/work-case/junk-matters-hero.webp`],
@@ -113,7 +113,7 @@ export default function WorkIndexPage() {
               className="mx-auto max-w-4xl text-[21px] leading-[1.55] md:text-[30px]"
               style={{ fontFamily: SYNE }}
             >
-              Every site here was designed and built from scratch for a real
+              Every site here was designed and built from scratch for a
               small business.{" "}
               <span className="text-[#0d0d0d]/45">
                 Click any project for the full story: what they needed, what we

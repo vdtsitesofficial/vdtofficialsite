@@ -18,18 +18,22 @@ import { SITE_PAGES } from "@/lib/pages";
  * Nanaimo" organically. As of 2026-08-15 it is the indexable Nanaimo city
  * page and comes through lib/pages.ts like every other one. See the note at
  * the top of app/web-design-nanaimo/page.tsx.
+ *
+ * lastModified is set only where it is TRUE (blog posts carry updatedAt).
+ * Pages and case studies used to stamp `new Date()`, so 37 of 43 entries
+ * claimed to have changed at every build, which teaches Google to ignore
+ * the field for the whole sitemap (audit 2026-10-11). No date beats a
+ * wrong one; add one back only if it comes from a real edit timestamp.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = SITE_PAGES.map((p) => ({
     url: `${SITE_URL}${p.path}`,
-    lastModified: new Date(),
     changeFrequency: p.changeFrequency,
     priority: p.priority,
   }));
 
   const work = CASE_STUDIES.map((c) => ({
     url: `${SITE_URL}/work/${c.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));

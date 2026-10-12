@@ -10,6 +10,7 @@ import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-vancouver-island
@@ -54,6 +55,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/web-design-vancouver-island" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Web Design Across Vancouver Island | VDT Sites",
     description:
       "Website design for Vancouver Island businesses, from Victoria to Campbell River. One studio in Nanaimo, one fixed price, hosting included.",
@@ -324,7 +326,7 @@ export default function WebDesignVancouverIslandPage() {
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  A Nanaimo coffee roaster with a real online store. A
+                  A Nanaimo coffee roaster with a full online store. A
                   Japanese vehicle importer in Parksville. A counselling
                   practice serving clients across BC, a food truck run from
                   the owner&rsquo;s phone, an electrician, an accounting

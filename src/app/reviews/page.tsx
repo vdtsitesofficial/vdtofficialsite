@@ -11,6 +11,7 @@ import Stars from "@/components/Stars";
 import Reveal from "@/components/Reveal";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /reviews - the client reviews in one place.
@@ -47,19 +48,20 @@ const SHORT = REST.filter((t) => t.quote.length < LONG_QUOTE_CHARS);
 export const metadata: Metadata = {
   title: "Reviews: What Our Clients Say",
   description:
-    "Real 5-star Google reviews from the Vancouver Island small businesses we have built websites for, reproduced word for word.",
+    "5-star Google reviews from the Vancouver Island small businesses we have built websites for, reproduced word for word.",
   alternates: { canonical: "/reviews" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Reviews: What Our Clients Say",
     description:
-      "Real 5-star Google reviews from the Vancouver Island small businesses we have built websites for.",
+      "5-star Google reviews from the Vancouver Island small businesses we have built websites for.",
     url: "/reviews",
   },
   twitter: {
     card: "summary_large_image",
     title: "Reviews: What Our Clients Say",
     description:
-      "Real 5-star Google reviews from the Vancouver Island small businesses we have built websites for.",
+      "5-star Google reviews from the Vancouver Island small businesses we have built websites for.",
   },
 };
 
@@ -83,7 +85,7 @@ export default function ReviewsPage() {
             "@id": `${SITE}/reviews`,
             name: "Reviews: What Our Clients Say",
             description:
-              "Real 5-star Google reviews from the Vancouver Island small businesses VDT Sites has built websites for.",
+              "5-star Google reviews from the Vancouver Island small businesses VDT Sites has built websites for.",
             isPartOf: { "@id": `${SITE}/#website` },
             about: { "@id": `${SITE}/#business` },
             breadcrumb: {

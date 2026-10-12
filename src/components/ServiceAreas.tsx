@@ -47,6 +47,13 @@ const AREAS = [
     label: "Non-profit website design",
     href: "/non-profit-website-design-vancouver",
   },
+  // The money pages, added 2026-10-11: /pricing had 7 inbound links and no
+  // link from the homepage, nav or footer; maintenance and redesign had 3
+  // and 4. /affordable-web-design is left out on purpose, it pulls price
+  // shoppers and the site is moving upmarket (vault: SEO Plan).
+  { label: "Website design pricing", href: "/pricing" },
+  { label: "Website maintenance", href: "/website-maintenance" },
+  { label: "Website redesign", href: "/website-redesign" },
 ];
 
 export default function ServiceAreas({

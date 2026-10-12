@@ -4,6 +4,7 @@ import LogoCarousel from "@/components/LogoCarousel";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
 import { PRICE_BRAND_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /logo-design-nanaimo
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/logo-design-nanaimo" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Logo Design in Nanaimo, BC | VDT Sites",
     description:
       "Custom logo design in Nanaimo as part of the Full Brand Kit: logo, cards, invoice template, typefaces and your website in one price.",
@@ -305,7 +307,7 @@ export default function LogoDesignNanaimoPage() {
                 Some of our work
               </h2>
               <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70 md:pt-2">
-                Logos we have designed for real businesses, most of them
+                Logos we have designed for local businesses, most of them
                 sitting on websites we built too. The full stories are in{" "}
                 <Link
                   href="/work"

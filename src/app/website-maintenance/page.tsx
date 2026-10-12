@@ -8,6 +8,7 @@ import PageHeader from "@/components/PageHeader";
 import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 import { PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /website-maintenance
@@ -37,7 +38,7 @@ const SPLIT =
 const MONTHLY_NUM = PRICE_MONTHLY.replace("$", "");
 
 export const metadata: Metadata = {
-  title: `Website Maintenance Services for ${PRICE_MONTHLY} a Month, Flat`,
+  title: `Website Maintenance for ${PRICE_MONTHLY} a Month, Flat`,
   description: `Website maintenance for one flat fee: hosting, domain, SSL, backups, monitoring and small updates, ${PRICE_MONTHLY} ${CURRENCY} a month, no contract. Call 250-616-2087.`,
   keywords: [
     "website maintenance services",
@@ -48,12 +49,13 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/website-maintenance" },
   openGraph: {
-    title: `Website Maintenance Services for ${PRICE_MONTHLY} a Month | VDT Sites`,
+    images: [OG_IMAGE],
+    title: `Website Maintenance for ${PRICE_MONTHLY} a Month | VDT Sites`,
     description: `One flat monthly fee covers hosting, domain, SSL, backups, monitoring and small updates. No contract, no hourly meter.`,
     url: "/website-maintenance",
   },
   twitter: {
-    title: `Website Maintenance Services for ${PRICE_MONTHLY} a Month | VDT Sites`,
+    title: `Website Maintenance for ${PRICE_MONTHLY} a Month | VDT Sites`,
     description: `One flat monthly fee covers hosting, domain, SSL, backups, monitoring and small updates. No contract, no hourly meter.`,
   },
 };
@@ -111,7 +113,7 @@ export default function WebsiteMaintenancePage() {
       {
         "@type": "WebPage",
         "@id": URL,
-        name: `Website Maintenance Services for ${PRICE_MONTHLY} a Month, Flat`,
+        name: `Website Maintenance for ${PRICE_MONTHLY} a Month, Flat`,
         description: `Website maintenance for one flat monthly fee: hosting, domain, SSL, backups, monitoring and small updates. No contract.`,
         isPartOf: { "@id": `${SITE}/#website` },
         about: { "@id": `${SITE}/#business` },
@@ -333,7 +335,7 @@ export default function WebsiteMaintenancePage() {
                   >
                     redesign
                   </Link>
-                  , with a real number attached, rather than a monthly fee
+                  , with an actual number attached, rather than a monthly fee
                   spent propping it up.
                 </p>
               </div>

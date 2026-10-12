@@ -10,6 +10,7 @@ import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-victoria
@@ -84,6 +85,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/web-design-victoria" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Design in Victoria, BC | VDT Sites",
     description: `Website design for Victoria businesses from ${PRICE_BUILD_FROM} ${CURRENCY}. One call away with quick, personal service, and no downtown agency overhead in the quote.`,
     url: "/web-design-victoria",
@@ -138,7 +140,7 @@ const REASONS = [
   },
   {
     title: "You are not paying for a downtown office",
-    body: "Victoria has real agencies with real offices and real staff, and their pricing reflects that whether or not your project needs any of it. We are two people up-island. The work that goes into the site is the same; the overhead loaded on top of it is not.",
+    body: "Victoria has full-size agencies with downtown offices and salaried staff, and their pricing reflects that whether or not your project needs any of it. We are two people up-island. The work that goes into the site is the same; the overhead loaded on top of it is not.",
   },
   {
     title: "Built to be found, not just to look good",
@@ -358,7 +360,7 @@ export default function WebDesignVictoriaPage() {
                 </p>
                 <p>
                   We wrote up the whole Canadian pricing picture, including what
-                  the real ranges look like and what drives them, in{" "}
+                  the actual ranges look like and what drives them, in{" "}
                   <Link
                     href="/blog/small-business-website-cost-2026"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"
@@ -391,7 +393,7 @@ export default function WebDesignVictoriaPage() {
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  A coffee roaster with a real online store. A counselling
+                  A coffee roaster with a full online store. A counselling
                   practice that left Squarespace. A Japanese import business, a
                   food truck run from the owner&rsquo;s phone, a city council
                   campaign taking donations on two rails, and an accounting firm

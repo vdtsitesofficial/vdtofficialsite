@@ -10,6 +10,7 @@ import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-parksville
@@ -62,6 +63,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/web-design-parksville" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Design in Parksville, BC | VDT Sites",
     description:
       "Website design for Parksville businesses, built 20 minutes away in Nanaimo. Fixed price, hosting included, and we already build for Parksville.",
@@ -97,7 +99,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
 const REASONS = [
   {
     title: "We already build here",
-    body: "Morky Auto Imports in Parksville trusted us with their site, and it is live, fast and bringing in enquiries. That matters more than anything we could claim about ourselves: you can look at a real Parksville business we built, click through it, and judge the work directly.",
+    body: "Morky Auto Imports in Parksville trusted us with their site, and it is live, fast and bringing in enquiries. That matters more than anything we could claim about ourselves: you can look at a Parksville business we built, click through it, and judge the work directly.",
   },
   {
     title: "Twenty minutes away, one call away",
@@ -271,7 +273,7 @@ export default function WebDesignParksvillePage() {
                 </p>
                 <p>
                   The rest of our work is spread across Vancouver Island: a
-                  coffee roaster with a real online store, a counselling
+                  coffee roaster with a full online store, a counselling
                   practice, an accounting firm, a food truck.{" "}
                   <Link
                     href="/work"

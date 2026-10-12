@@ -10,6 +10,7 @@ import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-campbell-river
@@ -58,6 +59,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/web-design-campbell-river" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Design in Campbell River, BC | VDT Sites",
     description:
       "Website design for Campbell River businesses: charters, trades, tourism and shops. Fixed price, hosting included, built on-island in Nanaimo.",
@@ -81,7 +83,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
   },
   {
     q: "Can a website really bring in tourists and visitors?",
-    a: "For a Campbell River business it is often the whole game. A visitor planning a fishing trip, a whale watching tour or a week on the North Island books from a phone, weeks ahead, from somewhere else entirely. If your site loads fast, shows real photos, answers the obvious questions and takes the booking or the call, you win trips that were decided before anyone reached town. That is exactly the kind of site we build.",
+    a: "For a Campbell River business it is often the whole game. A visitor planning a fishing trip, a whale watching tour or a week on the North Island books from a phone, weeks ahead, from somewhere else entirely. If your site loads fast, shows your own photos, answers the obvious questions and takes the booking or the call, you win trips that were decided before anyone reached town. That is exactly the kind of site we build.",
   },
   {
     q: "How long does it take?",
@@ -292,7 +294,7 @@ export default function WebDesignCampbellRiverPage() {
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  A coffee roaster with a real online store. A Japanese
+                  A coffee roaster with a full online store. A Japanese
                   vehicle importer in Parksville. A counselling practice that
                   left Squarespace, a food truck run from the owner&rsquo;s
                   phone, and an accounting firm whose old site had been

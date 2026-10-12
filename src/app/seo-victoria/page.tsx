@@ -3,6 +3,7 @@ import Link from "next/link";
 import MobileActionBar from "@/components/MobileActionBar";
 import PageHeader from "@/components/PageHeader";
 import ServiceAreas from "@/components/ServiceAreas";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /seo-victoria
@@ -73,6 +74,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo-victoria" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "SEO Services in Victoria, BC | VDT Sites",
     description:
       "Get found on Google by Victoria customers searching for what you do. One-time setup, fixed price, no monthly retainer.",
@@ -97,7 +99,7 @@ const FAQS = [
        header note this is NOT a swipe at agencies, and it ends by conceding
        the agency model suits some people. */
     q: "Are you an SEO agency?",
-    a: "Not in the usual sense, and it is worth knowing before you compare quotes. Most SEO companies working in Victoria are built around a monthly retainer and put an account manager between you and whoever does the work. We are a small studio up-island in Nanaimo, so the person who audits your site is the person who fixes it and the person who replies when you ask what changed. If what you want is a large agency with a dedicated account team and a monthly report, that is a real thing to want and we are honestly not it.",
+    a: "Not in the usual sense, and it is worth knowing before you compare quotes. Most SEO companies working in Victoria are built around a monthly retainer and put an account manager between you and whoever does the work. We are a small studio up-island in Nanaimo, so the person who audits your site is the person who fixes it and the person who replies when you ask what changed. If what you want is a large agency with a dedicated account team and a monthly report, that is a fair thing to want and we are honestly not it.",
   },
   {
     q: "Do you guarantee a first page ranking?",
@@ -117,14 +119,14 @@ const FAQS = [
   },
   {
     q: "What about AI search, like ChatGPT and Google's AI answers?",
-    a: "It changes where answers appear, not what earns them. AI answers overwhelmingly cite pages that already rank in normal search, so the groundwork is the same: clean structure, real content, structured data, and a strong profile. We also set up the newer pieces, like an llms.txt file and schema markup, that make a site easier for AI systems to read and cite.",
+    a: "It changes where answers appear, not what earns them. AI answers overwhelmingly cite pages that already rank in normal search, so the groundwork is the same: clean structure, useful content, structured data, and a strong profile. We also set up the newer pieces, like an llms.txt file and schema markup, that make a site easier for AI systems to read and cite.",
   },
 ];
 
 const PILLARS = [
   {
     title: "Your Google Business Profile",
-    body: "The map with three businesses pinned on it sits above the normal results for most local searches, and it is fed by your profile, not your website. Category choice, service areas, real photos, accurate hours and a steady flow of reviews decide who appears there. In a city with as many competing profiles as Victoria, the finished ones win, and most are not finished.",
+    body: "The map with three businesses pinned on it sits above the normal results for most local searches, and it is fed by your profile, not your website. Category choice, service areas, your own photos, accurate hours and a steady flow of reviews decide who appears there. In a city with as many competing profiles as Victoria, the finished ones win, and most are not finished.",
   },
   {
     title: "A site Google can actually read",
@@ -387,7 +389,7 @@ export default function SeoVictoriaPage() {
                   watched it go from invisible to competitive on local
                   searches, without touching the website. Our profile sits at
                   5.0 stars from the businesses we have built for, every review
-                  real and{" "}
+                  verifiable and{" "}
                   <Link
                     href="/reviews"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"
@@ -407,7 +409,7 @@ export default function SeoVictoriaPage() {
                   >
                     the case studies
                   </Link>{" "}
-                  are all real builds for businesses in Nanaimo, Parksville and
+                  are all live builds for businesses in Nanaimo, Parksville and
                   across Vancouver Island, and we work with Victoria the same
                   way we work with everyone: by phone, email and video call,
                   ninety minutes up the highway.

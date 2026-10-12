@@ -10,6 +10,7 @@ import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-comox-valley
@@ -58,6 +59,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/web-design-comox-valley" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Web Design in the Comox Valley | VDT Sites",
     description:
       "Website design for Courtenay, Comox and Cumberland businesses. Fixed price, hosting included, built on-island in Nanaimo.",
@@ -299,7 +301,7 @@ export default function WebDesignComoxValleyPage() {
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  A coffee roaster with a real online store. A Japanese vehicle
+                  A coffee roaster with a full online store. A Japanese vehicle
                   importer. A counselling practice that left Squarespace, a
                   food truck run from the owner&rsquo;s phone, and an
                   accounting firm whose old site had been invisible to Google

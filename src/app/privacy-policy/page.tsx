@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * Public Privacy Policy page.
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
     "VDT Sites Privacy Policy. How VDT Sites collects, uses, and protects personal information on vdtsites.com, in compliance with BC PIPA and Canada's PIPEDA.",
   alternates: { canonical: "/privacy-policy" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Privacy Policy - VDT Sites",
     description: "How VDT Sites collects, uses, and protects personal information.",
     url: "/privacy-policy",
@@ -157,7 +159,7 @@ export default function PrivacyPolicyPage() {
               <strong>Cloudflare Web Analytics:</strong> cookieless traffic measurement, so we can see how many people read a page. It stores nothing on your device and collects no information that identifies you.
             </li>
             <li>
-              <strong>Google Ads:</strong> conversion measurement for our own advertising. The Google Ads tag sets the <span className="font-mono text-[13px]">_gcl_au</span> cookie and tells Google when a visit resulted in a contact form submission, so we can see which ads are worth paying for. It receives the fact that a conversion occurred, not the personal information you typed into the form. If you reach the Site by clicking one of our Google ads, the phone number shown on the page is replaced with a Google forwarding number that connects to the same line. Your call reaches us normally and we receive no recording of it, but Google reports how long the call lasted and the caller&rsquo;s area code, so we can tell which ads lead to phone enquiries. Anyone who did not arrive from an ad sees our real number.
+              <strong>Google Ads:</strong> conversion measurement for our own advertising. The Google Ads tag sets the <span className="font-mono text-[13px]">_gcl_au</span> cookie and tells Google when a visit resulted in a contact form submission, so we can see which ads are worth paying for. It receives the fact that a conversion occurred, not the personal information you typed into the form. If you reach the Site by clicking one of our Google ads, the phone number shown on the page is replaced with a Google forwarding number that connects to the same line. Your call reaches us normally and we receive no recording of it, but Google reports how long the call lasted and the caller&rsquo;s area code, so we can tell which ads lead to phone enquiries. Anyone who did not arrive from an ad sees our main number.
             </li>
           </ul>
           <p>

@@ -3,6 +3,7 @@ import "./globals.css";
 import MobileDrawer from "@/components/MobileDrawer";
 import { EditorRoot } from "vdt-site-kit";
 import { GA4_SNIPPET } from "@/lib/tracking";
+import { OG_IMAGE } from "@/lib/og";
 
 // TAGGING HISTORY — read before touching GOOGLE_ADS_ID below.
 //
@@ -92,6 +93,7 @@ export const metadata: Metadata = {
   publisher: "VDT Sites",
   alternates: { canonical: "/" },
   openGraph: {
+    images: [OG_IMAGE],
     type: "website",
     locale: "en_CA",
     url: SITE_URL,

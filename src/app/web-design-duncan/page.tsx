@@ -10,6 +10,7 @@ import TeamCard from "@/components/TeamCard";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-duncan
@@ -56,6 +57,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/web-design-duncan" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Design in Duncan & the Cowichan Valley | VDT Sites",
     description:
       "Website design for Duncan, Cowichan Valley, Ladysmith and Chemainus businesses. Fixed price, hosting included, built 45 minutes up the highway in Nanaimo.",
@@ -290,7 +292,7 @@ export default function WebDesignDuncanPage() {
               </h2>
               <div className="space-y-5 text-[16px] leading-relaxed text-[#0d0d0d]/75 md:pt-2">
                 <p>
-                  A coffee roaster with a real online store. A Japanese
+                  A coffee roaster with a full online store. A Japanese
                   vehicle importer in Parksville. A counselling practice that
                   left Squarespace, a food truck run from the owner&rsquo;s
                   phone, and an accounting firm whose old site had been

@@ -7,6 +7,7 @@ import PageHeader from "@/components/PageHeader";
 import WorkCarousel from "@/components/WorkCarousel";
 import { WORK_ITEMS } from "@/lib/workItems";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /web-design-nanaimo
@@ -87,9 +88,10 @@ const PAGE_URL = `${SITE}/web-design-nanaimo`;
 export const metadata: Metadata = {
   title: "Website Design in Nanaimo, BC",
   description:
-    "Custom website design for small businesses in Nanaimo and across Vancouver Island. Fixed pricing, hosting included, and you own the site. Free quote: call 250-616-2087.",
+    "Custom website design for Nanaimo small businesses. Fixed pricing, hosting included, and you own the site. Free quote: call 250-616-2087.",
   alternates: { canonical: "/web-design-nanaimo" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Design in Nanaimo, BC | VDT Sites",
     description:
       "Custom websites for Nanaimo small businesses from $899 CAD plus $40 a month. Built in Nanaimo, not outsourced.",
@@ -139,7 +141,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
   },
   {
     q: "What is the difference between web design and web development?",
-    a: "In most quotes you will read locally, nothing. We do both on every project, so the site is designed and then genuinely built rather than assembled from a theme: custom layout, custom code, and whatever the business actually needs behind it, like online booking, e-commerce, a donation form or a calculator. If you have been told a custom feature is not possible on your current site, that is usually a platform limit rather than a real one.",
+    a: "In most quotes you will read locally, nothing. We do both on every project, so the site is designed and then genuinely built rather than assembled from a theme: custom layout, custom code, and whatever the business actually needs behind it, like online booking, e-commerce, a donation form or a calculator. If you have been told a custom feature is not possible on your current site, that is usually a platform limit rather than a technical one.",
   },
   {
     q: "Do you work with businesses outside Nanaimo?",

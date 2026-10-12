@@ -94,7 +94,7 @@ export const SITE_PAGES: SitePage[] = [
   {
     path: "/work",
     label: "Work",
-    description: "case studies of real client builds.",
+    description: "case studies of client builds.",
     changeFrequency: "monthly",
     priority: 0.9,
     section: "main",

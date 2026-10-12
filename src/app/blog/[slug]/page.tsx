@@ -13,6 +13,7 @@ import {
 } from "@/lib/blog";
 import { getAuthor } from "@/lib/authors";
 import { parseInline, stripInline } from "@/lib/blog";
+import { OG_IMAGE } from "@/lib/og";
 
 /** Same inline-link expansion the article body uses, for FAQ answers. */
 function inlineFaq(text: string): React.ReactNode {
@@ -58,6 +59,7 @@ export async function generateMetadata({
     ...(post.draft ? { robots: { index: false, follow: false } } : {}),
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
+      images: [OG_IMAGE],
       type: "article",
       url,
       siteName: "VDT Sites",

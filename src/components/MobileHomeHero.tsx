@@ -380,7 +380,7 @@ export default function MobileHomeHero() {
             style={{ color: C.body }}
           >
             Websites, branding, and digital experiences crafted to elevate your
-            brand and deliver real results.
+            brand and bring in enquiries.
           </motion.p>
 
           <motion.div {...fadeUp(0.54)} ref={ctaRef} className="mt-5">

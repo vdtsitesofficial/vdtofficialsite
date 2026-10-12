@@ -32,7 +32,7 @@ export default function PreviewEndStrip() {
             </p>
             <p className="text-base sm:text-lg leading-snug max-w-2xl">
               That&apos;s one of <strong className="text-white">{otherCount + 1} live demos</strong>{" "}
-              of what we can build. Below this line is the real VDT Sites, a
+              of what we can build. Below this line is VDT Sites itself, a
               two-person studio in Nanaimo.
             </p>
           </div>

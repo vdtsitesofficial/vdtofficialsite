@@ -9,6 +9,7 @@ import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 import TeamCard from "@/components/TeamCard";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /affordable-web-design
@@ -36,7 +37,7 @@ const SPLIT =
   "grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]";
 
 export const metadata: Metadata = {
-  title: `Affordable Web Design: Custom Sites From ${PRICE_BUILD_FROM} ${CURRENCY}`,
+  title: `Affordable Web Design From ${PRICE_BUILD_FROM} ${CURRENCY}`,
   description: `Affordable web design without the template look: custom-built sites from ${PRICE_BUILD_FROM} ${CURRENCY}, hosting and care for ${PRICE_MONTHLY} a month. The price is public. Call 250-616-2087.`,
   keywords: [
     "affordable web design",
@@ -47,12 +48,13 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/affordable-web-design" },
   openGraph: {
-    title: `Affordable Web Design: Custom Sites From ${PRICE_BUILD_FROM} ${CURRENCY} | VDT Sites`,
+    images: [OG_IMAGE],
+    title: `Affordable Web Design From ${PRICE_BUILD_FROM} ${CURRENCY} | VDT Sites`,
     description: `Custom-built websites from ${PRICE_BUILD_FROM} ${CURRENCY}, hosting and care for ${PRICE_MONTHLY} a month. Affordable by structure, not by cutting corners.`,
     url: "/affordable-web-design",
   },
   twitter: {
-    title: `Affordable Web Design: Custom Sites From ${PRICE_BUILD_FROM} ${CURRENCY} | VDT Sites`,
+    title: `Affordable Web Design From ${PRICE_BUILD_FROM} ${CURRENCY} | VDT Sites`,
     description: `Custom-built websites from ${PRICE_BUILD_FROM} ${CURRENCY}, hosting and care for ${PRICE_MONTHLY} a month. Affordable by structure, not by cutting corners.`,
   },
 };
@@ -91,7 +93,7 @@ const FAQS = [
   },
   {
     q: "What about really cheap website builders?",
-    a: "DIY builders are genuinely the affordable option if your time is free and the result only needs to exist. The honest tradeoffs: the monthly platform fees quietly pass the custom price within a couple of years, the site is rented rather than owned, and the SEO groundwork mostly does not happen. We wrote up the comparison without the scare tactics, so you can decide with real numbers.",
+    a: "DIY builders are genuinely the affordable option if your time is free and the result only needs to exist. The honest tradeoffs: the monthly platform fees quietly pass the custom price within a couple of years, the site is rented rather than owned, and the SEO groundwork mostly does not happen. We wrote up the comparison without the scare tactics, so you can decide with the numbers in front of you.",
   },
   {
     q: "Is affordable web design worth it for a small business?",
@@ -106,7 +108,7 @@ export default function AffordableWebDesignPage() {
       {
         "@type": "WebPage",
         "@id": URL,
-        name: `Affordable Web Design: Custom Sites From ${PRICE_BUILD_FROM} ${CURRENCY}`,
+        name: `Affordable Web Design From ${PRICE_BUILD_FROM} ${CURRENCY}`,
         description: `Affordable web design without the template look: custom-built sites from ${PRICE_BUILD_FROM} ${CURRENCY}, hosting and care for ${PRICE_MONTHLY} a month.`,
         isPartOf: { "@id": `${SITE}/#website` },
         about: { "@id": `${SITE}/#business` },
@@ -206,7 +208,7 @@ export default function AffordableWebDesignPage() {
                 Custom-built websites from {PRICE_BUILD_FROM} {CURRENCY}, one
                 time, with everything it takes to run one for{" "}
                 {PRICE_MONTHLY} a month. Not a template, not a page builder,
-                and not a teaser price with the real one waiting behind a
+                and not a teaser price with the actual one waiting behind a
                 sales call. The numbers are public.
               </p>
               <div className="flex flex-col items-start gap-4 md:pt-1">
@@ -335,7 +337,7 @@ export default function AffordableWebDesignPage() {
                   >
                     the case studies
                   </Link>{" "}
-                  was built at these prices, for real businesses, and{" "}
+                  was built at these prices, for local businesses, and{" "}
                   <Link
                     href="/reviews"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"

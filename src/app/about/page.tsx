@@ -280,7 +280,7 @@ export default async function AboutPage() {
               What clients say
             </h2>
             <p className="mx-auto mt-3 max-w-md text-center text-[15px] leading-relaxed text-[#0d0d0d]/60">
-              Two of the {REVIEW_COUNT} real 5 star reviews left on our Google
+              Two of the {REVIEW_COUNT} 5 star reviews left on our Google
               Business Profile.
             </p>
 

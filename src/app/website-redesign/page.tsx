@@ -8,6 +8,7 @@ import PageHeader from "@/components/PageHeader";
 import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY, CURRENCY } from "@/lib/pricing";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /website-redesign
@@ -36,7 +37,7 @@ const SPLIT =
 
 export const metadata: Metadata = {
   title: "Website Redesign Services at a Fixed Price",
-  description: `Website redesign that keeps your Google standing: we audit what ranks, keep or redirect every URL, and rebuild fast and modern. Fixed quote from ${PRICE_BUILD_FROM} ${CURRENCY}. Call 250-616-2087.`,
+  description: `Website redesign that keeps your Google standing: we audit what ranks, keep or redirect every URL, and rebuild it fast. Fixed quote from ${PRICE_BUILD_FROM} ${CURRENCY}. Call 250-616-2087.`,
   keywords: [
     "website redesign services",
     "website redesign cost",
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/website-redesign" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Website Redesign Services at a Fixed Price | VDT Sites",
     description:
       "A redesign that keeps your Google standing: audit what ranks, keep or redirect every URL, rebuild fast and modern. Fixed quote up front.",
@@ -342,7 +344,7 @@ export default function WebsiteRedesignPage() {
                   >
                     the case studies
                   </Link>{" "}
-                  for what the before and after looks like on real
+                  for what the before and after looks like for local
                   businesses.
                 </p>
               </div>

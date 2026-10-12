@@ -67,7 +67,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom build · SEO migration · Self-serve editing · AI site assistant",
     metaTitle: "Junk Removal Website Design in Nanaimo, BC",
     metaDescription:
-      "How we rebuilt a Nanaimo junk removal company's Wix site as a fast custom website and moved 178 URLs across without losing a search result. A VDT Sites case study.",
+      "How we rebuilt a Nanaimo junk removal company's Wix site as a fast custom website and moved 178 URLs across without losing a search result.",
     client:
       "Junk Matters runs junk removal, donation and recycling out of Nanaimo across central Vancouver Island. They have built a 5.0 rating on more than 130 Google reviews doing it, and the site had to earn the same trust before anyone picks up the phone.",
     needed:
@@ -81,7 +81,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Services and towns, structured to be found",
-        body: "An A to Z index of everything they take, feeding into real service pages for the big jobs: appliances, mattresses, hot tubs, estate and hoarding cleanouts, construction debris. Each town they serve has its own page, with the honest version of what is covered there rather than a promise nobody could keep in Port Alberni.",
+        body: "An A to Z index of everything they take, feeding into full service pages for the big jobs: appliances, mattresses, hot tubs, estate and hoarding cleanouts, construction debris. Each town they serve has its own page, with the honest version of what is covered there rather than a promise nobody could keep in Port Alberni.",
       },
       {
         title: "An estimate that matches how they really price",
@@ -97,7 +97,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     design:
-      "Junk removal sites mostly look like clip art. This one is built on their actual jobs: real trailers, real driveways, real before and afters, with the type doing the heavy lifting. The line we designed the whole thing around is their own, You Matter, We Matter, Junk Matters, and the landfill being the last stop rather than the first.",
+      "Junk removal sites mostly look like clip art. This one is built on their own jobs: their trailers, their customers' driveways, their before and afters, with the type doing the heavy lifting. The line we designed the whole thing around is their own, You Matter, We Matter, Junk Matters, and the landfill being the last stop rather than the first.",
     stats: [
       { value: "178 / 178", label: "addresses verified in a side by side crawl before the domain moved" },
       { value: "151 / 151", label: "redirects returning a literal 301 to the right page" },
@@ -121,7 +121,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom design · Self-serve editing · Menu schema · Domain migration",
     metaTitle: "Pub & Restaurant Website Design in Victoria, BC",
     metaDescription:
-      "How we designed a custom website for Smugglers' Cove Pub in Cadboro Bay, Victoria, with a menu the pub edits itself, menu data Google can read, and a domain move that left their email untouched.",
+      "A custom website for Smugglers' Cove Pub in Cadboro Bay, Victoria: a menu the pub edits itself, menu data Google can read, and email untouched by the move.",
     client:
       "Smugglers' Cove is a cozy British style pub in seaside Cadboro Bay, Victoria, open since 2005. Global comfort fare, fish and chips, weekly specials, a covered terrace and a second floor deck, and in their own words, the friendliest room in Victoria.",
     needed:
@@ -176,7 +176,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom build · Motion design · Online booking · Blog",
     metaTitle: "Hypnotherapist Website Design in Nanaimo, BC",
     metaDescription:
-      "How we rebuilt a Nanaimo clinical hypnotherapist's Squarespace site as a fast, custom website with calm motion design, online booking and her full blog. A VDT Sites case study.",
+      "How we rebuilt a Nanaimo clinical hypnotherapist's Squarespace site as a fast, custom website with calm motion design, online booking and her full blog.",
     client:
       "Sherri Kozubal is a Medical Intuitive and Clinical Hypnotherapist based right here in Nanaimo, working with clients around the world by phone and video. Her practice is calm, personal and precise, and her website needed to feel the same way.",
     needed:
@@ -224,11 +224,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom build · Full brand kit · Self-serve editing",
     metaTitle: "Electrician Website Design in Nanaimo, BC",
     metaDescription:
-      "How we built a Nanaimo electrical contractor a logo, a brand and a five page website from scratch, with his trade certifications up front and every word on the site editable by him.",
+      "How we built a Nanaimo electrical contractor a logo, a brand and a five page website, with his trade certifications up front and every word editable by him.",
     client:
       "Horizon Hues Installations is Eric Pizzingrilli, a licensed electrical contractor working out of Nanaimo across Vancouver Island from Victoria up to Campbell River. Residential, commercial, service repair and EV chargers, and he is the person who quotes your job and the person who turns up to do it.",
     needed:
-      "Everything. A new trade business has no logo, no domain, no email on its own name and nothing for a customer to find when they search. It also has the credibility problem every new contractor has: the certifications are real and hard won, but nobody sees them until they are put somewhere. And the site had to be one Eric could change himself, because he is out of cell service for stretches and cannot be waiting on someone else to fix a typo.",
+      "Everything. A new trade business has no logo, no domain, no email on its own name and nothing for a customer to find when they search. It also has the credibility problem every new contractor has: the certifications are hard won, but nobody sees them until they are put somewhere. And the site had to be one Eric could change himself, because he is out of cell service for stretches and cannot be waiting on someone else to fix a typo.",
     builtIntro:
       "We built the brand first, then the site around it, and it has been quietly improved since without Eric having to do anything.",
     built: [
@@ -269,13 +269,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     liveUrl: "https://mocoffee.ca",
     year: "2026",
     stackLine: "E-commerce · Subscriptions · Live shipping rates · Full admin",
-    metaTitle: "E-Commerce Website for a Coffee Roaster in Nanaimo",
+    metaTitle: "Ecommerce Website for a Nanaimo Coffee Roaster",
     metaDescription:
-      "How we built mocoffee.ca: Stripe checkout with subscriptions, live courier rates, branded order emails and a full back office for a small-batch Vancouver Island coffee roaster.",
+      "How we built mocoffee.ca: Stripe checkout with subscriptions, live courier rates, branded order emails and a back office for a small-batch Nanaimo coffee roaster.",
     client:
       "MO Coffee is a small-batch roastery on Vancouver Island with one product and a strong opinion: a bag of coffee should be a full pound, always. Every bag of Hello Darkness is 454 grams, roasted weekly and shipped fresh.",
     needed:
-      "Selling coffee online is more than a buy button. They needed real checkout with subscriptions, honest shipping prices instead of a flat guess, order emails that look like the brand, and a back office the owner could run alone without phoning us every week.",
+      "Selling coffee online is more than a buy button. They needed a proper checkout with subscriptions, honest shipping prices instead of a flat guess, order emails that look like the brand, and a back office the owner could run alone without phoning us every week.",
     builtIntro:
       "We built the whole pipeline, from the first click to the box leaving the warehouse.",
     built: [
@@ -285,7 +285,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Live courier rates at checkout",
-        body: "The store quotes real shipping prices from the couriers at the moment of purchase, cheapest option first. Customers see what shipping actually costs, and the roaster stops losing money on guesses.",
+        body: "The store quotes live shipping prices from the couriers at the moment of purchase, cheapest option first. Customers see what shipping actually costs, and the roaster stops losing money on guesses.",
       },
       {
         title: "A back office that runs the business",
@@ -318,7 +318,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom build · Menu management · Self-serve editing · Light and dark",
     metaTitle: "Food Truck Website Design on Vancouver Island",
     metaDescription:
-      "How we built isleairchicken.ca: a custom single-page food truck website with a full-screen menu slider and an on-page editor the owner uses to update his own menu.",
+      "How we built isleairchicken.ca: a single-page food truck website with a menu slider and an on-page editor the owner uses to update his own menu.",
     client:
       "Isle Air Chicken is a Vancouver Island food truck doing something genuinely different: crispy chicken that is air-fried and seed-oil free. Like most food trucks, the business lived entirely on social media.",
     needed:
@@ -363,13 +363,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     liveUrl: "https://morkyautoimports.ca",
     year: "2026",
     stackLine: "Inventory system · Photo galleries · Local SEO · Self-serve admin",
-    metaTitle: "Automotive Business Website Design in Parksville, BC",
+    metaTitle: "Car Importer Website Design in Parksville, BC",
     metaDescription:
-      "How we built morkyautoimports.ca: a Japanese-inspired design, a self-managed car inventory with photo galleries, and vehicle structured data for search. A VDT Sites case study.",
+      "How we built morkyautoimports.ca: a Japanese-inspired design, a self-managed car inventory with photo galleries, and vehicle structured data for search.",
     client:
       "Morky Auto Imports is a one-at-a-time Japanese auction import service based in Parksville. Buyers describe the car they want, Morky bids at the source auctions in Japan, then handles shipping, paperwork and BC compliance until the car is in the driveway.",
     needed:
-      "Importing a car sight-unseen takes trust, so the site had to feel considered rather than salesy. It also needed a real inventory: cars arrive, sell and change price weekly, and all of that had to be manageable without touching code.",
+      "Importing a car sight-unseen takes trust, so the site had to feel considered rather than salesy. It also needed a working inventory: cars arrive, sell and change price weekly, and all of that had to be manageable without touching code.",
     builtIntro:
       "We built it as two things in one: a brand site that earns the deposit, and an inventory platform behind it.",
     built: [
@@ -414,7 +414,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom build · Self-serve editing · Protected contact · Deliverability",
     metaTitle: "Counselling Website Design in BC",
     metaDescription:
-      "How we moved a BC counselling practice off Squarespace onto a fast custom website with on-page editing, a bot-protected contact form and fixed email deliverability.",
+      "How we moved a BC counselling practice off Squarespace onto a fast custom website with on-page editing, a bot-protected form and fixed email deliverability.",
     client:
       "Therapeutic Value is the counselling practice of Stephanie Dubinsky, BA, RTC, serving clients across British Columbia. The practice is warm and professional, and its website is often the first step a nervous client takes.",
     needed:
@@ -461,16 +461,16 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Web application · Database · Admin dashboards · Scoreboard-ready",
     metaTitle: "Sports Club and Tournament Website Design",
     metaDescription:
-      "How we built a tournament management platform for a Calgary volleyball association: real database, admin dashboards, and a scoreboard-ready structure. A VDT Sites case study.",
+      "How we built a tournament management platform for a Calgary volleyball association: a full database, admin dashboards, and a scoreboard-ready structure.",
     client:
-      "CEVA is the Calgary Elite Volleyball Association, a competitive volleyball organization running multi-team tournaments. This is our proof that VDT goes past brochure sites: when a client needs real software, we build real software.",
+      "CEVA is the Calgary Elite Volleyball Association, a competitive volleyball organization running multi-team tournaments. This is our proof that VDT goes past brochure sites: when a client needs a full application, we build one.",
     needed:
-      "Tournaments generate structure: divisions, pools, teams, games, standings, news, photos. All of it changes in real time on event weekends, and none of it can depend on a developer being on call. The association needed a hub its own admins could drive.",
+      "Tournaments generate structure: divisions, pools, teams, games, standings, news, photos. All of it changes live on event weekends, and none of it can depend on a developer being on call. The association needed a hub its own admins could drive.",
     builtIntro:
       "We designed the data first and the pages second, which is the difference between a site and a platform.",
     built: [
       {
-        title: "A real tournament database",
+        title: "A proper tournament database",
         body: "Tournaments, divisions, pools, teams, games, news and photo galleries all live in a proper database with an admin interface over top. Nothing is hard-coded.",
       },
       {
@@ -508,7 +508,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Campaign forms · Donations · Mailing list · Self-serve editing",
     metaTitle: "Campaign Website Design in Nanaimo, BC",
     metaDescription:
-      "How we built paulvanryssel.ca: volunteer and lawn sign forms, donations by card and e-transfer, a mailing list and on-page editing for a Nanaimo city council campaign.",
+      "paulvanryssel.ca: volunteer and lawn sign forms, donations by card and e-transfer, a mailing list and on-page editing for a Nanaimo council campaign.",
     client:
       "Paul Van Ryssel is a candidate for Nanaimo City Council. A campaign site is a sprint with a hard deadline: it has to inform, recruit and fundraise from day one, and stay current as the campaign evolves.",
     needed:
@@ -570,15 +570,15 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: "Four service pages that carry their own weight",
-        body: "Bookkeeping, corporate tax, personal income tax and financial consulting each got a real page, restructured from the old text-heavy versions into checklists, steps and outcomes. We kept the original URLs so a decade of links and rankings pointed at the new pages on day one.",
+        body: "Bookkeeping, corporate tax, personal income tax and financial consulting each got a proper page, restructured from the old text-heavy versions into checklists, steps and outcomes. We kept the original URLs so a decade of links and rankings pointed at the new pages on day one.",
       },
       {
         title: "A GST calculator that gets the cents right",
-        body: "We ported the calculator from their old site and found its maths quietly wrong: it rounded to whole numbers and dropped the cents on every result. Same tool, ten countries of real rates, correct answers now.",
+        body: "We ported the calculator from their old site and found its maths quietly wrong: it rounded to whole numbers and dropped the cents on every result. Same tool, ten countries of current rates, correct answers now.",
       },
       {
         title: "A move with no broken links",
-        body: "Cutting a live domain over is where sites usually lose their search rankings. We inventoried every old URL first and redirected the ones that no longer existed, so the old blog posts and pages all still land somewhere real.",
+        body: "Cutting a live domain over is where sites usually lose their search rankings. We inventoried every old URL first and redirected the ones that no longer existed, so the old blog posts and pages all still land somewhere useful.",
       },
     ],
     design:
@@ -606,7 +606,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Static rebuild · Hosting migration · Domain cutover · Redesign",
     metaTitle: "Home Improvement Website Design in Nanaimo, BC",
     metaDescription:
-      "How we cloned Westro Construction's WordPress site into a self-contained static site, redesigned it, and moved westro.ca onto Cloudflare with their email and their ads tag intact.",
+      "How we cloned Westro Construction's WordPress site into a static site, redesigned it, and moved westro.ca onto Cloudflare with their email and their ads tag intact.",
     client:
       "Westro is a Nanaimo home improvement supplier serving Vancouver Island, branded on its own site as Westro | Home Improvements. They import direct, and they supply seven different product lines: custom kitchen cabinets, aluminum windows, folding doors, garage doors, composite fencing, bathtubs and vanities. That is seven things to explain properly before anyone picks up the phone.",
     needed:
@@ -643,7 +643,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "812 / 812", label: "responsive checks passing across browsers and screen sizes" },
     ],
     result:
-      "westro.ca runs on files now, with no old host behind it and no server doing work on each visit. Seven product lines each have a page that loads immediately on a phone, the company's email never dropped a message on the way across, and the enquiry form reaches their sales inbox for real instead of hoping the visitor has a mail app.",
+      "westro.ca runs on files now, with no old host behind it and no server doing work on each visit. Seven product lines each have a page that loads immediately on a phone, the company's email never dropped a message on the way across, and the enquiry form reaches their sales inbox directly instead of hoping the visitor has a mail app.",
   },
 ];
 

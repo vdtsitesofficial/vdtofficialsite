@@ -3,6 +3,7 @@ import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import ReviewPull from "@/components/ReviewPull";
 import ServiceAreas from "@/components/ServiceAreas";
+import { OG_IMAGE } from "@/lib/og";
 
 /**
  * /seo-nanaimo
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
   // "Nanaimo SEO" leads the title on purpose: it is the exact phrase the
   // page ranks for (Semrush ca, pos 62 on 2026-08-09, KD 7) and the old
   // title only carried the reversed word order.
-  title: "Nanaimo SEO Services, Without the Monthly Retainer",
+  title: "Nanaimo SEO Services, No Monthly Retainer",
   description:
     "Local SEO in Nanaimo: get found on Google by people searching for what you do. One-time setup at a fixed price, no monthly retainer. Call 250-616-2087.",
   keywords: [
@@ -57,13 +58,14 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/seo-nanaimo" },
   openGraph: {
-    title: "Nanaimo SEO Services, Without the Monthly Retainer | VDT Sites",
+    images: [OG_IMAGE],
+    title: "Nanaimo SEO Services, No Monthly Retainer | VDT Sites",
     description:
       "Get found on Google by Nanaimo customers searching for what you do. One-time setup, fixed price, no monthly retainer.",
     url: "/seo-nanaimo",
   },
   twitter: {
-    title: "Nanaimo SEO Services, Without the Monthly Retainer | VDT Sites",
+    title: "Nanaimo SEO Services, No Monthly Retainer | VDT Sites",
     description:
       "Get found on Google by Nanaimo customers searching for what you do. One-time setup, fixed price, no retainer.",
   },
@@ -92,14 +94,14 @@ const FAQS = [
   },
   {
     q: "What about AI search, like ChatGPT and Google's AI answers?",
-    a: "It changes where answers appear, not what earns them. AI answers overwhelmingly cite pages that already rank in normal search, so the groundwork is the same: clean structure, real content, structured data, and a strong profile. We also set up the newer pieces, like an llms.txt file and schema markup, that make a site easier for AI systems to read and cite.",
+    a: "It changes where answers appear, not what earns them. AI answers overwhelmingly cite pages that already rank in normal search, so the groundwork is the same: clean structure, useful content, structured data, and a strong profile. We also set up the newer pieces, like an llms.txt file and schema markup, that make a site easier for AI systems to read and cite.",
   },
 ];
 
 const PILLARS = [
   {
     title: "Your Google Business Profile",
-    body: "The map with three businesses pinned on it sits above the normal results for most local searches, and it is fed by your profile, not your website. Category choice, service areas, real photos, accurate hours and a steady flow of reviews decide who appears there. This is the highest-leverage piece of local SEO and most Nanaimo businesses have never finished setting theirs up.",
+    body: "The map with three businesses pinned on it sits above the normal results for most local searches, and it is fed by your profile, not your website. Category choice, service areas, your own photos, accurate hours and a steady flow of reviews decide who appears there. This is the highest-leverage piece of local SEO and most Nanaimo businesses have never finished setting theirs up.",
   },
   {
     title: "A site Google can actually read",
@@ -118,7 +120,7 @@ export default function SeoNanaimoPage() {
       {
         "@type": "WebPage",
         "@id": URL,
-        name: "Nanaimo SEO Services, Without the Monthly Retainer",
+        name: "Nanaimo SEO Services, No Monthly Retainer",
         description:
           "Local SEO for Nanaimo businesses: Google Business Profile, on-page fixes, listings and measurement. One-time setup at a fixed price, no retainer.",
         isPartOf: { "@id": `${SITE}/#website` },
@@ -365,7 +367,7 @@ export default function SeoNanaimoPage() {
                   watched it go from invisible to competitive on local
                   searches, without touching the website. Our profile sits at
                   5.0 stars from the businesses we have built for, every review
-                  real and{" "}
+                  verifiable and{" "}
                   <Link
                     href="/reviews"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"
@@ -385,7 +387,7 @@ export default function SeoNanaimoPage() {
                   >
                     the case studies
                   </Link>{" "}
-                  are all real builds for businesses in Nanaimo, Parksville and
+                  are all live builds for businesses in Nanaimo, Parksville and
                   across Vancouver Island.
                 </p>
               </div>
