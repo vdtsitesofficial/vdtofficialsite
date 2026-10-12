@@ -167,6 +167,36 @@ export const SITE_PAGES: SitePage[] = [
     priority: 0.8,
     section: "main",
   },
+  // The three below were added 2026-10-11 for service clusters Search
+  // Console showed impressions for with no dedicated page. Each page's own
+  // header comment lists the queries.
+  {
+    path: "/branding-nanaimo",
+    label: "Branding packages in Nanaimo",
+    description:
+      "the Full Brand Kit as a branding package: custom logo, print-ready business card design, invoice template, brand typefaces and the website, designed together.",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    section: "main",
+  },
+  {
+    path: "/web-development-nanaimo",
+    label: "Web development in Nanaimo",
+    description:
+      "custom web development: online stores, owner-managed inventories, forms and payments, platforms with admin dashboards, and moving sites off WordPress or Wix.",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    section: "main",
+  },
+  {
+    path: "/website-hosting-nanaimo",
+    label: "Website hosting and domains in Nanaimo",
+    description:
+      "Cloudflare hosting, domain registration and DNS, SSL, backups and support in one flat monthly fee, with domain moves that keep email working.",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    section: "main",
+  },
   {
     path: "/non-profit-website-design-vancouver",
     label: "Non-profit website design in Vancouver",

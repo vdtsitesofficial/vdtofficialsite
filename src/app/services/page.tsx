@@ -76,6 +76,8 @@ type ServiceGroup = {
   services: Service[];
   /** Optional deep link to the group's dedicated service page. */
   more?: { label: string; href: string };
+  /** Further dedicated pages for the group, listed under `more`. */
+  also?: { label: string; href: string }[];
 };
 
 const GROUPS: ServiceGroup[] = [
@@ -83,6 +85,7 @@ const GROUPS: ServiceGroup[] = [
     id: "websites",
     title: "Websites",
     more: { label: "The full price list, published", href: "/pricing" },
+    also: [{ label: "Web development in Nanaimo", href: "/web-development-nanaimo" }],
     intro:
       "Every site is built for your business rather than assembled from a template. Fixed price quoted up front, so you know the number before anyone starts.",
     services: [
@@ -112,6 +115,12 @@ const GROUPS: ServiceGroup[] = [
     id: "hosting",
     title: "Hosting and care",
     more: { label: "What the care plan covers", href: "/website-maintenance" },
+    also: [
+      {
+        label: "Hosting and domains in Nanaimo",
+        href: "/website-hosting-nanaimo",
+      },
+    ],
     intro:
       "The monthly fee covers everything it takes to keep the site online, current and safe. One bill, one person to call.",
     services: [
@@ -154,6 +163,7 @@ const GROUPS: ServiceGroup[] = [
     id: "brand",
     title: "Logo and brand",
     more: { label: "Logo design in Nanaimo", href: "/logo-design-nanaimo" },
+    also: [{ label: "Branding packages in Nanaimo", href: "/branding-nanaimo" }],
     intro:
       "A site and a brand that were designed apart always look it. We do both, so yours match.",
     services: [
@@ -715,6 +725,15 @@ export default function ServicesPage() {
                     {group.more.label} &rarr;
                   </a>
                 )}
+                {group.also?.map((l) => (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    className="mt-3 block w-fit text-[13px] font-semibold uppercase tracking-[0.12em] text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
+                  >
+                    {l.label} &rarr;
+                  </a>
+                ))}
               </Reveal>
 
               <div className="border-t border-black/10">

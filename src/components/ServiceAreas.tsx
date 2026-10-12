@@ -43,6 +43,12 @@ const AREAS = [
   { label: "Nanaimo SEO", href: "/seo-nanaimo" },
   { label: "Victoria SEO", href: "/seo-victoria" },
   { label: "Logo design in Nanaimo", href: "/logo-design-nanaimo" },
+  { label: "Branding packages in Nanaimo", href: "/branding-nanaimo" },
+  { label: "Web development in Nanaimo", href: "/web-development-nanaimo" },
+  {
+    label: "Website hosting and domains in Nanaimo",
+    href: "/website-hosting-nanaimo",
+  },
   {
     label: "Non-profit website design",
     href: "/non-profit-website-design-vancouver",

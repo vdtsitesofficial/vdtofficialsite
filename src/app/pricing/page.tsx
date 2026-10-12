@@ -44,7 +44,7 @@ const SPLIT =
   "grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]";
 
 export const metadata: Metadata = {
-  title: "Website Design Pricing & Packages, Published",
+  title: "Website Packages & Pricing in Nanaimo, BC",
   description: `Website design pricing, in public: custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. No quote form needed.`,
   keywords: [
     "website design pricing",
@@ -56,12 +56,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/pricing" },
   openGraph: {
     images: [OG_IMAGE],
-    title: "Website Design Pricing & Packages, Published | VDT Sites",
+    title: "Website Packages & Pricing in Nanaimo, BC | VDT Sites",
     description: `Custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. The numbers, in public.`,
     url: "/pricing",
   },
   twitter: {
-    title: "Website Design Pricing & Packages, Published | VDT Sites",
+    title: "Website Packages & Pricing in Nanaimo, BC | VDT Sites",
     description: `Custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}. The numbers, in public.`,
   },
 };
@@ -124,7 +124,7 @@ export default function PricingPage() {
       {
         "@type": "WebPage",
         "@id": URL,
-        name: "Website Design Pricing & Packages, Published",
+        name: "Website Packages & Pricing in Nanaimo, BC",
         description: `Website design pricing: custom builds from ${PRICE_BUILD_FROM} ${CURRENCY}, site plus brand kit from ${PRICE_BRAND_FROM}, everything monthly for ${PRICE_MONTHLY}.`,
         isPartOf: { "@id": `${SITE}/#website` },
         about: { "@id": `${SITE}/#business` },

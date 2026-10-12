@@ -55,6 +55,9 @@ export const metadata: Metadata = {
     "local seo nanaimo",
     "nanaimo seo company",
     "google business profile optimization nanaimo",
+    "seo company nanaimo",
+    "seo audit nanaimo",
+    "small business seo nanaimo",
   ],
   alternates: { canonical: "/seo-nanaimo" },
   openGraph: {
@@ -71,10 +74,52 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * What the one-time setup actually contains, added 2026-10-11. Search
+ * Console showed the page drawing impressions for the deliverable-shaped
+ * queries (seo audit / tracking / reporting / plans / company nanaimo,
+ * positions 30 to 80) without ever naming them. Each item is work VDT does
+ * on every SEO setup; do not add one that is not.
+ */
+const DELIVERABLES = [
+  {
+    title: "An SEO audit of your current site",
+    body: "We start by checking what Google can and cannot see: whether your pages are indexed, what they rank for today, what is slowing them down, and which local searches you should be showing up for but are not. You get the findings in plain words before any work starts.",
+  },
+  {
+    title: "Google Business Profile optimization",
+    body: "Categories, services, service areas, description, photos and posts, set up properly. For most Nanaimo businesses this is the single biggest local SEO lever, because it decides who appears in the map results.",
+  },
+  {
+    title: "On-page SEO",
+    body: "Titles, headings, page copy and internal links rewritten so each page clearly answers one search, with the service and the city where Google expects to find them.",
+  },
+  {
+    title: "Technical SEO",
+    body: "Mobile speed, structured data, a clean sitemap and the fixes that stop pages being skipped. The groundwork that decides whether you can rank at all.",
+  },
+  {
+    title: "Local listings and citations",
+    body: "Your business name, phone and website made consistent across the directories that matter for Vancouver Island, so Google and AI assistants trust that the details are correct.",
+  },
+  {
+    title: "SEO tracking and reporting you can read",
+    body: "Search Console and analytics connected to your site, so you can see for yourself which searches bring visitors and which pages turn them into calls. No monthly report you have to pay for to understand.",
+  },
+];
+
 const FAQS = [
   {
     q: "How much does SEO cost in Nanaimo?",
     a: "Ours is a one-time setup at a fixed price, quoted before any work starts, and the number depends on the state of your current site rather than on a menu. A site that just needs its basics fixed costs less than one that needs pages rebuilt. What we do not charge is a monthly retainer, because for a local business most of the ongoing wins are things you do, not things you pay for.",
+  },
+  {
+    q: "Are you an SEO company or a web design company?",
+    a: "Both, on purpose. We are a two-person studio in Nanaimo that builds websites with the SEO groundwork built in, and we do one-time local SEO setups for businesses whose site already exists. What we are not is a retainer agency billing monthly for reports.",
+  },
+  {
+    q: "What is included in an SEO plan?",
+    a: "Ours is one setup, not a monthly plan: an SEO audit, Google Business Profile optimization, on-page and technical SEO, consistent local listings, and tracking connected so you can see the results yourself. Everything is quoted as a fixed price before work starts.",
   },
   {
     q: "Do you guarantee a first page ranking?",
@@ -207,7 +252,7 @@ export default function SeoNanaimoPage() {
               className="mt-4 max-w-[18ch] text-4xl font-bold leading-[1.05] md:text-[64px]"
               style={{ fontFamily: SYNE }}
             >
-              SEO in Nanaimo, without the retainer.
+              SEO services in Nanaimo, without the retainer.
             </h1>
 
             <div className="mt-8 grid gap-x-16 gap-y-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
@@ -273,6 +318,54 @@ export default function SeoNanaimoPage() {
                   </div>
                   <p className="mt-3 pl-8 text-[15px] leading-relaxed text-[#0d0d0d]/70">
                     {p.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── What the setup includes ─────────────────────── */}
+        <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className={SPLIT}>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#dc2626]">
+                  What you get
+                </p>
+                <h2
+                  className="mt-4 text-3xl font-bold leading-tight md:text-[40px]"
+                  style={{ fontFamily: SYNE }}
+                >
+                  What our Nanaimo SEO setup includes
+                </h2>
+              </div>
+              <p className="text-[16px] leading-relaxed text-[#0d0d0d]/70 md:pt-2">
+                Six pieces of work, done once and handed over. It is the same
+                list an SEO company would split across a monthly plan, quoted
+                here as one fixed price.
+              </p>
+            </div>
+
+            <div className="mt-12 space-y-10">
+              {DELIVERABLES.map((d, i) => (
+                <div key={d.title} className="max-w-3xl">
+                  <div className="flex items-baseline gap-3">
+                    <span
+                      className="text-[13px] font-bold text-[#dc2626]"
+                      aria-hidden
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3
+                      className="text-xl font-bold leading-snug"
+                      style={{ fontFamily: SYNE }}
+                    >
+                      {d.title}
+                    </h3>
+                  </div>
+                  <p className="mt-3 pl-8 text-[15px] leading-relaxed text-[#0d0d0d]/70">
+                    {d.body}
                   </p>
                 </div>
               ))}
