@@ -17,7 +17,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.16.0",
-    "next": "^15.1.0",
+    "next": "15.5.28",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "server-only": "^0.0.1",
@@ -26,7 +26,7 @@
     "vdt-site-kit": "github:vdtsitesofficial/vdt-site-kit"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.19.9",
+    "@opennextjs/cloudflare": "1.20.13",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
