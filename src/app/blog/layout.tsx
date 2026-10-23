@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LAB_V } from "@/lib/labVersion";
+import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
 
 /**
  * Shared chrome for all /blog routes. Loads the lab's design tokens
@@ -845,6 +846,7 @@ export default function BlogLayout({
               <a href="/contact" className="hover:underline">
                 Contact
               </a>
+              <ZohoPartnerBadge className="hover:underline" />
             </div>
             <a
               href="https://vdtsites.com"
