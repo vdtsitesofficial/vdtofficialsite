@@ -114,6 +114,64 @@ export const CASE_STUDIES: CaseStudy[] = [
       "The site went live on their own domain in one afternoon with nothing broken behind it, and the search history they spent years building came with it. They run the site now, and we are still the ones who make it faster.",
   },
   {
+    slug: "matts-island-construction",
+    // "Matts", no apostrophe: the owner's spelling (2026-10-11), even though
+    // the logo artwork still reads MATT'S. No reviewAuthor until Matt leaves
+    // a Google review; the rankings in `result` were observed 2026-10-23.
+    name: "Matts Island Construction",
+    kicker: "Deck builder · Shawnigan Lake, BC",
+    headline: "A deck builder's website you tour room by room",
+    intro:
+      "Matts Island Construction builds decks and renovates homes around Shawnigan Lake. We rebuilt the website from scratch around a scroll tour of a house, gave Matt every word and photo to change himself, and carried the old site's addresses across so the rankings came with them.",
+    liveUrl: "https://mattsislandconstruction.ca",
+    year: "2026",
+    stackLine: "Custom build · Self-serve editing · SEO migration · Business Profile setup",
+    metaTitle: "Deck Builder Website Design in Shawnigan Lake, BC",
+    metaDescription:
+      "How we rebuilt a Shawnigan Lake deck builder's website with a room by room scroll tour, self-serve editing and 116 old addresses redirected.",
+    client:
+      "Matts Island Construction is Matt Williamson, a deck builder and general contractor in Shawnigan Lake who has worked across the Cowichan Valley since 2013. Decks are the core of it, vinyl decks and glass railings especially, alongside bathrooms, renovations, additions, garages, siding and fences. He is rated 4.9 stars on Google, holds a BBB A+ rating, and sees every job through from the quote to the finish.",
+    needed:
+      "His old site was a template of more than forty pages, many of them near copies of each other for different towns, and every one of those addresses had some search history behind it. He needed a site that sells decks first, a page for each service that can rank on its own, a quote form that answers people straight away, and a way to change his own text and photos without calling anyone. It all had to go live before his old host billed him again at the end of October, with his business email moving off that same host at the same time.",
+    builtIntro:
+      "We built the site around the work he does most, then moved everything he already had onto it one piece at a time.",
+    built: [
+      {
+        title: "A front page you tour room by room",
+        body: "The homepage opens on an illustrated lakeside house with the walls cut away. Scroll and the camera moves through it one stop at a time: the bathroom, the garage, the kitchen, the siding and finally the deck, each with a short line about that trade and a link to its service page. The stops run left to right across the house so the tour never doubles back, and on a phone the picture fills the whole screen instead of sitting in a letterbox.",
+      },
+      {
+        title: "A page for every service",
+        body: "Deck building, vinyl decks, deck repair, bathrooms, home renovations, additions and garages, siding, and fences each have their own page, written for Shawnigan Lake and the towns around it, with the structured data Google reads for the business, each service and its common questions. Painting and drywall, which he coordinates, sit on the renovations page rather than posing as separate trades.",
+      },
+      {
+        title: "His words and his photos, in his hands",
+        body: "Matt signs in with a code emailed to him, clicks any text on the live page and retypes it, and changes photos the same way. The projects gallery is built from his own job photos, sorted from an album of hundreds, and a photo only names a town when Matt has confirmed that is where the job was.",
+      },
+      {
+        title: "A quote form that answers straight away",
+        body: "Every quote request is saved before the email goes out, so none can go missing on the way to his inbox, and bots are filtered by an invisible check instead of a puzzle. The person asking gets an instant reply from Matt's own address confirming it arrived, so nobody is left wondering whether the form worked.",
+      },
+      {
+        title: "The old addresses, carried across",
+        body: "We mapped all 116 addresses from the old site and pointed each one at the page that replaced it, including the old town pages, which now land on the matching service. Links, bookmarks and search results that pointed at the old site still arrive somewhere useful, and the rankings came with them.",
+      },
+      {
+        title: "Email and Google, set up properly",
+        body: "His business email moved off the old host onto Zoho with his old mail brought across, and the messages he sends now pass the checks that keep them out of spam folders. We also rebuilt his Google Business Profile: categories, services, service areas and description, plus two months of posts scheduled ahead.",
+      },
+    ],
+    design:
+      "The brand line is set in heavy stencil capitals, the kind sprayed on a site sign, with ISLAND in a warm sunset orange and an architect's dimension line across the middle reading Shawnigan Lake, Est. 2013. The palette comes from the lake at golden hour: bone, charcoal and that orange, with the illustrated house carrying the warmth. Below the hero the design steps back, because on a trade site the job photos do the selling.",
+    stats: [
+      { value: "#1", label: "on Google for deck builder Shawnigan Lake, the day after launch" },
+      { value: "116 / 116", label: "old site addresses redirected to the page that replaced them" },
+      { value: "8", label: "service pages, each written for Shawnigan Lake and the towns around it" },
+    ],
+    result:
+      "The site went live on mattsislandconstruction.ca on October 22. The next day, his new deck building page was the top unpaid result on Google for deck builder Shawnigan Lake, and the business showed first on Google Maps for deck builder and general contractor searches in Shawnigan Lake. Matt changes the words and photos himself now, and every quote request lands in his inbox with the customer already answered.",
+  },
+  {
     slug: "smugglers-cove",
     // "Pub", not "Tavern": the owners settled the name on 2026-09-28 and it
     // matches their Business Profile, the domain and the logo. The business

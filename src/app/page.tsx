@@ -908,6 +908,30 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="/work/matts-island-construction"
+                aria-label="Matts Island Construction case study"
+                data-name="Matts Island Construction"
+                data-tags="Deck Builder · Room by Room Tour"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/mattsisland.webp"
+                      alt="Matts Island Construction website by VDT Sites, deck builder in Shawnigan Lake, BC"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="/work/smugglers-cove"
                 aria-label="Smugglers' Cove Pub case study"
                 data-name="Smugglers' Cove Pub"
