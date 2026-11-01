@@ -23,6 +23,8 @@ export type CaseStudy = {
   intro: string;
   /** Omit once the client's site is offline: the page drops the visit button */
   liveUrl?: string;
+  /** Shown where the visit button would sit, for a site that has been retired */
+  retiredNote?: string;
   year: string;
   /** e.g. "Custom build · Self-serve editing · Booking" */
   stackLine: string;
@@ -506,13 +508,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: "A campaign website with the whole toolkit built in",
     intro:
       "A city council campaign needs to collect volunteers, take donations properly and change messaging fast. We gave Paul Van Ryssel's campaign all three.",
+    retiredNote: "Campaign complete. This website was retired after the 2026 election.",
     year: "2026",
     stackLine: "Campaign forms · Donations · Mailing list · Self-serve editing",
     metaTitle: "Campaign Website Design in Nanaimo, BC",
     metaDescription:
       "Paul Van Ryssel's campaign website: volunteer and lawn sign forms, donations by card and e-transfer, a mailing list and on-page editing for a Nanaimo council campaign.",
     client:
-      "Paul Van Ryssel is a candidate for Nanaimo City Council. A campaign site is a sprint with a hard deadline: it has to inform, recruit and fundraise from day one, and stay current as the campaign evolves.",
+      "Paul Van Ryssel was a candidate for Nanaimo City Council. A campaign site is a sprint with a hard deadline: it has to inform, recruit and fundraise from day one, and stay current as the campaign evolves.",
     needed:
       "Five pages of platform and story, forms for every way a supporter can help, donations handled properly under BC campaign finance rules, and the ability for the campaign to edit its own message without waiting on anyone.",
     builtIntro:

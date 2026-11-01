@@ -169,6 +169,9 @@ export default async function CaseStudyPage({
                   Visit the live site
                 </a>
               )}
+              {cs.retiredNote && (
+                <p className="w-full text-[14px] font-medium text-[#0d0d0d]/70">{cs.retiredNote}</p>
+              )}
               <span className="text-[13.5px] text-[#0d0d0d]/50">
                 {cs.kicker} · {cs.stackLine}
               </span>
