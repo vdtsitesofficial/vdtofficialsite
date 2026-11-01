@@ -21,7 +21,8 @@ export type CaseStudy = {
   headline: string;
   /** Lede paragraph directly under the H1 */
   intro: string;
-  liveUrl: string;
+  /** Omit once the client's site is offline: the page drops the visit button */
+  liveUrl?: string;
   year: string;
   /** e.g. "Custom build · Self-serve editing · Booking" */
   stackLine: string;
@@ -505,12 +506,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     headline: "A campaign website with the whole toolkit built in",
     intro:
       "A city council campaign needs to collect volunteers, take donations properly and change messaging fast. We gave Paul Van Ryssel's campaign all three.",
-    liveUrl: "https://paulvanryssel.ca",
     year: "2026",
     stackLine: "Campaign forms · Donations · Mailing list · Self-serve editing",
     metaTitle: "Campaign Website Design in Nanaimo, BC",
     metaDescription:
-      "paulvanryssel.ca: volunteer and lawn sign forms, donations by card and e-transfer, a mailing list and on-page editing for a Nanaimo council campaign.",
+      "Paul Van Ryssel's campaign website: volunteer and lawn sign forms, donations by card and e-transfer, a mailing list and on-page editing for a Nanaimo council campaign.",
     client:
       "Paul Van Ryssel is a candidate for Nanaimo City Council. A campaign site is a sprint with a hard deadline: it has to inform, recruit and fundraise from day one, and stay current as the campaign evolves.",
     needed:

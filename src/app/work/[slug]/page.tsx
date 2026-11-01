@@ -100,7 +100,7 @@ export default async function CaseStudyPage({
                 "@type": "CreativeWork",
                 name: `${cs.name} website`,
                 about: cs.kicker,
-                url: cs.liveUrl,
+                url: cs.liveUrl ?? `${SITE}/work/${cs.slug}`,
                 dateCreated: cs.year,
                 image: `${SITE}/work-case/${cs.slug}-hero.webp`,
                 creator: { "@id": `${SITE}/#business` },
@@ -159,14 +159,16 @@ export default async function CaseStudyPage({
               {cs.intro}
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <a
-                href={cs.liveUrl}
-                target="_blank"
-                rel="noopener"
-                className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
-              >
-                Visit the live site
-              </a>
+              {cs.liveUrl && (
+                <a
+                  href={cs.liveUrl}
+                  target="_blank"
+                  rel="noopener"
+                  className="rounded-full bg-[#dc2626] px-8 py-3.5 text-[15px] font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-[#b91c1c] active:translate-y-[1px]"
+                >
+                  Visit the live site
+                </a>
+              )}
               <span className="text-[13.5px] text-[#0d0d0d]/50">
                 {cs.kicker} · {cs.stackLine}
               </span>
