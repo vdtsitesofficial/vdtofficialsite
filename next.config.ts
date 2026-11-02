@@ -22,31 +22,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // OpenNext / Cloudflare provides `cloudflare:email` as a built-in module of
-  // the Workers runtime. Webpack can't resolve `cloudflare:` URIs at build
-  // time, so we externalize them and let the runtime do the import.
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [
-        ...(Array.isArray(config.externals) ? config.externals : []),
-        {
-          "cloudflare:email": "commonjs cloudflare:email",
-          "cloudflare:workers": "commonjs cloudflare:workers",
-        },
-        // Same problem, different scheme. vdt-site-kit's content store reaches
-        // for `node:fs/promises` and `node:path` in its local-JSON dev
-        // fallback, and webpack refuses a `node:` URI outright
-        // ("UnhandledSchemeError ... Unhandled scheme"). They are real modules
-        // at runtime (the Worker sets nodejs_compat), so externalize the whole
-        // scheme rather than naming modules the kit might add to later.
-        ({ request }: { request?: string }, cb: (e?: null, r?: string) => void) =>
-          request?.startsWith("node:")
-            ? cb(null, `commonjs ${request}`)
-            : cb(),
-      ];
-    }
-    return config;
-  },
 };
 
 export default nextConfig;

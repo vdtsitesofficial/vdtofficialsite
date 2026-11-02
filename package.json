@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint",
     "preview": "opennextjs-cloudflare build && node scripts/minify-lab.mjs && node scripts/patch-open-next.mjs && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && node scripts/minify-lab.mjs && node scripts/patch-open-next.mjs && opennextjs-cloudflare deploy"
   },
@@ -17,21 +17,23 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.16.0",
-    "next": "15.5.28",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "next": "16.4.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0",
     "three": "^0.184.0",
-    "vdt-site-kit": "github:vdtsitesofficial/vdt-site-kit"
+    "vdt-site-kit": "github:vdtsitesofficial/vdt-site-kit#69b72cd92d37e055be32c640675eb5999ec28dba"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "1.20.13",
+    "@opennextjs/cloudflare": "1.20.15",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "esbuild": "^0.25.4",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.3",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0",
     "wrangler": "^4.86.0"
