@@ -913,7 +913,7 @@ export default function ServicesPage() {
               <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#0d0d0d]/55">
                 Right here in town? Most of our work starts at home:{" "}
                 <a
-                  href="/web-design-nanaimo"
+                  href="/"
                   className="font-semibold text-[#dc2626] underline decoration-[#dc2626]/30 decoration-2 underline-offset-[5px] transition-colors hover:decoration-[#dc2626]"
                 >
                   website design in Nanaimo

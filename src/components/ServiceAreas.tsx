@@ -20,11 +20,14 @@
  * city). The link kept pointing at the homepage anyway, which left the home
  * city with one inbound internal link while every sibling city had ten.
  *
+ * Back to the HOMEPAGE since 2026-11-04: /web-design-nanaimo is noindex
+ * again and the homepage owns the term (see that page's header note).
+ *
  * Voice: no em dashes or en dashes (see lib/caseStudies.ts).
  */
 
 const AREAS = [
-  { label: "Website design in Nanaimo", href: "/web-design-nanaimo" },
+  { label: "Website design in Nanaimo", href: "/" },
   {
     label: "Web design across Vancouver Island",
     href: "/web-design-vancouver-island",

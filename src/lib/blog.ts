@@ -770,7 +770,7 @@ const websiteCostPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "If you want the numbers above applied to your own business, here is what we do: [website design in Nanaimo](/web-design-nanaimo) for the build itself, and [local SEO in Nanaimo](/seo-nanaimo) when the site exists but nobody is finding it.",
+      text: "If you want the numbers above applied to your own business, here is what we do: [website design in Nanaimo](/) for the build itself, and [local SEO in Nanaimo](/seo-nanaimo) when the site exists but nobody is finding it.",
     },
   ],
 };
@@ -2397,7 +2397,7 @@ const wixVsDesignerPost: BlogPost = {
     },
     {
       kind: "p",
-      text: "If you land on the hire-someone side of that, this is the work we do: [website design in Nanaimo](/web-design-nanaimo) for a build off the template treadmill, and [local SEO in Nanaimo](/seo-nanaimo) if the problem is that nobody is finding the site you already have.",
+      text: "If you land on the hire-someone side of that, this is the work we do: [website design in Nanaimo](/) for a build off the template treadmill, and [local SEO in Nanaimo](/seo-nanaimo) if the problem is that nobody is finding the site you already have.",
     },
   ],
 };

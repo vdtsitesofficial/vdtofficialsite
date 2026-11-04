@@ -423,7 +423,7 @@ export default function PricingPage() {
                   If you would rather see the work before the price, our page
                   on hiring a{" "}
                   <Link
-                    href="/web-design-nanaimo"
+                    href="/"
                     className="font-semibold text-[#dc2626] underline underline-offset-2"
                   >
                     Nanaimo website designer

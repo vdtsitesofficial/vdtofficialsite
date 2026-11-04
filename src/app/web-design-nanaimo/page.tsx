@@ -44,7 +44,21 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  *    only hole in the set. /web-design-victoria is one of only two pages on
  *    the whole site that ranks for anything, which is the pattern working.
  *
- * So the owner is this page: the slug matches the query, the H1 already
+ * ── Noindex again, 2026-11-04 (Sem)
+ * Superseded: this page is noindex, follow again and the HOMEPAGE owns
+ * "web design Nanaimo". What changed since August: the homepage H1 became
+ * "Website Design in Nanaimo, BC" (2026-10-11) and it now ranks 6.7-9.2
+ * for "website design nanaimo", while this page sat at ~25 for "web
+ * design nanaimo" and outside the top 30 on 2026-11-04. Google treats the
+ * two phrasings as one query, so two pages split it and the weaker one was
+ * shown. The homepage also holds the site's authority (every client footer
+ * credit links to it). This page keeps its Google Ads job unchanged;
+ * noindex does not affect ads. Internal links that said "website design in
+ * Nanaimo" now point at the homepage, and it is out of the sitemap.
+ * Before reversing this again, check GSC Pages for the query (mobile).
+ *
+ * (August reasoning, kept for history:)
+ * So the owner was this page: the slug matches the query, the H1 already
  * carries the city, and the homepage keeps its showcase job and targets
  * brand plus generic terms. One page, one term, no new page added.
  *
@@ -93,6 +107,9 @@ export const metadata: Metadata = {
   // at pos 25) and the Ads keyword. Splitting the phrasings stops the two
   // pages competing for one query.
   title: "Web Design in Nanaimo, BC: Local Web Designers",
+  // Ads-only since 2026-11-04: the homepage owns the Nanaimo terms. See the
+  // note at the top of this file.
+  robots: { index: false, follow: true },
   description:
     "Custom website design for Nanaimo small businesses. Fixed pricing, hosting included, and you own the site. Free quote: call 250-616-2087.",
   alternates: { canonical: "/web-design-nanaimo" },

@@ -238,20 +238,9 @@ export const SITE_PAGES: SitePage[] = [
 
   // City and region pages. The Vancouver Island hub links all of them.
   //
-  // /web-design-nanaimo was absent from this list until 2026-08-15, because
-  // it carried robots noindex as an ads-only landing page and the homepage
-  // was elected to own "web design Nanaimo" organically. Semrush showed the
-  // homepage never ranked for it at all, so the term had no owner and the
-  // home city was the only hole in an otherwise complete set of city pages.
-  // Full reasoning at the top of app/web-design-nanaimo/page.tsx.
-  {
-    path: "/web-design-nanaimo",
-    label: "Website design in Nanaimo, BC",
-    description: `websites for Nanaimo small businesses, designed and developed in Nanaimo rather than outsourced. Fixed quote from ${PRICE_BUILD_FROM} ${CURRENCY} plus ${PRICE_MONTHLY} a month, hosting included. Sherri Kozubal, MO Coffee, UniSol Accounting and Paul Van Ryssel are Nanaimo clients.`,
-    changeFrequency: "monthly",
-    priority: 0.9,
-    section: "main",
-  },
+  // /web-design-nanaimo is NOT listed: it is a noindex Google Ads landing page
+  // (again, since 2026-11-04) and the homepage owns "web design Nanaimo".
+  // See the note at the top of app/web-design-nanaimo/page.tsx.
   {
     path: "/web-design-vancouver-island",
     label: "Web design across Vancouver Island",
