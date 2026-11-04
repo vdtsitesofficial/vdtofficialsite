@@ -281,7 +281,14 @@ function fracs() {
 // the window is genuinely too narrow to hold it (W_CAP). (Mobile keeps the
 // pure width-based size since the tap-to-enter intro is calibrated to it.)
 const DESKTOP_LAPTOP_H_FLOOR = 1.35; // min laptop width as a multiple of vh
-const DESKTOP_LAPTOP_W_CAP   = 0.95; // never wider than 95% of the viewport
+// W_CAP was 0.95 until 2026-11-04. It only binds on squarish windows
+// (aspect < ~1.42, e.g. a half-screen MacBook at ~780x790), where it shrank
+// the laptop to ~28% of the height with empty fireplace above it (Sem: "the
+// location of the laptop too"). The PNG is ~57% transparent margin, so the
+// IMAGE may exceed the viewport while the laptop itself stays ~56% of the
+// width. At 1.3 the lid sits ~48% down and the base ~85%, the same as
+// 1440x900 (47/87). Wide windows never reach the cap, so they are unchanged.
+const DESKTOP_LAPTOP_W_CAP   = 1.3;
 function laptopDims() {
   let w;
   if (IS_MOBILE) {
