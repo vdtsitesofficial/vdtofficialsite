@@ -579,9 +579,22 @@ function updateOverlay(currentScale) {
   // laptop screen edge-to-edge while everything stays visible. Keep these
   // in sync with hero.css's compact block.
   const BAND_TOP = 0.25, BAND_BOT = 0.75;
+  // Squarish desktop windows (a half-screen MacBook is ~780x790): the hero
+  // is laid out at the window's shape, which is much taller than the 16:10
+  // laptop screen. Plain "contain" fitted it by HEIGHT, leaving a narrow
+  // hero box floating in the screen with clipped ghost letters at its edges
+  // and the CTAs pushed off the bottom by homeY (Sem, 2026-11-04: "looks
+  // glitchy" on half screen). Instead fill the screen's WIDTH and frame the
+  // content band (gem top ~0.19 to CTA bottom ~0.80 of the hero at every
+  // squarish size measured), shrinking only if that band would not fit.
+  // Wide windows (fitW <= fitH) keep the old fit exactly.
+  const D_BAND_TOP = 0.18, D_BAND_BOT = 0.82;
+  const isNarrowDesktop = !isMobile && fitW > fitH;
   const naturalScale = isMobile
     ? Math.max(0.001, projH / ((BAND_BOT - BAND_TOP) * view.h))
-    : Math.max(0.001, Math.min(fitW, fitH));
+    : isNarrowDesktop
+      ? Math.max(0.001, Math.min(fitW, projH / ((D_BAND_BOT - D_BAND_TOP) * view.h)))
+      : Math.max(0.001, Math.min(fitW, fitH));
   const baseScale  = naturalScale + (1 - naturalScale) * lock;
   const innerScale = baseScale * T.homeS;
 
@@ -597,6 +610,11 @@ function updateOverlay(currentScale) {
     const BAND_MID = (BAND_TOP + BAND_BOT) / 2;
     const restCenter = projH / 2 - BAND_MID * naturalScale * view.h;
     innerOffsetY = restCenter * (1 - lock);
+  } else if (isNarrowDesktop) {
+    // Centre the content band at rest, ease to the usual homeY at lock so
+    // the handoff to the full-screen hero is unchanged.
+    const restCenter = projH / 2 - ((D_BAND_TOP + D_BAND_BOT) / 2) * naturalScale * view.h;
+    innerOffsetY = restCenter + (T.homeY - restCenter) * lock;
   } else {
     innerOffsetY = 0 + T.homeY;
   }

@@ -37,6 +37,13 @@
   isolation: isolate; /* contain z-index stacking so nothing leaks out */
 }
 
+/* In the laptop preview the overlay does the clipping, so let the ghost
+   wordmark bleed to the screen edge instead of being cut at the hero box.
+   Matters on squarish windows, where the hero can sit a few px inside the
+   screen (main.js isNarrowDesktop). Wide windows are unchanged: the hero
+   already spans the overlay. Mobile has its own rule below. */
+#screen-overlay.is-preview .vdt-hero { overflow: visible; }
+
 /* ── grain texture (scoped) ── */
 .vdt-hero::before {
   content: "";
