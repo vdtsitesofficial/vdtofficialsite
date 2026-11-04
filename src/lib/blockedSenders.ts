@@ -9,10 +9,16 @@ const BLOCKED_SENDERS = [
 ];
 
 // Names we refuse to hear from, whatever address they arrive on. Matched
-// after stripping everything but letters and lowercasing, so "Robert Trocky",
-// "robert.trocky" and "RobertTrocky" all hit "roberttrocky".
+// after stripping everything but letters and lowercasing, so "Robert Rocky",
+// "robert.rocky" and "RobertRocky" all hit "robertrocky".
+//
+// TAKE THE SPELLING FROM THE STORED SUBMISSIONS, NOT FROM MEMORY. The first
+// name ban here was "roberttrocky" (two t's, 2026-10-03) while every one of
+// the bot's 21 submissions since 2026-08-24 was signed "Robertrocky" (one t),
+// so it never matched and ten more got through. /admin shows the exact name,
+// and so does `wrangler kv bulk get` on ADMIN_KV.
 const BLOCKED_NAMES = [
-  "roberttrocky",
+  "robertrocky",
 ];
 
 // Gmail ignores dots and anything after a "+" in the local part, and treats
