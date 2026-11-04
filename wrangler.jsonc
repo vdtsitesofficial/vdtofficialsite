@@ -84,6 +84,14 @@
     // address, sent via Resend when the RESEND_API_KEY secret is set, else
     // via the SEND_EMAIL binding (which requires the address to be a
     // verified Email Routing destination — vdtsites@gmail.com is).
-    "ADMIN_EMAILS": "vdtsites@gmail.com,vanduist.sem@gmail.com"
+    "ADMIN_EMAILS": "vdtsites@gmail.com,vanduist.sem@gmail.com",
+    // Cloudflare Turnstile on the contact form. PUBLIC site key from the
+    // widget for vdtsites.com (dashboard: Turnstile > the vdtsites.com
+    // widget). Empty means the check is OFF. It is read from THIS FILE at
+    // build time and baked into the pages (next.config.ts), so set it here
+    // and deploy, never in the dashboard's Variables. The matching secret is
+    // a worker secret: `npx wrangler secret put TURNSTILE_SECRET_KEY`.
+    // The route enforces only when BOTH are set (src/lib/turnstile.ts).
+    "TURNSTILE_SITE_KEY": ""
   }
 }

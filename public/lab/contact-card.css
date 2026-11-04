@@ -408,6 +408,27 @@
   opacity: 0;
 }
 
+/* Turnstile challenge (src/components/TurnstileField.tsx).
+   min-height holds the widget's height before api.js draws it, so the
+   button does not jump.
+   min-width: 0 is load-bearing on phones: the widget is never narrower than
+   300px, and as a grid item with the default automatic minimum it widened
+   the form's single column, pushing every field and the send button past
+   the card's padding at 375px. With it, only the widget is wider than the
+   column, and the flex centring splits that overflow evenly into the
+   card's side padding. */
+.vdt-contact-card .cc-turnstile {
+  min-height: 65px;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+/* Turnstile's size "flexible" fills its container, but as a flex item it
+   would shrink to 300px; grow it so it spans the form like the fields. */
+.vdt-contact-card .cc-turnstile > * {
+  flex: 1 1 auto;
+}
+
 /* ─── send button ─── */
 .vdt-contact-card .cc-send-btn {
   margin-top: 6px;

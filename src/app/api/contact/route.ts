@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { saveMessage } from "@/lib/admin";
 import { isBlockedSender } from "@/lib/blockedSenders";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 type Payload = {
   name: string;
@@ -10,6 +11,10 @@ type Payload = {
   callDate?: string; // "Schedule a call": YYYY-MM-DD
   callTime?: string; // "Schedule a call": slot key from TIME_SLOTS
   website?: string; // honeypot
+  // Turnstile token. api.js writes it into a hidden input of this name inside
+  // the form, so a native submit carries it as-is and contact-card.js copies
+  // it into the JSON body under the same key.
+  "cf-turnstile-response"?: string;
 };
 
 // Whitelisted call windows (Pacific time). Keys arrive from the client,
@@ -27,6 +32,7 @@ type Env = {
   RESEND_API_KEY?: string;
   CONTACT_FROM_EMAIL?: string;
   CONTACT_TO_EMAIL?: string;
+  TURNSTILE_SECRET_KEY?: string; // worker secret; see src/lib/turnstile.ts
 };
 
 async function getEnv(): Promise<Env | null> {
@@ -181,6 +187,7 @@ export async function POST(req: Request) {
       callDate: params.get("callDate") ?? "",
       callTime: params.get("callTime") ?? "",
       website: params.get("website") ?? "",
+      "cf-turnstile-response": params.get("cf-turnstile-response") ?? "",
     };
   } else {
     try {
@@ -283,7 +290,32 @@ export async function POST(req: Request) {
     }
   }
 
+  // Turnstile, the real anti-bot check (the honeypot and the name list above
+  // only catch bots that already showed themselves). It sits AFTER the field
+  // validation on purpose: verifying spends the token, so a person who
+  // mistyped their email and fixes it would otherwise resubmit a dead token
+  // and be dropped. Placed BEFORE the KV save and the email, so a submission
+  // that fails it is neither stored nor sent.
+  //
+  // A failure gets the same silent success as the honeypot and a blocked
+  // sender, on both the JSON and the native path: a visible refusal only
+  // teaches a script what to change. The log line is the only trace, so a
+  // real person caught by it is visible in `wrangler tail vdtsites`.
+  // A no-op until BOTH keys are set (see src/lib/turnstile.ts).
   const env = await getEnv();
+  const rawToken = body["cf-turnstile-response"];
+  const turnstile = await verifyTurnstile(
+    typeof rawToken === "string" ? rawToken.trim() : "",
+    env?.TURNSTILE_SECRET_KEY || process.env.TURNSTILE_SECRET_KEY,
+    req.headers.get("cf-connecting-ip"),
+  );
+  if (!turnstile.ok) {
+    console.warn(
+      `[VDT contact form] dropped a submission that failed the Turnstile check (${turnstile.reason}, ${isNative ? "native" : "json"})`,
+    );
+    return succeed();
+  }
+
   // No placeholder fallbacks: if the addresses aren't configured we DON'T send
   // (never email an example.com stranger). The submission is still saved to KV
   // below, so the lead is captured in /admin regardless.

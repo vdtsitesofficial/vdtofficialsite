@@ -36,7 +36,9 @@
     gsap.from(q(".cc-role, .cc-divider"), {
       y: 20, opacity: 0, stagger: 0.08, delay: 0.7, duration: 0.9, ease: "power3.out",
     });
-    gsap.from(q(".cc-item, .cc-field, .cc-send-btn"), {
+    // .cc-turnstile: the Turnstile widget joins the field stagger, so it does
+    // not sit fully drawn while the fields around it are still fading in.
+    gsap.from(q(".cc-item, .cc-field, .cc-turnstile, .cc-send-btn"), {
       y: 20, opacity: 0, stagger: 0.10, delay: 0.9, duration: 0.9, ease: "power3.out",
     });
     gsap.to(q(".cc-icon"), {
@@ -177,6 +179,25 @@
       if (form.elements.website && form.elements.website.value) { form.reset(); return; }
       if (!form.checkValidity()) { form.reportValidity(); return; }
 
+      // Turnstile (2026-11-04). The widget exists only when the site key is
+      // set (src/components/TurnstileField.tsx). With it on the page, a
+      // submit without a token is refused HERE, visibly: the server would
+      // answer {ok:true} and drop it, so sending anyway would show a real
+      // person "Message sent" for a message nobody receives.
+      const challenge = form.querySelector(".cf-turnstile");
+      const tokenInput = form.querySelector('input[name="cf-turnstile-response"]');
+      const token = tokenInput ? tokenInput.value : "";
+      if (challenge && !token) {
+        const before = label.textContent;
+        label.textContent = "Finish the check above";
+        sendBtn.classList.add("cc-error");
+        setTimeout(() => {
+          sendBtn.classList.remove("cc-error");
+          label.textContent = before;
+        }, 2400);
+        return;
+      }
+
       sendBtn.disabled  = true;
       const original    = label.textContent;
       label.textContent = "Sending…";
@@ -190,6 +211,7 @@
         callDate: (form.elements.callDate?.value || "").trim(),
         callTime: (form.elements.callTime?.value || "").trim(),
         website: form.elements.website?.value   || "",
+        "cf-turnstile-response": token,
       };
       const isCall = Boolean(payload.callDate && payload.callTime);
 
@@ -204,6 +226,12 @@
         ok = res.ok && data && data.ok === true;
       } catch {
         ok = false;
+      }
+
+      // A token is single-use and the route has now spent it (or refused
+      // it), so draw a fresh challenge for the next message or the retry.
+      if (challenge && window.turnstile) {
+        try { window.turnstile.reset(challenge); } catch {}
       }
 
       if (ok) {

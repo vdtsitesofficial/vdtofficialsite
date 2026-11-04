@@ -10,6 +10,8 @@
  * confirmed delivery. Any page using this MUST load GSAP + contact-card.js
  * and contact-card.css, or it renders unstyled and the form won't submit.
  */
+import TurnstileField from "@/components/TurnstileField";
+
 export default function ContactCard({
   paddingTop = 48,
   paddingBottom = 72,
@@ -162,6 +164,11 @@ export default function ContactCard({
               autoComplete="off"
               aria-hidden="true"
             />
+
+            {/* Turnstile, inside the <form> so its hidden token input rides
+                along with a native submit too. Renders nothing until the
+                site key is set; see components/TurnstileField.tsx. */}
+            <TurnstileField />
 
             <button type="submit" className="cc-send-btn">
               <span className="cc-send-label">Send message</span>

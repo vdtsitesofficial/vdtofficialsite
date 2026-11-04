@@ -23,6 +23,7 @@ import { TESTIMONIALS, GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
 import { HOME_FAQS } from "@/lib/faqs";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY } from "@/lib/pricing";
 import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
+import TurnstileField from "@/components/TurnstileField";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
 const IMPORTMAP = JSON.stringify({
@@ -1895,6 +1896,9 @@ export default function Home() {
                 autoComplete="off"
                 aria-hidden="true"
               />
+
+              {/* Turnstile; see components/TurnstileField.tsx. */}
+              <TurnstileField />
 
               <button type="submit" className="cc-send-btn">
                 <span className="cc-send-label">Send message</span>

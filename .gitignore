@@ -39,3 +39,6 @@ responsive-audit-out*/
 # the build reads defaults, not KV.
 /content.local.json
 /public/uploads/
+
+# wrangler local secrets (npm run preview reads them). Never commit.
+.dev.vars*
