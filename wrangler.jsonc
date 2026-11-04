@@ -92,6 +92,6 @@
     // and deploy, never in the dashboard's Variables. The matching secret is
     // a worker secret: `npx wrangler secret put TURNSTILE_SECRET_KEY`.
     // The route enforces only when BOTH are set (src/lib/turnstile.ts).
-    "TURNSTILE_SITE_KEY": ""
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFz9dULYrdKfsncJ"
   }
 }
