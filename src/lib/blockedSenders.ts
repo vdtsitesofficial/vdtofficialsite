@@ -17,8 +17,15 @@ const BLOCKED_SENDERS = [
 // the bot's 21 submissions since 2026-08-24 was signed "Robertrocky" (one t),
 // so it never matched and ten more got through. /admin shows the exact name,
 // and so does `wrangler kv bulk get` on ADMIN_KV.
+//
+// Spellings below are copied from the stored submissions on the day each ban
+// went in: Robertrocky (2026-11-04), then Carlosplern (15 submissions on 15
+// addresses, 2026-08-28 to 2026-10-04) and Samuelutecy (8 on 8, 2026-10-10 to
+// 2026-10-31), both banned 2026-11-04 on Phil's word.
 const BLOCKED_NAMES = [
   "robertrocky",
+  "carlosplern",
+  "samuelutecy",
 ];
 
 // Gmail ignores dots and anything after a "+" in the local part, and treats
