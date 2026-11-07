@@ -23,7 +23,7 @@
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0",
     "three": "^0.184.0",
-    "vdt-site-kit": "github:vdtsitesofficial/vdt-site-kit#69b72cd92d37e055be32c640675eb5999ec28dba"
+    "vdt-site-kit": "github:vdtsitesofficial/vdt-site-kit#v0.23.1"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "1.20.15",
