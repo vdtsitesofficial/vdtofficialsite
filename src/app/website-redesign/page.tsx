@@ -209,7 +209,7 @@ export default function WebsiteRedesignPage() {
               Redesign
             </p>
             <h1
-              className="mt-4 max-w-[20ch] text-4xl font-bold leading-[1.05] md:text-[64px]"
+              className="mt-4 max-w-[20ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
               style={{ fontFamily: SYNE }}
             >
               A redesign that keeps what Google knows about you.

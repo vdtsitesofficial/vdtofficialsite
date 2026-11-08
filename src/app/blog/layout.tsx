@@ -203,6 +203,7 @@ export default function BlogLayout({
           color: #1a1a1a;
           margin: 0 0 28px;
           max-width: 18ch;
+          min-width: min-content;
         }
 
         /* Deck under the title (uses post.description). Body face, not the

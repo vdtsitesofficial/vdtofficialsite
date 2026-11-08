@@ -227,7 +227,7 @@ export default function WebDesignVancouverIslandPage() {
               Victoria to Campbell River
             </p>
             <h1
-              className="mt-4 max-w-[18ch] text-4xl font-bold leading-[1.05] md:text-[60px]"
+              className="mt-4 max-w-[18ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[60px]"
               style={{ fontFamily: SYNE }}
             >
               Web design for the whole of Vancouver Island.

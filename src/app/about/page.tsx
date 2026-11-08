@@ -150,7 +150,7 @@ export default async function AboutPage() {
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[15ch] text-[40px] font-bold leading-[1.02] md:text-[76px]"
+              className="max-w-[15ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
               style={{ fontFamily: SYNE }}
             >
               Two students who build websites that work.

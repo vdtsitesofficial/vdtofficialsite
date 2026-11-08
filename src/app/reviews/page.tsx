@@ -123,7 +123,7 @@ export default function ReviewsPage() {
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[14ch] text-[40px] font-bold leading-[1.02] md:text-[76px]"
+              className="max-w-[14ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
               style={{ fontFamily: SYNE }}
             >
               What our clients say

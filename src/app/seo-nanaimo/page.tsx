@@ -251,7 +251,7 @@ export default function SeoNanaimoPage() {
               Local SEO
             </p>
             <h1
-              className="mt-4 max-w-[18ch] text-4xl font-bold leading-[1.05] md:text-[64px]"
+              className="mt-4 max-w-[18ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
               style={{ fontFamily: SYNE }}
             >
               SEO services in Nanaimo, without the retainer.

@@ -419,7 +419,7 @@ export default function ServicesPage() {
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[15ch] text-[40px] font-bold leading-[1.02] md:text-[76px]"
+              className="max-w-[15ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
               style={{ fontFamily: SYNE }}
             >
               Everything a small business needs online.
@@ -457,7 +457,7 @@ export default function ServicesPage() {
                   260/mo KD 23, Semrush ca Aug 2026). A separate packages
                   page would cannibalise this one, so the keyword lives here. */}
               <h2
-                className="max-w-[24ch] text-[26px] font-bold leading-[1.12] md:text-[34px]"
+                className="max-w-[24ch] min-w-min text-[26px] font-bold leading-[1.12] md:text-[34px]"
                 style={{ fontFamily: SYNE }}
               >
                 Website packages, both fixed price.
@@ -624,7 +624,7 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <h2
-                className="max-w-[16ch] text-[30px] font-bold leading-[1.1] md:text-[52px]"
+                className="max-w-[16ch] min-w-min text-[30px] font-bold leading-[1.1] md:text-[52px]"
                 style={{ fontFamily: SYNE }}
               >
                 How it works, start to live.
@@ -680,7 +680,7 @@ export default function ServicesPage() {
                 The full list
               </p>
               <h2
-                className="mt-4 max-w-[20ch] text-[30px] font-bold leading-[1.1] md:text-[44px]"
+                className="mt-4 max-w-[20ch] min-w-min text-[30px] font-bold leading-[1.1] md:text-[44px]"
                 style={{ fontFamily: SYNE }}
               >
                 Everything we offer, in five groups.
@@ -779,7 +779,7 @@ export default function ServicesPage() {
           <Reveal>
             <div className="mx-auto max-w-6xl rounded-[18px] rounded-br-[64px] border border-black/10 bg-white/60 px-7 py-10 md:px-14 md:py-14">
               <h2
-                className="max-w-[20ch] text-[24px] font-bold leading-[1.15] md:text-[34px]"
+                className="max-w-[20ch] min-w-min text-[24px] font-bold leading-[1.15] md:text-[34px]"
                 style={{ fontFamily: SYNE }}
               >
                 The bills you do not get.
@@ -839,7 +839,7 @@ export default function ServicesPage() {
           <Reveal>
             <div className="mx-auto max-w-6xl">
               <h2
-                className="max-w-[18ch] text-[30px] font-bold leading-[1.1] md:text-[52px]"
+                className="max-w-[18ch] min-w-min text-[30px] font-bold leading-[1.1] md:text-[52px]"
                 style={{ fontFamily: SYNE }}
               >
                 Not sure which of these you need?

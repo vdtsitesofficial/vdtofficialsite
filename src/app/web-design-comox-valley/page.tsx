@@ -207,7 +207,7 @@ export default function WebDesignComoxValleyPage() {
               Courtenay · Comox · Cumberland
             </p>
             <h1
-              className="mt-4 max-w-[19ch] text-4xl font-bold leading-[1.05] md:text-[60px]"
+              className="mt-4 max-w-[19ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[60px]"
               style={{ fontFamily: SYNE }}
             >
               Website design for the Comox Valley.

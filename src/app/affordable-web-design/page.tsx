@@ -199,7 +199,7 @@ export default function AffordableWebDesignPage() {
               Fixed price
             </p>
             <h1
-              className="mt-4 max-w-[20ch] text-4xl font-bold leading-[1.05] md:text-[64px]"
+              className="mt-4 max-w-[20ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
               style={{ fontFamily: SYNE }}
             >
               Affordable web design that does not look it.

@@ -734,6 +734,7 @@ html.vdt-mobile-intro body {
   letter-spacing: -0.025em;
   margin-bottom: 28px;
   max-width: 14ch;
+  min-width: min-content;
 }
 .dest-h1 em {
   font-family: var(--font-serif);

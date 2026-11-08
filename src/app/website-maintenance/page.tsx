@@ -204,7 +204,7 @@ export default function WebsiteMaintenancePage() {
               Care plan
             </p>
             <h1
-              className="mt-4 max-w-[20ch] text-4xl font-bold leading-[1.05] md:text-[64px]"
+              className="mt-4 max-w-[20ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
               style={{ fontFamily: SYNE }}
             >
               Website maintenance, one flat fee, no meter.

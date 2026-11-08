@@ -178,7 +178,7 @@ export default function LogoDesignNanaimoPage() {
               Logo &amp; Brand
             </p>
             <h1
-              className="mt-4 max-w-[16ch] text-4xl font-bold leading-[1.05] md:text-[64px]"
+              className="mt-4 max-w-[16ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
               style={{ fontFamily: SYNE }}
             >
               Logo design in Nanaimo that comes with the brand attached.
