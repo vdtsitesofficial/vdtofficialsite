@@ -21,8 +21,9 @@ import { OG_IMAGE } from "@/lib/og";
  * Scope, kept honest: hosting is the $40 monthly that comes with every
  * site VDT builds or rebuilds. We do not sell bare hosting for sites we
  * did not build. The email promise here is that a domain move keeps
- * existing email working (Westro, Smugglers' Cove). VDT does not sell
- * business email (Phil, 2026-11-09); /business-email redirects to /services.
+ * existing email working (Westro, Smugglers' Cove); mailboxes, Google
+ * Workspace and forwarding have their own page, /business-email (added
+ * 2026-10-22 when VDT became a Zoho Workplace partner).
  * The included list mirrors INCLUDED on /services.
  */
 
@@ -135,6 +136,9 @@ export default function WebsiteHostingNanaimoPage() {
                 your inbox both keep working on switch day, the way we did for{" "}
                 <InLink href="/work/westro">Westro</InLink> and{" "}
                 <InLink href="/work/smugglers-cove">Smugglers&apos; Cove Pub</InLink>.
+                Want email on your domain, or a move to a new mail provider?
+                That is on our{" "}
+                <InLink href="/business-email">business email page</InLink>.
               </p>
             </>
           ),

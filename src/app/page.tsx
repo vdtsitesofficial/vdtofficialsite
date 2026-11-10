@@ -22,6 +22,7 @@ import { LAB_V } from "@/lib/labVersion";
 import { TESTIMONIALS, GOOGLE_REVIEWS_URL } from "@/lib/testimonials";
 import { HOME_FAQS } from "@/lib/faqs";
 import { PRICE_BUILD_FROM, PRICE_MONTHLY } from "@/lib/pricing";
+import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
 import TurnstileField from "@/components/TurnstileField";
 
 // Three.js / polygon-clipping importmap — shared by hero.js and main.js.
@@ -2034,6 +2035,7 @@ export default function Home() {
           >
             Find us on Google
           </a>
+          <ZohoPartnerBadge className="vdt-fl__credit" />
           <a className="vdt-fl__credit" href="https://vdtsites.com" target="_blank" rel="noreferrer">
             Site by VDTSITES.COM
           </a>

@@ -198,6 +198,15 @@ export const SITE_PAGES: SitePage[] = [
     section: "main",
   },
   {
+    path: "/business-email",
+    label: "Business email on your own domain",
+    description:
+      "email on your own domain, set up and managed for you: Zoho Mail mailboxes hosted in Canada (official Zoho Workplace partner), Google Workspace setup, or forwarding into your current inbox, with the old email moved across.",
+    changeFrequency: "monthly",
+    priority: 0.7,
+    section: "main",
+  },
+  {
     path: "/non-profit-website-design-vancouver",
     label: "Non-profit website design in Vancouver",
     description:

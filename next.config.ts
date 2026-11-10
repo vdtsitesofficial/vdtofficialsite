@@ -34,18 +34,6 @@ const nextConfig: NextConfig = {
   },
   // vdt-site-kit ships raw TS/TSX with no build step, so this site compiles it.
   transpilePackages: ["vdt-site-kit"],
-  // VDT stopped offering business email (Phil, 2026-11-09) and the
-  // /business-email page was removed. It was indexed and linked from every
-  // footer, so it 301s to /services rather than 404ing.
-  async redirects() {
-    return [
-      {
-        source: "/business-email",
-        destination: "/services",
-        statusCode: 301,
-      },
-    ];
-  },
   // Security headers flagged by the 2026-08-16 Screaming Frog crawl (all
   // HTML routes are worker-rendered, so next.config headers() reaches them;
   // static assets under public/ are served by the assets binding and get
