@@ -10,7 +10,6 @@ import {
   PRICE_BRAND_FROM,
   PRICE_MONTHLY,
 } from "@/lib/pricing";
-import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
 
 /**
  * /services — the full menu of what VDT actually sells.
@@ -121,7 +120,6 @@ const GROUPS: ServiceGroup[] = [
         label: "Hosting and domains in Nanaimo",
         href: "/website-hosting-nanaimo",
       },
-      { label: "Business email for your domain", href: "/business-email" },
     ],
     intro:
       "The monthly fee covers everything it takes to keep the site online, current and safe. One bill, one person to call.",
@@ -136,11 +134,7 @@ const GROUPS: ServiceGroup[] = [
       },
       {
         name: "Domain registration",
-        body: "We register and manage your domain name for you, including DNS setup, renewals and email routing. No juggling logins with a registrar you signed up for years ago and can no longer get into.",
-      },
-      {
-        name: "Business email",
-        body: "Email on your own domain, set up and looked after for you. As an official Zoho Workplace partner we host mailboxes in Zoho's Canadian data centre, or we set up Google Workspace or simple forwarding, and we move your old email across either way.",
+        body: "We register and manage your domain name for you, including DNS setup and renewals. No juggling logins with a registrar you signed up for years ago and can no longer get into.",
       },
     ],
   },
@@ -1006,7 +1000,6 @@ export default function ServicesPage() {
 
       <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-black/10 px-6 py-5 text-[12px] text-[#0d0d0d]/55 md:px-14">
         <span>© {new Date().getFullYear()} VDT Sites · Built in Nanaimo, BC</span>
-        <ZohoPartnerBadge className="hover:text-[#0d0d0d]" />
         <nav aria-label="Legal" className="flex gap-5">
           <a href="/terms-of-service" className="hover:text-[#0d0d0d]">
             Terms

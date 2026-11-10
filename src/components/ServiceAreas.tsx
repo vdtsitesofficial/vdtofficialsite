@@ -52,7 +52,6 @@ const AREAS = [
     label: "Website hosting and domains in Nanaimo",
     href: "/website-hosting-nanaimo",
   },
-  { label: "Business email for your domain", href: "/business-email" },
   {
     label: "Non-profit website design",
     href: "/non-profit-website-design-vancouver",
