@@ -15,8 +15,8 @@ import { OG_IMAGE } from "@/lib/og";
  *      use; replies from the business address only work from Gmail
  *      (Outlook.com / Hotmail cannot add an outside send-as address).
  *   2. A Zoho Mail mailbox, set up and managed by VDT in Zoho's Canadian
- *      data centre. One mailbox included with the website plans (Sem's
- *      brief). Extra-mailbox price: ask Sem before publishing one.
+ *      data centre. Not included in the $40 monthly
+ *      (Phil, 2026-11-09): mailboxes are quoted separately.
  *   3. Google Workspace on their domain. The client owns the Google
  *      account and Google bills them; VDT is added as an admin.
  *
@@ -64,7 +64,6 @@ const ZOHO_INCLUDED = [
   "Domain verification, MX, SPF, DKIM and DMARC set up so your mail reaches inboxes, not spam folders",
   "Works in the Zoho Mail app, the Gmail app, iPhone Mail and any web browser",
   "Extra addresses like info@ or quotes@ delivered to the same inbox",
-  "One mailbox included with our website plans",
 ];
 
 const FAQS = [
@@ -90,7 +89,7 @@ const FAQS = [
   },
   {
     q: "Is business email included with my website?",
-    a: "One Zoho mailbox is included with our website plans. Forwarding, extra mailboxes and Google Workspace setup are quoted when we talk, so you only pay for what your business actually uses.",
+    a: "No, business email is separate from the website plans. Zoho mailboxes, forwarding and Google Workspace setup are quoted when we talk, so you only pay for what your business actually uses.",
   },
   {
     q: "Who owns my email account?",
@@ -161,8 +160,7 @@ export default function BusinessEmailPage() {
                   A full mailbox on your domain, hosted in Zoho&apos;s Canadian
                   data centre and managed by us as an official Zoho Workplace
                   partner. Your own inbox and storage, kept separate
-                  from personal mail, and one mailbox is included with our
-                  website plans.
+                  from personal mail.
                 </p>
               ),
             },

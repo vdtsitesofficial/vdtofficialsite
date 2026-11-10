@@ -404,14 +404,7 @@ export default function PricingPage() {
                   </Link>{" "}
                   covers, hosting to small updates, inside {PRICE_MONTHLY} a
                   month. No renewal invoices, no surprise line items, and no
-                  charge for calling us. One{" "}
-                  <Link
-                    href="/business-email"
-                    className="font-semibold text-[#dc2626] underline underline-offset-2"
-                  >
-                    business email mailbox
-                  </Link>{" "}
-                  on your own domain is included too.
+                  charge for calling us.
                 </p>
                 {/* Exact-match anchor into the home-market city page. Pricing
                     is a high-intent page, so the link is worth more from here
