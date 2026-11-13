@@ -154,8 +154,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "matts-island-construction",
     // "Matts", no apostrophe: the owner's spelling (2026-10-11). No
-    // reviewAuthor until Matt leaves a Google review; the rankings in
-    // `result` were observed 2026-10-23. App screens are captured from a local
+    // reviewAuthor until Matt leaves a Google review. No ranking claims: we
+    // have no record of where he ranked before launch (Sem, 2026-11-13). App screens are captured from a local
     // copy with seeded sample customers, never his live data.
     name: "Matts Island Construction",
     kicker: "Construction company · Shawnigan Lake, BC",
@@ -350,12 +350,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     design:
       "The logo sets everything else. Its sun orange, lake blue, charcoal and bone run through the cards, the website and the app, and the stencil lettering of ISLAND CONSTRUCTION becomes the website's headline, with an architect's dimension line reading Shawnigan Lake, Est. 2013. The website opens on an illustrated lakeside house as warm as the logo, then steps back below the hero, because on a trade site the job photos do the selling. The app keeps the same orange and charcoal in a quieter layout, light or dark, that reads easily on a phone at the end of a long day.",
     stats: [
-      { value: "#1", label: "on Google for deck builder Shawnigan Lake, the day after launch" },
       { value: "116 / 116", label: "old site addresses redirected to the page that replaced them" },
+      { value: "8", label: "service pages, each written for Shawnigan Lake and the towns around it" },
       { value: "4 in 1", label: "logo, business cards, website and job app, one look across all of them" },
     ],
     result:
-      "The website went live on mattsislandconstruction.ca on October 22. The next day his new deck building page was the top unpaid result on Google for deck builder Shawnigan Lake, and the business showed first on Google Maps for deck builder and general contractor searches in Shawnigan Lake. The app followed in November: quote requests from the site now arrive in it, and his estimates, invoices, warranties and schedule all run from his phone, under the same logo that is on his cards.",
+      "The website went live on mattsislandconstruction.ca on October 22, and the app followed in November. Quote requests from the site now arrive in the app, his estimates, invoices, warranties and schedule all run from his phone, and he changes the words and photos on his website himself. The same logo is on his cards, his site and the app, so every place a customer meets him looks like one company.",
     faq: [
       {
         q: "Do you build websites for construction companies in Shawnigan Lake and the Cowichan Valley?",
@@ -371,7 +371,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         q: "Will a new website keep my Google rankings?",
-        a: "It should, if the old addresses are carried across. On this project we redirected all 116 addresses from the old site to the pages that replaced them, and his deck building page reached the top of Google for deck builder Shawnigan Lake the day after launch.",
+        a: "It should, if the old addresses are carried across. On this project we redirected all 116 addresses from the old site to the pages that replaced them, so links, bookmarks and search results that pointed at the old site still land on the right page.",
       },
       {
         q: "Can I update the website myself after it is built?",
