@@ -911,7 +911,7 @@ export default function Home() {
                 href="/work/matts-island-construction"
                 aria-label="Matts Island Construction case study"
                 data-name="Matts Island Construction"
-                data-tags="Deck Builder · Room by Room Tour"
+                data-tags="Logo · Website · Job App"
               >
                 <div className="vdt-portfolio__card-frame">
                   <div className="vdt-portfolio__card-bezel">

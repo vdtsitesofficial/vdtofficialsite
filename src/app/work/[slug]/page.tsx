@@ -29,6 +29,8 @@ const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 
 const BODY = "'Roboto', system-ui, sans-serif";
 const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
+/** Chapter headings (The brand / The website / The app) on multi-part projects. */
+const CHAPTER_H2 = "text-[48px] leading-[0.95] md:text-[72px]";
 /** Reviews longer than this render as body text rather than a pull quote. */
 const LONG_QUOTE = 600;
 
@@ -103,14 +105,59 @@ export default async function CaseStudyPage({
               isPartOf: { "@id": `${SITE}/#website` },
               mainEntity: {
                 "@type": "CreativeWork",
-                name: `${cs.name} website`,
+                name: cs.brand || cs.app ? `${cs.name} logo, website and app` : `${cs.name} website`,
                 about: cs.kicker,
                 url: cs.liveUrl ?? `${SITE}/work/${cs.slug}`,
                 dateCreated: cs.year,
                 image: `${SITE}/work-case/${cs.slug}-hero.webp`,
                 creator: { "@id": `${SITE}/#business` },
+                // A multi-part project lists each deliverable, so the logo and the
+                // app are entities in their own right, not just words on the page.
+                ...(cs.brand || cs.app
+                  ? {
+                      hasPart: [
+                        ...(cs.brand
+                          ? [
+                              {
+                                "@type": "ImageObject",
+                                name: `${cs.name} logo`,
+                                contentUrl: `${SITE}${cs.brand.logos[0].src}`,
+                                creator: { "@id": `${SITE}/#business` },
+                              },
+                            ]
+                          : []),
+                        ...(cs.liveUrl
+                          ? [{ "@type": "WebSite", name: `${cs.name} website`, url: cs.liveUrl, creator: { "@id": `${SITE}/#business` } }]
+                          : []),
+                        ...(cs.app
+                          ? [
+                              {
+                                "@type": "SoftwareApplication",
+                                name: `${cs.name} job app`,
+                                applicationCategory: "BusinessApplication",
+                                operatingSystem: "Web, iOS, Android",
+                                creator: { "@id": `${SITE}/#business` },
+                              },
+                            ]
+                          : []),
+                      ],
+                    }
+                  : {}),
               },
             },
+            ...(cs.faq?.length
+              ? [
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    mainEntity: cs.faq.map((f) => ({
+                      "@type": "Question",
+                      name: f.q,
+                      acceptedAnswer: { "@type": "Answer", text: f.a },
+                    })),
+                  },
+                ]
+              : []),
             {
               "@context": "https://schema.org",
               "@type": "BreadcrumbList",
@@ -197,29 +244,144 @@ export default async function CaseStudyPage({
         <section className="px-6 pt-14 md:px-14 md:pt-20">
           <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:gap-14">
             <div>
-              <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
+              <h2 className="text-[20px] font-bold" style={BODY_STYLE}>
                 The client
               </h2>
               <p className="mt-3 text-[15px] leading-[1.75] text-[#0d0d0d]/70">{cs.client}</p>
             </div>
             <div>
-              <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
+              <h2 className="text-[20px] font-bold" style={BODY_STYLE}>
                 What they needed
               </h2>
               <p className="mt-3 text-[15px] leading-[1.75] text-[#0d0d0d]/70">{cs.needed}</p>
             </div>
           </div>
+          {/* Service pages this project used: internal links up to the money pages. */}
+          {cs.services?.length ? (
+            <p className="mx-auto mt-8 max-w-6xl text-[13.5px] leading-[1.9] text-[#0d0d0d]/55">
+              Services in this project:{" "}
+              {cs.services.map((l, k) => (
+                <span key={l.href}>
+                  {k > 0 && <span aria-hidden="true"> · </span>}
+                  <a
+                    href={l.href}
+                    className="font-medium text-[#0d0d0d]/80 underline decoration-[#dc2626]/40 decoration-2 underline-offset-[5px] transition-colors hover:text-[#dc2626] hover:decoration-[#dc2626]"
+                  >
+                    {l.label}
+                  </a>
+                </span>
+              ))}
+            </p>
+          ) : null}
         </section>
 
+        {/* the brand (only for projects that included a logo and print) */}
+        {cs.brand && (
+          <section className="px-6 pt-16 md:px-14 md:pt-24" aria-labelledby="chapter-brand">
+            <div className="mx-auto max-w-6xl">
+              <h2 id="chapter-brand" className={CHAPTER_H2} style={DISPLAY}>
+                {cs.brand.heading}
+              </h2>
+              <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70 md:text-[16px]">
+                {cs.brand.intro}
+              </p>
+
+              {/* Logo on both grounds; the small-size icon sits on the seam
+                  between them rather than floating loose (Design Preferences:
+                  overlays anchor to an edge or seam). */}
+              <div className="relative mt-10 grid gap-5 md:mt-16 md:grid-cols-2">
+                {cs.brand.logos.map((l) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    key={l.src}
+                    src={l.src}
+                    alt={l.alt}
+                    width={l.width}
+                    height={l.height}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full rounded-[24px] shadow-[0_22px_48px_-22px_rgba(0,0,0,0.45)]"
+                  />
+                ))}
+                {cs.brand.icon && (
+                  <figure className="flex items-center gap-4 md:absolute md:left-1/2 md:top-0 md:-translate-x-1/2 md:-translate-y-1/2 md:flex-col md:gap-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={cs.brand.icon.src}
+                      alt={cs.brand.icon.alt}
+                      width={cs.brand.icon.width}
+                      height={cs.brand.icon.height}
+                      loading="lazy"
+                      decoding="async"
+                      className="size-16 shrink-0 rounded-[22%] shadow-[0_14px_30px_-10px_rgba(0,0,0,0.5)] ring-4 ring-[#f4efe6] md:size-24"
+                    />
+                    <figcaption className="text-[13px] leading-snug text-[#0d0d0d]/60 md:sr-only">
+                      {cs.brand.icon.caption}
+                    </figcaption>
+                  </figure>
+                )}
+              </div>
+              {cs.brand.icon && (
+                <p className="mt-4 hidden text-center text-[13px] text-[#0d0d0d]/55 md:block">{cs.brand.icon.caption}</p>
+              )}
+
+              {/* Business cards: the back tucked behind the front, one stack per colourway. */}
+              <div className="mt-14 grid gap-12 md:mt-12 md:grid-cols-2 md:gap-10">
+                {cs.brand.cards.map((c) => (
+                  <figure key={c.label} className="group">
+                    <div className="relative pr-[10%] pt-[12%]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.back.src}
+                        alt={c.back.alt}
+                        width={c.back.width}
+                        height={c.back.height}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute right-0 top-0 w-[90%] rotate-[3deg] rounded-[12px] shadow-[0_18px_36px_-16px_rgba(0,0,0,0.45)] transition-transform duration-500 motion-safe:group-hover:translate-x-2 motion-safe:group-hover:-translate-y-2"
+                      />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.front.src}
+                        alt={c.front.alt}
+                        width={c.front.width}
+                        height={c.front.height}
+                        loading="lazy"
+                        decoding="async"
+                        className="relative w-[90%] -rotate-[2deg] rounded-[12px] shadow-[0_26px_50px_-18px_rgba(0,0,0,0.55)] transition-transform duration-500 motion-safe:group-hover:-translate-y-1"
+                      />
+                    </div>
+                    <figcaption className="mt-6 text-[13.5px] text-[#0d0d0d]/55">
+                      <span className="font-semibold text-[#0d0d0d]">{c.label}</span> business card, front and back
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+
+              <div className="mt-12 grid gap-8 md:grid-cols-3 md:gap-10">
+                {cs.brand.notes.map((n) => (
+                  <div key={n.title}>
+                    <h3 className="text-[16px] font-bold">{n.title}</h3>
+                    <p className="mt-2 text-[14.5px] leading-[1.7] text-[#0d0d0d]/70">{n.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* what we built */}
-        <section className="px-6 pt-14 md:px-14 md:pt-20">
+        <section className="px-6 pt-14 md:px-14 md:pt-20" aria-labelledby="chapter-website">
           <div className="mx-auto max-w-6xl">
-            <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-            <h2 className="mt-4 text-[24px] font-bold" style={BODY_STYLE}>
-              What we built
-            </h2>
+            {cs.websiteHeading ? (
+              <h2 id="chapter-website" className={CHAPTER_H2} style={DISPLAY}>
+                {cs.websiteHeading}
+              </h2>
+            ) : (
+              <h2 id="chapter-website" className="text-[24px] font-bold" style={BODY_STYLE}>
+                What we built
+              </h2>
+            )}
             <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70">
               {cs.builtIntro}
             </p>
@@ -263,11 +425,72 @@ export default async function CaseStudyPage({
           </div>
         </section>
 
+        {/* the app (only for projects that included one) */}
+        {cs.app && (
+          <section className="px-6 pt-16 md:px-14 md:pt-24" aria-labelledby="chapter-app">
+            <div className="mx-auto max-w-6xl">
+              <h2 id="chapter-app" className={CHAPTER_H2} style={DISPLAY}>
+                {cs.app.heading}
+              </h2>
+              <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70 md:text-[16px]">
+                {cs.app.intro}
+              </p>
+
+              {/* The desktop view sits behind; the phones stand on its lower
+                  edge, so the two read as one product at two sizes. */}
+              {cs.app.desktop && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={cs.app.desktop.src}
+                  alt={cs.app.desktop.alt}
+                  width={cs.app.desktop.width}
+                  height={cs.app.desktop.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="mt-10 w-full rounded-[24px] border border-black/10 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.45)]"
+                />
+              )}
+              <div
+                className={`relative grid grid-cols-2 gap-x-4 gap-y-8 px-2 md:grid-cols-4 md:gap-6 md:px-8 ${
+                  cs.app.desktop ? "-mt-[10%] md:-mt-[13%]" : "mt-10"
+                }`}
+              >
+                {cs.app.phones.map((ph) => (
+                  <figure key={ph.src}>
+                    <div className="rounded-[30px] bg-[#111] p-[5px] shadow-[0_26px_50px_-20px_rgba(0,0,0,0.6)] md:rounded-[38px] md:p-[7px]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={ph.src}
+                        alt={ph.alt}
+                        width={ph.width}
+                        height={ph.height}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full rounded-[25px] md:rounded-[31px]"
+                      />
+                    </div>
+                    <figcaption className="mt-3 text-[13px] leading-snug text-[#0d0d0d]/60">{ph.caption}</figcaption>
+                  </figure>
+                ))}
+              </div>
+              {cs.app.note && <p className="mt-6 text-[12.5px] text-[#0d0d0d]/45">{cs.app.note}</p>}
+
+              <div className="mt-12 grid gap-8 md:grid-cols-2 md:gap-x-12 lg:grid-cols-3">
+                {cs.app.features.map((f) => (
+                  <div key={f.title}>
+                    <h3 className="text-[16px] font-bold">{f.title}</h3>
+                    <p className="mt-2 text-[14.5px] leading-[1.7] text-[#0d0d0d]/70">{f.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* design notes */}
         <section className="px-6 pt-14 md:px-14 md:pt-20">
           <div className="mx-auto max-w-6xl">
-            <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-            <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
+            <h2 className="text-[20px] font-bold" style={BODY_STYLE}>
               Design notes
             </h2>
             <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70">{cs.design}</p>
@@ -313,8 +536,7 @@ export default async function CaseStudyPage({
         {review && (
           <section className="px-6 pt-14 md:px-14 md:pt-20">
             <figure className="mx-auto max-w-6xl">
-              <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
+              <h2 className="text-[20px] font-bold" style={BODY_STYLE}>
                 What the client said
               </h2>
               {/* A short review reads as a pull quote in Syne. A long one (Junk
@@ -359,10 +581,37 @@ export default async function CaseStudyPage({
           </section>
         )}
 
+        {/* FAQ: the one quiet hairline list on the page; FAQPage data is in the head script */}
+        {cs.faq?.length ? (
+          <section className="px-6 pt-14 md:px-14 md:pt-20" aria-labelledby="case-faq">
+            <div className="mx-auto max-w-6xl">
+              <h2 id="case-faq" className="text-[20px] font-bold">
+                Common questions
+              </h2>
+              <div className="mt-4 max-w-3xl border-t border-black/10">
+                {cs.faq.map((f) => (
+                  <details key={f.q} className="group border-b border-black/10 py-4">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-[15.5px] font-semibold leading-snug [&::-webkit-details-marker]:hidden">
+                      <h3 className="font-semibold">{f.q}</h3>
+                      <span
+                        aria-hidden="true"
+                        className="mt-0.5 text-[20px] leading-none text-[#dc2626] transition-transform duration-200 group-open:rotate-45"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-3 max-w-2xl text-[14.5px] leading-[1.75] text-[#0d0d0d]/70">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         {/* CTA */}
         <section className="px-6 pb-6 pt-14 text-center md:pt-20">
           <h2 className="mx-auto max-w-xl text-[34px] font-bold leading-[1.15] md:text-[44px]" style={DISPLAY}>
-            Want a site like this for your business?
+            {cs.brand || cs.app ? "Want a brand, site or app like this?" : "Want a site like this for your business?"}
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-[#0d0d0d]/65">
             Every project is quoted up front, based on what your business actually needs.

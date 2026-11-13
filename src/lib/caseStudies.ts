@@ -11,6 +11,36 @@ import { getTestimonialByAuthor, type Testimonial } from "./testimonials";
 
 export type CaseStat = { value: string; label: string };
 export type CaseFeature = { title: string; body: string };
+export type CaseImage = { src: string; alt: string; width: number; height: number };
+export type CaseFaq = { q: string; a: string };
+export type CaseLink = { href: string; label: string };
+
+/**
+ * Optional chapters for a project that was more than a website (Matts Island:
+ * logo + business cards, website, job app). A case study without them renders
+ * exactly as before.
+ */
+export type CaseBrand = {
+  heading: string;
+  intro: string;
+  /** The logo on its light and dark grounds (SVGs carry their own background). */
+  logos: CaseImage[];
+  /** Small-size mark, e.g. the browser tab icon. */
+  icon?: CaseImage & { caption: string };
+  /** One entry per colourway; the back sits behind the front. */
+  cards: { label: string; front: CaseImage; back: CaseImage }[];
+  notes: CaseFeature[];
+};
+
+export type CaseApp = {
+  heading: string;
+  intro: string;
+  desktop?: CaseImage;
+  phones: (CaseImage & { caption: string })[];
+  features: CaseFeature[];
+  /** Small print under the screens, e.g. that they show sample data. */
+  note?: string;
+};
 
 export type CaseStudy = {
   slug: string;
@@ -55,6 +85,14 @@ export type CaseStudy = {
    * and on the Morky page the review reads as Morky's.
    */
   reviewAuthorAs?: string;
+  /** Heading for the website chapter when brand/app chapters exist (default "What we built"). */
+  websiteHeading?: string;
+  brand?: CaseBrand;
+  app?: CaseApp;
+  /** Visible FAQ plus FAQPage structured data. */
+  faq?: CaseFaq[];
+  /** The service pages this project used, linked from the page. */
+  services?: CaseLink[];
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -115,61 +153,231 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "matts-island-construction",
-    // "Matts", no apostrophe: the owner's spelling (2026-10-11), even though
-    // the logo artwork still reads MATT'S. No reviewAuthor until Matt leaves
-    // a Google review; the rankings in `result` were observed 2026-10-23.
+    // "Matts", no apostrophe: the owner's spelling (2026-10-11). No
+    // reviewAuthor until Matt leaves a Google review; the rankings in
+    // `result` were observed 2026-10-23. App screens are captured from a local
+    // copy with seeded sample customers, never his live data.
     name: "Matts Island Construction",
-    kicker: "Deck builder · Shawnigan Lake, BC",
-    headline: "A deck builder's website you tour room by room",
+    kicker: "Construction company · Shawnigan Lake, BC",
+    headline: "A logo, website and job app for a Shawnigan Lake construction company",
     intro:
-      "Matts Island Construction builds decks and renovates homes around Shawnigan Lake. We rebuilt the website from scratch around a scroll tour of a house, gave Matt every word and photo to change himself, and carried the old site's addresses across so the rankings came with them.",
+      "Matts Island Construction builds decks and renovates homes around Shawnigan Lake and the Cowichan Valley. We designed the logo and business cards, rebuilt the website around a room by room tour of a house, and built the app Matt now runs the business from, from the first quote request to the paid invoice.",
     liveUrl: "https://mattsislandconstruction.ca",
     year: "2026",
-    stackLine: "Custom build · Self-serve editing · SEO migration · Business Profile setup",
-    metaTitle: "Deck Builder Website Design in Shawnigan Lake, BC",
+    stackLine: "Logo and business cards · Custom website · Job app · SEO migration",
+    metaTitle: "Construction Website, Logo & App · Shawnigan Lake",
     metaDescription:
-      "How we rebuilt a Shawnigan Lake deck builder's website with a room by room scroll tour, self-serve editing and 116 old addresses redirected.",
+      "The logo, business cards, website and job app we made for Matts Island Construction, a deck builder and contractor in Shawnigan Lake, BC.",
     client:
       "Matts Island Construction is Matt Williamson, a deck builder and general contractor in Shawnigan Lake who has worked across the Cowichan Valley since 2013. Decks are the core of it, vinyl decks and glass railings especially, alongside bathrooms, renovations, additions, garages, siding and fences. He is rated 4.9 stars on Google, holds a BBB A+ rating, and sees every job through from the quote to the finish.",
     needed:
-      "His old site was a template of more than forty pages, many of them near copies of each other for different towns, and every one of those addresses had some search history behind it. He needed a site that sells decks first, a page for each service that can rank on its own, a quote form that answers people straight away, and a way to change his own text and photos without calling anyone. It all had to go live before his old host billed him again at the end of October, with his business email moving off that same host at the same time.",
+      "His old site was a template of more than forty pages, many of them near copies of each other for different towns, and his logo was due for a refresh. He needed one look across his cards, his site and everything he sends, a site that sells decks first with a page for each service that can rank on its own, and a way to change his own words and photos. Behind the scenes, his estimates and invoices lived in one app and every quote request landed in his inbox, so running a job meant juggling several places. He wanted all of it in one place on his phone.",
+    services: [
+      { href: "/logo-design-nanaimo", label: "Logo design" },
+      { href: "/branding-nanaimo", label: "Branding and business cards" },
+      { href: "/web-design-duncan", label: "Web design in the Cowichan Valley" },
+      { href: "/web-development-nanaimo", label: "Custom web apps" },
+    ],
+    brand: {
+      heading: "The brand",
+      intro:
+        "We drew the logo from where he works: a lake house under a mountain and a setting sun, with the treeline and the lake below. Matt chose it from several rounds of options, and we carried it onto his business cards, his website and his app, so every place a customer meets him looks like the same company.",
+      logos: [
+        {
+          src: "/work-case/matts-island-construction-logo-light.svg",
+          alt: "Matts Island Construction logo on a light background: a lake house, mountain and sun above MATTS ISLAND CONSTRUCTION, designed by VDT Sites",
+          width: 932,
+          height: 660,
+        },
+        {
+          src: "/work-case/matts-island-construction-logo-dark.svg",
+          alt: "Matts Island Construction logo on a black background, the version for dark surfaces",
+          width: 932,
+          height: 660,
+        },
+      ],
+      icon: {
+        src: "/work-case/matts-island-construction-icon.svg",
+        alt: "Matts Island Construction icon: a house in a ring on orange",
+        width: 512,
+        height: 512,
+        caption: "The small-size icon, for the browser tab and the app on his home screen.",
+      },
+      cards: [
+        {
+          label: "Light",
+          front: {
+            src: "/work-case/matts-island-construction-card-light-front.webp",
+            alt: "Matts Island Construction business card, light version, front: the name above a lakeside scene",
+            width: 1050,
+            height: 600,
+          },
+          back: {
+            src: "/work-case/matts-island-construction-card-light-back.webp",
+            alt: "Matts Island Construction business card, light version, back: Matt Williamson's contact details above a treeline",
+            width: 1050,
+            height: 600,
+          },
+        },
+        {
+          label: "Black",
+          front: {
+            src: "/work-case/matts-island-construction-card-black-front.webp",
+            alt: "Matts Island Construction business card, black version, front",
+            width: 1050,
+            height: 600,
+          },
+          back: {
+            src: "/work-case/matts-island-construction-card-black-back.webp",
+            alt: "Matts Island Construction business card, black version, back with contact details",
+            width: 1050,
+            height: 600,
+          },
+        },
+      ],
+      notes: [
+        {
+          title: "A hammer in the name",
+          body: "The second T in MATTS is a framing hammer, kept from an earlier, simpler option because it says what he does before anyone reads a word.",
+        },
+        {
+          title: "A second mark for small sizes",
+          body: "A detailed logo turns to mush at the size of a browser tab, so instead of shrinking it we drew a separate icon, the house in a ring on his orange.",
+        },
+        {
+          title: "Cards ready for any printer",
+          body: "Two colourways, light and black, with the name in the sky on the front and his details over the treeline on the back, delivered as print-ready files with bleed.",
+        },
+      ],
+    },
+    websiteHeading: "The website",
     builtIntro:
       "We built the site around the work he does most, then moved everything he already had onto it one piece at a time.",
     built: [
       {
         title: "A front page you tour room by room",
-        body: "The homepage opens on an illustrated lakeside house with the walls cut away. Scroll and the camera moves through it one stop at a time: the bathroom, the garage, the kitchen, the siding and finally the deck, each with a short line about that trade and a link to its service page. The stops run left to right across the house so the tour never doubles back, and on a phone the picture fills the whole screen instead of sitting in a letterbox.",
+        body: "The homepage opens on an illustrated lakeside house with the walls cut away. Scroll and the camera moves through it one stop at a time: the bathroom, the garage, the kitchen, the siding and finally the deck, each with a short line about that trade and a link to its service page. On a phone the picture fills the whole screen instead of sitting in a letterbox.",
       },
       {
         title: "A page for every service",
-        body: "Deck building, vinyl decks, deck repair, bathrooms, home renovations, additions and garages, siding, and fences each have their own page, written for Shawnigan Lake and the towns around it, with the structured data Google reads for the business, each service and its common questions. Painting and drywall, which he coordinates, sit on the renovations page rather than posing as separate trades.",
+        body: "Deck building, vinyl decks, deck repair, bathrooms, home renovations, additions and garages, siding, and fences each have their own page, written for Shawnigan Lake and the towns around it, with the structured data Google reads for the business, each service and its common questions.",
       },
       {
         title: "His words and his photos, in his hands",
-        body: "Matt signs in with a code emailed to him, clicks any text on the live page and retypes it, and changes photos the same way. The projects gallery is built from his own job photos, sorted from an album of hundreds, and a photo only names a town when Matt has confirmed that is where the job was.",
+        body: "Matt signs in with a code emailed to him, clicks any text on the live page and retypes it, and changes photos the same way. The projects gallery is built from his own job photos, and a photo only names a town when Matt has confirmed that is where the job was.",
       },
       {
-        title: "A quote form that answers straight away",
-        body: "Every quote request is saved before the email goes out, so none can go missing on the way to his inbox, and bots are filtered by an invisible check instead of a puzzle. The person asking gets an instant reply from Matt's own address confirming it arrived, so nobody is left wondering whether the form worked.",
+        title: "A quote form that feeds the app",
+        body: "Customers can add photos to a quote request, bots are filtered by an invisible check instead of a puzzle, and every request is saved before anything else happens, so none can go missing. The person asking gets an instant reply, and the request lands in Matt's job app ready to quote.",
       },
       {
         title: "The old addresses, carried across",
-        body: "We mapped all 116 addresses from the old site and pointed each one at the page that replaced it, including the old town pages, which now land on the matching service. Links, bookmarks and search results that pointed at the old site still arrive somewhere useful, and the rankings came with them.",
+        body: "We mapped all 116 addresses from the old site and pointed each one at the page that replaced it, including the old town pages, which now land on the matching service. Links, bookmarks and search results that pointed at the old site still arrive somewhere useful.",
       },
       {
         title: "Email and Google, set up properly",
         body: "His business email moved off the old host onto Zoho with his old mail brought across, and the messages he sends now pass the checks that keep them out of spam folders. We also rebuilt his Google Business Profile: categories, services, service areas and description, plus two months of posts scheduled ahead.",
       },
     ],
+    app: {
+      heading: "The app",
+      intro:
+        "Matt runs the jobs from an app we built for him, on his own address at app.mattsislandconstruction.ca. It sits on his phone's home screen like any other app, and everything from the first quote request to the paid invoice happens in it, built around the way he already quoted and invoiced.",
+      desktop: {
+        src: "/work-case/matts-island-construction-app-desktop.webp",
+        alt: "Matts Island Construction job app on a computer: new requests, estimates out, money owed and income by month",
+        width: 1600,
+        height: 1000,
+      },
+      phones: [
+        {
+          src: "/work-case/matts-island-construction-app-home.webp",
+          alt: "Job app home screen on a phone with new quote requests and estimates waiting on a yes",
+          width: 600,
+          height: 1298,
+          caption: "Home: new requests, estimates out and money owed.",
+        },
+        {
+          src: "/work-case/matts-island-construction-app-estimate.webp",
+          alt: "An estimate in the job app with its status, price and next step",
+          width: 600,
+          height: 1298,
+          caption: "An estimate and its next step, on one screen.",
+        },
+        {
+          src: "/work-case/matts-island-construction-app-customer-page.webp",
+          alt: "The customer's own page for their project, where they send photos without logging in",
+          width: 600,
+          height: 1298,
+          caption: "The customer's page: photos in, no login needed.",
+        },
+        {
+          src: "/work-case/matts-island-construction-app-job-website.webp",
+          alt: "Making a website project page from a job in the app: photos, page title, town and type of job",
+          width: 600,
+          height: 1298,
+          caption: "A finished job becomes a page on his website.",
+        },
+      ],
+      features: [
+        {
+          title: "Quote requests arrive ready to quote",
+          body: "A request from the website lands in the app with the customer's details and photos already filled in, with a push alert to his phone.",
+        },
+        {
+          title: "Estimates with options, signed online",
+          body: "He writes estimates with wood, composite or vinyl options. The customer picks one and signs on their phone, and the deposit request goes out when they accept.",
+        },
+        {
+          title: "Invoices the way he already did them",
+          body: "Deposit and final invoices with GST added on top, a No GST tick for any line, and payments marked as card, e-transfer, cash or cheque.",
+        },
+        {
+          title: "Warranties filled in for him",
+          body: "The right supplier warranty and deck care sheet go out with the final invoice, with the customer's name, address and install date already in place and his signature on it.",
+        },
+        {
+          title: "His calendar and to-dos",
+          body: "Site visits, appointments and to-dos with reminders on his phone, and a calendar feed that shows his bookings in his phone's own calendar.",
+        },
+        {
+          title: "Reviews and new website pages",
+          body: "Once a job is paid the customer is asked for a review, and Matt can turn the job photos into a new project page on his website in a few taps.",
+        },
+      ],
+      note: "Screens shown with sample customers, not Matt's.",
+    },
     design:
-      "The brand line is set in heavy stencil capitals, the kind sprayed on a site sign, with ISLAND in a warm sunset orange and an architect's dimension line across the middle reading Shawnigan Lake, Est. 2013. The palette comes from the lake at golden hour: bone, charcoal and that orange, with the illustrated house carrying the warmth. Below the hero the design steps back, because on a trade site the job photos do the selling.",
+      "The logo sets everything else. Its sun orange, lake blue, charcoal and bone run through the cards, the website and the app, and the stencil lettering of ISLAND CONSTRUCTION becomes the website's headline, with an architect's dimension line reading Shawnigan Lake, Est. 2013. The website opens on an illustrated lakeside house as warm as the logo, then steps back below the hero, because on a trade site the job photos do the selling. The app keeps the same orange and charcoal in a quieter layout, light or dark, that reads easily on a phone at the end of a long day.",
     stats: [
       { value: "#1", label: "on Google for deck builder Shawnigan Lake, the day after launch" },
       { value: "116 / 116", label: "old site addresses redirected to the page that replaced them" },
-      { value: "8", label: "service pages, each written for Shawnigan Lake and the towns around it" },
+      { value: "4 in 1", label: "logo, business cards, website and job app, one look across all of them" },
     ],
     result:
-      "The site went live on mattsislandconstruction.ca on October 22. The next day, his new deck building page was the top unpaid result on Google for deck builder Shawnigan Lake, and the business showed first on Google Maps for deck builder and general contractor searches in Shawnigan Lake. Matt changes the words and photos himself now, and every quote request lands in his inbox with the customer already answered.",
+      "The website went live on mattsislandconstruction.ca on October 22. The next day his new deck building page was the top unpaid result on Google for deck builder Shawnigan Lake, and the business showed first on Google Maps for deck builder and general contractor searches in Shawnigan Lake. The app followed in November: quote requests from the site now arrive in it, and his estimates, invoices, warranties and schedule all run from his phone, under the same logo that is on his cards.",
+    faq: [
+      {
+        q: "Do you build websites for construction companies in Shawnigan Lake and the Cowichan Valley?",
+        a: "Yes. Matts Island Construction is in Shawnigan Lake, and we build for trades across the Cowichan Valley, Duncan, Mill Bay and the rest of Vancouver Island from our base in Nanaimo. Every site is custom built, with a page for each service so each one can rank on its own.",
+      },
+      {
+        q: "Can you design a logo and business cards for a construction company?",
+        a: "Yes. For Matts Island we drew the logo from his own surroundings, made a simple icon for small sizes, and delivered business cards in two colourways as print-ready files. The logo files for print, web and social media are his to keep.",
+      },
+      {
+        q: "What can a custom job app do for a contractor?",
+        a: "It puts the paperwork of a job in one place on your phone. Matt's app takes quote requests from his website, sends estimates customers sign online, sends deposit and final invoices, fills in supplier warranties, keeps his calendar and to-dos, and asks for a review once a job is paid. We build it around how you already quote and invoice, so there is no new system to learn.",
+      },
+      {
+        q: "Will a new website keep my Google rankings?",
+        a: "It should, if the old addresses are carried across. On this project we redirected all 116 addresses from the old site to the pages that replaced them, and his deck building page reached the top of Google for deck builder Shawnigan Lake the day after launch.",
+      },
+      {
+        q: "Can I update the website myself after it is built?",
+        a: "Yes. Matt signs in with a code sent to his email, clicks any text on his live site to change it, and swaps photos the same way. His job app can also publish a new project page from a finished job's photos.",
+      },
+    ],
   },
   {
     slug: "smugglers-cove",
