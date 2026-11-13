@@ -71,7 +71,7 @@ export default function WorkCarousel({ items }: { items: WorkItem[] }) {
       <div className="px-6 text-center">
         <h2
           className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#0d0d0d]/45"
-          style={{ fontFamily: "'Syne','Inter',sans-serif" }}
+          style={{ fontFamily: "'Roboto',system-ui,sans-serif" }}
         >
           Recent work
         </h2>
@@ -125,7 +125,7 @@ export default function WorkCarousel({ items }: { items: WorkItem[] }) {
               />
               <div className="flex items-end justify-between gap-3 px-5 py-4">
                 <div>
-                  <p className="text-[15px] font-semibold" style={{ fontFamily: "'Syne','Inter',sans-serif" }}>
+                  <p className="text-[15px] font-semibold" style={{ fontFamily: "'Roboto',system-ui,sans-serif" }}>
                     {w.name}
                   </p>
                   <p className="mt-0.5 text-[13px] text-[#0d0d0d]/55">{w.line}</p>

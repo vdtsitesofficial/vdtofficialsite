@@ -246,11 +246,11 @@ function makeTextCanvas(width, height, word) {
   //     the footer's bottom row.
   const margin = 0.72;
   let fontPx = Math.round(height * 1.20);
-  ctx.font = `400 ${fontPx}px "Anton", "Hanken Grotesk", sans-serif`;
+  ctx.font = `400 ${fontPx}px "Bebas Neue", "Hanken Grotesk", sans-serif`;
   const measured = ctx.measureText(word).width;
   if (measured > width * margin) {
     fontPx = Math.floor(fontPx * ((width * margin) / measured));
-    ctx.font = `400 ${fontPx}px "Anton", "Hanken Grotesk", sans-serif`;
+    ctx.font = `400 ${fontPx}px "Bebas Neue", "Hanken Grotesk", sans-serif`;
   }
   ctx.fillText(word, width / 2, height * 0.93);
   return c;
@@ -388,7 +388,7 @@ export function initFluidFooter(opts = {}) {
   }
   rebuildParticles();
   if (typeof document !== "undefined" && document.fonts) {
-    document.fonts.load('400 200px "Anton"').then(() => rebuildParticles());
+    document.fonts.load('400 200px "Bebas Neue"').then(() => rebuildParticles());
   }
   const ro = new ResizeObserver(rebuildParticles);
   ro.observe(wrap);

@@ -39,7 +39,12 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * means a new review sorts itself.
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
 
 const [LEAD, ...REST] = TESTIMONIALS;
@@ -70,7 +75,7 @@ export default function ReviewsPage() {
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
 
@@ -117,14 +122,14 @@ export default function ReviewsPage() {
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
-            style={{ fontFamily: SYNE }}
+            style={DISPLAY}
           >
             VDT
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[14ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
-              style={{ fontFamily: SYNE }}
+              className="max-w-[14ch] min-w-min text-[52px] font-bold leading-[1.02] md:text-[99px]"
+              style={DISPLAY}
             >
               What our clients say
             </h1>
@@ -167,7 +172,7 @@ export default function ReviewsPage() {
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute -top-2 left-0 select-none text-[110px] leading-none text-[#dc2626]/15 md:-top-6 md:text-[170px]"
-                  style={{ fontFamily: SYNE }}
+                  style={DISPLAY}
                 >
                   &ldquo;
                 </span>
@@ -175,7 +180,7 @@ export default function ReviewsPage() {
                   <Stars size={18} />
                   <blockquote
                     className="mt-5 max-w-4xl text-[24px] font-bold leading-[1.28] md:text-[38px]"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     {LEAD.quote}
                   </blockquote>
@@ -236,8 +241,8 @@ export default function ReviewsPage() {
         <section className="px-6 pt-16 md:px-14 md:pt-20">
           <div className="mx-auto max-w-6xl">
             <h2
-              className="text-[22px] font-bold md:text-[28px]"
-              style={{ fontFamily: SYNE }}
+              className="text-[29px] font-bold md:text-[36px]"
+              style={DISPLAY}
             >
               Short and to the point
             </h2>
@@ -276,8 +281,8 @@ export default function ReviewsPage() {
             <Reveal>
               <div className="max-w-2xl">
                 <h2
-                  className="text-[26px] font-bold md:text-[34px]"
-                  style={{ fontFamily: SYNE }}
+                  className="text-[34px] font-bold md:text-[44px]"
+                  style={DISPLAY}
                 >
                   Where these come from
                 </h2>
@@ -311,8 +316,8 @@ export default function ReviewsPage() {
         {/* cta - one button plus a call link, never two buttons */}
         <section className="px-6 py-20 text-center md:py-28">
           <h2
-            className="mx-auto max-w-2xl text-[26px] font-bold leading-[1.15] md:text-[36px]"
-            style={{ fontFamily: SYNE }}
+            className="mx-auto max-w-2xl text-[34px] font-bold leading-[1.15] md:text-[47px]"
+            style={DISPLAY}
           >
             Want to be the next one?
           </h2>

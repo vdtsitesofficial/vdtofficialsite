@@ -37,7 +37,12 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * Voice: no em dashes or en dashes (see lib/caseStudies.ts).
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
 const URL = `${SITE}/web-design-parksville`;
 
@@ -179,7 +184,7 @@ export default function WebDesignParksvillePage() {
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
       {/* <ContactCard> renders unstyled and cannot submit without these. */}
@@ -202,7 +207,7 @@ export default function WebDesignParksvillePage() {
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
-            style={{ fontFamily: SYNE }}
+            style={DISPLAY}
           >
             VDT
           </span>
@@ -212,8 +217,8 @@ export default function WebDesignParksvillePage() {
               Parksville · Oceanside
             </p>
             <h1
-              className="mt-4 max-w-[17ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
-              style={{ fontFamily: SYNE }}
+              className="mt-4 max-w-[17ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[83px]"
+              style={DISPLAY}
             >
               Website design in Parksville, from just up the road.
             </h1>
@@ -251,8 +256,8 @@ export default function WebDesignParksvillePage() {
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
-                className="text-3xl font-bold leading-tight md:text-[40px]"
-                style={{ fontFamily: SYNE }}
+                className="text-3xl font-bold leading-tight md:text-[52px]"
+                style={DISPLAY}
               >
                 We already build for Parksville
               </h2>
@@ -312,8 +317,8 @@ export default function WebDesignParksvillePage() {
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
-                className="text-3xl font-bold leading-tight md:text-[40px]"
-                style={{ fontFamily: SYNE }}
+                className="text-3xl font-bold leading-tight md:text-[52px]"
+                style={DISPLAY}
               >
                 What you get, and why it works
               </h2>
@@ -335,7 +340,7 @@ export default function WebDesignParksvillePage() {
                     </span>
                     <h3
                       className="text-xl font-bold leading-snug"
-                      style={{ fontFamily: SYNE }}
+                      style={BODY_STYLE}
                     >
                       {r.title}
                     </h3>
@@ -353,8 +358,8 @@ export default function WebDesignParksvillePage() {
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
             <h2
-              className="text-3xl font-bold leading-tight md:text-[40px]"
-              style={{ fontFamily: SYNE }}
+              className="text-3xl font-bold leading-tight md:text-[52px]"
+              style={DISPLAY}
             >
               Common questions
             </h2>
@@ -363,7 +368,7 @@ export default function WebDesignParksvillePage() {
                 <div key={f.q}>
                   <dt
                     className="text-lg font-bold leading-snug"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     {f.q}
                   </dt>
@@ -395,8 +400,8 @@ export default function WebDesignParksvillePage() {
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
-                className="text-3xl font-bold leading-tight md:text-[40px]"
-                style={{ fontFamily: SYNE }}
+                className="text-3xl font-bold leading-tight md:text-[52px]"
+                style={DISPLAY}
               >
                 Tell us about your Parksville business.
               </h2>

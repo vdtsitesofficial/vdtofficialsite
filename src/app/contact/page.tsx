@@ -42,7 +42,12 @@ export const metadata: Metadata = {
   },
 };
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 
 export default function ContactPage() {
   return (
@@ -50,7 +55,7 @@ export default function ContactPage() {
       {/* Contact card fonts (Inter body, Syne display) — same faces the
           card uses on the homepage. */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
       <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
@@ -107,7 +112,7 @@ export default function ContactPage() {
         </p>
         <h1
           className="mx-auto mt-3 max-w-2xl text-3xl font-bold leading-tight md:text-5xl"
-          style={{ fontFamily: SYNE }}
+          style={BODY_STYLE}
         >
           Let&rsquo;s talk about your website.
         </h1>
@@ -137,7 +142,7 @@ export default function ContactPage() {
           <h2
             id="what-happens-next"
             className="text-2xl font-bold leading-tight md:text-3xl"
-            style={{ fontFamily: SYNE }}
+            style={BODY_STYLE}
           >
             What happens after you get in touch
           </h2>
@@ -195,7 +200,7 @@ export default function ContactPage() {
 
           <h2
             className="mt-14 text-2xl font-bold leading-tight md:text-3xl"
-            style={{ fontFamily: SYNE }}
+            style={BODY_STYLE}
           >
             Useful things to mention
           </h2>

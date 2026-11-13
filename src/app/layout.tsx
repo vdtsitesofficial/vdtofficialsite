@@ -185,14 +185,11 @@ ${GA4_SNIPPET}`,
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* Site-wide font baseline. The OLD showcase design loaded Fraunces,
-            Hanken Grotesk, IBM Plex Mono, and DM Serif Display — those were
-            decommissioned when the lab took over the homepage and the blog
-            shifted to Cormorant Garamond + Inter. Page-specific fonts
-            (Syne, Cormorant Garamond, Unbounded, etc.) are loaded by each
-            page's own <link> so they don't ship on every route. */}
+        {/* Site-wide pairing (2026-11-13): Bebas Neue for display headings,
+            Roboto for body and UI. Pages that need extra faces (JetBrains
+            Mono / Space Mono on the homepage lab) load them with their own <link>. */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300..700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300..900&display=swap"
           rel="stylesheet"
         />
 

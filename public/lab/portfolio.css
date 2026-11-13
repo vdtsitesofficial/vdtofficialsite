@@ -8,7 +8,7 @@
  *
  * Required host fonts (load in <head> of the host page):
  *   <link rel="preconnect" href="https://fonts.googleapis.com">
- *   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=JetBrains+Mono:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ *   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Roboto:wght@300..900&display=swap" rel="stylesheet">
  * ============================================================ */
 
 .vdt-portfolio {
@@ -28,7 +28,7 @@
   grid-template-rows: auto 1fr auto auto;
   gap: 0.8rem;
   padding: 3.2rem 1.2rem 1.6rem;
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Roboto", ui-sans-serif, system-ui, sans-serif;
   color: var(--vdt-pf-ink);
   /* The 3D side cards poke past the right viewport edge; nothing above
      this section clips (html overflow-x is visible), so without this the
@@ -55,10 +55,10 @@
   margin-bottom: .9rem;
 }
 .vdt-portfolio__title {
-  font-family: "Unbounded", sans-serif;
-  font-weight: 900;
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+  font-weight: 400;
   font-size: clamp(1.76rem, 4.4vw, 2.88rem);
-  letter-spacing: -.025em;
+  letter-spacing: .01em;
   line-height: 1;
 }
 .vdt-portfolio__title em {
@@ -242,7 +242,7 @@
   display: flex;
   align-items: center;
   gap: .35rem;
-  font-family: "Inter", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-size: 1.1rem;
   letter-spacing: .04em;
@@ -277,7 +277,7 @@
   transition: opacity .3s;
 }
 .vdt-portfolio__meta-name {
-  font-family: "Unbounded", sans-serif;
+  font-family: 'Roboto', system-ui, sans-serif;
   font-weight: 700;
   font-size: clamp(1.1rem, 2.2vw, 1.5rem);
   letter-spacing: -.02em;

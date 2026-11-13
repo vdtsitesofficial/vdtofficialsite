@@ -129,7 +129,12 @@ export const metadata: Metadata = {
   },
 };
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 
 /* Card list lives in lib/workItems.ts, shared with /web-design-victoria. */
 
@@ -256,7 +261,7 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
       <link rel="stylesheet" href={`/lab/contact-card.css?v=${LAB_V}`} />
@@ -279,8 +284,8 @@ export default function LandingPage() {
             Nanaimo · Vancouver Island
           </p>
           <h1
-            className="mx-auto mt-4 max-w-3xl text-[34px] font-bold leading-[1.05] md:text-[58px]"
-            style={{ fontFamily: SYNE }}
+            className="mx-auto mt-4 max-w-3xl text-[44px] font-bold leading-[1.05] md:text-[75px]"
+            style={DISPLAY}
           >
             Web design in Nanaimo, built from scratch.
           </h1>
@@ -321,7 +326,7 @@ export default function LandingPage() {
             {REASONS.map((r) => (
               <div key={r.title}>
                 <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-                <h3 className="mt-5 text-[19px] font-bold" style={{ fontFamily: SYNE }}>
+                <h3 className="mt-5 text-[19px] font-bold" style={BODY_STYLE}>
                   {r.title}
                 </h3>
                 <p className="mt-3 text-[15px] leading-[1.7] text-[#0d0d0d]/65">{r.body}</p>
@@ -351,8 +356,8 @@ export default function LandingPage() {
         <section className="border-t border-black/10 px-6 pt-16 md:pt-24">
           <div className="mx-auto max-w-3xl">
             <h2
-              className="text-[26px] font-bold leading-tight md:text-[34px]"
-              style={{ fontFamily: SYNE }}
+              className="text-[34px] font-bold leading-tight md:text-[44px]"
+              style={DISPLAY}
             >
               Website design in Nanaimo, done by people who live here
             </h2>
@@ -416,8 +421,8 @@ export default function LandingPage() {
         <section className="px-6 pt-14 md:pt-20">
           <div className="mx-auto max-w-3xl">
             <h2
-              className="text-[26px] font-bold leading-tight md:text-[34px]"
-              style={{ fontFamily: SYNE }}
+              className="text-[34px] font-bold leading-tight md:text-[44px]"
+              style={DISPLAY}
             >
               Design and development, not one or the other
             </h2>
@@ -445,15 +450,15 @@ export default function LandingPage() {
         <section className="px-6 pt-16 md:pt-24">
           <div className="mx-auto max-w-3xl">
             <h2
-              className="text-[26px] font-bold leading-tight md:text-[34px]"
-              style={{ fontFamily: SYNE }}
+              className="text-[34px] font-bold leading-tight md:text-[44px]"
+              style={DISPLAY}
             >
               Common questions
             </h2>
             <dl className="mt-8 divide-y divide-black/10 border-t border-black/10">
               {FAQS.map((f) => (
                 <div key={f.q} className="py-6">
-                  <dt className="text-[17px] font-bold" style={{ fontFamily: SYNE }}>
+                  <dt className="text-[17px] font-bold" style={BODY_STYLE}>
                     {f.q}
                   </dt>
                   <dd className="mt-3 text-[15.5px] leading-[1.8] text-[#0d0d0d]/70">

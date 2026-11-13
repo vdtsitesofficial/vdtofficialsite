@@ -10,7 +10,7 @@
  *   1. The two Google Fonts (Unbounded weight 900, JetBrains Mono
  *      weight 700) must be loaded by the host page's <head>:
  *        <link rel="preconnect" href="https://fonts.googleapis.com">
- *        <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+ *        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
  *      Already present in laptop-zoom/index.html — verify before
  *      removing.
  *   2. `.vdt-hero` is `position: relative`; its absolutely-positioned
@@ -76,15 +76,15 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  font-family: "Unbounded", sans-serif;
-  font-weight: 900;
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+  font-weight: 400;
   font-size: clamp(5rem, 17vw, 16rem);
   line-height: 0.9;
   color: var(--vdt-hero-ink);
   opacity: .07;
   pointer-events: none;
   user-select: none;
-  letter-spacing: -.04em;
+  letter-spacing: .01em;
   white-space: nowrap;
   text-transform: uppercase;
   padding: 5% 2%;
@@ -119,8 +119,8 @@
   display: inline-flex;
   align-items: center;
   gap: .5rem;
-  font-family: "Unbounded", sans-serif;
-  font-weight: 900;
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+  font-weight: 400;
   font-size: .95rem;
   letter-spacing: .04em;
   color: var(--vdt-hero-ink);
@@ -337,10 +337,10 @@
 }
 
 .vdt-hero__title {
-  font-family: "Unbounded", sans-serif;
-  font-weight: 900;
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+  font-weight: 400;
   font-size: clamp(2.6rem, 7.8vw, 5.4rem);
-  letter-spacing: -.03em;
+  letter-spacing: .01em;
   line-height: 1;
   display: flex;
   align-items: baseline;

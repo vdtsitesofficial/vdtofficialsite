@@ -24,7 +24,7 @@
   overflow: hidden;
   background: var(--vdt-fl-bg);
   color: var(--vdt-fl-ink);
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Roboto", ui-sans-serif, system-ui, sans-serif;
 }
 
 /* thin hairline divider at the top of the footer */
@@ -175,10 +175,10 @@
   color: var(--vdt-fl-ink);
 }
 .vdt-fl__fallback-text {
-  font-family: "Anton", "Hanken Grotesk", sans-serif;
-  font-weight: 900;
+  font-family: 'Bebas Neue', 'Oswald', sans-serif;
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: .01em;
   font-size: clamp(64px, 22vw, 360px);
   text-align: center;
   width: 100%;

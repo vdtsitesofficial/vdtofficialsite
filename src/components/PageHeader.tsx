@@ -105,7 +105,7 @@ export default function PageHeader({
         }
         .vdt-ph__mark { width: 34px; height: 34px; }
         .vdt-ph__brand span {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 800;
           letter-spacing: 0.08em;
           font-size: 13px;

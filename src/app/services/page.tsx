@@ -38,16 +38,13 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * fourteen identical boxes.
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 
-/**
- * The big price numeral only. Syne is the page's display face, but its figures
- * are eccentric (wide, squarish, odd terminals) and at 84px the "$899" read as
- * a different typeface from the neutral grotesque in Sem's mockup. Inter 800 is
- * the match — note the font link above has to request 800 explicitly, or the
- * browser synthesises it from 700 and the strokes smear at this size.
- */
-const NUMERAL = "'Inter', system-ui, sans-serif";
 const SITE = "https://vdtsites.com";
 
 /**
@@ -335,9 +332,9 @@ export default function ServicesPage() {
   const enrico = getTestimonialByAuthor("Enrico Del Mundo");
 
   return (
-    <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
+    <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]" style={BODY_STYLE}>
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300..900&display=swap"
         rel="stylesheet"
       />
 
@@ -413,14 +410,14 @@ export default function ServicesPage() {
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
-            style={{ fontFamily: SYNE }}
+            style={DISPLAY}
           >
             VDT
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[15ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
-              style={{ fontFamily: SYNE }}
+              className="max-w-[15ch] min-w-min text-[52px] font-bold leading-[1.02] md:text-[99px]"
+              style={DISPLAY}
             >
               Everything a small business needs online.
             </h1>
@@ -457,8 +454,8 @@ export default function ServicesPage() {
                   260/mo KD 23, Semrush ca Aug 2026). A separate packages
                   page would cannibalise this one, so the keyword lives here. */}
               <h2
-                className="max-w-[24ch] min-w-min text-[26px] font-bold leading-[1.12] md:text-[34px]"
-                style={{ fontFamily: SYNE }}
+                className="max-w-[24ch] min-w-min text-[34px] font-bold leading-[1.12] md:text-[44px]"
+                style={DISPLAY}
               >
                 Website packages, both fixed price.
               </h2>
@@ -500,8 +497,8 @@ export default function ServicesPage() {
                       {name}
                     </h2>
                     <p
-                      className="mt-4 text-[60px] font-extrabold leading-[0.9] tracking-[-0.035em] md:text-[76px]"
-                      style={{ fontFamily: NUMERAL }}
+                      className="mt-4 text-[78px] font-extrabold leading-[0.9] tracking-[-0.035em] md:text-[99px]"
+                      style={DISPLAY}
                     >
                       {price}
                     </p>
@@ -522,7 +519,7 @@ export default function ServicesPage() {
                       </span>
                       <h3
                         className="text-[18px] font-bold leading-[1.15] md:text-[21px]"
-                        style={{ fontFamily: SYNE }}
+                        style={BODY_STYLE}
                       >
                         {listTitle}
                       </h3>
@@ -559,7 +556,7 @@ export default function ServicesPage() {
                   </span>
                   <h2
                     className="text-[21px] font-bold leading-[1.15] md:text-[25px]"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     What the {MONTHLY} a month covers
                   </h2>
@@ -601,7 +598,7 @@ export default function ServicesPage() {
                 <div>
                   <h2
                     className="text-[19px] font-bold md:text-[22px]"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     Getting started
                   </h2>
@@ -624,8 +621,8 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <h2
-                className="max-w-[16ch] min-w-min text-[30px] font-bold leading-[1.1] md:text-[52px]"
-                style={{ fontFamily: SYNE }}
+                className="max-w-[16ch] min-w-min text-[39px] font-bold leading-[1.1] md:text-[68px]"
+                style={DISPLAY}
               >
                 How it works, start to live.
               </h2>
@@ -644,15 +641,15 @@ export default function ServicesPage() {
                   <article className="grid gap-3 border-b border-black/10 py-7 md:grid-cols-[minmax(0,80px)_minmax(0,200px)_1fr] md:items-baseline md:gap-10 md:py-9">
                     <span
                       aria-hidden="true"
-                      className="text-[34px] font-extrabold leading-none text-[#dc2626]/20 md:text-[46px]"
-                      style={{ fontFamily: SYNE }}
+                      className="text-[44px] font-extrabold leading-none text-[#dc2626]/20 md:text-[60px]"
+                      style={DISPLAY}
                     >
                       {p.n}
                     </span>
                     <div>
                       <h3
                         className="text-[19px] font-bold md:text-[22px]"
-                        style={{ fontFamily: SYNE }}
+                        style={BODY_STYLE}
                       >
                         {p.title}
                       </h3>
@@ -680,8 +677,8 @@ export default function ServicesPage() {
                 The full list
               </p>
               <h2
-                className="mt-4 max-w-[20ch] min-w-min text-[30px] font-bold leading-[1.1] md:text-[44px]"
-                style={{ fontFamily: SYNE }}
+                className="mt-4 max-w-[20ch] min-w-min text-[39px] font-bold leading-[1.1] md:text-[57px]"
+                style={DISPLAY}
               >
                 Everything we offer, in five groups.
               </h2>
@@ -708,14 +705,14 @@ export default function ServicesPage() {
                 <div className="flex items-baseline gap-4 md:block">
                   <span
                     aria-hidden="true"
-                    className="text-[42px] font-extrabold leading-none text-[#dc2626]/20 md:text-[64px]"
-                    style={{ fontFamily: SYNE }}
+                    className="text-[55px] font-extrabold leading-none text-[#dc2626]/20 md:text-[83px]"
+                    style={DISPLAY}
                   >
                     {String(gi + 1).padStart(2, "0")}
                   </span>
                   <h2
-                    className="text-[27px] font-bold leading-[1.1] md:mt-4 md:text-[36px]"
-                    style={{ fontFamily: SYNE }}
+                    className="text-[35px] font-bold leading-[1.1] md:mt-4 md:text-[47px]"
+                    style={DISPLAY}
                   >
                     {group.title}
                   </h2>
@@ -754,7 +751,7 @@ export default function ServicesPage() {
                         <div>
                           <h3
                             className="text-[18px] font-bold md:text-[20px]"
-                            style={{ fontFamily: SYNE }}
+                            style={BODY_STYLE}
                           >
                             {s.name}
                           </h3>
@@ -779,8 +776,8 @@ export default function ServicesPage() {
           <Reveal>
             <div className="mx-auto max-w-6xl rounded-[18px] rounded-br-[64px] border border-black/10 bg-white/60 px-7 py-10 md:px-14 md:py-14">
               <h2
-                className="max-w-[20ch] min-w-min text-[24px] font-bold leading-[1.15] md:text-[34px]"
-                style={{ fontFamily: SYNE }}
+                className="max-w-[20ch] min-w-min text-[31px] font-bold leading-[1.15] md:text-[44px]"
+                style={DISPLAY}
               >
                 The bills you do not get.
               </h2>
@@ -822,7 +819,7 @@ export default function ServicesPage() {
               <figure className="mx-auto max-w-4xl">
                 <blockquote
                   className="border-l-2 border-[#dc2626] pl-6 text-[19px] leading-[1.65] md:pl-9 md:text-[24px]"
-                  style={{ fontFamily: SYNE }}
+                  style={BODY_STYLE}
                 >
                   {enrico.quote}
                 </blockquote>
@@ -839,8 +836,8 @@ export default function ServicesPage() {
           <Reveal>
             <div className="mx-auto max-w-6xl">
               <h2
-                className="max-w-[18ch] min-w-min text-[30px] font-bold leading-[1.1] md:text-[52px]"
-                style={{ fontFamily: SYNE }}
+                className="max-w-[18ch] min-w-min text-[39px] font-bold leading-[1.1] md:text-[68px]"
+                style={DISPLAY}
               >
                 Not sure which of these you need?
               </h2>

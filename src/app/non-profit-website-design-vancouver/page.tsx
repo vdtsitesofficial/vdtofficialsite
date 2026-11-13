@@ -50,7 +50,12 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * Voice: no em dashes or en dashes (see lib/caseStudies.ts).
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
 const URL = `${SITE}/non-profit-website-design-vancouver`;
 
@@ -210,7 +215,7 @@ export default function NonProfitVancouverPage() {
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
       <script
@@ -226,7 +231,7 @@ export default function NonProfitVancouverPage() {
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
-            style={{ fontFamily: SYNE }}
+            style={DISPLAY}
           >
             VDT
           </span>
@@ -236,8 +241,8 @@ export default function NonProfitVancouverPage() {
               Non-Profits &amp; Charities
             </p>
             <h1
-              className="mt-4 max-w-[16ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[64px]"
-              style={{ fontFamily: SYNE }}
+              className="mt-4 max-w-[16ch] min-w-min text-4xl font-bold leading-[1.05] md:text-[83px]"
+              style={DISPLAY}
             >
               Non-profit website design in Vancouver.
             </h1>
@@ -274,8 +279,8 @@ export default function NonProfitVancouverPage() {
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
-                className="text-3xl font-bold leading-tight md:text-[40px]"
-                style={{ fontFamily: SYNE }}
+                className="text-3xl font-bold leading-tight md:text-[52px]"
+                style={DISPLAY}
               >
                 What a non-profit site has to do that a business site
                 doesn&rsquo;t
@@ -300,7 +305,7 @@ export default function NonProfitVancouverPage() {
                     </span>
                     <h3
                       className="text-xl font-bold leading-snug"
-                      style={{ fontFamily: SYNE }}
+                      style={BODY_STYLE}
                     >
                       {d.title}
                     </h3>
@@ -323,8 +328,8 @@ export default function NonProfitVancouverPage() {
                   The part most people miss
                 </p>
                 <h2
-                  className="mt-4 text-3xl font-bold leading-tight md:text-[40px]"
-                  style={{ fontFamily: SYNE }}
+                  className="mt-4 text-3xl font-bold leading-tight md:text-[52px]"
+                  style={DISPLAY}
                 >
                   Your website is what qualifies you for Google Ad Grants
                 </h2>
@@ -377,8 +382,8 @@ export default function NonProfitVancouverPage() {
                   Proof
                 </p>
                 <h2
-                  className="mt-4 text-3xl font-bold leading-tight md:text-[40px]"
-                  style={{ fontFamily: SYNE }}
+                  className="mt-4 text-3xl font-bold leading-tight md:text-[52px]"
+                  style={DISPLAY}
                 >
                   Donations, volunteers and compliance, already built
                 </h2>
@@ -441,8 +446,8 @@ export default function NonProfitVancouverPage() {
         <section className="border-t border-black/10 px-6 py-16 md:px-14 md:py-20">
           <div className="mx-auto max-w-6xl">
             <h2
-              className="text-3xl font-bold leading-tight md:text-[40px]"
-              style={{ fontFamily: SYNE }}
+              className="text-3xl font-bold leading-tight md:text-[52px]"
+              style={DISPLAY}
             >
               Common questions
             </h2>
@@ -451,7 +456,7 @@ export default function NonProfitVancouverPage() {
                 <div key={f.q}>
                   <dt
                     className="text-lg font-bold leading-snug"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     {f.q}
                   </dt>
@@ -469,8 +474,8 @@ export default function NonProfitVancouverPage() {
           <div className="mx-auto max-w-6xl">
             <div className={SPLIT}>
               <h2
-                className="text-3xl font-bold leading-tight md:text-[40px]"
-                style={{ fontFamily: SYNE }}
+                className="text-3xl font-bold leading-tight md:text-[52px]"
+                style={DISPLAY}
               >
                 Tell us what your organization does.
               </h2>

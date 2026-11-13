@@ -27,7 +27,7 @@ export default function BlogLayout({
         crossOrigin="anonymous"
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300..900&display=swap"
         rel="stylesheet"
       />
       {/* Same ?v= cache-bust the homepage uses. Without it the blog kept
@@ -152,7 +152,7 @@ export default function BlogLayout({
 
         /* Breadcrumb across top of header. */
         .vdt-article__crumbs {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.22em;
@@ -174,7 +174,7 @@ export default function BlogLayout({
 
         /* The eyebrow category above the title. */
         .vdt-article__kicker {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 11px;
           font-weight: 600;
           letter-spacing: 0.32em;
@@ -195,11 +195,11 @@ export default function BlogLayout({
 
         /* The title — the site's display face, same as every other h1. */
         .vdt-article__title {
-          font-family: 'Syne', 'Inter', sans-serif;
-          font-weight: 700;
+          font-family: 'Bebas Neue', 'Oswald', sans-serif;
+          font-weight: 400;
           font-size: clamp(1.9rem, 4.4vw, 3rem);
           line-height: 1.02;
-          letter-spacing: -0.015em;
+          letter-spacing: .01em;
           color: #1a1a1a;
           margin: 0 0 28px;
           max-width: 18ch;
@@ -210,7 +210,7 @@ export default function BlogLayout({
            display one — it's a sentence to read, and the site sets its hero
            paragraphs in Inter too. */
         .vdt-article__lede {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 400;
           font-size: clamp(1.15rem, 1.7vw, 1.35rem);
           line-height: 1.55;
@@ -236,14 +236,14 @@ export default function BlogLayout({
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: 1rem;
           letter-spacing: -0.02em;
           flex-shrink: 0;
         }
         .vdt-article__byline-text {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 13.5px;
           line-height: 1.4;
           color: #1a1a1a;
@@ -252,7 +252,7 @@ export default function BlogLayout({
           font-weight: 600;
         }
         .vdt-article__byline-meta {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.18em;
@@ -264,7 +264,7 @@ export default function BlogLayout({
 
         /* ── TOC marginalia ────────────────────────────────────── */
         .vdt-toc__label {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10px;
           font-weight: 600;
           letter-spacing: 0.28em;
@@ -283,7 +283,7 @@ export default function BlogLayout({
           gap: 14px;
         }
         .vdt-toc__item a {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 13.5px;
           font-weight: 600;
           line-height: 1.3;
@@ -321,7 +321,7 @@ export default function BlogLayout({
          * ============================================================ */
 
         .vdt-prose {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 18px;
           line-height: 1.78;
           color: #2a2823;
@@ -340,8 +340,8 @@ export default function BlogLayout({
 
         /* Drop cap on the very first paragraph. */
         .vdt-prose > p:first-of-type::first-letter {
-          font-family: 'Syne', 'Inter', sans-serif;
-          font-weight: 700;
+          font-family: 'Bebas Neue', 'Oswald', sans-serif;
+          font-weight: 400;
           font-size: 3.1em;
           float: left;
           line-height: 0.82;
@@ -355,7 +355,7 @@ export default function BlogLayout({
         .vdt-prose h2 {
           margin-top: 3em;
           margin-bottom: 0.5em;
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: clamp(1.35rem, 2.5vw, 1.7rem);
           line-height: 1.12;
@@ -367,7 +367,7 @@ export default function BlogLayout({
         .vdt-prose h2::before {
           content: attr(data-num);
           display: block;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 700;
           letter-spacing: 0.32em;
@@ -397,7 +397,7 @@ export default function BlogLayout({
           background: currentColor;
         }
         .vdt-ornament__mark {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: 1.05rem;
           line-height: 1;
@@ -408,7 +408,7 @@ export default function BlogLayout({
         .vdt-prose h3 {
           margin-top: 2em;
           margin-bottom: 0.4em;
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: clamp(1.05rem, 1.4vw, 1.2rem);
           line-height: 1.3;
@@ -435,7 +435,7 @@ export default function BlogLayout({
           position: absolute;
           left: 0;
           top: -0.05em;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 1.2em;
           color: #dc2626;
           line-height: 1;
@@ -470,7 +470,7 @@ export default function BlogLayout({
           border-top: 1px solid rgba(26, 26, 26, 0.12);
         }
         .vdt-faq__heading {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: clamp(1.35rem, 2.5vw, 1.7rem);
           line-height: 1.12;
@@ -482,7 +482,7 @@ export default function BlogLayout({
         .vdt-faq__item { margin-bottom: 28px; }
         .vdt-faq__item:last-child { margin-bottom: 0; }
         .vdt-faq__q {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: 1.05rem;
           line-height: 1.35;
@@ -490,7 +490,7 @@ export default function BlogLayout({
           margin-bottom: 10px;
         }
         .vdt-faq__a {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 17px;
           line-height: 1.7;
           color: #2a2823;
@@ -531,20 +531,20 @@ export default function BlogLayout({
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: 17px;
           letter-spacing: 0.02em;
         }
         .vdt-author__name {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: 1.05rem;
           color: #1a1a1a;
           margin: 0;
         }
         .vdt-author__role {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 12px;
           font-weight: 600;
           letter-spacing: 0.06em;
@@ -553,7 +553,7 @@ export default function BlogLayout({
           margin: 4px 0 0;
         }
         .vdt-author__bio {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 15.5px;
           line-height: 1.65;
           color: #2a2823;
@@ -562,7 +562,7 @@ export default function BlogLayout({
         .vdt-author__link {
           display: inline-block;
           margin-top: 10px;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 12px;
           font-weight: 600;
           letter-spacing: 0.12em;
@@ -588,7 +588,7 @@ export default function BlogLayout({
           border-top: 1px solid rgba(26, 26, 26, 0.12);
         }
         .vdt-related__heading {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: clamp(1.35rem, 2.5vw, 1.7rem);
           line-height: 1.12;
@@ -621,7 +621,7 @@ export default function BlogLayout({
           transform: translateY(-2px);
         }
         .vdt-related__kicker {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.22em;
@@ -629,14 +629,14 @@ export default function BlogLayout({
           color: #dc2626;
         }
         .vdt-related__title {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-weight: 700;
           font-size: 1.05rem;
           line-height: 1.3;
           color: #1a1a1a;
         }
         .vdt-related__excerpt {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 15px;
           line-height: 1.6;
           color: #6f6a60;
@@ -644,7 +644,7 @@ export default function BlogLayout({
         .vdt-related__more {
           margin-top: auto;
           padding-top: 6px;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 12px;
           font-weight: 600;
           letter-spacing: 0.12em;
@@ -659,7 +659,7 @@ export default function BlogLayout({
          *  Coda — signature, CTA, back link.
          * ============================================================ */
         .vdt-coda__sig {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 0.85rem;
           font-weight: 600;
           color: #6f6a60;
@@ -674,7 +674,7 @@ export default function BlogLayout({
           flex-wrap: wrap;
         }
         .vdt-coda__sig .stamp {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.22em;
@@ -702,7 +702,7 @@ export default function BlogLayout({
           }
         }
         .vdt-coda__cta-title {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: clamp(1.2rem, 1.9vw, 1.5rem);
           line-height: 1.15;
           color: #1a1a1a;
@@ -711,7 +711,7 @@ export default function BlogLayout({
           max-width: 28ch;
         }
         .vdt-coda__cta-btn {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.24em;
@@ -741,7 +741,7 @@ export default function BlogLayout({
 
         .vdt-coda__back {
           margin-top: 56px;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Roboto', system-ui, sans-serif;
           font-size: 10.5px;
           font-weight: 600;
           letter-spacing: 0.24em;

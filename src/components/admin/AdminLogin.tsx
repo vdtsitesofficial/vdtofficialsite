@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { C, SYNE, FONT_HREF } from "./theme";
+import { C, SYNE, DISPLAY_FONT, FONT_HREF } from "./theme";
 
 type Step = "email" | "pin";
 
@@ -90,7 +90,7 @@ export default function AdminLogin() {
       <span
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-[6%] -translate-x-1/2 select-none text-[110px] font-extrabold leading-none tracking-tight md:text-[190px]"
-        style={{ fontFamily: SYNE, color: "rgba(13,13,13,0.035)" }}
+        style={{ fontFamily: DISPLAY_FONT, fontWeight: 400, color: "rgba(13,13,13,0.035)" }}
       >
         VDT
       </span>

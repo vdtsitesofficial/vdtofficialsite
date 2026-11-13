@@ -22,7 +22,12 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * and serve from the edge cache like the rest of the public site.
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
 /** Reviews longer than this render as body text rather than a pull quote. */
 const LONG_QUOTE = 600;
@@ -78,9 +83,9 @@ export default async function CaseStudyPage({
   const next = CASE_STUDIES[(i + 1) % CASE_STUDIES.length];
 
   return (
-    <div className="flex min-h-svh flex-col bg-[#f4efe6] text-[#0d0d0d]">
+    <div className="flex min-h-svh flex-col bg-[#f4efe6] text-[#0d0d0d]" style={BODY_STYLE}>
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300..900&display=swap"
         rel="stylesheet"
       />
 
@@ -150,8 +155,8 @@ export default async function CaseStudyPage({
                 information though, so it moves below the headline and joins
                 the stack line as a meta row rather than being deleted. */}
             <h1
-              className="max-w-3xl text-[34px] font-bold leading-[1.05] md:text-[56px]"
-              style={{ fontFamily: SYNE }}
+              className="max-w-3xl text-[44px] font-bold leading-[1.05] md:text-[73px]"
+              style={DISPLAY}
             >
               {cs.headline}
             </h1>
@@ -193,14 +198,14 @@ export default async function CaseStudyPage({
           <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:gap-14">
             <div>
               <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
+              <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
                 The client
               </h2>
               <p className="mt-3 text-[15px] leading-[1.75] text-[#0d0d0d]/70">{cs.client}</p>
             </div>
             <div>
               <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
+              <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
                 What they needed
               </h2>
               <p className="mt-3 text-[15px] leading-[1.75] text-[#0d0d0d]/70">{cs.needed}</p>
@@ -212,7 +217,7 @@ export default async function CaseStudyPage({
         <section className="px-6 pt-14 md:px-14 md:pt-20">
           <div className="mx-auto max-w-6xl">
             <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-            <h2 className="mt-4 text-[24px] font-bold" style={{ fontFamily: SYNE }}>
+            <h2 className="mt-4 text-[24px] font-bold" style={BODY_STYLE}>
               What we built
             </h2>
             <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70">
@@ -222,7 +227,7 @@ export default async function CaseStudyPage({
             <div className={`mt-8 grid gap-7 md:grid-cols-2 ${cs.built.length === 4 ? "" : "lg:grid-cols-3"}`}>
               {cs.built.map((f) => (
                 <div key={f.title} className="rounded-xl border border-black/10 bg-white/55 p-6">
-                  <h3 className="text-[16px] font-bold" style={{ fontFamily: SYNE }}>
+                  <h3 className="text-[16px] font-bold" style={BODY_STYLE}>
                     {f.title}
                   </h3>
                   <p className="mt-2.5 text-[14.5px] leading-[1.7] text-[#0d0d0d]/70">{f.body}</p>
@@ -262,7 +267,7 @@ export default async function CaseStudyPage({
         <section className="px-6 pt-14 md:px-14 md:pt-20">
           <div className="mx-auto max-w-6xl">
             <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-            <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
+            <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
               Design notes
             </h2>
             <p className="mt-3 max-w-2xl text-[15px] leading-[1.75] text-[#0d0d0d]/70">{cs.design}</p>
@@ -279,13 +284,13 @@ export default async function CaseStudyPage({
               aria-hidden="true"
               className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#dc2626] to-transparent opacity-70"
             />
-            <h2 className="text-[20px] font-bold" style={{ fontFamily: SYNE }}>
+            <h2 className="text-[20px] font-bold" style={BODY_STYLE}>
               The result
             </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-3">
               {cs.stats.map((s) => (
                 <div key={s.label}>
-                  <p className="text-[22px] font-bold text-[#ff6b5e] md:text-[24px]" style={{ fontFamily: SYNE }}>
+                  <p className="text-[22px] font-bold text-[#ff6b5e] md:text-[24px]" style={BODY_STYLE}>
                     {s.value}
                   </p>
                   <p className="mt-1.5 text-[13px] leading-[1.55] text-white/65">{s.label}</p>
@@ -309,7 +314,7 @@ export default async function CaseStudyPage({
           <section className="px-6 pt-14 md:px-14 md:pt-20">
             <figure className="mx-auto max-w-6xl">
               <div className="h-[3px] w-11 rounded bg-[#dc2626]" />
-              <h2 className="mt-4 text-[20px] font-bold" style={{ fontFamily: SYNE }}>
+              <h2 className="mt-4 text-[20px] font-bold" style={BODY_STYLE}>
                 What the client said
               </h2>
               {/* A short review reads as a pull quote in Syne. A long one (Junk
@@ -322,7 +327,7 @@ export default async function CaseStudyPage({
                   return (
                     <blockquote
                       className="mt-5 max-w-3xl text-[19px] leading-[1.6] text-[#0d0d0d]/85 md:text-[22px] md:leading-[1.55]"
-                      style={{ fontFamily: SYNE }}
+                      style={BODY_STYLE}
                     >
                       <span aria-hidden="true" className="text-[#dc2626]">&ldquo;</span>
                       {quote}
@@ -356,7 +361,7 @@ export default async function CaseStudyPage({
 
         {/* CTA */}
         <section className="px-6 pb-6 pt-14 text-center md:pt-20">
-          <h2 className="mx-auto max-w-xl text-[26px] font-bold leading-[1.15] md:text-[34px]" style={{ fontFamily: SYNE }}>
+          <h2 className="mx-auto max-w-xl text-[34px] font-bold leading-[1.15] md:text-[44px]" style={DISPLAY}>
             Want a site like this for your business?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-[#0d0d0d]/65">

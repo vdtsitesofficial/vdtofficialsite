@@ -1,4 +1,9 @@
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 
 /**
  * The "Who you'd actually be working with" trust card: both headshots,
@@ -40,7 +45,7 @@ export default function TeamCard({
       </div>
       <h2
         className="mt-4 text-[22px] font-bold md:text-[26px]"
-        style={{ fontFamily: SYNE }}
+        style={BODY_STYLE}
       >
         Who you&rsquo;d actually be working with
       </h2>

@@ -12,7 +12,12 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * CollectionPage + ItemList structured data so crawlers see the set.
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
 
 export const metadata: Metadata = {
@@ -39,9 +44,9 @@ export default function WorkIndexPage() {
   const [featured, ...rest] = CASE_STUDIES;
 
   return (
-    <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
+    <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]" style={BODY_STYLE}>
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300..900&display=swap"
         rel="stylesheet"
       />
 
@@ -79,14 +84,14 @@ export default function WorkIndexPage() {
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
-            style={{ fontFamily: SYNE }}
+            style={DISPLAY}
           >
             VDT
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[15ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
-              style={{ fontFamily: SYNE }}
+              className="max-w-[15ch] min-w-min text-[52px] font-bold leading-[1.02] md:text-[99px]"
+              style={DISPLAY}
             >
               Work we&rsquo;re proud to sign.
             </h1>
@@ -112,7 +117,7 @@ export default function WorkIndexPage() {
           <Reveal>
             <p
               className="mx-auto max-w-4xl text-[21px] leading-[1.55] md:text-[30px]"
-              style={{ fontFamily: SYNE }}
+              style={BODY_STYLE}
             >
               Every site here was designed and built from scratch for a
               small business.{" "}
@@ -146,8 +151,8 @@ export default function WorkIndexPage() {
                 />
                 <div className="px-2 pb-2 md:pr-6">
                   <h2
-                    className="text-[26px] font-bold leading-[1.1] md:text-[36px]"
-                    style={{ fontFamily: SYNE }}
+                    className="text-[34px] font-bold leading-[1.1] md:text-[47px]"
+                    style={DISPLAY}
                   >
                     {featured.name}
                   </h2>
@@ -182,7 +187,7 @@ export default function WorkIndexPage() {
                     height={900}
                   />
                   <div className="px-2 pb-2 pt-4">
-                    <h2 className="text-[19px] font-bold" style={{ fontFamily: SYNE }}>
+                    <h2 className="text-[19px] font-bold" style={BODY_STYLE}>
                       {c.name}
                     </h2>
                     <p className="mt-1.5 text-[14px] leading-[1.6] text-[#0d0d0d]/65">

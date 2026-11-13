@@ -14,11 +14,11 @@ const CARD_BG = "#fbf7ee"; // a tick warmer than the page canvas for separation
 // The site's pairing — Syne display, Inter body — not the separate editorial
 // serif this page used to run. Syne is loaded at 600/700/800 with no italic;
 // don't ask for other weights here or the browser synthesises them.
-const DISPLAY = "'Syne', 'Inter', sans-serif";
-const BODY = "'Inter', system-ui, sans-serif";
+const DISPLAY = "'Bebas Neue', 'Oswald', sans-serif";
+const BODY = "'Roboto', system-ui, sans-serif";
 // Small tracked uppercase labels. Were JetBrains Mono, which this route never
 // actually loaded, so they rendered in whatever mono the OS had.
-const LABEL = "'Inter', system-ui, sans-serif";
+const LABEL = "'Roboto', system-ui, sans-serif";
 
 export const metadata: Metadata = {
   // Descriptive on purpose — with the "| VDT Sites" template this lands at
@@ -131,8 +131,8 @@ export default function BlogIndexPage() {
         <h1
           style={{
             fontFamily: DISPLAY,
-            fontWeight: 700,
-            fontSize: "clamp(2rem, 3.8vw, 3rem)",
+            fontWeight: 400,
+            fontSize: "clamp(2.6rem, 4.9vw, 3.9rem)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: INK,
@@ -207,7 +207,7 @@ export default function BlogIndexPage() {
         <h2
           id="blog-about"
           style={{
-            fontFamily: DISPLAY,
+            fontFamily: BODY,
             fontWeight: 700,
             fontSize: "clamp(1.35rem, 2.5vw, 1.7rem)",
             lineHeight: 1.15,
@@ -287,7 +287,7 @@ function FeaturedCard({ post }: { post: PostLike }) {
       <MetaRow post={post} />
       <h2
         style={{
-          fontFamily: DISPLAY,
+          fontFamily: BODY,
           fontWeight: 700,
           fontSize: "clamp(1.4rem, 2.4vw, 1.9rem)",
           lineHeight: 1.12,
@@ -353,7 +353,7 @@ function CompactCard({ post }: { post: PostLike }) {
       <MetaRow post={post} compact />
       <h3
         style={{
-          fontFamily: DISPLAY,
+          fontFamily: BODY,
           fontWeight: 700,
           fontSize: "1.15rem",
           lineHeight: 1.25,

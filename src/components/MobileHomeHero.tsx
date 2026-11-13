@@ -37,9 +37,9 @@ const C = {
 };
 
 const F = {
-  headline: "'Anton', 'Arial Narrow', sans-serif",
+  headline: "'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif",
   mono: "'Space Mono', 'Courier New', monospace",
-  body: "'Inter', system-ui, sans-serif",
+  body: "'Roboto', system-ui, sans-serif",
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;

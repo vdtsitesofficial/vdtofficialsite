@@ -44,9 +44,11 @@ export const C = {
   highlight: "#8a5a00",
 } as const;
 
-/** Display face, same stack the public pages use. */
-export const SYNE = "'Syne', 'Inter', sans-serif";
+/** Heading face for the admin's small headings (Roboto, the site's body face). */
+export const SYNE = "'Roboto', system-ui, sans-serif";
+/** Display face for the ghost wordmark, same as the public pages. */
+export const DISPLAY_FONT = "'Bebas Neue', 'Oswald', sans-serif";
 
 /** The one stylesheet both admin screens need. */
 export const FONT_HREF =
-  "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap";
+  "https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap";

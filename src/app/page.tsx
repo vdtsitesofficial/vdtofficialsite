@@ -175,11 +175,11 @@ export default function Home() {
           app/layout.tsx's <head>); the browser dedupes them but it bloats
           the HTML otherwise. */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300..900&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet"
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=JetBrains+Mono:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@700&display=swap"
         rel="stylesheet"
       />
       {/* Zoom-hero image preloads. These live HERE, not in the root layout,
@@ -1219,7 +1219,7 @@ export default function Home() {
       >
         <p
           className="text-[15px] font-medium text-[#0d0d0d]/70"
-          style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+          style={{ fontFamily: "'Roboto', system-ui, sans-serif" }}
         >
           Like what you see? Let&rsquo;s build yours.
         </p>
@@ -1227,14 +1227,14 @@ export default function Home() {
           <a
             href="tel:+12506162087"
             className="rounded-full bg-[#dc2626] px-7 py-3 text-[14px] font-bold text-white transition-transform hover:scale-[1.03]"
-            style={{ fontFamily: "'Syne', 'Inter', sans-serif" }}
+            style={{ fontFamily: "'Roboto', system-ui, sans-serif" }}
           >
             Call 250-616-2087
           </a>
           <a
             href="#contact"
             className="rounded-full border border-[#0d0d0d]/25 px-7 py-3 text-[14px] font-semibold text-[#0d0d0d] transition-colors hover:border-[#0d0d0d]/60"
-            style={{ fontFamily: "'Syne', 'Inter', sans-serif" }}
+            style={{ fontFamily: "'Roboto', system-ui, sans-serif" }}
           >
             Start a conversation
           </a>
@@ -1244,7 +1244,7 @@ export default function Home() {
             rather than one more footer row. */}
         <p
           className="mx-auto mt-6 max-w-[54ch] text-[13px] leading-relaxed text-[#0d0d0d]/55"
-          style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+          style={{ fontFamily: "'Roboto', system-ui, sans-serif" }}
         >
           Building the site is one half of it. If you also need customers to
           find you on Google, we offer{" "}
@@ -1448,7 +1448,7 @@ export default function Home() {
                   <div className="mock mock--type" aria-hidden="true">
                     <div className="mock-card__label">TYPOGRAPHY</div>
                     <div className="mock-type__sample">Aa</div>
-                    <div className="mock-type__name">Unbounded</div>
+                    <div className="mock-type__name">Bebas Neue</div>
                     <div className="mock-card__caption">
                       Bold headlines.
                       <br />

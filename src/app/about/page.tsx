@@ -20,7 +20,12 @@ import ZohoPartnerBadge from "@/components/ZohoPartnerBadge";
  * Syne display, red accent) so the site reads as one thing.
  */
 
-const SYNE = "'Syne', 'Inter', sans-serif";
+/** Display face (headings 30px+). Bebas Neue is caps-only with one weight,
+ * so the inline weight pins it to 400 over any font-bold class. */
+const DISPLAY = { fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontWeight: 400, letterSpacing: "0.01em" } as const;
+/** Body and small headings: Roboto. */
+const BODY = "'Roboto', system-ui, sans-serif";
+const BODY_STYLE = { fontFamily: BODY } as const;
 const SITE = "https://vdtsites.com";
 
 type Founder = {
@@ -104,7 +109,7 @@ export default async function AboutPage() {
   return (
     <div className="flex min-h-svh flex-col overflow-x-clip bg-[#f4efe6] text-[#0d0d0d]">
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300..900&family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
 
@@ -144,14 +149,14 @@ export default async function AboutPage() {
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 top-0 select-none text-[128px] font-extrabold leading-none tracking-tight text-[#0d0d0d]/[0.035] md:-right-6 md:text-[230px]"
-            style={{ fontFamily: SYNE }}
+            style={DISPLAY}
           >
             VDT
           </span>
           <div className="relative mx-auto max-w-6xl">
             <h1
-              className="max-w-[15ch] min-w-min text-[40px] font-bold leading-[1.02] md:text-[76px]"
-              style={{ fontFamily: SYNE }}
+              className="max-w-[15ch] min-w-min text-[52px] font-bold leading-[1.02] md:text-[99px]"
+              style={DISPLAY}
             >
               Two students who build websites that work.
             </h1>
@@ -176,8 +181,8 @@ export default async function AboutPage() {
         <section className="px-6 pt-20 md:px-14 md:pt-28">
           <Reveal>
             <p
-              className="mx-auto max-w-4xl text-[21px] leading-[1.55] md:text-[30px]"
-              style={{ fontFamily: SYNE }}
+              className="mx-auto max-w-4xl text-[27px] leading-[1.55] md:text-[39px]"
+              style={DISPLAY}
             >
               We met on the VIU Mariners volleyball team and started VDT Sites
               because small businesses on the Island kept getting quoted agency
@@ -218,7 +223,7 @@ export default async function AboutPage() {
                   </p>
                   <h2
                     className="mt-1.5 text-[21px] font-bold"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     {f.name}
                   </h2>
@@ -245,8 +250,8 @@ export default async function AboutPage() {
         <section className="px-6 pt-16 md:px-14 md:pt-24">
           <div className="mx-auto max-w-4xl">
             <h2
-              className="text-center text-[26px] font-bold md:text-[34px]"
-              style={{ fontFamily: SYNE }}
+              className="text-center text-[34px] font-bold md:text-[44px]"
+              style={DISPLAY}
             >
               How we work
             </h2>
@@ -258,7 +263,7 @@ export default async function AboutPage() {
                 >
                   <h3
                     className="text-[16px] font-bold"
-                    style={{ fontFamily: SYNE }}
+                    style={BODY_STYLE}
                   >
                     {p.title}
                   </h3>
@@ -275,8 +280,8 @@ export default async function AboutPage() {
         <section className="px-6 pt-16 md:px-14 md:pt-24">
           <div className="mx-auto max-w-4xl">
             <h2
-              className="text-center text-[26px] font-bold md:text-[34px]"
-              style={{ fontFamily: SYNE }}
+              className="text-center text-[34px] font-bold md:text-[44px]"
+              style={DISPLAY}
             >
               What clients say
             </h2>
@@ -325,8 +330,8 @@ export default async function AboutPage() {
         <section className="px-6 pt-16 md:px-14 md:pt-24">
           <div className="mx-auto max-w-4xl">
             <h2
-              className="text-center text-[26px] font-bold md:text-[34px]"
-              style={{ fontFamily: SYNE }}
+              className="text-center text-[34px] font-bold md:text-[44px]"
+              style={DISPLAY}
             >
               <PageText page="about" k="clientsHeading" live={about} />
             </h2>
@@ -377,8 +382,8 @@ export default async function AboutPage() {
         {/* cta */}
         <section className="px-6 py-20 text-center md:py-28">
           <h2
-            className="mx-auto max-w-2xl text-[26px] font-bold leading-[1.15] md:text-[36px]"
-            style={{ fontFamily: SYNE }}
+            className="mx-auto max-w-2xl text-[34px] font-bold leading-[1.15] md:text-[47px]"
+            style={DISPLAY}
           >
             Want to see what we&rsquo;d do with your site?
           </h2>

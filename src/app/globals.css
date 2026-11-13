@@ -9,9 +9,9 @@
   --color-accent: #5D6A4A;
   --color-accent-strong: #43503A;
 
-  --font-display: "Anton", "Oswald", "Bebas Neue", "Hanken Grotesk", system-ui, sans-serif;
+  --font-display: 'Bebas Neue', 'Oswald', sans-serif;
   --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --font-body: "Hanken Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: 'Roboto', system-ui, sans-serif;
 
   /* Soft lifted surface for the /services price cards (Sem's mockup
      2026-08-03). A theme token, not an inline `shadow-[0_1px_2px_rgba(...)]`:
