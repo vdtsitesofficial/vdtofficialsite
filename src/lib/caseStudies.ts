@@ -397,7 +397,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stackLine: "Custom design · Self-serve editing · FAQ schema · Domain migration",
     metaTitle: "Hair Salon Website Design in Nanaimo, BC",
     metaDescription:
-      "How we rebuilt a north Nanaimo hair salon's website: easy to read, edited by the salon itself, with real reviews and the domain moved into their own name.",
+      "How we rebuilt a north Nanaimo hair salon's website: easy to read, edited by the salon itself, with Google reviews and the domain moved into their own name.",
     client:
       "Chameleon Hair Salon is a small team of Red Seal stylists on Departure Bay Road in north Nanaimo, rated 4.8 stars on Google. Cuts, colour with Wella, hair tattoos and Ayurvedic head massage, from a salon that does its own recycling and calls itself green.",
     needed:
@@ -418,7 +418,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         body: "More than 250 pieces of text edit in place, along with 17 photos and every list on the site. The salon signs in with a one time code sent to their email, clicks the text on the page and types, and the change is public within seconds. Prices, hours, stylist write ups, the FAQ and the photos all change without a call to us.",
       },
       {
-        title: "Real reviews and straight answers",
+        title: "Their reviews, word for word, and straight answers",
         body: "Twelve Google reviews are quoted word for word on the homepage, never trimmed into something the client did not say. Below them, the questions the salon hears every day, from what a cut costs to how to cancel, are answered in a few lines, with the top five showing and the rest one tap away. The same answers are published as structured data, so search engines can read them too.",
       },
       {
@@ -435,7 +435,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     stats: [
       { value: "250+", label: "pieces of text the salon edits itself, prices and hours included" },
       { value: "4", label: "screen shapes, each with its own crop of the homepage scene" },
-      { value: "12", label: "real Google reviews quoted word for word on the homepage" },
+      { value: "12", label: "Google reviews quoted word for word on the homepage" },
     ],
     result:
       "chameleonhairsalon.com is calm, quick to read and easy to book from, on a phone or a desktop. The prices, hours and photos are the salon's to change, the questions clients ask are answered before they call, and the domain is registered in the salon's own name.",
