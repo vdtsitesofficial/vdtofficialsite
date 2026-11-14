@@ -14,6 +14,7 @@ import type { WorkItem } from "@/components/WorkCarousel";
 export const WORK_ITEMS: WorkItem[] = [
   { img: "/work/junkmatters.webp", name: "Junk Matters", line: "Junk removal · Nanaimo", href: "/work/junk-matters" },
   { img: "/work/mattsisland.webp", name: "Matts Island Construction", line: "Logo, website and app · Shawnigan Lake", href: "/work/matts-island-construction" },
+  { img: "/work/chameleon.webp", name: "Chameleon Hair Salon", line: "Hair salon · Nanaimo", href: "/work/chameleon-hair-salon" },
   { img: "/work/smugglerscove.webp", name: "Smugglers' Cove Pub", line: "Neighbourhood pub · Victoria", href: "/work/smugglers-cove" },
   { img: "/work/mocoffee.webp", name: "MO Coffee", line: "Online coffee store · Nanaimo", href: "/work/mo-coffee" },
   { img: "/work/horizonhues.webp", name: "Horizon Hues", line: "Electrical contractor · Nanaimo", href: "/work/horizon-hues" },

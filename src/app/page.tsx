@@ -932,6 +932,30 @@ export default function Home() {
               <a
                 className="vdt-portfolio__card"
                 role="listitem"
+                href="/work/chameleon-hair-salon"
+                aria-label="Chameleon Hair Salon case study"
+                data-name="Chameleon Hair Salon"
+                data-tags="Hair Salon · Self-Serve Editing"
+              >
+                <div className="vdt-portfolio__card-frame">
+                  <div className="vdt-portfolio__card-bezel">
+                    <span className="vdt-portfolio__card-cam"></span>
+                  </div>
+                  <div className="vdt-portfolio__card-screen">
+                    <img
+                      className="vdt-portfolio__card-shot"
+                      src="/lab/shots/chameleon.webp"
+                      alt="Chameleon Hair Salon website by VDT Sites, hair salon in Nanaimo, BC"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </a>
+
+              <a
+                className="vdt-portfolio__card"
+                role="listitem"
                 href="/work/smugglers-cove"
                 aria-label="Smugglers' Cove Pub case study"
                 data-name="Smugglers' Cove Pub"

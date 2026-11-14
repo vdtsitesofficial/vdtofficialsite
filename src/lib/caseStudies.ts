@@ -380,6 +380,73 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
   },
   {
+    slug: "chameleon-hair-salon",
+    // The business is named throughout, never the owner. No reviewAuthor
+    // until the salon reviews us on Google. No ranking claims (launched
+    // 2026-11-13, nothing to measure yet). The hero is a styled salon
+    // scene, not a photo of their room (they are renovating), so the copy
+    // never calls it their salon; the stylist and work photos are theirs.
+    // The domain story stays generic: no previous provider named.
+    name: "Chameleon Hair Salon",
+    kicker: "Hair salon · Nanaimo, BC",
+    headline: "A calm, easy website for a Nanaimo hair salon",
+    intro:
+      "Chameleon Hair Salon has been cutting and colouring hair on Departure Bay Road in north Nanaimo for 17 years. We rebuilt their site from scratch around one brief, easy for every client to use, put every price, hour and photo in the salon's hands, and moved chameleonhairsalon.com into their own name without a minute offline.",
+    liveUrl: "https://chameleonhairsalon.com",
+    year: "2026",
+    stackLine: "Custom design · Self-serve editing · FAQ schema · Domain migration",
+    metaTitle: "Hair Salon Website Design in Nanaimo, BC",
+    metaDescription:
+      "How we rebuilt a north Nanaimo hair salon's website: easy to read, edited by the salon itself, with real reviews and the domain moved into their own name.",
+    client:
+      "Chameleon Hair Salon is a small team of Red Seal stylists on Departure Bay Road in north Nanaimo, rated 4.8 stars on Google. Cuts, colour with Wella, hair tattoos and Ayurvedic head massage, from a salon that does its own recycling and calls itself green.",
+    needed:
+      "The old site was a template that someone else controlled. Its homepage was mostly the cancellation policy, every service sat on one long page, and changing a price meant asking somebody else. Many of the salon's clients are older, so the brief was simple: clean, calm, not text heavy, and very easy to find your way around. The salon had also just moved to hourly pricing, so the prices had to explain themselves. And the domain was held by their previous web provider, so it had to come home before anything could launch.",
+    builtIntro:
+      "We kept every page short and obvious, then handed the salon the keys to everything that changes.",
+    built: [
+      {
+        title: "A first screen that answers the first question",
+        body: "The homepage opens on a full screen salon scene with the three things a new client checks first: what the salon is, where it is, and how to book. The scene is cropped separately for four screen shapes, from a phone held upright to an ultrawide monitor, so the chair and the plants are never cut off, and on a phone the text sits on a soft charcoal fade at the bottom where a thumb reaches it.",
+      },
+      {
+        title: "Prices that read the way they charge",
+        body: "The salon prices by time, so the services page says so plainly: a haircut is a range with the time it takes, colour is by the hour, and a short note explains why. Each group carries a photo of the salon's own recent work, and a small Products we use spot names the colour and retail lines they trust.",
+      },
+      {
+        title: "Every word and photo in the salon's hands",
+        body: "More than 250 pieces of text edit in place, along with 17 photos and every list on the site. The salon signs in with a one time code sent to their email, clicks the text on the page and types, and the change is public within seconds. Prices, hours, stylist write ups, the FAQ and the photos all change without a call to us.",
+      },
+      {
+        title: "Real reviews and straight answers",
+        body: "Twelve Google reviews are quoted word for word on the homepage, never trimmed into something the client did not say. Below them, the questions the salon hears every day, from what a cut costs to how to cancel, are answered in a few lines, with the top five showing and the rest one tap away. The same answers are published as structured data, so search engines can read them too.",
+      },
+      {
+        title: "A team page that makes booking easy",
+        body: "Each stylist has a photo, a short write up and what they love doing, from blondes and curly hair to hair tattoos and grey hair. Every stylist card has a Book online button and the phone number, because the booking system asks clients to pick their stylist after they sign in, and the front desk gets its own call button.",
+      },
+      {
+        title: "A domain move with nothing dropped",
+        body: "We got chameleonhairsalon.com released into the salon's own name, then attached the new site on Cloudflare before the switch, so the old site answered right up until the new one did. The old addresses, from the services page to the gallery, redirect to their new homes, and the www address and plain http both land on the one secure address.",
+      },
+    ],
+    design:
+      "Charcoal and sage, taken straight from the salon's new business cards, with white space doing most of the work and Jost for every word. Sections tuck into each other with soft rounded shoulders, and faded ivy and ferns sit behind the busier sections for depth without noise. The chameleon from their logo sits in the header, the footer and the browser tab.",
+    stats: [
+      { value: "250+", label: "pieces of text the salon edits itself, prices and hours included" },
+      { value: "4", label: "screen shapes, each with its own crop of the homepage scene" },
+      { value: "12", label: "real Google reviews quoted word for word on the homepage" },
+    ],
+    result:
+      "chameleonhairsalon.com is calm, quick to read and easy to book from, on a phone or a desktop. The prices, hours and photos are the salon's to change, the questions clients ask are answered before they call, and the domain is registered in the salon's own name.",
+    services: [
+      { href: "/website-redesign", label: "Website redesign" },
+      { href: "/web-design-nanaimo", label: "Web design in Nanaimo" },
+      { href: "/seo-nanaimo", label: "Local SEO" },
+      { href: "/website-hosting-nanaimo", label: "Hosting and domains" },
+    ],
+  },
+  {
     slug: "smugglers-cove",
     // "Pub", not "Tavern": the owners settled the name on 2026-09-28 and it
     // matches their Business Profile, the domain and the logo. The business
